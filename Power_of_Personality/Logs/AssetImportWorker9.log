@@ -1,0 +1,650 @@
+Using pre-set license
+Built from '2022.2/staging' branch; Version is '2022.2.20f1 (c5d806317f84) revision 12965894'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'ko' Physical Memory: 32729 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+G:\Unity\2022.2.20f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker9
+-projectPath
+G:/4p-project/Power_of_Personality
+-logFile
+Logs/AssetImportWorker9.log
+-srvPort
+3813
+Successfully changed project path to: G:/4p-project/Power_of_Personality
+G:/4p-project/Power_of_Personality
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [22980] Host "[IP] 192.168.0.26 [Port] 0 [Flags] 2 [Guid] 2105597635 [EditorId] 2105597635 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-JGTGNHB) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [22980] Host "[IP] 192.168.0.26 [Port] 0 [Flags] 2 [Guid] 2105597635 [EditorId] 2105597635 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-JGTGNHB) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 26.66 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.2.20f1 (c5d806317f84)
+[Subsystems] Discovering subsystems at path G:/Unity/2022.2.20f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path G:/4p-project/Power_of_Personality/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1060 6GB (ID=0x1b83)
+    Vendor:   NVIDIA
+    VRAM:     6044 MB
+    Driver:   31.0.15.4617
+Initialize mono
+Mono path[0] = 'G:/Unity/2022.2.20f1/Editor/Data/Managed'
+Mono path[1] = 'G:/Unity/2022.2.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'G:/Unity/2022.2.20f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56128
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: G:/Unity/2022.2.20f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: G:/Unity/2022.2.20f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.013600 seconds.
+- Loaded All Assemblies, in  0.716 seconds
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 1118 ms
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  2.106 seconds
+Domain Reload Profiling:
+	ReloadAssembly (459ms)
+		BeginReloadAssembly (242ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (2ms)
+		LoadAllAssembliesAndSetupDomain (0ms)
+			LoadAssemblies (240ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (246ms)
+				TypeCache.Initialize (245ms)
+					TypeCache.ScanAssembly (243ms)
+				ResolveRequiredComponents (1ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (1992ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (1356ms)
+				SetLoadedEditorAssemblies (15ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (3ms)
+				ProcessInitializeOnLoadAttributes (378ms)
+				ProcessInitializeOnLoadMethodAttributes (240ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.919 seconds
+Refreshing native plugins compatible for Editor in 6.98 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.807 seconds
+Domain Reload Profiling:
+	ReloadAssembly (433ms)
+		BeginReloadAssembly (250ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (12ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (33ms)
+		LoadAllAssembliesAndSetupDomain (1483ms)
+			LoadAssemblies (644ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (981ms)
+				TypeCache.Initialize (894ms)
+					TypeCache.ScanAssembly (882ms)
+				ResolveRequiredComponents (27ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (1211ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (55ms)
+				SetLoadedEditorAssemblies (8ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (189ms)
+				ProcessInitializeOnLoadAttributes (746ms)
+				ProcessInitializeOnLoadMethodAttributes (206ms)
+				AfterProcessingInitializeOnLoad (6ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (20ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.45 seconds
+Refreshing native plugins compatible for Editor in 68.66 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5983 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 98 unused Assets / (3.5 MB). Loaded Objects now: 6428.
+Memory consumption went from 240.7 MB to 237.2 MB.
+Total: 10.472800 ms (FindLiveObjects: 2.326800 ms CreateObjectMapping: 0.944000 ms MarkObjects: 5.136300 ms  DeleteObjects: 2.063900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 302356.067848 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_02_Materials/Effect_02_Particle_2.mat
+  artifactKey: Guid(fa5674c978b38db4282318528a41dccf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_02_Materials/Effect_02_Particle_2.mat using Guid(fa5674c978b38db4282318528a41dccf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '64f7e288e91493de2b4c45ca5a74d9dd') in 1.034194 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 1.560179 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_02_Materials/Effect_02_BlackHoleSphere.mat
+  artifactKey: Guid(28d7dfadec4093744ad72099b114c4cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_02_Materials/Effect_02_BlackHoleSphere.mat using Guid(28d7dfadec4093744ad72099b114c4cb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c0c3b7b11a5933dafe282dc8efaa281') in 0.023457 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 4.552374 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Effects/Effect_17_RainofArrow/Effect_17_Parts/Effect_17_Arrow_2.prefab
+  artifactKey: Guid(8ac1fc5d1a5c5b1439acd6faedce368c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Effects/Effect_17_RainofArrow/Effect_17_Parts/Effect_17_Arrow_2.prefab using Guid(8ac1fc5d1a5c5b1439acd6faedce368c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '207415e3d9f03242cc38dcbc7095a4a3') in 0.200214 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 20
+========================================================================
+Received Import Request.
+  Time since last request: 0.215435 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_17_Materials/Effect_17_Explosion.mat
+  artifactKey: Guid(7bfc138c84779fa4c8dfe7dab4ea425c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_17_Materials/Effect_17_Explosion.mat using Guid(7bfc138c84779fa4c8dfe7dab4ea425c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8585ba088d0302e20feae8cea6c62d98') in 0.157408 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_17_Materials/Effect_17_Particle_3.mat
+  artifactKey: Guid(6fe942c2d5b203640b396d79e0dd8724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_17_Materials/Effect_17_Particle_3.mat using Guid(6fe942c2d5b203640b396d79e0dd8724) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8edd559160c526faff11a17670fa1f3c') in 0.033495 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000041 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_17_Materials/Effect_17_Ring.mat
+  artifactKey: Guid(544d1d153c63f9a408b42760d31a63af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_17_Materials/Effect_17_Ring.mat using Guid(544d1d153c63f9a408b42760d31a63af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6474d514be44b8477936c38e4d4a23bc') in 0.067968 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 0.000080 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_18_Materials/Effect_18_Slash_3.mat
+  artifactKey: Guid(8081fe19623b6c94b929994b8c5ab431) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_18_Materials/Effect_18_Slash_3.mat using Guid(8081fe19623b6c94b929994b8c5ab431) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd1ab866cc2b2844911eba366ac06102f') in 0.022143 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Effects/Effect_18_TimeField/Effect_18_TimeField.prefab
+  artifactKey: Guid(96aacb3c58028424aa3e5f4e5c55f12e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Effects/Effect_18_TimeField/Effect_18_TimeField.prefab using Guid(96aacb3c58028424aa3e5f4e5c55f12e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '536e63216e8d3827ff9665198910d210') in 0.152641 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 65
+========================================================================
+Received Import Request.
+  Time since last request: 0.000049 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_18_Materials/Effect_18_Particle.mat
+  artifactKey: Guid(73fd572d3b7917e4794f6ecd5d529ba6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_18_Materials/Effect_18_Particle.mat using Guid(73fd572d3b7917e4794f6ecd5d529ba6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '242d7f5668d65072eff5304b109d88e5') in 0.021238 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_43_Materials/Effect_43_Slash_3.mat
+  artifactKey: Guid(4716d03b65410b04e84f74329857c721) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_43_Materials/Effect_43_Slash_3.mat using Guid(4716d03b65410b04e84f74329857c721) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '28552383bf6c6aec13469ac363b62af1') in 0.046530 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6
+========================================================================
+Received Import Request.
+  Time since last request: 0.000045 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_44_Materials/Effect_44_Particle.mat
+  artifactKey: Guid(57ccc280911a70f45a5e862c551f2c69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_44_Materials/Effect_44_Particle.mat using Guid(57ccc280911a70f45a5e862c551f2c69) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '17459b441ffe3424b591ce434d354aa7') in 0.018928 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Effects/Effect_19_FlameBust/Effect_19_Parts/Effect_19_FlameBustPart.prefab
+  artifactKey: Guid(ef77aeb97e282c642b636f1e637ec665) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Effects/Effect_19_FlameBust/Effect_19_Parts/Effect_19_FlameBustPart.prefab using Guid(ef77aeb97e282c642b636f1e637ec665) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ddce9140df96f2e4c8eb91a9d1da451e') in 0.165048 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 25
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Effects/Effect_45_MultipleLaserCanon/Effect_45_Parts/Effect_45_Bullet.prefab
+  artifactKey: Guid(6d149d12515658244a3bea0313e1b491) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Effects/Effect_45_MultipleLaserCanon/Effect_45_Parts/Effect_45_Bullet.prefab using Guid(6d149d12515658244a3bea0313e1b491) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ee168480b33bc28ee55551d18fa69501') in 0.093331 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 12
+========================================================================
+Received Import Request.
+  Time since last request: 0.000372 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Beam_6.mat
+  artifactKey: Guid(004e6711d9e63c84cb75b04a42f343f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Beam_6.mat using Guid(004e6711d9e63c84cb75b04a42f343f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb9d18afa42230cbc3c404d5e41c6a2d') in 0.124558 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 7
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Bomb.mat
+  artifactKey: Guid(ebb73c21d2531d04cb739a2ea7a6f532) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Bomb.mat using Guid(ebb73c21d2531d04cb739a2ea7a6f532) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'edd0949cf38681cdd290b5fc8615bf4c') in 0.060939 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 0.000104 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Body_2.mat
+  artifactKey: Guid(2fab268af27a92240865585fbf140a2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Body_2.mat using Guid(2fab268af27a92240865585fbf140a2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd12821da101603fd223f028feb5ef317') in 0.146987 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6
+========================================================================
+Received Import Request.
+  Time since last request: 0.008211 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Body_8.mat
+  artifactKey: Guid(ac1bc3f60cb79e542a13fe81845cfbb5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Body_8.mat using Guid(ac1bc3f60cb79e542a13fe81845cfbb5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '371d2b7dab43f528404edcefab06c50c') in 0.134010 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6
+========================================================================
+Received Import Request.
+  Time since last request: 0.000061 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Body.mat
+  artifactKey: Guid(3b49c4ee7527fe84a9d271b9a703e911) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Body.mat using Guid(3b49c4ee7527fe84a9d271b9a703e911) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4faf689bda9222ff3c9e9e3efd35661f') in 0.096305 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6
+========================================================================
+Received Import Request.
+  Time since last request: 0.478583 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Impact_3.mat
+  artifactKey: Guid(4f0c6d60ee9d35945ae40a0f136e0fa5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Impact_3.mat using Guid(4f0c6d60ee9d35945ae40a0f136e0fa5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '507a612a201d2e17f72387b1891c3e76') in 0.040336 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6
+========================================================================
+Received Import Request.
+  Time since last request: 0.027586 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Effects/Effect_46_CyberAirTroopInvader/Effect_46_Parts/Effect_46_Laser.prefab
+  artifactKey: Guid(f97f8873832f2164887cb3ab2f07c9aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Effects/Effect_46_CyberAirTroopInvader/Effect_46_Parts/Effect_46_Laser.prefab using Guid(f97f8873832f2164887cb3ab2f07c9aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd38a9aa0238dd37d107c27b3714c966d') in 0.029584 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 12
+========================================================================
+Received Import Request.
+  Time since last request: 0.106327 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Particle.mat
+  artifactKey: Guid(4d8e9dc3d68202f40a3afd8ff4e2cea9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Particle.mat using Guid(4d8e9dc3d68202f40a3afd8ff4e2cea9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3bf6587aa4b685b8c8f6513fd421dae6') in 0.029313 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.006535 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Ring_2.mat
+  artifactKey: Guid(60fcdcb609c55104292f8c6bae944075) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_Ring_2.mat using Guid(60fcdcb609c55104292f8c6bae944075) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9e9748cdf692ea0ca6b5c72ddc64fcec') in 0.038885 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_ShockwaveRing_2.mat
+  artifactKey: Guid(8bf8ebcd63aba204c8a4c22726dfbb89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_46_Materials/Effect_46_ShockwaveRing_2.mat using Guid(8bf8ebcd63aba204c8a4c22726dfbb89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0464a088669788f3656e7f5cf5ba40a3') in 0.150963 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6
+========================================================================
+Received Import Request.
+  Time since last request: 0.000050 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_47_Materials/Effect_47_DarkSphere.mat
+  artifactKey: Guid(aa9b3a816346f3e4eb2a422fb3abb4e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_47_Materials/Effect_47_DarkSphere.mat using Guid(aa9b3a816346f3e4eb2a422fb3abb4e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '378b9cc0769b18cdb8f9348fc0f1ba24') in 0.112204 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/Effects/Effect_Wizard/Effect_Wizard_Material/SkillE_Projectile/Effect_47_Impact_2.mat
+  artifactKey: Guid(8aa97e1432429174bbf4fe5185e9d663) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Wizard/Effect_Wizard_Material/SkillE_Projectile/Effect_47_Impact_2.mat using Guid(8aa97e1432429174bbf4fe5185e9d663) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b6fb5120400953c93124946e2a2129a8') in 0.021338 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 0.000061 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_47_Materials/Effect_47_Circle.mat
+  artifactKey: Guid(0a80744020627ab4184df37a436fe99f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_2(ScriptBased)/Materials/Effect_47_Materials/Effect_47_Circle.mat using Guid(0a80744020627ab4184df37a436fe99f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '175a5e4df816f356ebad58a6e957f771') in 0.021095 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 0.000058 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_53_Materials/Effect_53_Smoke.mat
+  artifactKey: Guid(153b7f013fe8ad04388737a8a9b627c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_53_Materials/Effect_53_Smoke.mat using Guid(153b7f013fe8ad04388737a8a9b627c1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9736b111d755e1ca6d445e936b390d6') in 0.070371 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.000044 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Effects/Effect_54_SateliteCannon/Effect_54_SateliteCannon.prefab
+  artifactKey: Guid(26d18c76357323442aebb3e37fa40c13) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Effects/Effect_54_SateliteCannon/Effect_54_SateliteCannon.prefab using Guid(26d18c76357323442aebb3e37fa40c13) Importer(815301076,1909f56bfc062723c751e8b465ee728b) Shader properties can't be added to this global property sheet. Trying to add _GrabTexture_ST (type 2 count 1)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
+UnityEngine.Rendering.ScriptableRenderContext:Submit ()
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData&,bool) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:666)
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCameraInternal (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:534)
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:376)
+UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>)
+UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,UnityEngine.Object,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle)
+UnityEditor.PreviewRenderUtility:Render (bool,bool)
+UnityEditor.GameObjectInspector:DoRenderPreview (UnityEditor.GameObjectInspector/PreviewData)
+UnityEditor.GameObjectInspector:RenderStaticPreview (string,UnityEngine.Object[],int,int)
+UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int)
+UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string)
+
+[./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs line 666]
+
+Shader properties can't be added to this global property sheet. Trying to add _GrabTexture_TexelSize (type 2 count 1)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
+UnityEngine.Rendering.ScriptableRenderContext:Submit ()
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData&,bool) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:666)
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCameraInternal (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:534)
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:376)
+UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>)
+UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,UnityEngine.Object,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle)
+UnityEditor.PreviewRenderUtility:Render (bool,bool)
+UnityEditor.GameObjectInspector:DoRenderPreview (UnityEditor.GameObjectInspector/PreviewData)
+UnityEditor.GameObjectInspector:RenderStaticPreview (string,UnityEngine.Object[],int,int)
+UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int)
+UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string)
+
+[./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs line 666]
+
+Shader properties can't be added to this global property sheet. Trying to add _GrabTexture_HDR (type 2 count 1)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
+UnityEngine.Rendering.ScriptableRenderContext:Submit ()
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData&,bool) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:666)
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCameraInternal (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:534)
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:376)
+UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>)
+UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,UnityEngine.Object,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle)
+UnityEditor.PreviewRenderUtility:Render (bool,bool)
+UnityEditor.GameObjectInspector:DoRenderPreview (UnityEditor.GameObjectInspector/PreviewData)
+UnityEditor.GameObjectInspector:RenderStaticPreview (string,UnityEngine.Object[],int,int)
+UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int)
+UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string)
+
+[./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs line 666]
+
+Shader properties can't be added to this global property sheet. Trying to add _GrabTexture (type 4 count 1)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
+UnityEngine.Rendering.ScriptableRenderContext:Submit ()
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData&,bool) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:666)
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCameraInternal (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:534)
+UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:376)
+UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>)
+UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,UnityEngine.Object,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle)
+UnityEditor.PreviewRenderUtility:Render (bool,bool)
+UnityEditor.GameObjectInspector:DoRenderPreview (UnityEditor.GameObjectInspector/PreviewData)
+UnityEditor.GameObjectInspector:RenderStaticPreview (string,UnityEngine.Object[],int,int)
+UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int)
+UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string)
+
+[./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs line 666]
+
+ -> (artifact id: 'b5e3ce87b5e0276cb4e72a0309cf8502') in 0.193496 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 48
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_55_Materials/Effect_55_Sphere.mat
+  artifactKey: Guid(c0c583e40cb6ce04281dce59272a684d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_55_Materials/Effect_55_Sphere.mat using Guid(c0c583e40cb6ce04281dce59272a684d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6efc82b9137c2cd550789b8c3fda845e') in 0.036766 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_55_Materials/Effect_55_SmallSphere.mat
+  artifactKey: Guid(4a1912fceaf0ee8498912784d9c3e956) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_55_Materials/Effect_55_SmallSphere.mat using Guid(4a1912fceaf0ee8498912784d9c3e956) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0535bdd03ec5c20de5c5d3b1e1e1278b') in 0.017087 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b7136c78903f695536235844c163102') in 0.780957 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 182
+========================================================================
+Received Import Request.
+  Time since last request: 0.000046 seconds.
+  path: Assets/Effects/Effect_Rogue/SkillEffect_IceE3_Rogue.prefab
+  artifactKey: Guid(d3aa6073dc35a1e4e8080c0c2bd39e80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Rogue/SkillEffect_IceE3_Rogue.prefab using Guid(d3aa6073dc35a1e4e8080c0c2bd39e80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e07916adc4f12284b02ddb9baebab08e') in 2.648069 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 39
+========================================================================
+Received Import Request.
+  Time since last request: 0.000038 seconds.
+  path: Assets/Effects/Effect_Rogue/SkillEffect_IceE1_Rogue.prefab
+  artifactKey: Guid(a14e503ea4da0194c9cf9312adc3b8ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Rogue/SkillEffect_IceE1_Rogue.prefab using Guid(a14e503ea4da0194c9cf9312adc3b8ae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cd8ff058927ec695c4ae57930812407d') in 0.048948 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 39
+========================================================================
+Received Import Request.
+  Time since last request: 0.000067 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_50_Materials/Effect_50_Wave.mat
+  artifactKey: Guid(dafbcccff1a5ee9408d0723ea3a0b33e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_50_Materials/Effect_50_Wave.mat using Guid(dafbcccff1a5ee9408d0723ea3a0b33e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f489e1721fbee3bf71225bcad54a19c1') in 0.126659 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6
+========================================================================
+Received Import Request.
+  Time since last request: 0.000033 seconds.
+  path: Assets/Effects/Effect_Rogue/SkillEffect_IceQ_Rogue.prefab
+  artifactKey: Guid(4804da7c01bb9a94087d2f3e3ce1b036) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Rogue/SkillEffect_IceQ_Rogue.prefab using Guid(4804da7c01bb9a94087d2f3e3ce1b036) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fcff13f2ed28742dfa9c359b384f5430') in 0.787596 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 79
+========================================================================
+Received Import Request.
+  Time since last request: 0.000037 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_50_Materials/Effect_50_Wave_2.mat
+  artifactKey: Guid(6c067e2e53e92864db4a18ce8f2eef0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_50_Materials/Effect_50_Wave_2.mat using Guid(6c067e2e53e92864db4a18ce8f2eef0a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ded733cc43eb621be3d077e2c4ce5dd') in 0.036113 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 7
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Effects/Effect_51_FlameTsunami/Effect_51_FlameTsunami.prefab
+  artifactKey: Guid(a628130ab124b774ca2c0dc173c776a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Effects/Effect_51_FlameTsunami/Effect_51_FlameTsunami.prefab using Guid(a628130ab124b774ca2c0dc173c776a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23702aa4027a555f5bd7a4e5e5597ace') in 0.031954 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 22
+========================================================================
+Received Import Request.
+  Time since last request: 0.000064 seconds.
+  path: Assets/Effects/Effect_Warrior/SkillEffect_IceE_Warrior.prefab
+  artifactKey: Guid(459f9f968d26a6246a39f59f2df237cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Warrior/SkillEffect_IceE_Warrior.prefab using Guid(459f9f968d26a6246a39f59f2df237cf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c3fecc43a6dde614abfd538fff569bee') in 0.038132 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 41
+========================================================================
+Received Import Request.
+  Time since last request: 0.000030 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_53_Materials/Effect_53_Chain_2.mat
+  artifactKey: Guid(1bcdf36d5847d184dafe55c337b0cde4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_53_Materials/Effect_53_Chain_2.mat using Guid(1bcdf36d5847d184dafe55c337b0cde4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b1faa26f835ef788f27a038dd4a56fb8') in 0.072906 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 4
+========================================================================
+Received Import Request.
+  Time since last request: 1.867316 seconds.
+  path: Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_Common_Materials/Effect_Common_Distort_3.mat
+  artifactKey: Guid(9c0f471ab2d888241bc183e802a6caf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/SpecialSkillsEffectsPack/AllEffects/EffectsSet_1(NotScriptBased)/Materials/Effect_Common_Materials/Effect_Common_Distort_3.mat using Guid(9c0f471ab2d888241bc183e802a6caf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b) 
+=================================================================
+	Native Crash Reporting
+=================================================================
+Got a UNKNOWN while executing native code. This usually indicates
+a fatal error in the mono runtime or one of the native libraries 
+used by your application.
+=================================================================
+
+=================================================================
+	Managed Stacktrace:
+=================================================================
+	  at <unknown> <0xffffffff>
+	  at UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal_Injected <0x00089>
+	  at UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal <0x0001a>
+	  at UnityEngine.Rendering.ScriptableRenderContext:Submit <0x00032>
+	  at UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera <0x00d72>
+	  at UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCameraInternal <0x00192>
+	  at UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render <0x00612>
+	  at UnityEngine.Rendering.RenderPipeline:InternalRender <0x00058>
+	  at UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal <0x001d2>
+	  at <Module>:runtime_invoke_void_object_intptr_object_AtomicSafetyHandle <0x000c7>
+	  at <unknown> <0xffffffff>
+	  at UnityEngine.Camera:Render <0x00090>
+	  at UnityEditor.PreviewRenderUtility:Render <0x0043a>
+	  at UnityEditor.MaterialEditor:DoRenderPreview <0x01b3a>
+	  at UnityEditor.MaterialEditor:RenderStaticPreview <0x001c2>
+	  at UnityEditor.AssetPreviewUpdater:CreatePreview <0x0018f>
+	  at UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset <0x00042>
+	  at <Module>:runtime_invoke_object_object_object_object <0x0008f>
+=================================================================
+Received signal SIGSEGV
+Obtained 60 stack frames
+0x00007ff69aa94c8d (Unity) ScriptableRenderLoopDrawSRPBatcher
+0x00007ff69aa953ea (Unity) ScriptableRenderLoopJob
+0x00007ff69adad623 (Unity) GfxDevice::ExecuteAsync
+0x00007ff69b095eae (Unity) GfxDeviceClient::ExecuteAsync
+0x00007ff69aa929a5 (Unity) ScheduleRenderJobs
+0x00007ff69aa8f179 (Unity) ExecuteDrawRenderersCommand
+0x00007ff69aa7d740 (Unity) ScriptableRenderContext::ExecuteScriptableRenderLoop
+0x00007ff699ee4ec9 (Unity) ScriptableRenderContext_CUSTOM_Submit_Internal_Injected
+0x00000204fce8c07a (Mono JIT Code) (wrapper managed-to-native) UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal_Injected (UnityEngine.Rendering.ScriptableRenderContext&)
+0x00000204fce8bfcb (Mono JIT Code) UnityEngine.Rendering.ScriptableRenderContext:Submit_Internal ()
+0x00000204fce8bf83 (Mono JIT Code) UnityEngine.Rendering.ScriptableRenderContext:Submit ()
+0x00000204fce41d73 (Mono JIT Code) UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCamera (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Rendering.Universal.CameraData&,bool) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:667)
+0x00000204fce39de3 (Mono JIT Code) UnityEngine.Rendering.Universal.UniversalRenderPipeline:RenderSingleCameraInternal (UnityEngine.Rendering.ScriptableRenderContext,UnityEngine.Camera) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:535)
+0x00000204fce33153 (Mono JIT Code) UnityEngine.Rendering.Universal.UniversalRenderPipeline:Render (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>) (at ./Library/PackageCache/com.unity.render-pipelines.universal@14.0.7/Runtime/UniversalRenderPipeline.cs:378)
+0x00000204fce323d9 (Mono JIT Code) UnityEngine.Rendering.RenderPipeline:InternalRender (UnityEngine.Rendering.ScriptableRenderContext,System.Collections.Generic.List`1<UnityEngine.Camera>)
+0x00000204fcd5e163 (Mono JIT Code) UnityEngine.Rendering.RenderPipelineManager:DoRenderLoop_Internal (UnityEngine.Rendering.RenderPipelineAsset,intptr,UnityEngine.Object,Unity.Collections.LowLevel.Unsafe.AtomicSafetyHandle)
+0x00000204fcd5e398 (Mono JIT Code) (wrapper runtime-invoke) <Module>:runtime_invoke_void_object_intptr_object_AtomicSafetyHandle (object,intptr,intptr,intptr)
+0x00007ffaf222e434 (mono-2.0-bdwgc) mono_jit_runtime_invoke (at C:/build/output/Unity-Technologies/mono/mono/mini/mini-runtime.c:3445)
+0x00007ffaf216eb44 (mono-2.0-bdwgc) do_runtime_invoke (at C:/build/output/Unity-Technologies/mono/mono/metadata/object.c:3066)
+0x00007ffaf216ecdc (mono-2.0-bdwgc) mono_runtime_invoke (at C:/build/output/Unity-Technologies/mono/mono/metadata/object.c:3113)
+0x00007ff69ae9f054 (Unity) scripting_method_invoke
+0x00007ff69ae7f864 (Unity) ScriptingInvocation::Invoke
+0x00007ff69aa7f7af (Unity) ScriptableRenderContext::ExtractAndExecuteRenderPipeline
+0x00007ff69a88d4d6 (Unity) Camera::CustomRenderWithPipeline
+0x00007ff69a8a3720 (Unity) Camera::StandaloneCustomRender
+0x00007ff69a8a39ab (Unity) Camera::StandaloneRender
+0x00007ff69a89a5e9 (Unity) CameraScripting::Render
+0x00007ff699ff52cd (Unity) Camera_CUSTOM_Render
+0x00000204fcd5deb1 (Mono JIT Code) (wrapper managed-to-native) UnityEngine.Camera:Render (UnityEngine.Camera)
+0x00000204fcd5d24b (Mono JIT Code) UnityEditor.PreviewRenderUtility:Render (bool,bool)
+0x00000204fcd59fdb (Mono JIT Code) UnityEditor.MaterialEditor:DoRenderPreview (UnityEditor.PreviewRenderUtility,bool)
+0x00000204fcd39f63 (Mono JIT Code) UnityEditor.MaterialEditor:RenderStaticPreview (string,UnityEngine.Object[],int,int)
+0x00000204fcd2a780 (Mono JIT Code) UnityEditor.AssetPreviewUpdater:CreatePreview (UnityEngine.Object,UnityEngine.Object[],string,int,int)
+0x00000204fcd2a463 (Mono JIT Code) UnityEditor.AssetPreviewUpdater:CreatePreviewForAsset (UnityEngine.Object,UnityEngine.Object[],string)
+0x00000204fcd2a520 (Mono JIT Code) (wrapper runtime-invoke) <Module>:runtime_invoke_object_object_object_object (object,intptr,intptr,intptr)
+0x00007ffaf222e434 (mono-2.0-bdwgc) mono_jit_runtime_invoke (at C:/build/output/Unity-Technologies/mono/mono/mini/mini-runtime.c:3445)
+0x00007ffaf216eb44 (mono-2.0-bdwgc) do_runtime_invoke (at C:/build/output/Unity-Technologies/mono/mono/metadata/object.c:3066)
+0x00007ffaf216ecdc (mono-2.0-bdwgc) mono_runtime_invoke (at C:/build/output/Unity-Technologies/mono/mono/metadata/object.c:3113)
+0x00007ff69ae9f054 (Unity) scripting_method_invoke
+0x00007ff69ae7f864 (Unity) ScriptingInvocation::Invoke
+0x00007ff69c23a84d (Unity) MonoCreateAssetPreview
+0x00007ff69c239640 (Unity) WriteAssetPreviewToFile
+0x00007ff69c239dd3 (Unity) WritePreviews
+0x00007ff69c230d0f (Unity) PreviewImporter::GenerateAssetData
+0x00007ff69c27b055 (Unity) ImportToObjects
+0x00007ff69c27a03c (Unity) ImportAsset
+0x00007ff69c29ec28 (Unity) AssetImportWorker::Import
+0x00007ff69c306a62 (Unity) <lambda_183697078dc22ecb201e4599e9982eaf>::operator()
+0x00007ff69c342422 (Unity) asio::detail::completion_handler<core::mutable_function<void __cdecl(void)>,asio::io_context::basic_executor_type<std::allocator<void>,0> >::do_complete
+0x00007ff69c32e3ce (Unity) asio::detail::win_iocp_io_context::do_one
+0x00007ff69c330034 (Unity) asio::detail::win_iocp_io_context::run
+0x00007ff69c3407cc (Unity) IOService::Run
+0x00007ff69c3151bf (Unity) AssetImportWorkerClient::Run
+0x00007ff69c2dfec7 (Unity) RunAssetImportWorkerClientV2
+0x00007ff69c2dff4b (Unity) RunAssetImporterV2
+0x00007ff69bacb611 (Unity) Application::InitializeProject
+0x00007ff69bf6a035 (Unity) WinMain
+0x00007ff69d34e95e (Unity) __scrt_common_main_seh
+0x00007ffbaf847344 (KERNEL32) BaseThreadInitThunk
+0x00007ffbb14e26b1 (ntdll) RtlUserThreadStart
+
