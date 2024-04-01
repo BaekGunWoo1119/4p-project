@@ -371,7 +371,9 @@ public class PlayerCtrl_Rogue : MonoBehaviour
             anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_Q") ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_W") ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E") ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack2"))
+            anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack2") ||
+            (anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !anim.GetBool("isRun")) ||
+            (anim.GetCurrentAnimatorStateInfo(0).IsName("Fall") && !anim.GetBool("isRun")))
         {
             moveSpd = 0;
             //moveVec = new Vector3(0, 0, 0).normalized;

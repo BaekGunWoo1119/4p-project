@@ -638,7 +638,7 @@ public class PlayerCtrl_Warrior : MonoBehaviour
         //스킬 나갈 시 카메라 무빙(얼굴 포커스, 멈춤)
         if(SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 0.7f, transform.position.y + 0.6f, transform.position.z - 1.5f, -50, 1.0f, "stop");
+            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 2.7f, transform.position.y + 1.2f, transform.position.z - 1.7f, -90, 1.5f, "stop");
         }
         else
         {
