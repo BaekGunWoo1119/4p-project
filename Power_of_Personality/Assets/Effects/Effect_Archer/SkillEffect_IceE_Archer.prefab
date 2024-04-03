@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4919698910798222978}
-  - component: {fileID: 8880861919968354893}
+  - component: {fileID: 3777431085258226141}
   m_Layer: 0
   m_Name: Effect_04_ChargeShot
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   m_Father: {fileID: 2712310572261537741}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8880861919968354893
+--- !u!114 &3777431085258226141
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,12 +43,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2539328020716333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c03fd6df5400b874584a2b58933ddf5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 0abfeb6d7faeeef489e7b8fa31a364fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_activeObj:
   - {fileID: 7345129289070201733}
-  m_delayTime: 1.5
+  m_delayTime: 1.75
 --- !u!1 &481687311279354012
 GameObject:
   m_ObjectHideFlags: 0
@@ -9945,7 +9945,7 @@ GameObject:
   - component: {fileID: 7114377293409834646}
   - component: {fileID: 961980732649624364}
   - component: {fileID: 1340197934052465352}
-  - component: {fileID: 4397913246526447307}
+  - component: {fileID: 6580356609010460557}
   m_Layer: 0
   m_Name: Effect_04_ChargeSphere
   m_TagString: Untagged
@@ -10039,7 +10039,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4397913246526447307
+--- !u!114 &6580356609010460557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10048,13 +10048,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2713116078155248841}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf9e2704e6a063e40b08fbfcf8d2e829, type: 3}
+  m_Script: {fileID: 11500000, guid: f875761d9a11f1b448dda0f9ee26e0f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isParticleSystem: 0
   m_inputMaterial: {fileID: 2100000, guid: 685e8eed5417c074f841bf803e513a10, type: 2}
-  m_timeToReduce: 0
-  m_reduceFactor: 0
+  m_timeToReduce: 2
+  m_reduceFactor: 1
   m_upFactor: 0
 --- !u!1 &2998662553226520011
 GameObject:

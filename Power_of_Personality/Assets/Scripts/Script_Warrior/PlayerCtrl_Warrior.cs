@@ -55,9 +55,9 @@ public class PlayerCtrl_Warrior : MonoBehaviour
     private bool WallCollision;
 
     //스킬 쿨타임
-    public float QSkillCoolTime;
-    public float WSkillCoolTime;
-    public float ESkillCoolTime;
+    private float QSkillCoolTime;
+    private float WSkillCoolTime;
+    private float ESkillCoolTime;
 
     //캐릭터 공격 이펙트
     public GameObject commonAttack_Ice1_Effect;
@@ -68,10 +68,13 @@ public class PlayerCtrl_Warrior : MonoBehaviour
     public GameObject Skill_IceQ_Effect;
     public GameObject Skill_FireW_Effect;
     public GameObject Skill_IceW_Effect;
+    public GameObject Skill_FireE_Effect;
+    public GameObject Skill_IceE_Effect;
     private GameObject Attack1_Effect;
     private GameObject Attack2_Effect;
     private GameObject SkillQ_Effect;
     private GameObject SkillW_Effect;
+    private GameObject SkillE_Effect;
     private GameObject SkillEffect;
     private float SkillYRot;
 
@@ -199,6 +202,7 @@ public class PlayerCtrl_Warrior : MonoBehaviour
             Attack2_Effect = commonAttack_Fire2_Effect;
             SkillQ_Effect = Skill_FireQ_Effect;
             SkillW_Effect = Skill_FireW_Effect;
+            SkillE_Effect = Skill_FireE_Effect;
         }
         else if (PlayerPrefs.GetString("property") == "Ice")
         {
@@ -206,6 +210,7 @@ public class PlayerCtrl_Warrior : MonoBehaviour
             Attack2_Effect = commonAttack_Ice2_Effect;
             SkillQ_Effect = Skill_IceQ_Effect;
             SkillW_Effect = Skill_IceW_Effect;
+            SkillE_Effect = Skill_IceE_Effect;
         }
         else
         {
@@ -213,6 +218,7 @@ public class PlayerCtrl_Warrior : MonoBehaviour
             Attack2_Effect = commonAttack_Ice2_Effect;
             SkillQ_Effect = Skill_IceQ_Effect;
             SkillW_Effect = Skill_IceW_Effect;
+            SkillE_Effect = Skill_IceE_Effect;
         }
 
         //벽 충돌체크
@@ -638,7 +644,7 @@ public class PlayerCtrl_Warrior : MonoBehaviour
         //스킬 나갈 시 카메라 무빙(얼굴 포커스, 멈춤)
         if(SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 2.7f, transform.position.y + 1.2f, transform.position.z - 1.7f, -90, 1.5f, "stop");
+            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 0.7f, transform.position.y + 0.6f, transform.position.z - 1.5f, -50, 1.0f, "stop");
         }
         else
         {
@@ -828,6 +834,8 @@ public class PlayerCtrl_Warrior : MonoBehaviour
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+            //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
+            //SkillQ_Effect.GetComponent<ParticleSystem>().startRotation3D = 
         }
         else
         {
@@ -839,6 +847,18 @@ public class PlayerCtrl_Warrior : MonoBehaviour
     {
         SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(SkillW_Effect.transform.eulerAngles));
         SkillEffect.transform.parent = EffectGen.transform;
+    }
+
+    public void skill_E_on()
+    {
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        }
+        else
+        {
+            SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, -90, 0f));
+        }
     }
 
     IEnumerator TakeDamage()

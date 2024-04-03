@@ -15,20 +15,20 @@ public class MonsterCtrl : MonoBehaviour
     //몬스터의 스테이터스
     public float curHP;     // 현재 체력
     public float maxHP;     // 최대 체력
-    public float ATK = 10;  // 공격력
+    public float ATK;  // 공격력
     public float DEF;       // 방어력
-    public float MoveSpeed = 2;  // 이동 속도
+    public float MoveSpeed;  // 이동 속도
     public float FireATTDEF;     // 화 속성 방어력
     public float IceATTDEF;      // 빙 속성 방어력
-    public float Damage = 10f;   // 받은 피해량
+    public float Damage;   // 받은 피해량
 
     public SkinnedMeshRenderer matObj;
     public GameObject targetObj;
 
     public Transform PlayerTr;     // 플레이어 Transform
     public float Distance;         // 플레이어와 몬스터 간의 거리
-    public float TraceRadius = 10.0f;  // 몬스터가 플레이어를 추적(Trace)하기 시작하는 거리
-    public float attackRadius = 3.0f;  // 몬스터가 플레이어를 공격(Attack)하기 시작하는 거리
+    public float TraceRadius;  // 몬스터가 플레이어를 추적(Trace)하기 시작하는 거리
+    public float attackRadius;  // 몬스터가 플레이어를 공격(Attack)하기 시작하는 거리
     public float AttackCoolTime;       // 몬스터의 공격 쿨타임
     public GameObject AttackCollider;  // 몬스터의 공격 콜라이더
     public GameObject Coin;     //몬스터를 죽이면 드랍되는 코인
@@ -40,7 +40,10 @@ public class MonsterCtrl : MonoBehaviour
     public virtual void Awake()
     {
         // 몬스터 기본 설정
-        AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
+        if (this.tag == "Monster_Melee")     // 이 몬스터가 근접 몬스터일때
+        {
+            AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
+        }
         SetHP(100);                         // 몬스터의 기본 HP를 설정
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
@@ -81,7 +84,7 @@ public class MonsterCtrl : MonoBehaviour
     #endregion
 
 
-    #region 플레이어 찾기, 플레이어와 거리 체크, 추적, 공격 함수.
+    #region 플레이어 찾기, 플레이어와 거리 체크, 추적, 공격 함수, HP바 위치 설정
     public virtual IEnumerator FindPlayer()     // 플레이어를 찾아서 할당해주는 함수
     {
         yield return new WaitForSeconds(0.1f);
@@ -110,7 +113,7 @@ public class MonsterCtrl : MonoBehaviour
         Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
         transform.Translate(movement, Space.World);
 
-        Vector3 hpBarPosition = transform.position + Vector3.up * 3.5f; // 몬스터의 상단으로 설정
+        Vector3 hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
         HpBar.transform.position = hpBarPosition;
 
         yield return null;
@@ -125,6 +128,11 @@ public class MonsterCtrl : MonoBehaviour
         anim.SetBool("isAttack", false);
         AttackCollider.SetActive(false);
         AttackCoolTime = 0;
+    }
+
+    public virtual Vector3 GetHPBarPosition()
+    {
+        return transform.position + Vector3.up * 3.5f;
     }
     #endregion
 

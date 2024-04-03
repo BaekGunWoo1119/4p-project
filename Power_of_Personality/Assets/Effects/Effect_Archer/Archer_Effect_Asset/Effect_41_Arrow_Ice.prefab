@@ -9838,7 +9838,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4450895404191685523}
-  - component: {fileID: 4913548015515836079}
+  - component: {fileID: 7268103279864545168}
   m_Layer: 0
   m_Name: Effect_41_Arrow_Ice
   m_TagString: Untagged
@@ -9863,7 +9863,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4913548015515836079
+--- !u!114 &7268103279864545168
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9872,19 +9872,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 7920563442075639008}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a92eda0b9e9558249a25d4f34f5daa5a, type: 3}
+  m_Script: {fileID: 11500000, guid: 56e17d10c4e020147ae8b5e49a85fd67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_gameObjectMain: {fileID: 1900560767565023245}
   m_gameObjectTail: {fileID: 6002377368019800061}
-  m_hitObject: {fileID: 0}
-  maxLength: 0
+  m_hitObject: {fileID: 8647576970062248739, guid: 3b2b6521714452049a246237fca7eca9, type: 3}
+  maxLength: 0.5
   isDestroy: 0
   ObjectDestroyTime: 0
-  TailDestroyTime: 0
-  HitObjectDestroyTime: 0
+  TailDestroyTime: 1
+  HitObjectDestroyTime: 1
   maxTime: 1
-  MoveSpeed: 10
+  MoveSpeed: 40
   isCheckHitTag: 0
   mtag: 
   isShieldActive: 0

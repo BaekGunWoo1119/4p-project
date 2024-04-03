@@ -115294,7 +115294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8327981711681588237}
   - component: {fileID: 2341659093422106170}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Attack_1_Collider
   m_TagString: WarriorAttack1
   m_Icon: {fileID: 0}
@@ -117158,7 +117158,6 @@ GameObject:
   - component: {fileID: 7264738506091923101}
   - component: {fileID: 1226211192982642129}
   - component: {fileID: 8908729975267040294}
-  - component: {fileID: 6758087976426114061}
   - component: {fileID: 1901929544688814895}
   - component: {fileID: 2018879315643185889}
   - component: {fileID: 742091936065243865}
@@ -117211,10 +117210,12 @@ MonoBehaviour:
   commonAttack_Ice2_Effect: {fileID: 7207131974424221420, guid: 5b9c16d03f63f204a9025f8d926ae01c, type: 3}
   commonAttack_Fire1_Effect: {fileID: 1668167229288200813, guid: 8b5e9a6ea1e98984e9ae1a3de4062dae, type: 3}
   commonAttack_Fire2_Effect: {fileID: 2449785767420222925, guid: a5e384801ab6e674394a2f8164b9c1cd, type: 3}
-  Skill_FireQ_Effect: {fileID: 1697485269308047324, guid: e7e5f3acc4300fa499c13d4952e20e6c, type: 3}
-  Skill_IceQ_Effect: {fileID: 101818329446047632, guid: 97fedc50262e566429260fea9b738a4c, type: 3}
+  Skill_FireQ_Effect: {fileID: 101818329446047632, guid: 707cc47335a9e8e4abd2cfeca3ea5e8a, type: 3}
+  Skill_IceQ_Effect: {fileID: 101818329446047632, guid: 0ebeca370b21b0d4db0c96e1a6e8aa23, type: 3}
   Skill_FireW_Effect: {fileID: 2837237706648772238, guid: 15f677e35a177024094d2b9f1eb687b7, type: 3}
-  Skill_IceW_Effect: {fileID: 4960040830365321334, guid: 4f9283f1058aaf54bbc9f1301ead8020, type: 3}
+  Skill_IceW_Effect: {fileID: 4960040830365321334, guid: 6aa4fbff91d801a47bd2c9bb905fb39f, type: 3}
+  Skill_FireE_Effect: {fileID: 101818329446047632, guid: add6f36b2dadaf84a864e7e0942308de, type: 3}
+  Skill_IceE_Effect: {fileID: 101818329446047632, guid: 8a1e6c7cf8a8fe840a4f84d0431a5ef8, type: 3}
   moveSpeed: 7
   JumpPower: 12
   fallPower: 4
@@ -117245,27 +117246,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &6758087976426114061
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7114715938675515446}
-  m_Material: {fileID: 13400000, guid: 2d425727974a2844690ee9b75801766d, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.001, y: 0.15154555, z: 0.001}
-  m_Center: {x: 0.0033946633, y: 0.07966606, z: 0.0030172914}
 --- !u!82 &1901929544688814895
 AudioSource:
   m_ObjectHideFlags: 0
@@ -141306,7 +141286,7 @@ GameObject:
   - component: {fileID: 6019772743568488294}
   - component: {fileID: 6196954089138377819}
   - component: {fileID: 2115714718311954133}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WSkill_Collider
   m_TagString: WarriorSkillW
   m_Icon: {fileID: 0}

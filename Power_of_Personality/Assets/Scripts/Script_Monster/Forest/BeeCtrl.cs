@@ -10,6 +10,11 @@ public class BeeCtrl : MonsterCtrl
 {
     public override void Awake()
     {
+        ATK = 10.0f;
+        MoveSpeed = 2.0f;
+        Damage = 10.0f;
+        TraceRadius = 10.0f;
+        attackRadius = 3.0f;
         base.Awake();
     }
     public override void Update()
@@ -53,5 +58,9 @@ public class BeeCtrl : MonsterCtrl
     public override IEnumerator TakeDamage()
     {
         yield return base.TakeDamage();
+    }
+    public override Vector3 GetHPBarPosition()
+    {
+        return base.GetHPBarPosition(); // 원하는 위치로 수정
     }
 }
