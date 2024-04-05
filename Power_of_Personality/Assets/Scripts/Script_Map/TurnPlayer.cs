@@ -31,23 +31,23 @@ public class TurnPlayer : MonoBehaviour
     }
 
     void OnTriggerExit(Collider col) {
-        Debug.Log(col);
+        //Debug.Log(col);
         if(col.CompareTag("Player")){
-            //Debug.Log("PlayerENTER");
-            if(IsNext == false){
-            Player.transform.SetParent(NextMap.transform);
-            Player.transform.localRotation = Quaternion.Euler(0,90,0);
-            //Player.transform.position=NextMap.transform.position;
-            
-            IsNext = true;
             Debug.Log("PlayerENTER");
+            //if(IsNext == false){
+            if(Player.transform.localEulerAngles.y > 60 && Player.transform.localEulerAngles.y < 120){
+            Player.transform.SetParent(NextMap.transform);
+            //Player.transform.localRotation = Quaternion.Euler(0,90,0);
+            //Player.transform.position=NextMap.transform.position;
+            IsNext = true;
+            Debug.Log(Player.transform.localEulerAngles.y);
             }
             else{
             Player.transform.SetParent(CurMap.transform);
-            Player.transform.localRotation = Quaternion.Euler(0,-90,0);
+            //Player.transform.localRotation = Quaternion.Euler(0,-90,0);
             //Player.transform.position=CurMap.transform.position;
             IsNext = false;
-            Debug.Log("PlayerLeft");
+            Debug.Log(Player.transform.localEulerAngles.y);
             }
         }
     }
