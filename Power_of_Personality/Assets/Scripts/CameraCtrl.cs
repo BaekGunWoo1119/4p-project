@@ -19,7 +19,9 @@ public class CameraCtrl : MonoBehaviour
     private float xPos;
     private float yPos;
     private float zPos;
+    private float xRot;
     private float yRot;
+    private float zRot;
     private string timeValue;
 
     private bool isMove;
@@ -61,12 +63,14 @@ public class CameraCtrl : MonoBehaviour
             if(timeValue == "stop")
             {
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(xPos,yPos,zPos), ref currentVelocity, 0.1f);
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0,yRot,0), Time.deltaTime * 3.5f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(xRot,yRot,zRot), Time.deltaTime * 3.5f);
                 StartCoroutine(TimeStop(0.35f));
             }
 
             else if(timeValue == "round")
             {
+                xRot = 10;
+                zRot = 0;
                 Time.timeScale = 1;
                 if(yRot == 60)
                 {
@@ -76,7 +80,7 @@ public class CameraCtrl : MonoBehaviour
                 {
                     transform.position = Vector3.SmoothDamp(transform.position, new Vector3(target.position.x - 1,yPos,zPos - 5), ref currentVelocity, 0.1f);
                 }
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(10,yRot,0), Time.deltaTime * 4.0f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(xRot,yRot,zRot), Time.deltaTime * 4.0f);
             }
             else if(timeValue == "forward")
             {
@@ -127,6 +131,8 @@ public class CameraCtrl : MonoBehaviour
         yPos = yP;
         zPos = zP;
         yRot = R;
+        xRot = 5;
+        zRot = 0;
 
         timeValue = value;
         focusTimer = Duration;

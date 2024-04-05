@@ -7,30 +7,30 @@ using System;
 
 public class PlayerCtrl : MonoBehaviour
 {
-    #region º¯¼ö ¼±¾ð
-    // GetAxis °ª
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // GetAxis ï¿½ï¿½
     protected float hAxis;
     protected float vAxis;
 
-    // PlayerÀÇ transform, YPosition, YRotation °ª
+    // Playerï¿½ï¿½ transform, YPosition, YRotation ï¿½ï¿½
     protected Transform trs;
     protected float YRot;
     protected float YPos;
 
-    //ÇÃ·¹ÀÌ¾î ½ºÅ×ÀÌÅÍ½º
+    //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í½ï¿½
     public float PlayerHP;     //HP
-    public float maxHP;        //ÃÖ´ë Ã¼·Â
-    public float Damage;       //¹ÞÀº ÇÇÇØ·®
-    public float PlayerATK;    //°ø°Ý·Â
-    public float PlayerDEF;    //¹æ¾î·Â
-    public float FireATT;      //ºÒ ¼Ó¼º µ¥¹ÌÁö ¹èÀ²
-    public float IceATT;       //¾óÀ½ ¼Ó¼º µ¥¹ÌÁö ¹èÀ²
-    public float moveSpeed;     //ÀÌµ¿¼Óµµ
-    public float moveSpd;      //ÀÌµ¿¼Óµµ
-    public float JumpPower;     //Á¡ÇÁ·Â
-    public float fallPower;     //¶³¾îÁö´Â Èû
+    public float maxHP;        //ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½
+    public float Damage;       //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø·ï¿½
+    public float PlayerATK;    //ï¿½ï¿½ï¿½Ý·ï¿½
+    public float PlayerDEF;    //ï¿½ï¿½ï¿½ï¿½
+    public float FireATT;      //ï¿½ï¿½ ï¿½Ó¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float IceATT;       //ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float moveSpeed;     //ï¿½Ìµï¿½ï¿½Óµï¿½
+    public float moveSpd;      //ï¿½Ìµï¿½ï¿½Óµï¿½
+    public float JumpPower;     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float fallPower;     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 
-    // ¾Ö´Ï¸ÞÀÌ¼Ç ÄÁÆ®·Ñ
+    // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½
     protected Vector3 initPos;
     protected bool isSkill = false;
     protected bool isAttack = false;
@@ -42,14 +42,14 @@ public class PlayerCtrl : MonoBehaviour
     //bool dashCount = false;
     protected bool isJumpAttack;
 
-    // ÄÚ·çÆ¾ ÄÁÆ®·Ñ
+    // ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½Æ®ï¿½ï¿½
     protected bool coroutineMove = false;
 
-    // ¾Ö´Ï¸ÞÀÌÅÍ, Rigidbody
+    // ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½, Rigidbody
     protected Animator anim;
     protected Rigidbody rd;
 
-    // ÀÌÆåÆ®
+    // ï¿½ï¿½ï¿½ï¿½Æ®
     public GameObject commonAttack_Ice1_Effect;
     public GameObject commonAttack_Ice2_Effect;
     public GameObject commonAttack_Ice3_Effect;
@@ -82,57 +82,57 @@ public class PlayerCtrl : MonoBehaviour
     public GameObject EffectGen;
     public GameObject SkillEffect;
 
-    // Ä«¸Þ¶ó, »ç¿îµå
+    // Ä«ï¿½Þ¶ï¿½, ï¿½ï¿½ï¿½ï¿½
     protected GameObject mainCamera;
     protected AudioClip[] effectAudio;
 
-    // º® Ãæµ¹Ã¼Å©
+    // ï¿½ï¿½ ï¿½æµ¹Ã¼Å©
     protected bool WallCollision;
 
     // HP Bar
     protected Slider HpBar;
     protected TMP_Text HpText;
 
-    // ÄðÅ¸ÀÓ °ü·Ã
+    // ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     protected float QSkillCoolTime;
     protected float WSkillCoolTime;
     protected float ESkillCoolTime;
     protected Image Qcool;
     protected Image Wcool;
     protected Image Ecool;
-    protected bool canTakeDamage = true; // µ¥¹ÌÁö¸¦ °¡Á®¿Ã ¼ö ÀÖ´ÂÁö
-    protected float damageCooldown = 1.0f; // 1ÃÊ¸¶´Ù Æ½µ¥¹ÌÁö¸¦ °¡Á®¿À±â À§ÇÔ
+    protected bool canTakeDamage = true; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½
+    protected float damageCooldown = 1.0f; // 1ï¿½Ê¸ï¿½ï¿½ï¿½ Æ½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    // È¸Àü °ü·Ã
+    // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     protected GameObject CurrentFloor;
     protected Vector3 moveVec;
     #endregion
 
     protected virtual void Start()
     {
-        // ÇÃ·¹ÀÌ¾î ½ºÅ×ÀÌÅÍ½º ÃÊ±âÈ­
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í½ï¿½ ï¿½Ê±ï¿½È­
         SetHp(100);
         PlayerATK = 100;
         PlayerDEF = 10;
         FireATT = 1.0f;
         IceATT = 1.0f;
 
-        // HP Bar ¼³Á¤
+        // HP Bar ï¿½ï¿½ï¿½ï¿½
         // HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
         // HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
         // HpText.text = "HP 100/100";
 
-        // ¾Ö´Ï¸ÞÀÌ¼Ç, Rigidbody, Transform ÄÄÆ÷³ÍÆ® ÁöÁ¤
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½, Rigidbody, Transform ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
         anim = GetComponent<Animator>();
         rd = GetComponent<Rigidbody>();
         trs = GetComponentInChildren<Transform>();
 
-        initPos = trs.position; // initPos¿¡ Transform.position ÇÒ´ç
-        mainCamera = GameObject.FindWithTag("MainCamera");  // ¸ÞÀÎ Ä«¸Þ¶ó ÁöÁ¤
-        anim.SetBool("isIdle", true);   // isIdleÀ» True·Î ¼³Á¤ÇØ¼­ Idle »óÅÂ ÁöÁ¤
-        EffectGen = transform.Find("EffectGen").gameObject; // EffectGen ÁöÁ¤
+        initPos = trs.position; // initPosï¿½ï¿½ Transform.position ï¿½Ò´ï¿½
+        mainCamera = GameObject.FindWithTag("MainCamera");  // ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½
+        anim.SetBool("isIdle", true);   // isIdleï¿½ï¿½ Trueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ Idle ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        EffectGen = transform.Find("EffectGen").gameObject; // EffectGen ï¿½ï¿½ï¿½ï¿½
 
-        // ¾Ö´Ï¸ÞÀÌ¼Ç, ½ºÅ³ °ü¸®ÇÏ´Â bool°ªÀ» false·Î ÃÊ±âÈ­
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½, ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ boolï¿½ï¿½ï¿½ï¿½ falseï¿½ï¿½ ï¿½Ê±ï¿½È­
         isSkill = false;
         isAttack = false;
         isDashAttack = false;
@@ -142,27 +142,30 @@ public class PlayerCtrl : MonoBehaviour
 
     protected virtual void Update()
     {
-        // º® Ãæµ¹Ã¼Å© ÇÔ¼ö ½ÇÇà
+        // ï¿½ï¿½ ï¿½æµ¹Ã¼Å© ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         WallCheck();
 
-        // ¾Ö´Ï¸ÞÀÌ¼Ç ¾÷µ¥ÀÌÆ®
+        // ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
         GetInput();
 
-        //½ºÅ³ ÄðÅ¸ÀÓ ÃæÀü
+        //ï¿½ï¿½Å³ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         QSkillCoolTime += Time.deltaTime;
         WSkillCoolTime += Time.deltaTime;
         ESkillCoolTime += Time.deltaTime;
 
-        //Y ·ÎÅ×ÀÌ¼Ç °íÁ¤ ÄÚµå
+        //Y ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
         YRot = transform.eulerAngles.y;
+        
+        //Xì¶• ê³ ì •
+        transform.localRotation = Quaternion.Euler(0, YRot, 0);
 
-        //Z Æ÷Áö¼Ç °íÁ¤
+        //Z ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
 
-        // char ¿ÀºêÁ§Æ® À§Ä¡ °íÁ¤
+        // char ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½
         transform.GetChild(0).localPosition = Vector3.zero;
 
-        // Move ÇÔ¼ö ½ÇÇà
+        // Move ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (!isSkill && !isAttack && !anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_B_3"))
         {
             Move();
@@ -170,13 +173,13 @@ public class PlayerCtrl : MonoBehaviour
             Turn();
         }
 
-        // Turn ÇÔ¼ö ½ÇÇà
+        // Turn ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (!isSkill && !isAttack && !anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             Turn();
         }
 
-        // Dodge ÇÔ¼ö ½ÇÇà
+        // Dodge ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.R))
         {
             Dodge();
@@ -190,13 +193,13 @@ public class PlayerCtrl : MonoBehaviour
             anim.SetBool("isJump", false);
         }
 
-        // Attack ÇÔ¼ö ½ÇÇà
+        // Attack ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (Input.GetKeyDown(KeyCode.A))
         {
             Attack_anim();
         }
 
-        //±âº»°ø°Ý1 & ±âº»°ø°Ý3 ½Ã ÀüÁø ¾Ö´Ï¸ÞÀÌ¼Ç & °ø°Ý»ç¿îµå
+        //ï¿½âº»ï¿½ï¿½ï¿½ï¿½1 & ï¿½âº»ï¿½ï¿½ï¿½ï¿½3 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ & ï¿½ï¿½ï¿½Ý»ï¿½ï¿½ï¿½
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1") && !coroutineMove)
         {
             /*
@@ -225,7 +228,7 @@ public class PlayerCtrl : MonoBehaviour
             transform.Translate(Vector3.forward * 3 * Time.deltaTime);
             */
         }
-        //Á¡ÇÁ°ø°Ý
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1") && !coroutineMove)
         {
             //isSound = false;
@@ -241,7 +244,7 @@ public class PlayerCtrl : MonoBehaviour
             anim.ResetTrigger("CommonAttack");
         }
 
-        //¾Ö´Ï¸ÞÀÌ¼ÇÀÌ ³¡³ª¸é coroutineÀ» °­Á¦·Î Á¾·á
+        //ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ coroutineï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_A_1")
         || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_A_2")
         || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_A_3")
@@ -256,7 +259,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             coroutineMove = false;
         }
-        //Á¡ÇÁ°ø°Ý ½Ã Y Æ÷Áö¼Ç °íÁ¤
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Y ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1") && !isJumpAttack)
         {
             Vector3 OriginPos = transform.position;
@@ -272,7 +275,7 @@ public class PlayerCtrl : MonoBehaviour
             float upperUpTime = 0;
             if (upperUpTime == 0)
             {
-                //°øÁß¿¡¼­ °íÁ¤µÇ¾î ¶§¸®´Ù°¡ ¶³¾îÁü
+                //ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 Vector3 OriginPos = transform.position;
                 YPos = OriginPos.y;
                 upperUpTime += 1;
@@ -284,10 +287,10 @@ public class PlayerCtrl : MonoBehaviour
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Fall") && isJumpAttack == true)
         {
             anim.ResetTrigger("CommonAttack");
-            //¶³¾îÁö´Â ÄÚµå ÃßÈÄ ¼öÁ¤
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             //rd.AddForce(Vector3.down * fallPower/3, ForceMode.VelocityChange);
         }
-        //ÇÑ ¹ø Á¡ÇÁ ½Ã ÇÑ ¹øÀÇ Á¡ÇÁ°ø°Ý ÄÞº¸¸¸ µÇ°Ô
+        //ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þºï¿½ï¿½ï¿½ ï¿½Ç°ï¿½
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wait") && isJumpAttack == true)
         {
             anim.ResetTrigger("CommonAttack");
@@ -307,7 +310,7 @@ public class PlayerCtrl : MonoBehaviour
             isAttack = false;
         }
 
-        //Áö»ó°ø°Ý 2Å¸, 3Å¸ ½Ã ¹æÇâÀüÈ¯ µÇµµ·Ï
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2Å¸, 3Å¸ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¯ ï¿½Çµï¿½ï¿½ï¿½
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1_Wait") ||
            anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_2_Wait"))
         {
@@ -364,13 +367,13 @@ public class PlayerCtrl : MonoBehaviour
         {
             isJumping = false;
         }
-        //Á¡ÇÁ ¸ð¼ÇÀÌ ½ÇÇàµÇ¾ß¸¸ Á¡ÇÁ°¡ ½ÇÇàµÇ°Ô(¾Ö´Ï¸ÞÀÌ¼Ç µô·¹ÀÌ ¹× ´õºíÁ¡ÇÁ °­Á¦ Á¦°Å)
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ß¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½(ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         if (isJumping == true)
         {
             Jump();
         }
 
-        //IdleÀÏ¶§ ½ºÅ³ ¹× °ø°Ý false ÆÇÁ¤
+        //Idleï¿½Ï¶ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ false ï¿½ï¿½ï¿½ï¿½
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             anim.SetBool("isIdle", true);
@@ -379,7 +382,7 @@ public class PlayerCtrl : MonoBehaviour
             anim.ResetTrigger("CommonAttack");
         }
 
-        //´Ù¸¥ ¸ð¼ÇÀÏ ¶§, È¤½Ã¶óµµ Move°¡ ½ÇÇàµÇµµ ´Þ¸®Áö ¸øÇÏ°Ô
+        //ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, È¤ï¿½Ã¶ï¿½ Moveï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Çµï¿½ ï¿½Þ¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wait") ||
            anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
            anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1") ||
@@ -397,7 +400,7 @@ public class PlayerCtrl : MonoBehaviour
             moveSpd = 0;
         }
 
-        //´ë½¬ÀÏ ¶§
+        //ï¿½ë½¬ï¿½ï¿½ ï¿½ï¿½
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
         {
             moveSpd = moveSpeed * 1.25f;
@@ -407,7 +410,7 @@ public class PlayerCtrl : MonoBehaviour
             moveSpd = moveSpeed;
         }
 
-        //Ä³¸¯ÅÍ ½ºÅ³ ÀÌÆåÆ®
+        //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½Æ®
         LocalSkillYRot = transform.localEulerAngles.y;
         SkillYRot = transform.eulerAngles.y;
         if (PlayerPrefs.GetString("property") == "Fire")
@@ -445,7 +448,7 @@ public class PlayerCtrl : MonoBehaviour
 
     }
 
-    #region HP ¼³Á¤
+    #region HP ï¿½ï¿½ï¿½ï¿½
     public virtual IEnumerator TakeDamage()
     {
         if (maxHP != 0 || PlayerHP > 0)
@@ -458,14 +461,14 @@ public class PlayerCtrl : MonoBehaviour
             anim.SetBool("TakeDamage", false);
         }
 
-        if (PlayerHP <= 0) // ÇÃ·¹ÀÌ¾î°¡ Á×À¸¸é °ÔÀÓ¿À¹ö Ã¢ ¶ç¿ò
+        if (PlayerHP <= 0) // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ Ã¢ ï¿½ï¿½ï¿½
         {
             anim.SetBool("isDie", true);
             yield return new WaitForSeconds(2.0f);
             GameObject.Find("EventSystem").GetComponent<GameEnd>().GameOver(true);
         }
     }
-    public virtual void SetHp(float amount) // Hp ¼¼ÆÃ
+    public virtual void SetHp(float amount) // Hp ï¿½ï¿½ï¿½ï¿½
     {
         maxHP = amount;
         PlayerHP = maxHP;
@@ -480,7 +483,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     #endregion
 
-    #region ÀÌµ¿ °ü·Ã ÇÔ¼ö
+    #region ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     protected virtual void WallCheck()
     {
         WallCollision = Physics.Raycast(transform.position + new Vector3(0, 1.0f, 0), transform.forward, 0.6f, LayerMask.GetMask("Wall", "Monster"));
@@ -527,69 +530,69 @@ public class PlayerCtrl : MonoBehaviour
     }
     protected virtual void Fall()
     {
-        anim.SetBool("isFall", true); //¶³¾îÁö´Â°ÍÀ¸·Î °¨Áö
+        anim.SetBool("isFall", true); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         rd.AddForce(Vector3.down * fallPower, ForceMode.VelocityChange);
     }
     protected virtual void Stay()
     {
-        isJumping = false; //isJump, isFallÀ» ´Ù½Ã false·Î
+        isJumping = false; //isJump, isFallï¿½ï¿½ ï¿½Ù½ï¿½ falseï¿½ï¿½
         anim.SetBool("isJump", false);
         anim.SetBool("isFall", false);
     }
     #endregion
 
-    #region Ãæµ¹ °ü·Ã ÇÔ¼ö
+    #region ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
     public virtual void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Monster_Melee")
         {
-            // Ãæµ¹ÇÑ ¸ó½ºÅÍ ¿ÀºêÁ§Æ®¿¡¼­ ÇØ´ç ½ºÅ©¸³Æ®¸¦ °¡Á®¿É´Ï´Ù.
+            // ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
             MonoBehaviour monsterCtrl = col.gameObject.transform.root.GetComponentInChildren<MonoBehaviour>();
 
-            // °¡Á®¿Â ¸ó½ºÅÍ ½ºÅ©¸³Æ®°¡ À¯È¿ÇÑÁö È®ÀÎÇÕ´Ï´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             if (monsterCtrl != null)
             {
-                // ½ºÅ©¸³Æ®ÀÇ ÀÌ¸§À» °¡Á®¿É´Ï´Ù.
+                // ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
                 string monsterScriptName = monsterCtrl.GetType().Name;
 
-                // "Ctrl"À» Á¦°ÅÇÏ¿© ¸ó½ºÅÍÀÇ ÀÌ¸§À» °¡Á®¿É´Ï´Ù.
+                // "Ctrl"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
                 string monsterName = monsterScriptName.Replace("Ctrl", "");
 
-                // ¸ó½ºÅÍ ÀÌ¸§À» »ç¿ëÇÏ¿© ÇØ´ç ¸ó½ºÅÍÀÇ ½ºÅ©¸³Æ® Å¸ÀÔÀ» °¡Á®¿É´Ï´Ù.
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ® Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
                 System.Type monsterScriptType = System.Type.GetType(monsterScriptName);
 
-                // °¡Á®¿Â ½ºÅ©¸³Æ®¸¦ µ¿ÀûÀ¸·Î ¸ó½ºÅÍ ½ºÅ©¸³Æ® Å¸ÀÔÀ¸·Î Ä³½ºÆÃÇÕ´Ï´Ù.
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ® Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
                 object specificMonsterCtrl = Convert.ChangeType(monsterCtrl, monsterScriptType);
 
-                // ¸ó½ºÅÍ ½ºÅ©¸³Æ®·Î Ä³½ºÆÃµÈ °´Ã¼¿¡¼­ ATK °ªÀ» °¡Á®¿É´Ï´Ù.
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ATK ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
                 float atkValue = (float)((specificMonsterCtrl as MonoBehaviour).GetType().GetField("ATK").GetValue(specificMonsterCtrl));
-                Debug.Log("¸ó½ºÅÍÀÇ ATK °ª: " + atkValue);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ATK ï¿½ï¿½: " + atkValue);
                 Damage = atkValue;
                 StartCoroutine(TakeDamage());
             }
             else
             {
-                Debug.Log("ÇØ´ç ¸ó½ºÅÍ¿¡ ´ëÇÑ ½ºÅ©¸³Æ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.Log("ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             }
         }
 
         else if (col.gameObject.tag == "Monster_Ranged")
         {
-            // Ãæµ¹ÇÑ ¸ó½ºÅÍ °ø°Ý¿¡¼­ ÇØ´ç ½ºÅ©¸³Æ®¸¦ °¡Á®¿É´Ï´Ù.
+            // ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
             MonoBehaviour monsterCtrl = col.gameObject.GetComponent<MonoBehaviour>();
 
-            // °¡Á®¿Â ¸ó½ºÅÍ ½ºÅ©¸³Æ®°¡ À¯È¿ÇÑÁö È®ÀÎÇÕ´Ï´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             if (monsterCtrl != null)
             {
-                // ¸ó½ºÅÍ ½ºÅ©¸³Æ®·Î Ä³½ºÆÃµÈ °´Ã¼¿¡¼­ ATK °ªÀ» °¡Á®¿É´Ï´Ù.
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ATK ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
                 float atkValue = (float)monsterCtrl.GetType().GetField("ATK").GetValue(monsterCtrl);
-                Debug.Log("¸ó½ºÅÍÀÇ ATK °ª: " + atkValue);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ATK ï¿½ï¿½: " + atkValue);
                 Damage = atkValue;
                 StartCoroutine(TakeDamage());
             }
             else
             {
-                Debug.Log("ÇØ´ç ¸ó½ºÅÍ¿¡ ´ëÇÑ ½ºÅ©¸³Æ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.Log("ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             }
         }
     }
@@ -598,42 +601,42 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (canTakeDamage == true && col.gameObject.tag == "Druid_Poison")
         {
-            // Ãæµ¹ÇÑ ¸ó½ºÅÍ °ø°Ý¿¡¼­ ÇØ´ç ½ºÅ©¸³Æ®¸¦ °¡Á®¿É´Ï´Ù.
+            // ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
             MonoBehaviour monsterCtrl = col.gameObject.GetComponent<MonoBehaviour>();
 
-            // °¡Á®¿Â ¸ó½ºÅÍ ½ºÅ©¸³Æ®°¡ À¯È¿ÇÑÁö È®ÀÎÇÕ´Ï´Ù.
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
             if (monsterCtrl != null)
             {
-                // ¸ó½ºÅÍ ½ºÅ©¸³Æ®·Î Ä³½ºÆÃµÈ °´Ã¼¿¡¼­ ATK °ªÀ» °¡Á®¿É´Ï´Ù.
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ATK ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É´Ï´ï¿½.
                 float atkValue = (float)monsterCtrl.GetType().GetField("ATK").GetValue(monsterCtrl);
-                Debug.Log("¸ó½ºÅÍÀÇ ATK °ª: " + atkValue);
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ATK ï¿½ï¿½: " + atkValue);
                 Damage = atkValue;
                 canTakeDamage = false;
                 StartCoroutine(TakeDamage());
             }
             else
             {
-                Debug.Log("ÇØ´ç ¸ó½ºÅÍ¿¡ ´ëÇÑ ½ºÅ©¸³Æ®¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                Debug.Log("ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Í¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             }
         }
     }
-    protected virtual void OnCollisionStay(Collision collision) // Ãæµ¹ °¨Áö
+    protected virtual void OnCollisionStay(Collision collision) // ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
     {
-        if (collision.gameObject.tag == "Floor")    // Tag°¡ FloorÀÎ ¿ÀºêÁ§Æ®¿Í Ãæµ¹ÇßÀ» ¶§
+        if (collision.gameObject.tag == "Floor")    // Tagï¿½ï¿½ Floorï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         {
             Stay();
         }
     }
     protected virtual void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")    // Tag°¡ FloorÀÎ ¿ÀºêÁ§Æ®¿Í Ãæµ¹ÀÌ ³¡³µÀ» ¶§
+        if (collision.gameObject.tag == "Floor")    // Tagï¿½ï¿½ Floorï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         {
             Fall();
         }
     }
     #endregion
 
-    #region ½ºÅ³ / °ø°Ý °ü·Ã ÇÔ¼ö. ÀÚ½Ä ½ºÅ©¸³Æ®¿¡ »ó¼ÓÀº ½ÃÅ°µÇ ÇÔ¼ö¸¦ ºñ¿ö¼­ °¢°¢¿¡ ¸Â´Â ½ºÅ©¸³Æ®¸¦ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï ÇÔ.
+    #region ï¿½ï¿½Å³ / ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½. ï¿½Ú½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½.
     protected virtual void Attack_anim()
     {
     }
@@ -651,7 +654,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     #endregion
 
-    #region Delay ÇÔ¼ö
+    #region Delay ï¿½Ô¼ï¿½
     protected virtual IEnumerator Delay(float seconds)
     {
         yield return new WaitForSeconds(seconds);

@@ -76,6 +76,11 @@ public class PlayerCtrl_Warrior : MonoBehaviour
     private GameObject SkillW_Effect;
     private GameObject SkillE_Effect;
     private GameObject SkillEffect;
+
+    private ParticleSystem setParticles1;
+    private ParticleSystem setParticles2;
+    private ParticleSystem setParticles3;
+    private ParticleSystem setParticles4;
     private float SkillYRot;
 
     //플레이어 스테이터스
@@ -602,7 +607,7 @@ public class PlayerCtrl_Warrior : MonoBehaviour
     IEnumerator SKill_E_Move()
     {
         float elapsedTime = 0;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.8f);
         //스킬 사용 시 카메라 무빙(등 포커스)
         if(SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
@@ -642,15 +647,17 @@ public class PlayerCtrl_Warrior : MonoBehaviour
     IEnumerator WarriorSkill_E()
     {
         //스킬 나갈 시 카메라 무빙(얼굴 포커스, 멈춤)
+        /*
         if(SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 0.7f, transform.position.y + 0.6f, transform.position.z - 1.5f, -50, 1.0f, "stop");
+            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 2.3f, transform.position.y + 1.3f, transform.position.z, -130, 2.0f, "stop");
         }
         else
         {
             mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x - 1.5f, transform.position.y + 0.6f, transform.position.z + 1.5f, 170, 1.0f, "stop");
         }
-        yield return new WaitForSeconds(0.5f);
+        */
+        yield return new WaitForSeconds(1.8f);
         GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
         //스킬 나갈 시 카메라 무빙(흔들림)
@@ -831,14 +838,21 @@ public class PlayerCtrl_Warrior : MonoBehaviour
 
     public void skill_Q_on()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88) )
         {
-            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
             //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
-            //SkillQ_Effect.GetComponent<ParticleSystem>().startRotation3D = 
+            setParticles1 = SkillQ_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+            setParticles2 = SkillQ_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+            StartCoroutine(RotateEffect(0f,0f,0f, setParticles1));
+            StartCoroutine(RotateEffect(0f,0f,0f, setParticles2));
+            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         }
         else
         {
+            setParticles1 = SkillQ_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+            setParticles2 = SkillQ_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+            StartCoroutine(RotateEffect(0f,179.0f,0f, setParticles1));
+            StartCoroutine(RotateEffect(0f,179.0f,0f, setParticles2));
             SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, -90, 0f));
         }
     }
@@ -853,12 +867,37 @@ public class PlayerCtrl_Warrior : MonoBehaviour
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
+            setParticles1 = SkillE_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+            setParticles2 = SkillE_Effect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+            setParticles3 = SkillE_Effect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+            setParticles4 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+            StartCoroutine(RotateEffect(0.6f,0f,0f, setParticles1));
+            StartCoroutine(RotateEffect(-0.6f,0f,0f, setParticles2));
+            StartCoroutine(RotateEffect(0.8f,0f,0f, setParticles3));
+            StartCoroutine(RotateEffect(-0.8f,0f,0f, setParticles4));
             SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         }
         else
         {
+            setParticles1 = SkillE_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+            setParticles2 = SkillE_Effect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+            setParticles3 = SkillE_Effect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+            setParticles4 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+            StartCoroutine(RotateEffect(0.6f,179.0f,0f, setParticles1));
+            StartCoroutine(RotateEffect(-0.6f,179.0f,0f, setParticles2));
+            StartCoroutine(RotateEffect(0.8f,179.0f,0f, setParticles3));
+            StartCoroutine(RotateEffect(-0.8f,179.0f,0f, setParticles4));
             SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, -90, 0f));
         }
+    }
+
+    IEnumerator RotateEffect(float xR, float yR, float zR, ParticleSystem particle)
+    {
+        var mainModule = particle.main;
+        mainModule.startRotationX = xR;
+        mainModule.startRotationY = yR;
+        mainModule.startRotationZ = zR;
+        yield return null;
     }
 
     IEnumerator TakeDamage()
