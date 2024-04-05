@@ -7,30 +7,30 @@ using System;
 
 public class PlayerCtrl : MonoBehaviour
 {
-    #region ���� ����
-    // GetAxis ��
+    #region 변수 선언
+    // GetAxis 값
     protected float hAxis;
     protected float vAxis;
 
-    // Player�� transform, YPosition, YRotation ��
+    // Player의 transform, YPosition, YRotation 값
     protected Transform trs;
     protected float YRot;
     protected float YPos;
 
-    //�÷��̾� �������ͽ�
+    //플레이어 스테이터스
     public float PlayerHP;     //HP
-    public float maxHP;        //�ִ� ü��
-    public float Damage;       //���� ���ط�
-    public float PlayerATK;    //���ݷ�
-    public float PlayerDEF;    //����
-    public float FireATT;      //�� �Ӽ� ������ ����
-    public float IceATT;       //���� �Ӽ� ������ ����
-    public float moveSpeed;     //�̵��ӵ�
-    public float moveSpd;      //�̵��ӵ�
-    public float JumpPower;     //������
-    public float fallPower;     //�������� ��
+    public float maxHP;        //최대 체력
+    public float Damage;       //받은 피해량
+    public float PlayerATK;    //공격력
+    public float PlayerDEF;    //방어력
+    public float FireATT;      //불 속성 데미지 배율
+    public float IceATT;       //얼음 속성 데미지 배율
+    public float moveSpeed;     //이동속도
+    public float moveSpd;      //이동속도
+    public float JumpPower;     //점프력
+    public float fallPower;     //떨어지는 힘
 
-    // �ִϸ��̼� ��Ʈ��
+    // 애니메이션 컨트롤
     protected Vector3 initPos;
     protected bool isSkill = false;
     protected bool isAttack = false;
@@ -42,14 +42,14 @@ public class PlayerCtrl : MonoBehaviour
     //bool dashCount = false;
     protected bool isJumpAttack;
 
-    // �ڷ�ƾ ��Ʈ��
+    // 코루틴 컨트롤
     protected bool coroutineMove = false;
 
-    // �ִϸ�����, Rigidbody
+    // 애니메이터, Rigidbody
     protected Animator anim;
     protected Rigidbody rd;
 
-    // ����Ʈ
+    // 이펙트
     public GameObject commonAttack_Ice1_Effect;
     public GameObject commonAttack_Ice2_Effect;
     public GameObject commonAttack_Ice3_Effect;
@@ -82,57 +82,57 @@ public class PlayerCtrl : MonoBehaviour
     public GameObject EffectGen;
     public GameObject SkillEffect;
 
-    // ī�޶�, ����
+    // 카메라, 사운드
     protected GameObject mainCamera;
     protected AudioClip[] effectAudio;
 
-    // �� �浹üũ
+    // 벽 충돌체크
     protected bool WallCollision;
 
     // HP Bar
     protected Slider HpBar;
     protected TMP_Text HpText;
 
-    // ��Ÿ�� ����
+    // 쿨타임 관련
     protected float QSkillCoolTime;
     protected float WSkillCoolTime;
     protected float ESkillCoolTime;
     protected Image Qcool;
     protected Image Wcool;
     protected Image Ecool;
-    protected bool canTakeDamage = true; // �������� ������ �� �ִ���
-    protected float damageCooldown = 1.0f; // 1�ʸ��� ƽ�������� �������� ����
+    protected bool canTakeDamage = true; // 데미지를 가져올 수 있는지
+    protected float damageCooldown = 1.0f; // 1초마다 틱데미지를 가져오기 위함
 
-    // ȸ�� ����
+    // 회전 관련
     protected GameObject CurrentFloor;
     protected Vector3 moveVec;
     #endregion
 
     protected virtual void Start()
     {
-        // �÷��̾� �������ͽ� �ʱ�ȭ
+        // 플레이어 스테이터스 초기화
         SetHp(100);
         PlayerATK = 100;
         PlayerDEF = 10;
         FireATT = 1.0f;
         IceATT = 1.0f;
 
-        // HP Bar ����
+        // HP Bar 설정
         // HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
         // HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
         // HpText.text = "HP 100/100";
 
-        // �ִϸ��̼�, Rigidbody, Transform ������Ʈ ����
+        // 애니메이션, Rigidbody, Transform 컴포넌트 지정
         anim = GetComponent<Animator>();
         rd = GetComponent<Rigidbody>();
         trs = GetComponentInChildren<Transform>();
 
-        initPos = trs.position; // initPos�� Transform.position �Ҵ�
-        mainCamera = GameObject.FindWithTag("MainCamera");  // ���� ī�޶� ����
-        anim.SetBool("isIdle", true);   // isIdle�� True�� �����ؼ� Idle ���� ����
-        EffectGen = transform.Find("EffectGen").gameObject; // EffectGen ����
+        initPos = trs.position; // initPos에 Transform.position 할당
+        mainCamera = GameObject.FindWithTag("MainCamera");  // 메인 카메라 지정
+        anim.SetBool("isIdle", true);   // isIdle을 True로 설정해서 Idle 상태 지정
+        EffectGen = transform.Find("EffectGen").gameObject; // EffectGen 지정
 
-        // �ִϸ��̼�, ��ų �����ϴ� bool���� false�� �ʱ�ȭ
+        // 애니메이션, 스킬 관리하는 bool값을 false로 초기화
         isSkill = false;
         isAttack = false;
         isDashAttack = false;
@@ -142,30 +142,27 @@ public class PlayerCtrl : MonoBehaviour
 
     protected virtual void Update()
     {
-        // �� �浹üũ �Լ� ����
+        // 벽 충돌체크 함수 실행
         WallCheck();
 
-        // �ִϸ��̼� ������Ʈ
+        // 애니메이션 업데이트
         GetInput();
 
-        //��ų ��Ÿ�� ����
+        //스킬 쿨타임 충전
         QSkillCoolTime += Time.deltaTime;
         WSkillCoolTime += Time.deltaTime;
         ESkillCoolTime += Time.deltaTime;
 
-        //Y �����̼� ���� �ڵ�
+        //Y 로테이션 고정 코드
         YRot = transform.eulerAngles.y;
-        
-        //X축 고정
-        transform.localRotation = Quaternion.Euler(0, YRot, 0);
 
-        //Z ������ ����
+        //Z 포지션 고정
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
 
-        // char ������Ʈ ��ġ ����
+        // char 오브젝트 위치 고정
         transform.GetChild(0).localPosition = Vector3.zero;
 
-        // Move �Լ� ����
+        // Move 함수 실행
         if (!isSkill && !isAttack && !anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_B_3"))
         {
             Move();
@@ -173,13 +170,13 @@ public class PlayerCtrl : MonoBehaviour
             Turn();
         }
 
-        // Turn �Լ� ����
+        // Turn 함수 실행
         if (!isSkill && !isAttack && !anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             Turn();
         }
 
-        // Dodge �Լ� ����
+        // Dodge 함수 실행
         if (Input.GetKeyDown(KeyCode.R))
         {
             Dodge();
@@ -193,13 +190,13 @@ public class PlayerCtrl : MonoBehaviour
             anim.SetBool("isJump", false);
         }
 
-        // Attack �Լ� ����
+        // Attack 함수 실행
         if (Input.GetKeyDown(KeyCode.A))
         {
             Attack_anim();
         }
 
-        //�⺻����1 & �⺻����3 �� ���� �ִϸ��̼� & ���ݻ���
+        //기본공격1 & 기본공격3 시 전진 애니메이션 & 공격사운드
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1") && !coroutineMove)
         {
             /*
@@ -228,7 +225,7 @@ public class PlayerCtrl : MonoBehaviour
             transform.Translate(Vector3.forward * 3 * Time.deltaTime);
             */
         }
-        //��������
+        //점프공격
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1") && !coroutineMove)
         {
             //isSound = false;
@@ -244,7 +241,7 @@ public class PlayerCtrl : MonoBehaviour
             anim.ResetTrigger("CommonAttack");
         }
 
-        //�ִϸ��̼��� ������ coroutine�� ������ ����
+        //애니메이션이 끝나면 coroutine을 강제로 종료
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_A_1")
         || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_A_2")
         || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_A_3")
@@ -259,7 +256,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             coroutineMove = false;
         }
-        //�������� �� Y ������ ����
+        //점프공격 시 Y 포지션 고정
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1") && !isJumpAttack)
         {
             Vector3 OriginPos = transform.position;
@@ -275,7 +272,7 @@ public class PlayerCtrl : MonoBehaviour
             float upperUpTime = 0;
             if (upperUpTime == 0)
             {
-                //���߿��� �����Ǿ� �����ٰ� ������
+                //공중에서 고정되어 때리다가 떨어짐
                 Vector3 OriginPos = transform.position;
                 YPos = OriginPos.y;
                 upperUpTime += 1;
@@ -287,10 +284,10 @@ public class PlayerCtrl : MonoBehaviour
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Fall") && isJumpAttack == true)
         {
             anim.ResetTrigger("CommonAttack");
-            //�������� �ڵ� ���� ����
+            //떨어지는 코드 추후 수정
             //rd.AddForce(Vector3.down * fallPower/3, ForceMode.VelocityChange);
         }
-        //�� �� ���� �� �� ���� �������� �޺��� �ǰ�
+        //한 번 점프 시 한 번의 점프공격 콤보만 되게
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wait") && isJumpAttack == true)
         {
             anim.ResetTrigger("CommonAttack");
@@ -310,7 +307,7 @@ public class PlayerCtrl : MonoBehaviour
             isAttack = false;
         }
 
-        //������� 2Ÿ, 3Ÿ �� ������ȯ �ǵ���
+        //지상공격 2타, 3타 시 방향전환 되도록
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1_Wait") ||
            anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_2_Wait"))
         {
@@ -367,13 +364,13 @@ public class PlayerCtrl : MonoBehaviour
         {
             isJumping = false;
         }
-        //���� ����� ����Ǿ߸� ������ ����ǰ�(�ִϸ��̼� ������ �� �������� ���� ����)
+        //점프 모션이 실행되야만 점프가 실행되게(애니메이션 딜레이 및 더블점프 강제 제거)
         if (isJumping == true)
         {
             Jump();
         }
 
-        //Idle�϶� ��ų �� ���� false ����
+        //Idle일때 스킬 및 공격 false 판정
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             anim.SetBool("isIdle", true);
@@ -382,7 +379,7 @@ public class PlayerCtrl : MonoBehaviour
             anim.ResetTrigger("CommonAttack");
         }
 
-        //�ٸ� ����� ��, Ȥ�ö� Move�� ����ǵ� �޸��� ���ϰ�
+        //다른 모션일 때, 혹시라도 Move가 실행되도 달리지 못하게
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wait") ||
            anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
            anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1") ||
@@ -400,7 +397,7 @@ public class PlayerCtrl : MonoBehaviour
             moveSpd = 0;
         }
 
-        //�뽬�� ��
+        //대쉬일 때
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
         {
             moveSpd = moveSpeed * 1.25f;
@@ -410,7 +407,7 @@ public class PlayerCtrl : MonoBehaviour
             moveSpd = moveSpeed;
         }
 
-        //ĳ���� ��ų ����Ʈ
+        //캐릭터 스킬 이펙트
         LocalSkillYRot = transform.localEulerAngles.y;
         SkillYRot = transform.eulerAngles.y;
         if (PlayerPrefs.GetString("property") == "Fire")
@@ -448,7 +445,7 @@ public class PlayerCtrl : MonoBehaviour
 
     }
 
-    #region HP ����
+    #region HP 설정
     public virtual IEnumerator TakeDamage()
     {
         if (maxHP != 0 || PlayerHP > 0)
@@ -461,19 +458,19 @@ public class PlayerCtrl : MonoBehaviour
             anim.SetBool("TakeDamage", false);
         }
 
-        if (PlayerHP <= 0) // �÷��̾ ������ ���ӿ��� â ���
+        if (PlayerHP <= 0) // 플레이어가 죽으면 게임오버 창 띄움
         {
             anim.SetBool("isDie", true);
             yield return new WaitForSeconds(2.0f);
             GameObject.Find("EventSystem").GetComponent<GameEnd>().GameOver(true);
         }
     }
-    public virtual void SetHp(float amount) // Hp ����
+    public virtual void SetHp(float amount) // Hp 세팅
     {
         maxHP = amount;
         PlayerHP = maxHP;
     }
-    public virtual void CheckHp() // HP üũ
+    public virtual void CheckHp() // HP 체크
     {
         string inputText = "HP " + PlayerHP.ToString("F0") + "/" + maxHP.ToString("F0");
         if (HpBar != null)
@@ -483,7 +480,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     #endregion
 
-    #region �̵� ���� �Լ�
+    #region 이동 관련 함수
     protected virtual void WallCheck()
     {
         WallCollision = Physics.Raycast(transform.position + new Vector3(0, 1.0f, 0), transform.forward, 0.6f, LayerMask.GetMask("Wall", "Monster"));
@@ -530,69 +527,69 @@ public class PlayerCtrl : MonoBehaviour
     }
     protected virtual void Fall()
     {
-        anim.SetBool("isFall", true); //�������°����� ����
+        anim.SetBool("isFall", true); //떨어지는것으로 감지
         rd.AddForce(Vector3.down * fallPower, ForceMode.VelocityChange);
     }
     protected virtual void Stay()
     {
-        isJumping = false; //isJump, isFall�� �ٽ� false��
+        isJumping = false; //isJump, isFall을 다시 false로
         anim.SetBool("isJump", false);
         anim.SetBool("isFall", false);
     }
     #endregion
 
-    #region �浹 ���� �Լ�
+    #region 충돌 관련 함수
     public virtual void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Monster_Melee")
         {
-            // �浹�� ���� ������Ʈ���� �ش� ��ũ��Ʈ�� �����ɴϴ�.
+            // 충돌한 몬스터 오브젝트에서 해당 스크립트를 가져옵니다.
             MonoBehaviour monsterCtrl = col.gameObject.transform.root.GetComponentInChildren<MonoBehaviour>();
 
-            // ������ ���� ��ũ��Ʈ�� ��ȿ���� Ȯ���մϴ�.
+            // 가져온 몬스터 스크립트가 유효한지 확인합니다.
             if (monsterCtrl != null)
             {
-                // ��ũ��Ʈ�� �̸��� �����ɴϴ�.
+                // 스크립트의 이름을 가져옵니다.
                 string monsterScriptName = monsterCtrl.GetType().Name;
 
-                // "Ctrl"�� �����Ͽ� ������ �̸��� �����ɴϴ�.
+                // "Ctrl"을 제거하여 몬스터의 이름을 가져옵니다.
                 string monsterName = monsterScriptName.Replace("Ctrl", "");
 
-                // ���� �̸��� ����Ͽ� �ش� ������ ��ũ��Ʈ Ÿ���� �����ɴϴ�.
+                // 몬스터 이름을 사용하여 해당 몬스터의 스크립트 타입을 가져옵니다.
                 System.Type monsterScriptType = System.Type.GetType(monsterScriptName);
 
-                // ������ ��ũ��Ʈ�� �������� ���� ��ũ��Ʈ Ÿ������ ĳ�����մϴ�.
+                // 가져온 스크립트를 동적으로 몬스터 스크립트 타입으로 캐스팅합니다.
                 object specificMonsterCtrl = Convert.ChangeType(monsterCtrl, monsterScriptType);
 
-                // ���� ��ũ��Ʈ�� ĳ���õ� ��ü���� ATK ���� �����ɴϴ�.
+                // 몬스터 스크립트로 캐스팅된 객체에서 ATK 값을 가져옵니다.
                 float atkValue = (float)((specificMonsterCtrl as MonoBehaviour).GetType().GetField("ATK").GetValue(specificMonsterCtrl));
-                Debug.Log("������ ATK ��: " + atkValue);
+                Debug.Log("몬스터의 ATK 값: " + atkValue);
                 Damage = atkValue;
                 StartCoroutine(TakeDamage());
             }
             else
             {
-                Debug.Log("�ش� ���Ϳ� ���� ��ũ��Ʈ�� ã�� �� �����ϴ�.");
+                Debug.Log("해당 몬스터에 대한 스크립트를 찾을 수 없습니다.");
             }
         }
 
         else if (col.gameObject.tag == "Monster_Ranged")
         {
-            // �浹�� ���� ���ݿ��� �ش� ��ũ��Ʈ�� �����ɴϴ�.
+            // 충돌한 몬스터 공격에서 해당 스크립트를 가져옵니다.
             MonoBehaviour monsterCtrl = col.gameObject.GetComponent<MonoBehaviour>();
 
-            // ������ ���� ��ũ��Ʈ�� ��ȿ���� Ȯ���մϴ�.
+            // 가져온 몬스터 스크립트가 유효한지 확인합니다.
             if (monsterCtrl != null)
             {
-                // ���� ��ũ��Ʈ�� ĳ���õ� ��ü���� ATK ���� �����ɴϴ�.
+                // 몬스터 스크립트로 캐스팅된 객체에서 ATK 값을 가져옵니다.
                 float atkValue = (float)monsterCtrl.GetType().GetField("ATK").GetValue(monsterCtrl);
-                Debug.Log("������ ATK ��: " + atkValue);
+                Debug.Log("몬스터의 ATK 값: " + atkValue);
                 Damage = atkValue;
                 StartCoroutine(TakeDamage());
             }
             else
             {
-                Debug.Log("�ش� ���Ϳ� ���� ��ũ��Ʈ�� ã�� �� �����ϴ�.");
+                Debug.Log("해당 몬스터에 대한 스크립트를 찾을 수 없습니다.");
             }
         }
     }
@@ -601,42 +598,42 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (canTakeDamage == true && col.gameObject.tag == "Druid_Poison")
         {
-            // �浹�� ���� ���ݿ��� �ش� ��ũ��Ʈ�� �����ɴϴ�.
+            // 충돌한 몬스터 공격에서 해당 스크립트를 가져옵니다.
             MonoBehaviour monsterCtrl = col.gameObject.GetComponent<MonoBehaviour>();
 
-            // ������ ���� ��ũ��Ʈ�� ��ȿ���� Ȯ���մϴ�.
+            // 가져온 몬스터 스크립트가 유효한지 확인합니다.
             if (monsterCtrl != null)
             {
-                // ���� ��ũ��Ʈ�� ĳ���õ� ��ü���� ATK ���� �����ɴϴ�.
+                // 몬스터 스크립트로 캐스팅된 객체에서 ATK 값을 가져옵니다.
                 float atkValue = (float)monsterCtrl.GetType().GetField("ATK").GetValue(monsterCtrl);
-                Debug.Log("������ ATK ��: " + atkValue);
+                Debug.Log("몬스터의 ATK 값: " + atkValue);
                 Damage = atkValue;
                 canTakeDamage = false;
                 StartCoroutine(TakeDamage());
             }
             else
             {
-                Debug.Log("�ش� ���Ϳ� ���� ��ũ��Ʈ�� ã�� �� �����ϴ�.");
+                Debug.Log("해당 몬스터에 대한 스크립트를 찾을 수 없습니다.");
             }
         }
     }
-    protected virtual void OnCollisionStay(Collision collision) // �浹 ����
+    protected virtual void OnCollisionStay(Collision collision) // 충돌 감지
     {
-        if (collision.gameObject.tag == "Floor")    // Tag�� Floor�� ������Ʈ�� �浹���� ��
+        if (collision.gameObject.tag == "Floor")    // Tag가 Floor인 오브젝트와 충돌했을 때
         {
             Stay();
         }
     }
     protected virtual void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")    // Tag�� Floor�� ������Ʈ�� �浹�� ������ ��
+        if (collision.gameObject.tag == "Floor")    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
         {
             Fall();
         }
     }
     #endregion
 
-    #region ��ų / ���� ���� �Լ�. �ڽ� ��ũ��Ʈ�� ����� ��Ű�� �Լ��� ����� ������ �´� ��ũ��Ʈ�� ����� �� �ֵ��� ��.
+    #region 스킬 / 공격 관련 함수. 자식 스크립트에 상속은 시키되 함수를 비워서 각각에 맞는 스크립트를 사용할 수 있도록 함.
     protected virtual void Attack_anim()
     {
     }
@@ -654,7 +651,7 @@ public class PlayerCtrl : MonoBehaviour
     }
     #endregion
 
-    #region Delay �Լ�
+    #region Delay 함수
     protected virtual IEnumerator Delay(float seconds)
     {
         yield return new WaitForSeconds(seconds);

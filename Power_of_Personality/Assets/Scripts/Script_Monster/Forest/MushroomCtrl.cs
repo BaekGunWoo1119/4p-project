@@ -61,6 +61,6 @@ public class MushroomCtrl : MonsterCtrl
     }
     public override Vector3 GetHPBarPosition()
     {
-        return base.GetHPBarPosition(); // ¿øÇÏ´Â À§Ä¡·Î ¼öÁ¤
+        return base.GetHPBarPosition(); // ì›í•˜ëŠ” ìœ„ì¹˜ë¡œ ìˆ˜ì •
     }
 }
