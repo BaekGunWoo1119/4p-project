@@ -172,29 +172,15 @@ public class PlayerCtrl_Warrior : MonoBehaviour
         ESkillCoolTime += Time.deltaTime;
 
         //스킬 쿨타임 UI(03.18)
-        if(Qcool.fillAmount == 0)
-        {
-            
-        }
-        else
+        if(Qcool.fillAmount != 0)
         {
             Qcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
         }
-
-        if(Wcool.fillAmount == 0)
-        {
-            
-        }
-        else
+        if(Wcool.fillAmount != 0)
         {
             Wcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
         }
-
-        if(Ecool.fillAmount == 0)
-        {
-            
-        }
-        else
+        if(Ecool.fillAmount != 0)
         {
             Ecool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
         }
@@ -288,25 +274,24 @@ public class PlayerCtrl_Warrior : MonoBehaviour
             }
         }
 
-        //기본공격1 & 기본공격3 시 전진 애니메이션 & 공격사운드
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_1B") && !coroutineMove)
+        //기본공격1 & 기본공격3 시 전진 애니메이션
+        if(anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1") && !coroutineMove)
         {
             isSound = false;
             StartCoroutine(Attack1_Collider());
             StartCoroutine(Delay(0.4f));
             StartCoroutine(MoveForwardForSeconds(0.3f));
-            //StartCoroutine(Attack_Sound(0, 0.8f));
             StartCoroutine(Delay(0.2f));
             mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.03f, null);
         }
-        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_2") && !coroutineMove && !isSound)
+        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2") && !coroutineMove && !isSound)
         {
             StartCoroutine(Attack1_Collider());
             StartCoroutine(Attack_Sound(1, 0.8f));
             StartCoroutine(Delay(0.2f));
             mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.01f, null);
         }
-        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_4") && !coroutineMove)
+        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3") && !coroutineMove)
         {
             StartCoroutine(Delay(0.2f));
             StartCoroutine(MoveForwardForSeconds(0.3f));
@@ -319,32 +304,26 @@ public class PlayerCtrl_Warrior : MonoBehaviour
         else if(anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1") && !coroutineMove)
         {
             isSound = false;
-            //audioSources[0].Stop();
             mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.5f, "null");
             StartCoroutine(Attack1_Collider());
-            //StartCoroutine(Delay(0.4f));
         }
         else if(anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack2") && !isSound)
         {
-            //audioSources[1].Play();
             mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.6f, "null");
             StartCoroutine(Attack1_Collider());
             StartCoroutine(Delay(0.2f));
         }
         else if(anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack3") && !coroutineMove)
         {
-            //audioSources[1].Stop();
             mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.5f, "null");
-            //audioSources[1].Play();
-            //StartCoroutine(Delay(0.2f));
             StartCoroutine(Attack1_Collider());
             anim.ResetTrigger("CommonAttack");
         }
         //애니메이션이 끝나면 coroutine을 강제로 종료
-        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_1B") 
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_3") 
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_4")
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_7Combo_ALL")
+        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1") 
+        || anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2") 
+        || anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3")
+        || anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E")
         || anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1")
         || anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack2")
         || anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack3"))
@@ -355,6 +334,7 @@ public class PlayerCtrl_Warrior : MonoBehaviour
         {
             coroutineMove = false;
         }
+
         //점프공격 시 Y 포지션 고정
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1") && !isJumpAttack)
         {
@@ -390,14 +370,14 @@ public class PlayerCtrl_Warrior : MonoBehaviour
         }
 
         //지상공격 2타, 3타 시 방향전환 되도록
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_1B_Wait") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_2_Wait"))
+        if(anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1_Wait") ||
+           anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2_Wait"))
         {
             isAttack = false;
         }
-        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_1B") ||
-                anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_2") ||
-                anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_4"))
+        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1") ||
+                anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2") ||
+                anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3"))
         {
             isAttack = true;
         }
@@ -425,6 +405,7 @@ public class PlayerCtrl_Warrior : MonoBehaviour
             Skill_W();
         }
 
+        //Skill_E
         if(Input.GetKeyDown(KeyCode.E) 
         && !isSkill 
         && !isJumping 
@@ -466,9 +447,9 @@ public class PlayerCtrl_Warrior : MonoBehaviour
         //다른 모션일 때, 혹시라도 Move가 실행되도 달리지 못하게
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wait") || 
             anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_1B") ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_2") || 
-            anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_4") ||
+            anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1") ||
+            anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2") || 
+            anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3") ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_Q") ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_W") ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E") ||
@@ -646,17 +627,6 @@ public class PlayerCtrl_Warrior : MonoBehaviour
     }
     IEnumerator WarriorSkill_E()
     {
-        //스킬 나갈 시 카메라 무빙(얼굴 포커스, 멈춤)
-        /*
-        if(SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 2.3f, transform.position.y + 1.3f, transform.position.z, -130, 2.0f, "stop");
-        }
-        else
-        {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x - 1.5f, transform.position.y + 0.6f, transform.position.z + 1.5f, 170, 1.0f, "stop");
-        }
-        */
         yield return new WaitForSeconds(1.8f);
         GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
@@ -749,11 +719,11 @@ public class PlayerCtrl_Warrior : MonoBehaviour
             yield return null;
         }
 
-        //검사 애니메이션 실행 시가 아닐 때만 false 반환
+        //앞으로 가는 애니메이션 실행 시가 아닐 때만 false 반환
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_1B") 
         || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_2") 
         || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_4") 
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_7Combo_ALL"))
+        || anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E"))
         {
 
         }
@@ -768,12 +738,6 @@ public class PlayerCtrl_Warrior : MonoBehaviour
             WSkillCoolTime = 0;
             Wcool.fillAmount = 1;
         }
-        /*
-        if (Attack_1_Collider == true)
-        {
-            Attack_1_Collider.SetActive(false);
-        }
-        */
     }
 
     IEnumerator Delay(float seconds)
@@ -788,6 +752,9 @@ public class PlayerCtrl_Warrior : MonoBehaviour
             isSound = false;
         }
     }
+
+    //이펙트 & 사운드
+
     public void comboAttack_1_on()
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
