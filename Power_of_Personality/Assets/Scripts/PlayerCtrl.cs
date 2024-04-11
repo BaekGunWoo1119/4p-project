@@ -34,13 +34,13 @@ public class PlayerCtrl : MonoBehaviour
     protected Vector3 initPos;
     protected bool isSkill = false;
     protected bool isAttack = false;
-    protected bool isDash = false;
-    protected bool isDashAttack = false;
     protected bool isJumping = false;
     protected bool isRun = false;
     protected bool isForward = true;
-    //bool dashCount = false;
     protected bool isJumpAttack;
+    protected bool isCommonAttack1InProgress = false;
+    protected bool isCommonAttack2InProgress = false;
+    protected bool isCommonAttack3InProgress = false;
 
     // 코루틴 컨트롤
     protected bool coroutineMove = false;
@@ -85,6 +85,8 @@ public class PlayerCtrl : MonoBehaviour
     // 카메라, 사운드
     protected GameObject mainCamera;
     protected AudioClip[] effectAudio;
+    protected bool isSound = false;
+    protected AudioSource[] audioSources;
 
     // 벽 충돌체크
     protected bool WallCollision;
@@ -111,6 +113,7 @@ public class PlayerCtrl : MonoBehaviour
     protected virtual void Start()
     {
         // 플레이어 스테이터스 초기화
+        SetIce();
         SetHp(100);
         PlayerATK = 100;
         PlayerDEF = 10;
@@ -121,6 +124,11 @@ public class PlayerCtrl : MonoBehaviour
         // HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
         // HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
         // HpText.text = "HP 100/100";
+
+        //쿨타임 UI(03.18)
+        Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
+        Wcool = GameObject.Find("CoolTime-W").GetComponent<Image>();
+        Ecool = GameObject.Find("CoolTime-E").GetComponent<Image>();
 
         // 애니메이션, Rigidbody, Transform 컴포넌트 지정
         anim = GetComponent<Animator>();
@@ -135,13 +143,42 @@ public class PlayerCtrl : MonoBehaviour
         // 애니메이션, 스킬 관리하는 bool값을 false로 초기화
         isSkill = false;
         isAttack = false;
-        isDashAttack = false;
         isJumping = false;
         isRun = false;
+
+        //사운드
+        audioSources = GetComponents<AudioSource>();
+        for (int i = 0; i < audioSources.Length; i++)
+        {
+            audioSources[i].Stop();
+        }
     }
 
     protected virtual void Update()
     {
+        if (!canTakeDamage)
+        {
+            damageCooldown -= Time.deltaTime;
+            if (damageCooldown < 0)
+            {
+                canTakeDamage = true;
+                damageCooldown = 1.0f;
+            }
+        }
+
+        //스킬 쿨타임 UI(03.18)
+        if (Qcool.fillAmount != 0)
+        {
+            Qcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
+        }
+        if (Wcool.fillAmount != 0)
+        {
+            Wcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
+        }
+        if (Ecool.fillAmount != 0)
+        {
+            Ecool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
+        }
         // 벽 충돌체크 함수 실행
         WallCheck();
 
@@ -149,12 +186,17 @@ public class PlayerCtrl : MonoBehaviour
         GetInput();
 
         //스킬 쿨타임 충전
-        QSkillCoolTime += Time.deltaTime;
-        WSkillCoolTime += Time.deltaTime;
-        ESkillCoolTime += Time.deltaTime;
+        SkillCoolTimeCharge();
 
-        //Y 로테이션 고정 코드
+        //로테이션 고정 코드(04.10 백건우 수정, 굴절구간 문제 생길 시 아래 코드 대신 사용)
         YRot = transform.eulerAngles.y;
+        transform.localRotation = Quaternion.Euler(0, YRot, 0);
+        
+        /*
+            XRot = transform.eulerAngles.x;
+            YRot = transform.eulerAngles.y;
+            transform.localRotation = Quaternion.Euler(XRot, YRot, 0);
+        */
 
         //Z 포지션 고정
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
@@ -163,7 +205,7 @@ public class PlayerCtrl : MonoBehaviour
         transform.GetChild(0).localPosition = Vector3.zero;
 
         // Move 함수 실행
-        if (!isSkill && !isAttack && !anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_B_3"))
+        if (!isSkill && !isAttack && !anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3"))
         {
             Move();
             Move_anim();
@@ -196,66 +238,53 @@ public class PlayerCtrl : MonoBehaviour
             Attack_anim();
         }
 
-        //기본공격1 & 기본공격3 시 전진 애니메이션 & 공격사운드
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1") && !coroutineMove)
+        //기본공격1 & 기본공격3 시 전진 애니메이션
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1") && !isCommonAttack1InProgress)
         {
-            /*
-            isSound = false;
-            StartCoroutine(Attack1_Collider());
-            StartCoroutine(Delay(0.4f));
-            StartCoroutine(MoveForwardForSeconds(0.3f));
-            StartCoroutine(Attack1_Sound());
-            */
+            CommonAttack1();
+            isCommonAttack1InProgress = true;
         }
-        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_2") && !coroutineMove)
+        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2") && !isCommonAttack2InProgress && !isSound)
         {
-            /*
-            StartCoroutine(Attack1_Collider());
-            StartCoroutine(Attack2_Sound());
-            StartCoroutine(Delay(0.2f));
-            */
+            CommonAttack2();
+            isCommonAttack2InProgress = true;
         }
-        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_3") && !coroutineMove)
+        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3") && !isCommonAttack3InProgress)
         {
-            /*
-            StartCoroutine(Delay(0.2f));
-            StartCoroutine(MoveForwardForSeconds(0.3f));
-            StartCoroutine(Attack1_Collider());
-            StartCoroutine(Attack3_Sound());
-            transform.Translate(Vector3.forward * 3 * Time.deltaTime);
-            */
+            CommonAttack3();
+            isCommonAttack3InProgress = true;
         }
-        //점프공격
+
+         //지상공격 2타, 3타 시 방향전환 되도록
+        if(anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1_Wait") ||
+           anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2_Wait"))
+        {
+            isAttack = false;
+        }
+        else if(anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1") ||
+                anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2") ||
+                anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3"))
+        {
+            isAttack = true;
+        }
+
+        //점프공격 카메라 && 사운드
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1") && !coroutineMove)
         {
-            //isSound = false;
-            //StartCoroutine(Attack1_Sound());
-            //StartCoroutine(Attack1_Collider());
-            StartCoroutine(Delay(0.4f));
+            JumpAttack1();
         }
-        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack2") && !coroutineMove)
+        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack2") && !isSound)
         {
-            //StartCoroutine(Attack2_Sound());
-            //StartCoroutine(Attack1_Collider());
-            StartCoroutine(Delay(0.2f));
-            anim.ResetTrigger("CommonAttack");
+            JumpAttack2();
+        }
+        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack3") && !coroutineMove)
+        {
+            JumpAttack3();
         }
 
-        //애니메이션이 끝나면 coroutine을 강제로 종료
-        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_A_1")
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_A_2")
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_A_3")
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_7Combo_ALL")
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1")
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack2")
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack3"))
-        {
+        UpdateCoroutineMoveState();
+        Debug.Log(isAttack);
 
-        }
-        else
-        {
-            coroutineMove = false;
-        }
         //점프공격 시 Y 포지션 고정
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1") && !isJumpAttack)
         {
@@ -284,8 +313,6 @@ public class PlayerCtrl : MonoBehaviour
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Fall") && isJumpAttack == true)
         {
             anim.ResetTrigger("CommonAttack");
-            //떨어지는 코드 추후 수정
-            //rd.AddForce(Vector3.down * fallPower/3, ForceMode.VelocityChange);
         }
         //한 번 점프 시 한 번의 점프공격 콤보만 되게
         else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wait") && isJumpAttack == true)
@@ -305,18 +332,6 @@ public class PlayerCtrl : MonoBehaviour
         {
             anim.ResetTrigger("CommonAttack");
             isAttack = false;
-        }
-
-        //지상공격 2타, 3타 시 방향전환 되도록
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1_Wait") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_2_Wait"))
-        {
-            isAttack = false;
-        }
-        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_2") ||
-                anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_3"))
-        {
-            isAttack = true;
         }
 
         //Skill_Q
@@ -382,11 +397,11 @@ public class PlayerCtrl : MonoBehaviour
         //다른 모션일 때, 혹시라도 Move가 실행되도 달리지 못하게
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wait") ||
            anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1_Wait") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_2") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_2_Wait") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_3") ||
+           anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1") ||
+           anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1_Wait") ||
+           anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2") ||
+           anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2_Wait") ||
+           anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3") ||
            anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_Q") ||
            anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_W") ||
            anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E") ||
@@ -446,7 +461,7 @@ public class PlayerCtrl : MonoBehaviour
     }
 
     #region HP 설정
-    public virtual IEnumerator TakeDamage()
+    protected virtual IEnumerator TakeDamage()
     {
         if (maxHP != 0 || PlayerHP > 0)
         {
@@ -518,7 +533,6 @@ public class PlayerCtrl : MonoBehaviour
     protected virtual void Dodge()
     {
         anim.SetTrigger("isDodge");
-        //transform.Translate(Vector3.forward * moveSpeed * 2 * Time.deltaTime);
     }
     protected virtual void Jump()
     {
@@ -539,7 +553,7 @@ public class PlayerCtrl : MonoBehaviour
     #endregion
 
     #region 충돌 관련 함수
-    public virtual void OnTriggerEnter(Collider col)
+    protected virtual void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Monster_Melee")
         {
@@ -594,7 +608,7 @@ public class PlayerCtrl : MonoBehaviour
         }
     }
 
-    public virtual void OnTriggerStay(Collider col)
+    protected virtual void OnTriggerStay(Collider col)
     {
         if (canTakeDamage == true && col.gameObject.tag == "Druid_Poison")
         {
@@ -634,10 +648,34 @@ public class PlayerCtrl : MonoBehaviour
     #endregion
 
     #region 스킬 / 공격 관련 함수. 자식 스크립트에 상속은 시키되 함수를 비워서 각각에 맞는 스크립트를 사용할 수 있도록 함.
+    protected virtual void SetIce()
+    {
+    }
+    protected virtual void SetFire()
+    {
+    }
     protected virtual void Attack_anim()
     {
     }
 
+    protected virtual void CommonAttack1()
+    {
+    }
+    protected virtual void CommonAttack2()
+    {
+    }
+    protected virtual void CommonAttack3()
+    {
+    }
+    protected virtual void JumpAttack1()
+    {
+    }
+    protected virtual void JumpAttack2()
+    {
+    }
+    protected virtual void JumpAttack3()
+    {
+    }
     protected virtual void Skill_Q()
     {
     }
@@ -649,6 +687,27 @@ public class PlayerCtrl : MonoBehaviour
     protected virtual void Skill_E()
     {
     }
+    protected virtual void SkillCoolTimeCharge()
+    {
+        QSkillCoolTime += Time.deltaTime;
+        WSkillCoolTime += Time.deltaTime;
+        ESkillCoolTime += Time.deltaTime;
+    }
+    protected virtual void ResetAttackInProgressStates()
+    {
+        isCommonAttack1InProgress = false;
+        isCommonAttack2InProgress = false;
+        isCommonAttack3InProgress = false;
+    }
+    protected virtual void UpdateCoroutineMoveState()
+    {
+        if (!(anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1") ||
+            anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2") ||
+            anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3")))
+        {
+            ResetAttackInProgressStates();
+        }
+    }
     #endregion
 
     #region Delay 함수
@@ -658,7 +717,6 @@ public class PlayerCtrl : MonoBehaviour
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             moveVec = new Vector3(0, 0, 0);
-            //transform.rotation = Quaternion.Euler(0,YRot,0);
             isAttack = false;
             isSkill = false;
         }

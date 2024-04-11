@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-
-//도적 애니메이션
 public class PlayerCtrl_Rogue : PlayerCtrl
 {
+    private bool isDash = false;
+    private bool isDashAttack = false;
+
     protected override void Start()
     {
         base.Start();   // PlayerCtrl의 Start문을 상속 받아서 실행
@@ -15,33 +16,18 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         moveSpeed = 7;
         JumpPower = 14;
         fallPower = 4;
-        StartCoroutine(DashListener());     // 도적의 Dash는 따로 실행
+
+        // 도적의 Dash는 따로 실행
+        StartCoroutine(DashListener());
+        isDashAttack = false;
     }
 
     protected override void Update()
     {
         base.Update(); // PlayerCtrl의 Update문을 상속 받아서 실행
 
-        //다른 모션일 때, 혹시라도 Move가 실행되도 달리지 못하게
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wait") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_1_Wait") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_2") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_2_Wait") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_3Combo_A_3") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_Q") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_W") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E") ||
-           anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack2") ||
-           (anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !anim.GetBool("isRun")) ||
-           (anim.GetCurrentAnimatorStateInfo(0).IsName("Fall") && !anim.GetBool("isRun")))
-        {
-            moveSpd = 0;
-        }
-
         //대쉬일 때
-        else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
         {
             moveSpd = moveSpeed * 1.25f;
         }
@@ -83,7 +69,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     }
 
     protected override void Turn()
-    {   
+    {
         base.Turn();
     }
 
@@ -293,7 +279,10 @@ public class PlayerCtrl_Rogue : PlayerCtrl
             SkillEffect = Instantiate(SkillE4_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
         }
     }
-
+    protected override void SkillCoolTimeCharge()
+    {
+        base.SkillCoolTimeCharge();
+    }
     #endregion
 
     #region 도적 Dash 함수
@@ -377,6 +366,30 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     protected override IEnumerator Delay(float seconds)
     {
         yield return base.Delay(seconds);
+    }
+    protected override void SetIce()
+    {
+        Attack1_Effect = commonAttack_Ice1_Effect;
+        Attack2_Effect = commonAttack_Ice2_Effect;
+        Attack3_Effect = commonAttack_Ice3_Effect;
+        SkillQ_Effect = Skill_IceQ_Effect;
+        SkillW_Effect = Skill_IceW_Effect;
+        SkillE1_Effect = Skill_IceE1_Effect;
+        SkillE2_Effect = Skill_IceE2_Effect;
+        SkillE3_Effect = Skill_IceE3_Effect;
+        SkillE4_Effect = Skill_IceE4_Effect;
+    }
+    protected override void SetFire()
+    {
+        Attack1_Effect = commonAttack_Fire1_Effect;
+        Attack2_Effect = commonAttack_Fire2_Effect;
+        Attack3_Effect = commonAttack_Fire3_Effect;
+        SkillQ_Effect = Skill_FireQ_Effect;
+        SkillW_Effect = Skill_FireW_Effect;
+        SkillE1_Effect = Skill_FireE1_Effect;
+        SkillE2_Effect = Skill_FireE2_Effect;
+        SkillE3_Effect = Skill_FireE3_Effect;
+        SkillE4_Effect = Skill_FireE4_Effect;
     }
     #endregion
 }
