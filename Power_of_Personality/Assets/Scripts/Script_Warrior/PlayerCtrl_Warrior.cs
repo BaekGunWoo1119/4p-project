@@ -46,6 +46,14 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     protected override void Update()
     {
         base.Update();
+        if (PlayerPrefs.GetString("property") == "Fire")
+        {
+            SkillE_Effect = Skill_FireE_Effect;
+        }
+        else if (PlayerPrefs.GetString("property") == "Ice")
+        {
+            SkillE_Effect = Skill_IceE_Effect;
+        }
     }
 
     #region HP 설정

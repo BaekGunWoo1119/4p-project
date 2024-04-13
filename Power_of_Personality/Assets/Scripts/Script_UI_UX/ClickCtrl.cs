@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 
 public class BtnSetActive : MonoBehaviour
 {
-    public GameObject activeObj; // È°¼ºÈ­ÇÒ ¿ÀºêÁ§Æ®
+    public GameObject activeObj; // í™œì„±í™”í•  ì˜¤ë¸Œì íŠ¸
     private Vector3 originalScale;
     private Button button;
 
     private void Start()
     {
-        // ¿ÀºêÁ§Æ®ÀÇ ½ºÄÉÀÏ ÀúÀå
+        // ì˜¤ë¸Œì íŠ¸ì˜ ìŠ¤ì¼€ì¼ ì €ì¥
         if (activeObj != null)
         {
             originalScale = activeObj.transform.localScale;
@@ -26,22 +26,22 @@ public class BtnSetActive : MonoBehaviour
         }
     }
 
-    // ¹öÆ° Å¬¸¯
+    // ë²„íŠ¼ í´ë¦­
     private void SetActiveObj()
     {
         if (activeObj != null)
         {
-            // ¿ÀºêÁ§Æ®ÀÇ ½ºÄÉÀÏÀ» ÃÊ±â ½ºÄÉÀÏ·Î º¯°æ
+            // ì˜¤ë¸Œì íŠ¸ì˜ ìŠ¤ì¼€ì¼ì„ ì´ˆê¸° ìŠ¤ì¼€ì¼ë¡œ ë³€ê²½
             activeObj.transform.localScale = originalScale;
         }
     }
 
-    // ÀÌ ½ºÅ©¸³Æ®°¡ ºñÈ°¼ºÈ­µÉ ¶§ È£ÃâµÇ´Â ÇÔ¼ö
+    // ì´ ìŠ¤í¬ë¦½íŠ¸ê°€ ë¹„í™œì„±í™”ë  ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
     private void OnDestroy()
     {
         if (button != null)
         {
-            // ¿¬°áÇÑ ÀÌº¥Æ® ¸®½º³Ê¸¦ ÇØÁ¦
+            // ì—°ê²°í•œ ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆë¥¼ í•´ì œ
             button.onClick.RemoveListener(SetActiveObj);
         }
     }
