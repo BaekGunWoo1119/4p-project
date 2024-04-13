@@ -5,8 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class PortalCtrl : MonoBehaviour
 {
+    public string sceneName;
     void OnCollisionEnter(Collision collision)
     {
-        SceneManager.LoadScene("Cave_Example");
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void SetSceneName(string newSceneName)
+    {
+        sceneName = newSceneName;
     }
 }
