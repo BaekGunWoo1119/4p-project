@@ -190,7 +190,7 @@ public class PlayerCtrl : MonoBehaviour
 
         //로테이션 고정 코드(04.10 백건우 수정, 굴절구간 문제 생길 시 아래 코드 대신 사용)
         YRot = transform.eulerAngles.y;
-        transform.localRotation = Quaternion.Euler(0, YRot, 0);
+        //transform.localRotation = Quaternion.Euler(0, YRot, 0);
         
         /*
             XRot = transform.eulerAngles.x;
