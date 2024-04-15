@@ -291,7 +291,8 @@ public class SceneLoader : MonoBehaviour
 
         if(SceneManager.GetActiveScene().name == "Sewer_Example" ||
         SceneManager.GetActiveScene().name == "Forest_Example" ||
-        SceneManager.GetActiveScene().name == "Cave_Example" )
+        SceneManager.GetActiveScene().name == "Cave_Example" ||
+        SceneManager.GetActiveScene().name == "Castle_Example")
         {
             Exit_Game =  GameObject.Find("Exit").GetComponent<Button>();
             Setting_Back = GameObject.Find("OK").GetComponent<Button>();
@@ -305,7 +306,9 @@ public class SceneLoader : MonoBehaviour
             {
                 if(prf_Warrior != null)
                 {
-                    Instantiate(prf_Warrior, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
+                    GameObject spwPlayer = Instantiate(prf_Warrior, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
+                    GameObject parPlatfom = GameObject.FindWithTag("StartingPos");
+                    spwPlayer.transform.parent = parPlatfom.transform;
                     GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Warrior;
                     GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Warrior;
                 }
@@ -314,7 +317,9 @@ public class SceneLoader : MonoBehaviour
             {
                 if(prf_Rogue != null)
                 {
-                    Instantiate(prf_Rogue, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
+                    GameObject spwPlayer = Instantiate(prf_Rogue, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
+                    GameObject parPlatfom = GameObject.FindWithTag("StartingPos");
+                    spwPlayer.transform.parent = parPlatfom.transform;
                     GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Rogue;
                     GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Rogue;
                 }
@@ -323,7 +328,9 @@ public class SceneLoader : MonoBehaviour
             {
                 if(prf_Archer != null)
                 {   
-                    Instantiate(prf_Archer, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
+                    GameObject spwPlayer = Instantiate(prf_Archer, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
+                    GameObject parPlatfom = GameObject.FindWithTag("StartingPos");
+                    spwPlayer.transform.parent = parPlatfom.transform;
                     GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Archer;
                     GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Archer;
                 }
@@ -332,7 +339,9 @@ public class SceneLoader : MonoBehaviour
             {
                 if(prf_Wizard != null)
                 {
-                    Instantiate(prf_Wizard, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
+                    GameObject spwPlayer = Instantiate(prf_Wizard, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
+                    GameObject parPlatfom = GameObject.FindWithTag("StartingPos");
+                    spwPlayer.transform.parent = parPlatfom.transform;
                     GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Wizard;
                     GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Wizard;
                 }

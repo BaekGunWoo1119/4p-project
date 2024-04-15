@@ -6,17 +6,6 @@ public class KeyDownCtrl : MonoBehaviour
 {
     public GameObject activeObj; // 활성화할 오브젝트
     public KeyCode ctrlKey;
-    private Vector3 originalScale;
-
-    private void Start()
-    {
-        // 오브젝트의 스케일 저장
-        if (activeObj != null)
-        {
-            originalScale = activeObj.transform.localScale;
-            activeObj.transform.localScale = new Vector3(0, 0, 0);
-        }
-    }
 
     void Update()
     {
@@ -32,7 +21,7 @@ public class KeyDownCtrl : MonoBehaviour
         if (activeObj != null)
         {
             // 오브젝트의 스케일을 초기 스케일로 변경
-            activeObj.transform.localScale = originalScale;
+            activeObj.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 }

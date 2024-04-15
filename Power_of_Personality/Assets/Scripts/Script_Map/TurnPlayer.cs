@@ -17,7 +17,7 @@ public class TurnPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameObject.FindWithTag("Player");
+        StartCoroutine(FindPlayer());
         // PlayerCtrl_Rogue playerCtrl = Player.GetComponent<PlayerCtrl_Rogue>();
         // PlayerYRot = playerCtrl.YRot;
 
@@ -30,7 +30,8 @@ public class TurnPlayer : MonoBehaviour
         //Debug.Log(NextMapClass.transform.eulerAngles.y);
     }
 
-    void OnTriggerExit(Collider col) {
+    void OnTriggerExit(Collider col) 
+    {
         //Debug.Log(col);
         if(col.CompareTag("Player")){
             Debug.Log("PlayerENTER");
@@ -50,5 +51,11 @@ public class TurnPlayer : MonoBehaviour
             //Debug.Log(Player.transform.localEulerAngles.y);
             }
         }
+    }
+
+    IEnumerator FindPlayer()
+    {
+        yield return new WaitForSeconds(0.2f);
+        Player = GameObject.FindWithTag("Player");
     }
 }
