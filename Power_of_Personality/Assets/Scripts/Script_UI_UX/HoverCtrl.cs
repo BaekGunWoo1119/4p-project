@@ -6,47 +6,47 @@ using UnityEngine.EventSystems;
 
 public class ImageHoverCtrl : MonoBehaviour
 {
-    public GameObject activeObj; // È°¼ºÈ­ ½ÃÅ³ ¿ÀºêÁ§Æ®
-    private Image imageComponent; // ´ë»ó ÅØ½ºÆ®
-    private Vector3 originalScale; // ¿ÀºêÁ§Æ®ÀÇ ¿ø·¡ ½ºÄÉÀÏ
-    private Vector3 originalPosition; // ¿ÀºêÁ§Æ®ÀÇ ¿ø·¡ Æ÷Áö¼Ç
-    private bool isHovering = false; // ¸¶¿ì½º È£¹ö °¨Áö
+    public GameObject activeObj; // í™œì„±í™” ì‹œí‚¬ ì˜¤ë¸Œì íŠ¸
+    private Image imageComponent; // ëŒ€ìƒ í…ìŠ¤íŠ¸
+    private Vector3 originalScale; // ì˜¤ë¸Œì íŠ¸ì˜ ì›ë˜ ìŠ¤ì¼€ì¼
+    private Vector3 originalPosition; // ì˜¤ë¸Œì íŠ¸ì˜ ì›ë˜ í¬ì§€ì…˜
+    private bool isHovering = false; // ë§ˆìš°ìŠ¤ í˜¸ë²„ ê°ì§€
 
     void Start()
     {
         originalPosition = activeObj.transform.position;
         originalScale = activeObj.transform.localScale;
         activeObj.transform.localScale = new Vector3(0, 0, 0);
-        // Image ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿È
+        // Image ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜´
         imageComponent = GetComponent<Image>();
 
-        // EventTrigger ÄÄÆ÷³ÍÆ® Ãß°¡
+        // EventTrigger ì»´í¬ë„ŒíŠ¸ ì¶”ê°€
         EventTrigger trigger = gameObject.AddComponent<EventTrigger>();
 
-        // PointerEnter ÀÌº¥Æ® Ãß°¡
+        // PointerEnter ì´ë²¤íŠ¸ ì¶”ê°€
         EventTrigger.Entry entryEnter = new EventTrigger.Entry();
         entryEnter.eventID = EventTriggerType.PointerEnter;
         entryEnter.callback.AddListener((data) => { OnPointerEnter(); });
         trigger.triggers.Add(entryEnter);
 
-        // PointerExit ÀÌº¥Æ® Ãß°¡
+        // PointerExit ì´ë²¤íŠ¸ ì¶”ê°€
         EventTrigger.Entry entryExit = new EventTrigger.Entry();
         entryExit.eventID = EventTriggerType.PointerExit;
         entryExit.callback.AddListener((data) => { OnPointerExit(); });
         trigger.triggers.Add(entryExit);
     }
 
-    // ¸¶¿ì½º¸¦ ¿Ã·ÈÀ» ¶§
+    // ë§ˆìš°ìŠ¤ë¥¼ ì˜¬ë ¸ì„ ë•Œ
     public void OnPointerEnter()
     {
         isHovering = true;
-        activeObj.transform.localScale = originalScale; // ¿ø·¡ ½ºÄÉÀÏ·Î µÇµ¹¸²
+        activeObj.transform.localScale = originalScale; // ì›ë˜ ìŠ¤ì¼€ì¼ë¡œ ë˜ëŒë¦¼
     }
 
-    // ¸¶¿ì½º¸¦ ³»·ÈÀ» ¶§
+    // ë§ˆìš°ìŠ¤ë¥¼ ë‚´ë ¸ì„ ë•Œ
     public void OnPointerExit()
     {
         isHovering = false;
-        activeObj.transform.localScale = new Vector3(0, 0, 0); // ½ºÄÉÀÏ 0 Ã³¸®
+        activeObj.transform.localScale = new Vector3(0, 0, 0); // ìŠ¤ì¼€ì¼ 0 ì²˜ë¦¬
     }
 }
