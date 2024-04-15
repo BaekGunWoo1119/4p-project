@@ -283,7 +283,7 @@ public class PlayerCtrl : MonoBehaviour
         }
 
         UpdateCoroutineMoveState();
-        Debug.Log(isAttack);
+        //Debug.Log(isAttack);
 
         //점프공격 시 Y 포지션 고정
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1") && !isJumpAttack)
