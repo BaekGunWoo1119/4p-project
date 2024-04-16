@@ -1,0 +1,459 @@
+Using pre-set license
+Built from '2022.2/staging' branch; Version is '2022.2.20f1 (c5d806317f84) revision 12965894'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'ko' Physical Memory: 32729 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+G:\Unity\2022.2.20f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+G:/4p-project/Power_of_Personality
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+8098
+Successfully changed project path to: G:/4p-project/Power_of_Personality
+G:/4p-project/Power_of_Personality
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [31320] Host "[IP] 192.168.0.26 [Port] 0 [Flags] 2 [Guid] 3669103038 [EditorId] 3669103038 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-JGTGNHB) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [31320] Host "[IP] 192.168.0.26 [Port] 0 [Flags] 2 [Guid] 3669103038 [EditorId] 3669103038 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-JGTGNHB) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 30.66 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.2.20f1 (c5d806317f84)
+[Subsystems] Discovering subsystems at path G:/Unity/2022.2.20f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path G:/4p-project/Power_of_Personality/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce GTX 1060 6GB (ID=0x1b83)
+    Vendor:   NVIDIA
+    VRAM:     6044 MB
+    Driver:   31.0.15.4617
+Initialize mono
+Mono path[0] = 'G:/Unity/2022.2.20f1/Editor/Data/Managed'
+Mono path[1] = 'G:/Unity/2022.2.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'G:/Unity/2022.2.20f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56300
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: G:/Unity/2022.2.20f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: G:/Unity/2022.2.20f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.011066 seconds.
+- Loaded All Assemblies, in  0.553 seconds
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 802 ms
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.329 seconds
+Domain Reload Profiling:
+	ReloadAssembly (310ms)
+		BeginReloadAssembly (148ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		LoadAllAssembliesAndSetupDomain (0ms)
+			LoadAssemblies (148ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (233ms)
+				TypeCache.Initialize (233ms)
+					TypeCache.ScanAssembly (231ms)
+				ResolveRequiredComponents (1ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (1240ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (977ms)
+				SetLoadedEditorAssemblies (10ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (2ms)
+				ProcessInitializeOnLoadAttributes (163ms)
+				ProcessInitializeOnLoadMethodAttributes (89ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.532 seconds
+Refreshing native plugins compatible for Editor in 8.67 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.088 seconds
+Domain Reload Profiling:
+	ReloadAssembly (441ms)
+		BeginReloadAssembly (248ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (8ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (38ms)
+		LoadAllAssembliesAndSetupDomain (1088ms)
+			LoadAssemblies (601ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (633ms)
+				TypeCache.Initialize (564ms)
+					TypeCache.ScanAssembly (557ms)
+				ResolveRequiredComponents (26ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (766ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (43ms)
+				SetLoadedEditorAssemblies (10ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (121ms)
+				ProcessInitializeOnLoadAttributes (469ms)
+				ProcessInitializeOnLoadMethodAttributes (119ms)
+				AfterProcessingInitializeOnLoad (5ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (16ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.09 seconds
+Refreshing native plugins compatible for Editor in 7.84 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6005 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 95 unused Assets / (3.2 MB). Loaded Objects now: 6453.
+Memory consumption went from 248.1 MB to 244.9 MB.
+Total: 7.501700 ms (FindLiveObjects: 0.740500 ms CreateObjectMapping: 0.772400 ms MarkObjects: 4.759400 ms  DeleteObjects: 1.228100 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 26055.922492 seconds.
+  path: Assets/Scenes/Cave_Example.unity
+  artifactKey: Guid(014a28338e380b9488e0b19f85ba95ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Cave_Example.unity using Guid(014a28338e380b9488e0b19f85ba95ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd34df5a6b61cd3edf93b5a95318a9720') in 0.003932 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 1101.728958 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_pipe002.FBX
+  artifactKey: Guid(42f219f3d5cb45f4d8609abead3da5be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_pipe002.FBX using Guid(42f219f3d5cb45f4d8609abead3da5be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f75383df9aa6b300a646d5d10a4c3967') in 0.602499 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.595400 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_stairside002.FBX
+  artifactKey: Guid(e0f1f37d242b09f4c9409b9ea93d5c1d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_stairside002.FBX using Guid(e0f1f37d242b09f4c9409b9ea93d5c1d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4772f52a503ac495c727d56324e6f0d7') in 0.036255 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.231650 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wall001.FBX
+  artifactKey: Guid(c05f257697fa4aa4db71a33392911980) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wall001.FBX using Guid(c05f257697fa4aa4db71a33392911980) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c7ecf9faa982e0b84ebfae024961035') in 0.027153 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.162060 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wall002.FBX
+  artifactKey: Guid(3c81cdd6e65496f49b2183c731f227b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wall002.FBX using Guid(3c81cdd6e65496f49b2183c731f227b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9c22b59bfc5c0f1c41abb5b0cb7b3e4c') in 0.027972 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.186434 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wall002_metal.FBX
+  artifactKey: Guid(1044c5d42f57e2d4fa5ecad19f30c5f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wall002_metal.FBX using Guid(1044c5d42f57e2d4fa5ecad19f30c5f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6a28c3d067f74728c12e290b1cef0c04') in 0.030248 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.112947 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wall003.FBX
+  artifactKey: Guid(29fa50c16c2e88d4e927663503cba8d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wall003.FBX using Guid(29fa50c16c2e88d4e927663503cba8d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad7e6c3857d1671310ef2ae34a06200d') in 0.026417 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.132619 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wall004.FBX
+  artifactKey: Guid(ebbf7f0ed13d56348bd8df59314653b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wall004.FBX using Guid(ebbf7f0ed13d56348bd8df59314653b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '19958313edb6fff2418c12bacaefb8f6') in 0.029920 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.117298 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wall005.FBX
+  artifactKey: Guid(6b05c8bda49759940928ada388a8bc92) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wall005.FBX using Guid(6b05c8bda49759940928ada388a8bc92) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '940d6cc69c2d45c974ff44da6274ed63') in 0.027797 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.132174 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wall006.FBX
+  artifactKey: Guid(4391af2c0072c934d990a09a484e6b55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wall006.FBX using Guid(4391af2c0072c934d990a09a484e6b55) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5fcab2262e5326627352684f94043a47') in 0.029567 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.160783 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wall007.FBX
+  artifactKey: Guid(2262fa549d66ef140a923f5859322e05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wall007.FBX using Guid(2262fa549d66ef140a923f5859322e05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b0906ec4ae43bcd41eb06c5b24a6d18e') in 0.026506 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.295317 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wall008.FBX
+  artifactKey: Guid(80ae1b0c57129274ba0d9eae977507f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wall008.FBX using Guid(80ae1b0c57129274ba0d9eae977507f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b07f139e4e4244a2e2f1fcb9742dbaa') in 0.031150 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.244785 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wall009.FBX
+  artifactKey: Guid(cb1a7ee482e83f045b0d938f3acffe9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wall009.FBX using Guid(cb1a7ee482e83f045b0d938f3acffe9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1bf66693c4d73d2ecbffa36e1c439e1') in 0.025109 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.111006 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_water001.FBX
+  artifactKey: Guid(31a493bdc79154a4dadde2601925102c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_water001.FBX using Guid(31a493bdc79154a4dadde2601925102c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1578e562d18cba32392327f42b3a8b04') in 0.033204 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.103909 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wood001.FBX
+  artifactKey: Guid(8f5e65b831841be42b6bd7ec5b49226c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wood001.FBX using Guid(8f5e65b831841be42b6bd7ec5b49226c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '86ac665f64584cecc5a8aa4dbf333e8e') in 0.030197 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.245422 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wood002.FBX
+  artifactKey: Guid(1ed9eb9026b088e4ba11f4c2c599b9b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wood002.FBX using Guid(1ed9eb9026b088e4ba11f4c2c599b9b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5fe27ed6b4d3b6802ca423c71e13ab48') in 0.034460 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.279018 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_wood003.FBX
+  artifactKey: Guid(3c2fdc440ecbb7444bf7982d3d5646c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_wood003.FBX using Guid(3c2fdc440ecbb7444bf7982d3d5646c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'baa05f6be22296595aaad5e2d89a3943') in 0.049896 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.535966 seconds.
+  path: Assets/Models/Mesh_Sewer/zone.FBX
+  artifactKey: Guid(5606b3497000a2a4d9a46cf929e6d0ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/zone.FBX using Guid(5606b3497000a2a4d9a46cf929e6d0ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c5eeb88844cb05ab28715b273585387') in 0.030370 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 1.538744 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_stair001_metal.FBX
+  artifactKey: Guid(75a08fd21d9916e4bb27e56a22d83dde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_stair001_metal.FBX using Guid(75a08fd21d9916e4bb27e56a22d83dde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '653abf26829b66c77b7c1a0e784393b3') in 0.028648 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.025582 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_stair001_collision.FBX
+  artifactKey: Guid(8f1511e876b63c54880e8a1e186c25b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_stair001_collision.FBX using Guid(8f1511e876b63c54880e8a1e186c25b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '458afb231f8b3a2d9db164807b12e509') in 0.025774 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.278312 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_stair001.FBX
+  artifactKey: Guid(7730efd9d0c720149a25ce9a78d71f38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_stair001.FBX using Guid(7730efd9d0c720149a25ce9a78d71f38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd11d8150b1e5feef68f7ab554b8bd91') in 0.030675 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.175703 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_spider002.FBX
+  artifactKey: Guid(664cf6bc661c1ed4e9541b01940dd848) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_spider002.FBX using Guid(664cf6bc661c1ed4e9541b01940dd848) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e76f28661dca9aae216c9b130e371268') in 0.027469 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.241079 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_spider001.FBX
+  artifactKey: Guid(eed7c01da446ee54fbd273113d81abfa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_spider001.FBX using Guid(eed7c01da446ee54fbd273113d81abfa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e167298369202753c9e4436aba66b2a1') in 0.030854 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.094103 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_room_brick004.FBX
+  artifactKey: Guid(ee20a4a1c90d78f45b869182ca632812) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_room_brick004.FBX using Guid(ee20a4a1c90d78f45b869182ca632812) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '197196e7775c6b1861f47ccd8ca5eea2') in 0.027999 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.123541 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_room_brick003.FBX
+  artifactKey: Guid(cf75f15c583aab944ba20631ced9f46c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_room_brick003.FBX using Guid(cf75f15c583aab944ba20631ced9f46c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7262ab93f3efa8fc1048d5b3c2327fc1') in 0.029797 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.100559 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_room_brick002.FBX
+  artifactKey: Guid(95a2922266791b045a54712d176c8bc8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_room_brick002.FBX using Guid(95a2922266791b045a54712d176c8bc8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9bb271e0af10060b2f5d4025e42e8462') in 0.029729 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.468185 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_room_brick001.FBX
+  artifactKey: Guid(11f5a486a0176364191acc99618addfa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_room_brick001.FBX using Guid(11f5a486a0176364191acc99618addfa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c712d6ead95f489f1ddb26ed45407824') in 0.025985 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.030490 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_room001.FBX
+  artifactKey: Guid(8d719284883af434389ef8f8cacddc65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_room001.FBX using Guid(8d719284883af434389ef8f8cacddc65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'da9839ca4a1d5acd29c76c28c57de888') in 0.037253 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.126397 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_road003_collision.FBX
+  artifactKey: Guid(2d3bbb7dddb9a04449748797c5e766f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_road003_collision.FBX using Guid(2d3bbb7dddb9a04449748797c5e766f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5fdd8d0036deefd6667e9ad7253ec3a4') in 0.025823 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.197491 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_road003.FBX
+  artifactKey: Guid(14d1483c8ba80554da73fb4bcae73310) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_road003.FBX using Guid(14d1483c8ba80554da73fb4bcae73310) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '43bbbbb9f228c82d520ee92591ffe897') in 0.030204 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.509137 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_road002_collision.FBX
+  artifactKey: Guid(ccbe99c5fc4c34a4ab9bb2f60e9808b5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_road002_collision.FBX using Guid(ccbe99c5fc4c34a4ab9bb2f60e9808b5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '959507b558d1406a0dde452283ed1c6b') in 0.028133 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.297312 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_road002_brick.FBX
+  artifactKey: Guid(3bba01b19bec9404cab0ea15b6fdd1d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_road002_brick.FBX using Guid(3bba01b19bec9404cab0ea15b6fdd1d3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ac800a7a420e1b88ee493612c64f503c') in 0.024865 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 7.987764 seconds.
+  path: Assets/Models/Mesh_Sewer/sewer_road002.FBX
+  artifactKey: Guid(37e7f84f76f1ca44eb7d86ca596b3774) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Sewer/sewer_road002.FBX using Guid(37e7f84f76f1ca44eb7d86ca596b3774) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3f3dff2128c96df05d642f6ebe6164bc') in 0.043223 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 1195.737644 seconds.
+  path: Assets/Scenes/Cave_Example.unity
+  artifactKey: Guid(014a28338e380b9488e0b19f85ba95ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Cave_Example.unity using Guid(014a28338e380b9488e0b19f85ba95ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '35456ef1e4bb4b95447f946677f8f809') in 0.001245 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 499.769863 seconds.
+  path: Assets/Scenes/Forest_Example.unity
+  artifactKey: Guid(282660480af7b3b4a92d3c011e1cd453) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Forest_Example.unity using Guid(282660480af7b3b4a92d3c011e1cd453) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7161255bd4d56a6f2eb11803e3d8ffb9') in 0.001380 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 61.503486 seconds.
+  path: Assets/Models/Mesh_Forest/TurnPoint.fbx
+  artifactKey: Guid(9218dcfa464fd03438b3fa1a36d9004e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Forest/TurnPoint.fbx using Guid(9218dcfa464fd03438b3fa1a36d9004e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af601e2ace1801493fabeb950f5d1555') in 0.035868 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 8
