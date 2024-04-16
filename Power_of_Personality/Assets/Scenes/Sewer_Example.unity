@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44753474, g: 0.49749494, b: 0.57532394, a: 1}
+  m_IndirectSpecularColor: {r: 0.44753814, g: 0.49749702, b: 0.5753275, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -541,7 +541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4115901552313966247, guid: d01039c03a557834dba14be0adae8d05, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7780166297294088714, guid: d01039c03a557834dba14be0adae8d05, type: 3}
       propertyPath: m_IsTrigger
@@ -6717,7 +6717,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &566597840
 MonoBehaviour:
@@ -7639,15 +7639,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4054757995881675495, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4054757995881675495, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4054757995881675495, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 341.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5076767392863343163, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
       propertyPath: m_Camera
@@ -20630,7 +20630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portal: {fileID: 3992058561654064293, guid: 1d6debf3c293e9e4da18fbaa7f8af0e4, type: 3}
-  portalPos: {x: 136.3, y: 2, z: -103}
+  portalSpawner: {fileID: 1999118155}
   sceneName: Castle_Example
 --- !u!1001 &1706631598
 PrefabInstance:
@@ -24086,6 +24086,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4669793085473912, guid: f8af8abfa8d104945ae5cc88a88261f5, type: 3}
   m_PrefabInstance: {fileID: 1993050644}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1999118155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1999118156}
+  m_Layer: 0
+  m_Name: PortalSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1999118156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999118155}
+  m_LocalRotation: {x: 0, y: 0.5, z: 0, w: 0.8660254}
+  m_LocalPosition: {x: 156.82, y: 2, z: -140.39}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1999301065
 GameObject:
   m_ObjectHideFlags: 0

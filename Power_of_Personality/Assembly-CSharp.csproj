@@ -139,6 +139,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
      <Compile Include="Assets\Server\Warrior\Server_ChangeEffect.cs" />
+     <Compile Include="Assets\Scripts\ItemLoad.cs" />
      <Compile Include="Assets\Scripts\Script_Monster\MonsterCtrl.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\Scripts\Script_Rogue\PlayerCtrl_Rogue.cs" />
@@ -173,17 +174,16 @@
      <Compile Include="Assets\Scripts\Script_Monster\Cave\MimicCtrl.cs" />
      <Compile Include="Assets\Scripts\Script_Monster\Forest\CoinCtrl.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
+     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Blend_CenterGlow.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\SwordSlash.shader" />
      <None Include="Assets\Photon\PhotonLibs\netstandard2.0\Photon3Unity3D.xml" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\DownloadAssets\Hovl Studio\Sword slash VFX\Demo scene\HDRP and URP.txt" />
      <None Include="Assets\URP\Shader\Shader_100Effects\Shader_Decal.shader" />
      <None Include="Assets\Photon\PhotonUnityNetworking\changelog.txt" />
-     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Explosion.shader" />
-     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\SwordSlash.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
-     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Distortion.shader" />
-     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Blend_TwoSides.shader" />
+     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Add_CenterGlow.shader" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
      <None Include="Assets\SpecialSkillsEffectsPack\Shader_ForEffects\Shader_DistortionEffect.shader" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
@@ -193,6 +193,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
      <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Scroll.shader" />
      <None Include="Assets\SpecialSkillsEffectsPack\Shader_ForEffects\Shader_Decal.shader" />
+     <None Include="Assets\DownloadAssets\Hovl Studio\Epic Toon VFX 4\Demo scene\HDRP and URP.txt" />
      <None Include="Assets\URP\Shader\Shaders_Hovl\Add_Fresnel.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\URP\Shader\Shader_100Effects\Shader_DistortionEffect.shader" />
@@ -201,6 +202,7 @@
      <None Include="Assets\URP\Shader\Shaders_Hovl\Distortion.shader" />
      <None Include="Assets\URP\Shader\Shaders_Hovl\Blend_TwoSides.shader" />
      <None Include="Assets\URP\Shader\Shaders_Hovl\Blend_CenterGlow.shader" />
+     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Distortion.shader" />
      <None Include="Assets\Shaders\SH_VFX_Vefects_Add_Dissolve_URP.shader" />
      <None Include="Assets\DownloadAssets\Hovl Studio\Render Pipelines support\Documentation.txt" />
      <None Include="Assets\DownloadAssets\Hovl Studio\Sword slash VFX\Demo scene\Readme.txt" />
@@ -213,7 +215,6 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
      <None Include="Assets\Photon\PhotonLibs\changes-library.txt" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
-     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\BlendDistort.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
      <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Lightning.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
@@ -223,7 +224,7 @@
      <None Include="Assets\URP\Shader\Shaders_Hovl\BlendDistort.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\URP\Shader\Shaders_Hovl\Scroll.shader" />
-     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Add_CenterGlow.shader" />
+     <None Include="Assets\DownloadAssets\Hovl Studio\Epic Toon VFX 4\Demo scene\Readme.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
      <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Add_Fresnel.shader" />
      <None Include="Assets\URP\Shader\Shader_100Effects\Shader_IntegratedEffect.shader" />
@@ -233,12 +234,14 @@
      <None Include="Assets\URP\Shader\Shaders_Hovl\Add_CenterGlow.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\DissolveNoise.shader" />
-     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Blend_CenterGlow.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Explosion.shader" />
+     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\Blend_TwoSides.shader" />
      <None Include="Assets\Photon\PhotonUnityNetworking\link.xml" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
      <None Include="Assets\DownloadAssets\Hovl Studio\Magic effects pack\Demo scene\Readme.txt" />
+     <None Include="Assets\DownloadAssets\Hovl Studio\HSFiles\Shaders\BlendDistort.shader" />
      <None Include="Assets\URP\Shader\Shaders_Hovl\Explosion.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
      <None Include="Assets\URP\Shader\Shaders_Hovl\SwordSlash.shader" />
