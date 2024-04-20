@@ -7613,6 +7613,18 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1032660130609871626, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032660130609871626, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1032660130609871626, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1147188151215840026, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -7624,6 +7636,14 @@ PrefabInstance:
     - target: {fileID: 1147188151215840026, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760761562585552079, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1760761562585552079, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3833296599349588962, guid: e4b365f2cd2850f439a2c6ba2956b2f9, type: 3}
       propertyPath: m_AnchorMax.x
@@ -19345,6 +19365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1582822123}
   - component: {fileID: 1582822124}
+  - component: {fileID: 1582822125}
   m_Layer: 0
   m_Name: Platforms
   m_TagString: Untagged
@@ -19390,6 +19411,25 @@ MonoBehaviour:
   PlatformCase: {fileID: 0}
   JSONMapCases:
     MapDatas: []
+--- !u!114 &1582822125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582822122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb8a20653295064c9e7d59fba8936c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Monster: {fileID: 0}
+  Monster_1: {fileID: 3461512519736245918, guid: 96c7dd7c60d5fbe48b8fd5ca840c160e, type: 3}
+  Monster_2: {fileID: 3092335694254568385, guid: ab3ba30dd08cabc42994f0820ada905c, type: 3}
+  Monster_3: {fileID: 2463201624562091160, guid: bc15bb8db3a9d264a9ce09590385284b, type: 3}
+  platforms: []
+  JSONSpawnCases:
+    SpawnDatas: []
 --- !u!1001 &1608260709
 PrefabInstance:
   m_ObjectHideFlags: 0
