@@ -189,12 +189,12 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         if (LocalSkillYRot == 90 || (LocalSkillYRot < 92 && LocalSkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
+            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(90, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
-            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
+            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(90, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
     }
