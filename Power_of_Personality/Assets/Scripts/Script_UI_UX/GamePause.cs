@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Pause : MonoBehaviour
+public class GamePause : MonoBehaviour
 {
     public Button pauseButton;
     public Button resumeButton1;
@@ -17,13 +17,13 @@ public class Pause : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void PauseGame()
+    public static void PauseGame()
     {
         Time.timeScale = 0;
     }
 
-    private void ResumeGame()
+    public static void ResumeGame()
     {
-        Time .timeScale = 1;
+        Time.timeScale = 1;
     }
 }
