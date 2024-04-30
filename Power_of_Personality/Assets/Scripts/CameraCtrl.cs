@@ -99,19 +99,11 @@ public class CameraCtrl : MonoBehaviour
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(xPos,yPos,zPos), ref currentVelocity, 0.1f);
             }
             
-            if(Time.timeScale == 0)
-            {
-                focusTimer -= 0.01f;
-            }
-            else
-            {
-                focusTimer -= Time.deltaTime;
-            }
+            focusTimer -= Time.deltaTime;
         }
         else
         {
             focusTimer = 0f;
-            Time.timeScale = 1;
             timeValue = "play";
             xPos = 0;
             yPos = 0;
