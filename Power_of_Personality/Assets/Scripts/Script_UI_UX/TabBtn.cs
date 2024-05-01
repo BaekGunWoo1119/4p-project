@@ -13,6 +13,8 @@ public class TabBtn : MonoBehaviour
     public Color iceColor;
     public Sprite fireImage;
     public Sprite iceImage;
+    //스킬 이미지를 받아오기 위한 배열
+    public Sprite[] skillImage;
 
     public GameObject fireHit;
     public GameObject iceHit;
@@ -36,6 +38,13 @@ public class TabBtn : MonoBehaviour
             button.colors = colors;
             Image btnImage = innerImg.GetComponent<Image>();
             btnImage.sprite = fireImage;
+            //스킬 이미지 설정
+            Image skillImageQ = GameObject.Find("SkillImg-Q").GetComponent<Image>();
+            skillImageQ.sprite = skillImage[0];
+            Image skillImageW = GameObject.Find("SkillImg-W").GetComponent<Image>();
+            skillImageW.sprite = skillImage[1];
+            Image skillImageE = GameObject.Find("SkillImg-E").GetComponent<Image>();
+            skillImageE.sprite = skillImage[2];
             button.onClick.RemoveListener(SetFire);
             PlayerPrefs.SetString("property", "Fire");
             isFire = true;
@@ -52,6 +61,13 @@ public class TabBtn : MonoBehaviour
             button.colors = colors;
             Image btnImage = innerImg.GetComponent<Image>();
             btnImage.sprite = iceImage;
+            //스킬 이미지 설정
+            Image skillImageQ = GameObject.Find("SkillImg-Q").GetComponent<Image>();
+            skillImageQ.sprite = skillImage[3];
+            Image skillImageW = GameObject.Find("SkillImg-W").GetComponent<Image>();
+            skillImageW.sprite = skillImage[4];
+            Image skillImageE = GameObject.Find("SkillImg-E").GetComponent<Image>();
+            skillImageE.sprite = skillImage[5];
             button.onClick.RemoveListener(SetIce);
             PlayerPrefs.SetString("property", "Ice");
             isIce = true;
