@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraCtrl : MonoBehaviour
 {
     private Transform target; //Player
-    public Vector3 offsetOrigin; // 카메라 위치
     private Vector3 offset;
     private Vector3 currentVelocity = Vector3.zero;
 
@@ -15,6 +14,8 @@ public class CameraCtrl : MonoBehaviour
     private float shakeTimer = 0f;
 
     //카메라 고정
+    private Vector3 forwardDirection;
+    private Vector3 UpDirection;
     private float focusTimer = 0f;
     private float xPos;
     private float yPos;
@@ -28,17 +29,25 @@ public class CameraCtrl : MonoBehaviour
 
     void Start()
     {
-        offset = offsetOrigin;
+        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    
+
     void Update()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        if (forwardDirection == null || forwardDirection != target.transform.root.transform.forward)
+        {
+            forwardDirection = target.transform.root.transform.forward;
+        }
+        if (UpDirection == null || UpDirection != target.transform.root.transform.up)
+        {
+            UpDirection = target.transform.root.transform.up;
+        }
+        offset = forwardDirection * -10f + UpDirection * 4.25f;
         if (target != null && focusTimer <= 0 && shakeTimer <= 0 && !isMove)
         {
             // 플레이어의 움직임을 살짝 딜레이를 주고 따라 감
-            transform.position = Vector3.SmoothDamp(transform.position, target.position + offset, ref currentVelocity, 0.1f);
-            transform.rotation = Quaternion.Euler(0,0,0);
+            transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref currentVelocity, 0.1f);
+            transform.rotation = target.transform.root.GetComponentInParent<Transform>().rotation;
         }
 
         if (shakeTimer > 0)
@@ -64,14 +73,12 @@ public class CameraCtrl : MonoBehaviour
             {
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(xPos,yPos,zPos), ref currentVelocity, 0.1f);
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(xRot,yRot,zRot), Time.deltaTime * 3.5f);
-                StartCoroutine(TimeStop(0.35f));
             }
 
             else if(timeValue == "round")
             {
                 xRot = 10;
                 zRot = 0;
-                Time.timeScale = 1;
                 if(yRot == 60)
                 {
                     transform.position = Vector3.SmoothDamp(transform.position, new Vector3(target.position.x - 2,yPos,zPos - 5), ref currentVelocity, 0.1f);
@@ -84,7 +91,6 @@ public class CameraCtrl : MonoBehaviour
             }
             else if(timeValue == "forward")
             {
-                Time.timeScale = 1;
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(xPos,yPos,zPos), ref currentVelocity, 0.1f);
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(10,yRot,0), Time.deltaTime * 4.0f);
             }
@@ -138,20 +144,14 @@ public class CameraCtrl : MonoBehaviour
         focusTimer = Duration;
     }
 
-    IEnumerator TimeStop(float wait)
-    {
-        yield return new WaitForSeconds(wait);
-        Time.timeScale = 0;
-    }
-
     IEnumerator Setoffset(float wait)
     {
         yield return new WaitForSeconds(wait);
-        if(offset != offsetOrigin && shakeTimer <= 0 && focusTimer <= 0)
-        {
-            offset = offsetOrigin;
-            isMove = false;
-        }
+        //if(offset != offsetOrigin && shakeTimer <= 0 && focusTimer <= 0)
+        //{
+        //    offset = offsetOrigin;
+        //    isMove = false;
+        //}
     }
 
     public void moveStop(float seconds)

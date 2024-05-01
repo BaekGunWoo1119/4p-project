@@ -35,6 +35,10 @@ public class MonsterCtrl : MonoBehaviour
     public bool isDie;     //몬스터 사망체크
     public bool isHit;     //몬스터 피격체크
 
+    public GameObject IceHit;
+    public GameObject FireHit;
+     
+
     #endregion
 
     public virtual void Awake()
@@ -165,6 +169,16 @@ public class MonsterCtrl : MonoBehaviour
     {
         if (maxHP != 0 || curHP > 0)
         {
+
+            if (PlayerPrefs.GetString("property") == "Ice")
+            {
+                Instantiate(IceHit, this.transform.position, Quaternion.Euler(0, 0, 0));
+            }
+            if (PlayerPrefs.GetString("property") == "Fire")
+            {
+                Instantiate(FireHit, this.transform.position, Quaternion.Euler(0, 0, 0));
+            }
+
             Material[] materials = matObj.materials;
             curHP -= Damage;
             CheckHP(); // ü�� ����

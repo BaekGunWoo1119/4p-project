@@ -138,21 +138,21 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         //스킬 나갈 시 카메라 무빙(얼굴 포커스, 멈춤)
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 0.7f, transform.position.y + 2.0f, transform.position.z - 1.5f, -50, 1.0f, "stop");
+            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 3.0f, transform.position.y + 1.5f, transform.position.z, -90, 1.1f, "forward");
         }
         else
         {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x - 1.5f, transform.position.y + 2.0f, transform.position.z + 1.5f, 170, 1.0f, "stop");
+            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x - 3.0f, transform.position.y + 1.5f, transform.position.z, 90, 1.1f, "forward");
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.2f);
         //스킬 사용 시 카메라 무빙(등 포커스)
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x - 3.0f, transform.position.y + 2.5f, transform.position.z, 90, 3.3f, "forward");
+            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x - 3.0f, transform.position.y + 2.5f, transform.position.z, 90, 3.0f, "forward");
         }
         else
         {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 3.0f, transform.position.y + 2.5f, transform.position.z, -90, 3.3f, "forward");
+            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 3.0f, transform.position.y + 2.5f, transform.position.z, -90, 3.0f, "forward");
         }
         yield return new WaitForSeconds(1.0f);
         ESkillCoolTime = 0;
@@ -189,12 +189,12 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         if (LocalSkillYRot == 90 || (LocalSkillYRot < 92 && LocalSkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
+            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(90, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
-            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
+            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(90, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
     }
