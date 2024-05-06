@@ -32,7 +32,7 @@ public class CameraCtrl : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (forwardDirection == null || forwardDirection != target.transform.root.transform.forward)
         {
@@ -46,7 +46,7 @@ public class CameraCtrl : MonoBehaviour
         if (target != null && focusTimer <= 0 && shakeTimer <= 0 && !isMove)
         {
             // 플레이어의 움직임을 살짝 딜레이를 주고 따라 감
-            transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref currentVelocity, 0.1f);
+            transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref currentVelocity, 0f);
             transform.rotation = target.transform.root.GetComponentInParent<Transform>().rotation;
         }
 
@@ -73,14 +73,12 @@ public class CameraCtrl : MonoBehaviour
             {
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(xPos,yPos,zPos), ref currentVelocity, 0.1f);
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(xRot,yRot,zRot), Time.deltaTime * 3.5f);
-                StartCoroutine(TimeStop(0.35f));
             }
 
             else if(timeValue == "round")
             {
                 xRot = 10;
                 zRot = 0;
-                Time.timeScale = 1;
                 if(yRot == 60)
                 {
                     transform.position = Vector3.SmoothDamp(transform.position, new Vector3(target.position.x - 2,yPos,zPos - 5), ref currentVelocity, 0.1f);
@@ -93,7 +91,6 @@ public class CameraCtrl : MonoBehaviour
             }
             else if(timeValue == "forward")
             {
-                Time.timeScale = 1;
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(xPos,yPos,zPos), ref currentVelocity, 0.1f);
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(10,yRot,0), Time.deltaTime * 4.0f);
             }
@@ -102,19 +99,11 @@ public class CameraCtrl : MonoBehaviour
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(xPos,yPos,zPos), ref currentVelocity, 0.1f);
             }
             
-            if(Time.timeScale == 0)
-            {
-                focusTimer -= 0.01f;
-            }
-            else
-            {
-                focusTimer -= Time.deltaTime;
-            }
+            focusTimer -= Time.deltaTime;
         }
         else
         {
             focusTimer = 0f;
-            Time.timeScale = 1;
             timeValue = "play";
             xPos = 0;
             yPos = 0;
@@ -145,12 +134,6 @@ public class CameraCtrl : MonoBehaviour
 
         timeValue = value;
         focusTimer = Duration;
-    }
-
-    IEnumerator TimeStop(float wait)
-    {
-        yield return new WaitForSeconds(wait);
-        Time.timeScale = 0;
     }
 
     IEnumerator Setoffset(float wait)

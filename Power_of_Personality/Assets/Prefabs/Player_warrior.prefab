@@ -37229,7 +37229,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 483726586842910034}
-  - component: {fileID: 6964396625078451451}
   m_Layer: 0
   m_Name: Char_warrior
   m_TagString: Untagged
@@ -37254,27 +37253,6 @@ Transform:
   m_Father: {fileID: 7264738506091923101}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6964396625078451451
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3283460657652018569}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.6576842, y: 1.7170411, z: 0.68628925}
-  m_Center: {x: 0.0016849339, y: 0.9180792, z: -0.0066692233}
 --- !u!1 &3291193640169369673
 GameObject:
   m_ObjectHideFlags: 0
@@ -117247,6 +117225,7 @@ MonoBehaviour:
   LocalSkillYRot: 0
   EffectGen: {fileID: 0}
   SkillEffect: {fileID: 0}
+  cCol: {fileID: 0}
   QSkill_Collider: {fileID: 6186884052317262959, guid: 01a0b81a8ebfe8c43b09ccd5af03f118, type: 3}
   Skill_FireE_Effect: {fileID: 101818329446047632, guid: add6f36b2dadaf84a864e7e0942308de, type: 3}
   Skill_IceE_Effect: {fileID: 101818329446047632, guid: 8a1e6c7cf8a8fe840a4f84d0431a5ef8, type: 3}

@@ -60,10 +60,10 @@ public class SceneLoader : MonoBehaviour
     public GameObject prf_Rogue;
     public GameObject prf_Archer;
     public GameObject prf_Wizard;
-    public Sprite img_Warrior;
-    public Sprite img_Rogue;
-    public Sprite img_Archer;
-    public Sprite img_Wizard;
+    public Sprite[] img_Warrior;
+    public Sprite[] img_Rogue;
+    public Sprite[] img_Archer;
+    public Sprite[] img_Wizard;
 
     private Button SpellChoice_Back;
     private Button SpellChoice_Select;
@@ -309,8 +309,14 @@ public class SceneLoader : MonoBehaviour
                     GameObject spwPlayer = Instantiate(prf_Warrior, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
                     GameObject parPlatfom = GameObject.FindWithTag("StartingPos");
                     spwPlayer.transform.parent = parPlatfom.transform;
-                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Warrior;
-                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Warrior;
+                    //캐릭터 초상화 변경 코드
+                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Warrior[0];
+                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Warrior[0];
+                    //스킬 이미지 변경 코드. 0~2는 각각 Fire Q,W,E/3~5는 Ice Q,W,E에 해당
+                    for(int i = 1; i <= 6; i++)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TabBtn>().skillImage[i-1] = img_Warrior[i];
+                    }
                 }
             }
             else if(LobbyManager.PlayerProperties["PlayerClass"] == "Rogue")
@@ -320,8 +326,12 @@ public class SceneLoader : MonoBehaviour
                     GameObject spwPlayer = Instantiate(prf_Rogue, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
                     GameObject parPlatfom = GameObject.FindWithTag("StartingPos");
                     spwPlayer.transform.parent = parPlatfom.transform;
-                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Rogue;
-                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Rogue;
+                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Rogue[0];
+                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Rogue[0];
+                    for(int i = 1; i <= 6; i++)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TabBtn>().skillImage[i-1] = img_Rogue[i];
+                    }
                 }
             }
             else if(LobbyManager.PlayerProperties["PlayerClass"] == "Archer")
@@ -331,8 +341,12 @@ public class SceneLoader : MonoBehaviour
                     GameObject spwPlayer = Instantiate(prf_Archer, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
                     GameObject parPlatfom = GameObject.FindWithTag("StartingPos");
                     spwPlayer.transform.parent = parPlatfom.transform;
-                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Archer;
-                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Archer;
+                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Archer[0];
+                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Archer[0];
+                    for(int i = 1; i <= 6; i++)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TabBtn>().skillImage[i-1] = img_Archer[i];
+                    }
                 }
             }
             else if(LobbyManager.PlayerProperties["PlayerClass"] == "Wizard")
@@ -342,8 +356,12 @@ public class SceneLoader : MonoBehaviour
                     GameObject spwPlayer = Instantiate(prf_Wizard, new Vector3(0,0,0), Quaternion.Euler(0f, 90, 0f));
                     GameObject parPlatfom = GameObject.FindWithTag("StartingPos");
                     spwPlayer.transform.parent = parPlatfom.transform;
-                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Wizard;
-                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Wizard;
+                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Wizard[0];
+                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Wizard[0];
+                    for(int i = 1; i <= 6; i++)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TabBtn>().skillImage[i-1] = img_Wizard[i];
+                    }
                 }
             }   
         }
