@@ -34,6 +34,9 @@ public class CameraCtrl : MonoBehaviour
 
     void Update()
     {
+        if( target == null){
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
         if (forwardDirection == null || forwardDirection != target.transform.root.transform.forward)
         {
             forwardDirection = target.transform.root.transform.forward;
