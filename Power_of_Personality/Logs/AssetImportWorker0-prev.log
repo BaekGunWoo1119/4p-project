@@ -1,0 +1,830 @@
+Using pre-set license
+Built from '2022.2/staging' branch; Version is '2022.2.20f1 (c5d806317f84) revision 12965894'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Core' Language: 'ko' Physical Memory: 32698 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2022.2.20f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+D:/Unity/POP/Power_of_Personality
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+55784
+Successfully changed project path to: D:/Unity/POP/Power_of_Personality
+D:/Unity/POP/Power_of_Personality
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [2992] Host "[IP] 192.168.0.23 [Port] 0 [Flags] 2 [Guid] 4038386564 [EditorId] 4038386564 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-IMUE91T) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [2992] Host "[IP] 192.168.0.23 [Port] 0 [Flags] 2 [Guid] 4038386564 [EditorId] 4038386564 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-IMUE91T) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 9.77 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.2.20f1 (c5d806317f84)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.2.20f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Unity/POP/Power_of_Personality/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3070 (ID=0x2484)
+    Vendor:   NVIDIA
+    VRAM:     8018 MB
+    Driver:   31.0.15.5176
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.2.20f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.2.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.2.20f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56220
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.2.20f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.007795 seconds.
+- Loaded All Assemblies, in  0.303 seconds
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.250 seconds
+Domain Reload Profiling:
+	ReloadAssembly (178ms)
+		BeginReloadAssembly (79ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		LoadAllAssembliesAndSetupDomain (0ms)
+			LoadAssemblies (77ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (117ms)
+				TypeCache.Initialize (116ms)
+					TypeCache.ScanAssembly (115ms)
+				ResolveRequiredComponents (0ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (196ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (9ms)
+				SetLoadedEditorAssemblies (7ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (132ms)
+				ProcessInitializeOnLoadMethodAttributes (47ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.812 seconds
+Refreshing native plugins compatible for Editor in 3.61 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.647 seconds
+Domain Reload Profiling:
+	ReloadAssembly (211ms)
+		BeginReloadAssembly (129ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (21ms)
+		LoadAllAssembliesAndSetupDomain (599ms)
+			LoadAssemblies (287ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (373ms)
+				TypeCache.Initialize (335ms)
+					TypeCache.ScanAssembly (330ms)
+				ResolveRequiredComponents (13ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (470ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (7ms)
+				SetLoadedEditorAssemblies (4ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (75ms)
+				ProcessInitializeOnLoadAttributes (293ms)
+				ProcessInitializeOnLoadMethodAttributes (83ms)
+				AfterProcessingInitializeOnLoad (8ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (7ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 3.33 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6005 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 73 unused Assets / (1.1 MB). Loaded Objects now: 6464.
+Memory consumption went from 243.5 MB to 242.4 MB.
+Total: 4.393000 ms (FindLiveObjects: 0.483400 ms CreateObjectMapping: 0.584900 ms MarkObjects: 2.978700 ms  DeleteObjects: 0.345000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 39558.575002 seconds.
+  path: Assets/LowPolyRPGWeapons_Lite/Models/Bow_01.fbx
+  artifactKey: Guid(3855b63c5a0b1a041a1acca8eb229d9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LowPolyRPGWeapons_Lite/Models/Bow_01.fbx using Guid(3855b63c5a0b1a041a1acca8eb229d9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8ec3db053dea5f6753b4c33d51ed6e2') in 0.275720 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/LowPolyRPGWeapons_Lite/Models/Hammer_01.fbx
+  artifactKey: Guid(1978b0a3e563c684a926418906719528) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LowPolyRPGWeapons_Lite/Models/Hammer_01.fbx using Guid(1978b0a3e563c684a926418906719528) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7af9476105127b54f79a6c60994ea0ab') in 0.024896 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 8
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/LowPolyRPGWeapons_Lite/Models/Sword_01.fbx
+  artifactKey: Guid(d00dec123be83b445adbe6c8f3f02f41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LowPolyRPGWeapons_Lite/Models/Sword_01.fbx using Guid(d00dec123be83b445adbe6c8f3f02f41) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '281baacd72db3886a099f8026df958d9') in 0.016207 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 8
+========================================================================
+Received Import Request.
+  Time since last request: 0.000016 seconds.
+  path: Assets/LowPolyRPGWeapons_Lite/Models/Dagger_01.fbx
+  artifactKey: Guid(79f4cdb09da63b74081e5ed761e963ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LowPolyRPGWeapons_Lite/Models/Dagger_01.fbx using Guid(79f4cdb09da63b74081e5ed761e963ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f0c5cc7e403757f3b177aa69fdb8b6b') in 0.014589 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 8
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.774 seconds
+Refreshing native plugins compatible for Editor in 3.16 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.018 seconds
+Domain Reload Profiling:
+	ReloadAssembly (227ms)
+		BeginReloadAssembly (147ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (9ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (44ms)
+		LoadAllAssembliesAndSetupDomain (545ms)
+			LoadAssemblies (255ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (346ms)
+				TypeCache.Initialize (331ms)
+					TypeCache.ScanAssembly (325ms)
+				ResolveRequiredComponents (15ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (456ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (5ms)
+				SetLoadedEditorAssemblies (5ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (75ms)
+				ProcessInitializeOnLoadAttributes (277ms)
+				ProcessInitializeOnLoadMethodAttributes (87ms)
+				AfterProcessingInitializeOnLoad (7ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (12ms)
+Refreshing native plugins compatible for Editor in 4.01 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5790 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 46 unused Assets / (1.1 MB). Loaded Objects now: 6520.
+Memory consumption went from 205.8 MB to 204.8 MB.
+Total: 4.109600 ms (FindLiveObjects: 0.607500 ms CreateObjectMapping: 0.883300 ms MarkObjects: 2.413100 ms  DeleteObjects: 0.205100 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 62.480121 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '22564866c6f1f28804b385c792186f70') in 0.293081 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 90
+========================================================================
+Received Import Request.
+  Time since last request: 5.905188 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0efce5bd4d813098fbd7ecb483368913') in 0.022595 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 2.183752 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '461ed7c7e0089ac9815044849cfdbd37') in 0.022497 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 30.400775 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e0b39fba9d6425c6a354a3e9b2b2e4bd') in 0.016702 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 1.006134 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0a3efed77b133f3c178579a6d370265c') in 0.015240 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 28.921473 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '23023a8eab4d3df09e4642ae53a37db5') in 0.016290 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 22.108554 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4fb99e52c2f5b7e3fcc9c9e39684a4cb') in 0.042767 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 72
+========================================================================
+Received Import Request.
+  Time since last request: 4.828139 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9631cb38765b78c8c584cacb36d31b76') in 0.018720 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 72
+========================================================================
+Received Import Request.
+  Time since last request: 1.248294 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '28bcd88719149ae1bccbe6db548661ac') in 0.019901 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 72
+========================================================================
+Received Import Request.
+  Time since last request: 12.157939 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a4ec9affcf56868bd776ae5ed114b96') in 0.017404 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 72
+========================================================================
+Received Import Request.
+  Time since last request: 1.869053 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ae13f0b462bb400a46670bcd51d0b35') in 0.019449 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 72
+========================================================================
+Received Import Request.
+  Time since last request: 7.254864 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cfff2a2f9320dbbab4724c1dcc0abdb7') in 0.016839 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 0.770678 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc30f078671a8ae3eb54fce366bca465') in 0.017726 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 0.612333 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '77cb59a5ecd386be984fb41ffec3f13b') in 0.015589 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.783 seconds
+Refreshing native plugins compatible for Editor in 4.32 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.122 seconds
+Domain Reload Profiling:
+	ReloadAssembly (211ms)
+		BeginReloadAssembly (143ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (9ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (46ms)
+		LoadAllAssembliesAndSetupDomain (569ms)
+			LoadAssemblies (251ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (370ms)
+				TypeCache.Initialize (327ms)
+					TypeCache.ScanAssembly (319ms)
+				ResolveRequiredComponents (43ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (481ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (11ms)
+				SetLoadedEditorAssemblies (7ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (87ms)
+				ProcessInitializeOnLoadAttributes (274ms)
+				ProcessInitializeOnLoadMethodAttributes (94ms)
+				AfterProcessingInitializeOnLoad (8ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (12ms)
+Refreshing native plugins compatible for Editor in 3.41 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5790 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 46 unused Assets / (1.1 MB). Loaded Objects now: 6563.
+Memory consumption went from 205.9 MB to 204.8 MB.
+Total: 3.401500 ms (FindLiveObjects: 0.486900 ms CreateObjectMapping: 0.510300 ms MarkObjects: 2.187700 ms  DeleteObjects: 0.216000 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 103.536568 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f4489c555ac221978fd29b70f21dc002') in 0.241337 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 91
+========================================================================
+Received Import Request.
+  Time since last request: 6.411326 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c4fa1d4528406e290bb47edc7415c2ff') in 0.017634 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 0.736076 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '78e4bbe9a895ee049e60fef1859c4469') in 0.015163 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 1.897365 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1663e93ba640bad26d9a85b084c4c700') in 0.015450 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 4.025396 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c8d0cb777698aa7ff406f14eb07fd26c') in 0.017501 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 1.247122 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f95221aa27d72d943d3f8fe5a87c95ce') in 0.015703 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 1.887956 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab
+  artifactKey: Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireQ_Archer.prefab using Guid(0edd814ba6b67e24887e1ee5471102ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f85ac67483708010793007f083d66c36') in 0.015683 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 71
+========================================================================
+Received Import Request.
+  Time since last request: 8.213428 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a934c057de0083733fffbd834ce4d97a') in 0.016586 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 72
+========================================================================
+Received Import Request.
+  Time since last request: 2.610598 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '603cb25d039f1d2de13a8dee72f7bc8a') in 0.019864 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 72
+========================================================================
+Received Import Request.
+  Time since last request: 1.669181 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6e4cbbf11409c748492e26d2ba6aa597') in 0.019551 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 72
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.754 seconds
+Refreshing native plugins compatible for Editor in 3.25 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.049 seconds
+Domain Reload Profiling:
+	ReloadAssembly (215ms)
+		BeginReloadAssembly (145ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (9ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (45ms)
+		LoadAllAssembliesAndSetupDomain (536ms)
+			LoadAssemblies (264ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (327ms)
+				TypeCache.Initialize (314ms)
+					TypeCache.ScanAssembly (308ms)
+				ResolveRequiredComponents (13ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (458ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (7ms)
+				SetLoadedEditorAssemblies (5ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (77ms)
+				ProcessInitializeOnLoadAttributes (273ms)
+				ProcessInitializeOnLoadMethodAttributes (89ms)
+				AfterProcessingInitializeOnLoad (7ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (13ms)
+Refreshing native plugins compatible for Editor in 3.62 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5790 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 46 unused Assets / (1.1 MB). Loaded Objects now: 6606.
+Memory consumption went from 206.0 MB to 204.9 MB.
+Total: 3.504200 ms (FindLiveObjects: 0.565800 ms CreateObjectMapping: 0.522600 ms MarkObjects: 2.210500 ms  DeleteObjects: 0.204600 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 40.652746 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8979f8a01123933f382d3c5427e0fe8c') in 0.241913 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 99
+========================================================================
+Received Import Request.
+  Time since last request: 1.182510 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '93ef32669a9b950f81c956a1820acfa9') in 0.033666 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 80
+========================================================================
+Received Import Request.
+  Time since last request: 2.241712 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aee18ab3a4e68ebdb6525579202b7859') in 0.021020 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 80
+========================================================================
+Received Import Request.
+  Time since last request: 5.191466 seconds.
+  path: Assets/Images/Materials/Material_Cave/PolyToots_ASE_FrostIcicles.mat
+  artifactKey: Guid(36549ec3725bada4782d441f6a1a0409) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Materials/Material_Cave/PolyToots_ASE_FrostIcicles.mat using Guid(36549ec3725bada4782d441f6a1a0409) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb9863300209e77bc9b5f60b981335ac') in 0.023373 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 5
+========================================================================
+Received Import Request.
+  Time since last request: 289.301568 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab
+  artifactKey: Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_IceQ_Archer.prefab using Guid(926da2a89577a984285c71451520c7d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '749b9810d28191e69e78d4aeb8484bb1') in 0.021329 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 79
+========================================================================
+Received Import Request.
+  Time since last request: 12.492590 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '030d7afbae2c50a6f141ce58d8562c17') in 0.041322 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 111
+========================================================================
+Received Import Request.
+  Time since last request: 5.831064 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9d8dc3df0cae02268f4fe20cbb498a38') in 0.045064 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 111
+========================================================================
+Received Import Request.
+  Time since last request: 2.156456 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fcb3047a0d12c1b3ceaa8c8dc1107293') in 0.035848 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 111
+========================================================================
+Received Import Request.
+  Time since last request: 10.679065 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '605c296a82c05a15a13527755b0a7671') in 0.036113 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 111
+========================================================================
+Received Import Request.
+  Time since last request: 27.437614 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b755027b9a752636c83ac4789994596c') in 0.035801 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 113
+========================================================================
+Received Import Request.
+  Time since last request: 3.980566 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '85f4e06828104bce76563acfb1d04824') in 0.043788 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 113
+========================================================================
+Received Import Request.
+  Time since last request: 2.164243 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '739f6cf7bb024ed8c8d645595887b90e') in 0.036081 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 113
+========================================================================
+Received Import Request.
+  Time since last request: 0.556311 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0ab2880832b78f18f26179ad9c349747') in 0.033623 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 113
+========================================================================
+Received Import Request.
+  Time since last request: 0.559289 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c36753e2fcd692a9e42ae1b429475b0d') in 0.037286 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 113
+========================================================================
+Received Import Request.
+  Time since last request: 1.753499 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '06252ea63268971c10fc20c2abbff4ae') in 0.035020 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 113
+========================================================================
+Received Import Request.
+  Time since last request: 3.409056 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dd49948d7356409b2057b81ac34357e4') in 0.047331 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 114
+========================================================================
+Received Import Request.
+  Time since last request: 18.776203 seconds.
+  path: Assets/LowPolyRPGWeapons_Lite/Prefabs/Arrow_01.prefab
+  artifactKey: Guid(45804eb2722b83845adbcf2d72da12dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LowPolyRPGWeapons_Lite/Prefabs/Arrow_01.prefab using Guid(45804eb2722b83845adbcf2d72da12dd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fc98c5f8973e2d40bcf8957373a1a738') in 0.014615 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.761 seconds
+Refreshing native plugins compatible for Editor in 3.30 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.002 seconds
+Domain Reload Profiling:
+	ReloadAssembly (240ms)
+		BeginReloadAssembly (146ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (10ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (46ms)
+		LoadAllAssembliesAndSetupDomain (517ms)
+			LoadAssemblies (258ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (311ms)
+				TypeCache.Initialize (297ms)
+					TypeCache.ScanAssembly (291ms)
+				ResolveRequiredComponents (13ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (457ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (6ms)
+				SetLoadedEditorAssemblies (5ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (74ms)
+				ProcessInitializeOnLoadAttributes (274ms)
+				ProcessInitializeOnLoadMethodAttributes (92ms)
+				AfterProcessingInitializeOnLoad (6ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (12ms)
+Refreshing native plugins compatible for Editor in 3.22 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5790 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 46 unused Assets / (1.1 MB). Loaded Objects now: 6684.
+Memory consumption went from 206.2 MB to 205.2 MB.
+Total: 3.966100 ms (FindLiveObjects: 0.509800 ms CreateObjectMapping: 0.532100 ms MarkObjects: 2.729800 ms  DeleteObjects: 0.193700 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 56.659248 seconds.
+  path: Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab
+  artifactKey: Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Effects/Effect_Archer/SkillEffect_FireE_Archer.prefab using Guid(5b2017db9547c4e4c9bf332caac0413d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ee2df67178eb1c0b5707cfbd0a2f6936') in 0.250124 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 132
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  0.736 seconds
+Refreshing native plugins compatible for Editor in 3.11 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.026 seconds
+Domain Reload Profiling:
+	ReloadAssembly (218ms)
+		BeginReloadAssembly (150ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (9ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (45ms)
+		LoadAllAssembliesAndSetupDomain (515ms)
+			LoadAssemblies (262ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (311ms)
+				TypeCache.Initialize (298ms)
+					TypeCache.ScanAssembly (290ms)
+				ResolveRequiredComponents (13ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (457ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (7ms)
+				SetLoadedEditorAssemblies (5ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (78ms)
+				ProcessInitializeOnLoadAttributes (267ms)
+				ProcessInitializeOnLoadMethodAttributes (92ms)
+				AfterProcessingInitializeOnLoad (8ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (14ms)
+Refreshing native plugins compatible for Editor in 3.73 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5790 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 46 unused Assets / (1.1 MB). Loaded Objects now: 6727.
+Memory consumption went from 206.3 MB to 205.2 MB.
+Total: 3.957900 ms (FindLiveObjects: 0.527300 ms CreateObjectMapping: 0.671500 ms MarkObjects: 2.528700 ms  DeleteObjects: 0.229300 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
