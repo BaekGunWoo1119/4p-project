@@ -525,7 +525,7 @@ public class PlayerCtrl_Archer : MonoBehaviour
     {
         anim.SetTrigger("Skill_W");
         isSkill = true;
-        StartCoroutine(SKill_Up_Move(10.0f));
+        StartCoroutine(SKill_Up_Move(10.0f, 0.0f));
     }
 
     IEnumerator Skill_W_Deal()
@@ -549,10 +549,11 @@ public class PlayerCtrl_Archer : MonoBehaviour
     {
         anim.SetTrigger("Skill_E");
         isSkill = true;
-        StartCoroutine(SKill_Up_Move(17.0f));
+        StartCoroutine(SKill_Up_Move(32.0f, 1.2f));
     }
-    IEnumerator SKill_Up_Move(float upScale)
+    IEnumerator SKill_Up_Move(float upScale, float delayTime)
     {
+        yield return new WaitForSeconds(delayTime);
         rd.AddForce(Vector3.up * upScale, ForceMode.Impulse);
         yield return new WaitForSeconds(3.0f);
         isSkill = false;
