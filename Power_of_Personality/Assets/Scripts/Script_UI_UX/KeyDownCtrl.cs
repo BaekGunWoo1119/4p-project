@@ -9,9 +9,26 @@ public class KeyDownCtrl : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(ctrlKey))
+        if (Input.GetKeyDown(ctrlKey))
         {
-            SetActiveObj();
+            if (ctrlKey == KeyCode.Escape)
+            {
+                // Escape 키가 눌렸을 때 게임의 상태를 체크하고 일시 정지 혹은 재개
+                if (Time.timeScale == 0)
+                {
+                    GamePause.ResumeGame();
+                    UnSetActiveObj();
+                }
+                else
+                {
+                    GamePause.PauseGame();
+                    SetActiveObj();
+                }
+            }
+            else
+            {
+                SetActiveObj();
+            }
         }
     }
 
@@ -22,6 +39,15 @@ public class KeyDownCtrl : MonoBehaviour
         {
             // 오브젝트의 스케일을 초기 스케일로 변경
             activeObj.transform.localScale = new Vector3(1, 1, 1);
+        }
+    }
+
+    private void UnSetActiveObj()
+    {
+        if (activeObj != null)
+        {
+            // 오브젝트의 스케일을 초기 스케일로 변경
+            activeObj.transform.localScale = new Vector3(0, 0, 0);
         }
     }
 }
