@@ -4,12 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using Unity.Burst.CompilerServices;
 
 public class PlayerCtrl : MonoBehaviour
 {
     #region 변수 선언
+    //Raycast 관련
+    protected float raycastDistance = 0.5f;
+    protected RaycastHit hit;
+
     // GetAxis 값
-    protected float xInput;
+    protected float hAxis;
 
     // Player의 transform, YPosition, YRotation 값
     protected Transform trs;
@@ -87,9 +92,8 @@ public class PlayerCtrl : MonoBehaviour
     protected bool isSound = false;
     protected AudioSource[] audioSources;
 
-    // 충돌 관련
+    // 벽 충돌체크
     protected bool WallCollision;
-    public CapsuleCollider cCol;
 
     // HP Bar
     protected Slider HpBar;
@@ -108,16 +112,6 @@ public class PlayerCtrl : MonoBehaviour
     // 회전 관련
     protected GameObject CurrentFloor;
     protected Vector3 moveVec;
-    protected Vector3 moveDirection;
-
-    // 레이캐스트
-    protected float raycastDistance = 1f;
-    protected RaycastHit hit;
-
-    // 경사면 관련
-    protected Vector3 direction;
-    protected float CurrentGroundDistance;
-
     #endregion
 
     protected virtual void Start()
@@ -163,10 +157,39 @@ public class PlayerCtrl : MonoBehaviour
             audioSources[i].Stop();
         }
     }
+    protected virtual void FixedUpdate()
+    {
+        // Move 함수 실행
+        if (!isSkill && !isAttack && !anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3"))
+        {
+            Move();
+            Move_anim();
+            Turn();
+        }
+
+        // Turn 함수 실행
+        if (!isSkill && !isAttack && !anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            Turn();
+        }
+
+        // Dodge 함수 실행
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Dodge();
+        }
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wait"))
+        {
+            anim.ResetTrigger("isDodge");
+        }
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dodge"))
+        {
+            anim.SetBool("isJump", false);
+        }
+    }
 
     protected virtual void Update()
     {
-        Debug.DrawRay(transform.position-new Vector3(0, 0, 0), direction, Color.green);
         if (!canTakeDamage)
         {
             damageCooldown -= Time.deltaTime;
@@ -190,8 +213,14 @@ public class PlayerCtrl : MonoBehaviour
         {
             Ecool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
         }
+        // 땅에 닿아있는지 체크
+        isGrounded();
+
         // 벽 충돌체크 함수 실행
         WallCheck();
+
+        // 애니메이션 업데이트
+        GetInput();
 
         //스킬 쿨타임 충전
         SkillCoolTimeCharge();
@@ -212,8 +241,10 @@ public class PlayerCtrl : MonoBehaviour
         // char 오브젝트 위치 고정
         transform.GetChild(0).localPosition = Vector3.zero;
 
+
+
         // Attack 함수 실행
-        if (UnityEngine.Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A))
         {
             Attack_anim();
         }
@@ -263,7 +294,6 @@ public class PlayerCtrl : MonoBehaviour
         }
 
         UpdateCoroutineMoveState();
-        //Debug.Log(isAttack);
 
         //점프공격 시 Y 포지션 고정
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack1") && !isJumpAttack)
@@ -324,7 +354,7 @@ public class PlayerCtrl : MonoBehaviour
         {
             Skill_Q();
         }
-
+        
         //Skill_W
         if (Input.GetKeyDown(KeyCode.W)
         && !isSkill
@@ -437,55 +467,9 @@ public class PlayerCtrl : MonoBehaviour
             SkillQ_Effect = Skill_IceQ_Effect;
             SkillW_Effect = Skill_IceW_Effect;
         }
-
     }
 
-    protected virtual void FixedUpdate()
-    {
-        // 애니메이션 업데이트
-        if (UnityEngine.Input.GetKey(KeyCode.LeftArrow))
-        {
-            xInput = -1;
-        }
-        else if (UnityEngine.Input.GetKey(KeyCode.RightArrow))
-        {
-            xInput = 1;
-        }
-        else
-        {
-            xInput = 0;
-        }
 
-        // Move 함수 실행
-        if (!isSkill && !isAttack && !anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3"))
-        {
-            Move();
-            Turn();
-        }
-        if (isRun)
-        {
-            Move_anim();
-        }
-        // Turn 함수 실행
-        if (!isSkill && !isAttack && !anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-        {
-            Turn();
-        }
-
-        // Dodge 함수 실행
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Dodge();
-        }
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Wait"))
-        {
-            anim.ResetTrigger("isDodge");
-        }
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dodge"))
-        {
-            anim.SetBool("isJump", false);
-        }
-    }
     #region HP 설정
     protected virtual IEnumerator TakeDamage()
     {
@@ -527,57 +511,66 @@ public class PlayerCtrl : MonoBehaviour
         WallCollision = Physics.Raycast(transform.position + new Vector3(0, 1.0f, 0), transform.forward, 0.6f, LayerMask.GetMask("Wall", "Monster"));
     }
 
+    protected virtual void GetInput()
+    {
+        hAxis = Input.GetAxisRaw("Horizontal");
+    }
+
     protected virtual void Move()
     {
-        Vector3 Gravity = Vector3.down * Mathf.Abs(rd.velocity.y);
-        direction = AdjustDirectionToSlope(transform.forward);
-        if (xInput != 0)
+        if(hAxis != 0)
         {
-            isRun = true;
-            if (IsOnSlope())
-            {
-                Vector3 moveDirection = direction * moveSpeed;
-                Debug.Log(moveDirection);
-                rd.velocity = new Vector3(moveDirection.x, moveDirection.y, moveDirection.z);
-                Gravity = Vector3.zero;
-                rd.useGravity = false;
-            }
-            else if (!IsOnSlope())
-            {
-                direction = AdjustDirectionToSlope(transform.forward);
-                Vector3 moveDirection = direction * moveSpeed;
-                Debug.Log(moveDirection);
-                rd.velocity = new Vector3(moveDirection.x, rd.velocity.y, moveDirection.z);
-                rd.useGravity = true;
-            }
+            moveVec = AdjustDirectionToSlope(transform.forward);
         }
-        else if (xInput == 0)
+        else
         {
-            isRun = false;
-            anim.SetBool("isRun", false);
-            if (IsOnSlope() && isGrounded())
-            {
-                rd.velocity = new Vector3(0, 0, 0);
-                rd.useGravity = true;
-            }
-            else
-            {
-                rd.velocity = new Vector3(0, rd.velocity.y, 0);
-            }
+            moveVec = Vector3.zero;
         }
-
+        if (!WallCollision)
+        {
+            transform.position += moveVec * moveSpd * Time.fixedDeltaTime;
+        }
+        StartCoroutine(Delay(0.2f));
     }
     protected virtual void Move_anim()
     {
-        anim.SetBool("isRun", xInput != 0);
+        anim.SetBool("isRun", moveVec != Vector3.zero);
+    }
+
+    protected virtual Vector3 AdjustDirectionToSlope(Vector3 direction)
+    {
+        if (!anim.GetBool("isFall"))
+        {
+            return Vector3.ProjectOnPlane(direction, hit.normal).normalized;
+        }
+        else
+        {
+            return direction;
+        }
+    }
+    protected virtual bool isGrounded()
+    {
+        if (Physics.Raycast(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up, out hit, raycastDistance))
+        {
+            if (hit.collider.CompareTag("Floor"))
+            {
+                isJumping = false; //isJump, isFall을 다시 false로
+                anim.SetBool("isJump", false);
+                anim.SetBool("isFall", false);
+                Debug.DrawRay(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up * raycastDistance, Color.green);
+                return true;
+            }
+        }
+        Debug.DrawRay(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up * raycastDistance, Color.red);
+        return false;
     }
     protected virtual void Turn()
     {
-        if (xInput > 0)
+        if (hAxis > 0)
         {
             transform.localRotation = Quaternion.Euler(0, 90, 0);
         }
-        else if (xInput < 0)
+        else if (hAxis < 0)
         {
             transform.localRotation = Quaternion.Euler(0, -90, 0);
         }
@@ -588,9 +581,8 @@ public class PlayerCtrl : MonoBehaviour
     }
     protected virtual void Jump()
     {
-        if (!isGrounded()) return;
         anim.SetBool("isJump", true);
-        rd.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+        rd.AddForce(Vector3.up * JumpPower, ForceMode.VelocityChange);
     }
     protected virtual void Fall()
     {
@@ -602,29 +594,6 @@ public class PlayerCtrl : MonoBehaviour
         isJumping = false; //isJump, isFall을 다시 false로
         anim.SetBool("isJump", false);
         anim.SetBool("isFall", false);
-    }
-    protected virtual bool isGrounded()
-    {
-        if (Physics.Raycast(transform.position - new Vector3(0, -0.05f, 0), -Vector3.up, out hit, raycastDistance))
-        {
-            Debug.DrawRay(transform.position - new Vector3(0, -0.05f, 0), -Vector3.up * raycastDistance, Color.green);
-            return true;
-        }
-        Debug.DrawRay(transform.position - new Vector3(0, -0.05f, 0), -Vector3.up * raycastDistance, Color.red);
-        return false;
-    }
-    protected virtual bool IsOnSlope()
-    {
-        if (Physics.Raycast(transform.position - new Vector3(0, -0.05f, 0), -Vector3.up, out hit, raycastDistance))
-        {
-            var angle = Vector3.Angle(Vector3.up, hit.normal);
-            return angle != 0f && angle < 45f;
-        }
-        return false;
-    }
-    protected virtual Vector3 AdjustDirectionToSlope(Vector3 direction)
-    {
-        return Vector3.ProjectOnPlane(direction, hit.normal).normalized;
     }
     #endregion
 
@@ -709,15 +678,16 @@ public class PlayerCtrl : MonoBehaviour
     }
     protected virtual void OnCollisionStay(Collision collision) // 충돌 감지
     {
-        if (collision.gameObject.tag == "Floor")    // Tag가 Floor인 오브젝트와 충돌했을 때
+        /*if (collision.gameObject.tag == "Floor")    // Tag가 Floor인 오브젝트와 충돌했을 때
         {
             Stay();
-        }
+        }*/
     }
     protected virtual void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
+        if (collision.gameObject.tag == "Floor" )    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
         {
+            Debug.Log("실행");
             Fall();
         }
     }

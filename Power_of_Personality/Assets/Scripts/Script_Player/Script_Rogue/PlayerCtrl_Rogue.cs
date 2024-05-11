@@ -21,7 +21,10 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         StartCoroutine(DashListener());
         isDashAttack = false;
     }
-
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+    }
     protected override void Update()
     {
         base.Update(); // PlayerCtrl의 Update문을 상속 받아서 실행
@@ -51,6 +54,11 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     protected override void WallCheck()
     {
         base.WallCheck();
+    }
+
+    protected override void GetInput()
+    {
+        base.GetInput();
     }
 
     protected override void Move()
@@ -93,6 +101,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         base.OnCollisionStay(collision);
     }
+
     protected override void OnCollisionExit(Collision collision)
     {
         base.OnCollisionExit(collision);
@@ -184,12 +193,12 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         if (LocalSkillYRot == 90 || (LocalSkillYRot < 92 && LocalSkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(90, SkillYRot - 90, 0));
+            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
-            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(90, SkillYRot - 90, 0));
+            SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
     }

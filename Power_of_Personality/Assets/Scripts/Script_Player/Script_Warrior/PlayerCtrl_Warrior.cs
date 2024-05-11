@@ -43,6 +43,11 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         isSkillQ = false;
     }
 
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -78,6 +83,11 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         base.WallCheck();
     }
 
+    protected override void GetInput()
+    {
+        base.GetInput();
+    }
+
     protected override void Move()
     {
         base.Move();
@@ -110,18 +120,6 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     protected override void Stay()
     {
         base.Stay();
-    }
-    protected override bool isGrounded()
-    {
-        return base.isGrounded();
-    }
-    protected override bool IsOnSlope()
-    {
-        return base.IsOnSlope();
-    }
-    protected override Vector3 AdjustDirectionToSlope(Vector3 direction)
-    {
-        return base.AdjustDirectionToSlope(direction);
     }
     #endregion
 
