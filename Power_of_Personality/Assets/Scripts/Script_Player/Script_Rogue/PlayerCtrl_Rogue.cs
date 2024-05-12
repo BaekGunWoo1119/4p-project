@@ -61,24 +61,14 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         base.GetInput();
     }
 
-    protected override void Move()
+    public override void Move()
     {
         base.Move();
-    }
-
-    protected override void Move_anim()
-    {
-        base.Move_anim();
     }
 
     protected override void Turn()
     {
         base.Turn();
-    }
-
-    protected override void Dodge()
-    {
-        base.Dodge();
     }
 
     protected override void Jump()
@@ -97,11 +87,6 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     #endregion
 
     #region 충돌 관련 함수
-    protected override void OnCollisionStay(Collision collision) // 충돌 감지
-    {
-        base.OnCollisionStay(collision);
-    }
-
     protected override void OnCollisionExit(Collision collision)
     {
         base.OnCollisionExit(collision);
@@ -113,27 +98,6 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         anim.SetTrigger("CommonAttack");
         isAttack = true;
-    }
-    protected override void Skill_Q()
-    {
-        isSkill = true;
-        anim.SetTrigger("Skill_Q");
-        StartCoroutine(MoveForwardForSeconds(1.0f));
-        QSkillCoolTime = 0;
-    }
-
-    protected override void Skill_W()
-    {
-        anim.SetTrigger("Skill_W");
-        isSkill = true;
-        WSkillCoolTime = 0;
-    }
-
-    protected override void Skill_E()
-    {
-        anim.SetTrigger("Skill_E");
-        isSkill = true;
-        StartCoroutine(Skill_E_Move());
     }
 
     //도적 스킬 E 카메라 무브 및 스킬 공격
@@ -353,6 +317,30 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     #endregion
 
     #region 스킬이나 공격 움직임, Delay 등 세부 조정 함수
+
+    public override void UseSkill(string skillName)
+    {
+        isSkill = true;
+        if(skillName == "Q")
+        {
+            PlayAnim("Skill_Q");
+            StartCoroutine(MoveForwardForSeconds(1.0f));
+            QSkillCoolTime = 0;
+        }
+
+        if(skillName == "W")
+        {
+            PlayAnim("Skill_W");
+            WSkillCoolTime = 0;
+        }
+
+        if(skillName == "E")
+        {
+            PlayAnim("Skill_E");
+            StartCoroutine(Skill_E_Move());
+        }
+    }
+
     IEnumerator MoveForwardForSeconds(float seconds)
     {
         yield return new WaitForSeconds(0.3f);
@@ -394,6 +382,18 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         SkillE2_Effect = Skill_FireE2_Effect;
         SkillE3_Effect = Skill_FireE3_Effect;
         SkillE4_Effect = Skill_FireE4_Effect;
+    }
+    #endregion
+
+    #region 애니메이션
+    public override void PlayAnim(string AnimationName)
+    {
+        base.PlayAnim(AnimationName);
+    }
+
+    public override void StopAnim(string AnimationName)
+    {
+        base.StopAnim(AnimationName);
     }
     #endregion
 }

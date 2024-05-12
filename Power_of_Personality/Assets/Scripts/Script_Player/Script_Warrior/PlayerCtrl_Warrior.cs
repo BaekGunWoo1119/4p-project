@@ -88,24 +88,14 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         base.GetInput();
     }
 
-    protected override void Move()
+    public override void Move()
     {
         base.Move();
-    }
-
-    protected override void Move_anim()
-    {
-        base.Move_anim();
     }
 
     protected override void Turn()
     {
         base.Turn();
-    }
-
-    protected override void Dodge()
-    {
-        base.Dodge();
     }
 
     protected override void Jump()
@@ -124,10 +114,6 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     #endregion
 
     #region 충돌 관련 함수
-    protected override void OnCollisionStay(Collision collision) // 충돌 감지
-    {
-        base.OnCollisionStay(collision);
-    }
     protected override void OnCollisionExit(Collision collision)
     {
         base.OnCollisionExit(collision);
@@ -146,75 +132,65 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     #region 공격 관련 함수
     protected override void Attack_anim()
     {
-        anim.SetTrigger("CommonAttack");
+        PlayAnim("CommonAttack");
         isAttack = true;
     }
+    
+    //Attack 함수 통합/분리 (번호 할당 => 기본공격 1,2,3 = 0,1,2 / 점프공격 1,2,3 = 3,4,5)
+    public override void Attack(int AttackNumber)
+    {
+        if(AttackNumber == 0)
+        {
+            isSound = false;
+            StartCoroutine(Attack1_Collider());
+            StartCoroutine(Attack_Sound(AttackNumber , 0.8f));
+            StartCoroutine(Delay(0.4f));
+            StartCoroutine(MoveForwardForSeconds(0.3f));
+            StartCoroutine(Delay(0.2f));
+            mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.03f, null);
+        }
 
-    protected override void Skill_Q()
-    {
-        isSkill = true;
-        isSkillQ = true;
-        anim.SetTrigger("Skill_Q");
-        StartCoroutine(Spawn_SwordAura());
+        if(AttackNumber == 1)
+        {
+            StartCoroutine(Attack1_Collider());
+            StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
+            StartCoroutine(Delay(0.2f));
+            mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.01f, null);
+        }
+
+        if(AttackNumber == 2)
+        {
+            StartCoroutine(Delay(0.2f));
+            StartCoroutine(MoveForwardForSeconds(0.3f));
+            StartCoroutine(Attack1_Collider());
+            StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
+            StartCoroutine(Delay(5.0f));
+            mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.3f, 0.1f, null);
+        }
+
+        if(AttackNumber == 3)
+        {
+            isSound = false;
+            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.5f, "null");
+            StartCoroutine(Attack1_Collider());
+        }
+
+        if(AttackNumber == 4)
+        {
+            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.6f, "null");
+            StartCoroutine(Attack1_Collider());
+            StartCoroutine(Delay(0.2f));
+        }
+
+        if(AttackNumber == 5)
+        {
+            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.5f, "null");
+            StartCoroutine(Attack1_Collider());
+            StopAnim("CommonAttack");
+        }
+
     }
-    protected override void Skill_W()
-    {
-        WSkill_Collider.SetActive(true);
-        anim.SetTrigger("Skill_W");
-        isSkill = true;
-        StartCoroutine(MoveForwardForSeconds(1.35f));
-    }
-    protected override void Skill_E()
-    {
-        anim.SetTrigger("Skill_E");
-        isSkill = true;
-        StartCoroutine(SKill_E_Move());
-        StartCoroutine(WarriorSkill_E());
-    }
-    protected override void CommonAttack1()
-    {
-        Debug.Log("기본공격 실행!!");
-        isSound = false;
-        StartCoroutine(Attack1_Collider());
-        StartCoroutine(Delay(0.4f));
-        StartCoroutine(MoveForwardForSeconds(0.3f));
-        StartCoroutine(Delay(0.2f));
-        mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.03f, null);
-    }
-    protected override void CommonAttack2()
-    {
-        StartCoroutine(Attack1_Collider());
-        StartCoroutine(Attack_Sound(1, 0.8f));
-        StartCoroutine(Delay(0.2f));
-        mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.01f, null);
-    }
-    protected override void CommonAttack3()
-    {
-        StartCoroutine(Delay(0.2f));
-        StartCoroutine(MoveForwardForSeconds(0.3f));
-        StartCoroutine(Attack1_Collider());
-        StartCoroutine(Attack_Sound(2, 0.8f));
-        StartCoroutine(Delay(5.0f));
-        mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.3f, 0.1f, null);
-    }
-    protected override void JumpAttack1()
-    {
-        isSound = false;
-        mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.5f, "null");
-        StartCoroutine(Attack1_Collider());
-    }
-    protected override void JumpAttack2()
-    {
-        mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.6f, "null");
-        StartCoroutine(Attack1_Collider());
-        StartCoroutine(Delay(0.2f));
-    }
-    protected override void JumpAttack3()
-    {
-        mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.5f, "null");
-        StartCoroutine(Attack1_Collider());
-        anim.ResetTrigger("CommonAttack");
-    }
+
     IEnumerator Attack1_Collider()
     {
         yield return new WaitForSeconds(0.15f);
@@ -451,6 +427,31 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
     #region 스킬이나 공격 움직임, Delay 등 세부 조정 함수
 
+    public override void UseSkill(string skillName)
+    {
+        isSkill = true;
+        if(skillName == "Q")
+        {
+            isSkillQ = true;
+            PlayAnim("Skill_Q");
+            StartCoroutine(Spawn_SwordAura());
+        }
+
+        if(skillName == "W")
+        {
+            WSkill_Collider.SetActive(true);
+            PlayAnim("Skill_W");
+            StartCoroutine(MoveForwardForSeconds(1.35f));
+        }
+
+        if(skillName == "E")
+        {
+            PlayAnim("Skill_E");
+            StartCoroutine(SKill_E_Move());
+            StartCoroutine(WarriorSkill_E());
+        }
+    }
+
     IEnumerator MoveForwardForSeconds(float seconds)
     {
         coroutineMove = true;
@@ -463,19 +464,6 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
             elapsedTime += Time.deltaTime;
             yield return null;
-        }
-
-        //앞으로 가는 애니메이션 실행 시가 아닐 때만 false 반환
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_1B")
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_2")
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("Attack_4Combo_4")
-        || anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E"))
-        {
-
-        }
-        else
-        {
-            coroutineMove = false;
         }
 
         if (WSkill_Collider.activeSelf == true)
@@ -492,7 +480,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
-            anim.SetBool("isIdle", true);
+            PlayAnim("isIdle");
             isAttack = false;
             isSkill = false;
             isSound = false;
@@ -500,4 +488,15 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     }
     #endregion
 
+    #region 애니메이션 
+    public override void PlayAnim(string AnimationName)
+    {
+        base.PlayAnim(AnimationName);
+    }
+
+    public override void StopAnim(string AnimationName)
+    {
+        base.StopAnim(AnimationName);
+    }
+    #endregion
 }
