@@ -596,11 +596,11 @@ public class PlayerCtrl_Wizard : MonoBehaviour
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 0, 0f));
         }
         else
         {
-            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, -90, 0f));
+            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 180, 0f));
         }
     }
 
