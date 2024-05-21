@@ -54,7 +54,7 @@ public class ObjectMoveDestroys : MonoBehaviour
     {
         if (isHitMake == false)
             return;
-        m_makedObject = Instantiate(m_hitObject, hit.point, Quaternion.LookRotation(hit.normal)).gameObject;
+        m_makedObject = Instantiate(m_hitObject, hit.point, Quaternion.Euler(0f, 0f, 0f)).gameObject;
         m_makedObject.transform.parent = transform.parent;
         m_makedObject.transform.localScale = new Vector3(1, 1, 1);
     }

@@ -44,15 +44,18 @@ public class PlayerCtrl_Wizard : MonoBehaviour
     public GameObject Skill_IceW_Effect;
     public GameObject Skill_FireE_Aura_Effect;
     public GameObject Skill_IceE_Aura_Effect;
-    public GameObject Skill_FireE_Effect;
-    public GameObject Skill_IceE_Effect;
+    public GameObject Skill_FireE1_Effect;
+    public GameObject Skill_IceE1_Effect;
+    public GameObject Skill_FireE2_Effect;
+    public GameObject Skill_IceE2_Effect;
     private GameObject Attack1_Effect;
     private GameObject Attack2_Effect;
     private GameObject Skill_Aura_Effect;
     private GameObject SkillQ_Effect;
     private GameObject SkillW_Effect;
     private GameObject SkillE_Aura_Effect;
-    private GameObject SkillE_Effect;
+    private GameObject SkillE1_Effect;
+    private GameObject SkillE2_Effect;
     private GameObject SkillEffect;
     private float SkillYRot;
 
@@ -124,7 +127,8 @@ public class PlayerCtrl_Wizard : MonoBehaviour
             Skill_Aura_Effect = Skill_FireE_Aura_Effect;
             SkillQ_Effect = Skill_FireQ_Effect;
             SkillW_Effect = Skill_FireW_Effect;
-            SkillE_Effect = Skill_FireE_Effect;
+            SkillE1_Effect = Skill_FireE1_Effect;
+            SkillE2_Effect = Skill_FireE2_Effect;
             SkillE_Aura_Effect = Skill_FireE_Aura_Effect;
         }
         else if (PlayerPrefs.GetString("property") == "Ice")
@@ -134,7 +138,8 @@ public class PlayerCtrl_Wizard : MonoBehaviour
             Skill_Aura_Effect = Skill_Ice_Aura_Effect;
             SkillQ_Effect = Skill_IceQ_Effect;
             SkillW_Effect = Skill_IceW_Effect;
-            SkillE_Effect = Skill_IceE_Effect;
+            SkillE1_Effect = Skill_IceE1_Effect;
+            SkillE2_Effect = Skill_IceE2_Effect;
             SkillE_Aura_Effect = Skill_IceE_Aura_Effect;
         }
         else
@@ -144,7 +149,8 @@ public class PlayerCtrl_Wizard : MonoBehaviour
             Skill_Aura_Effect = Skill_Ice_Aura_Effect;
             SkillQ_Effect = Skill_IceQ_Effect;
             SkillW_Effect = Skill_IceW_Effect;
-            SkillE_Effect = Skill_IceE_Effect;
+            SkillE1_Effect = Skill_IceE1_Effect;
+            SkillE2_Effect = Skill_IceE2_Effect;
             SkillE_Aura_Effect = Skill_IceE_Aura_Effect;
         }
 
@@ -624,15 +630,27 @@ public class PlayerCtrl_Wizard : MonoBehaviour
         SkillEffect = Instantiate(SkillE_Aura_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y-1, EffectGen.transform.position.z), Quaternion.Euler(0f, 90, 0f));
     }
 
-    public void skill_E_on()
+    public void skill_E1_on()
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(SkillE_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0f, 90, 0f));
+            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30f, 90, 0f));
         }
         else
         {
-            SkillEffect = Instantiate(SkillE_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0f, -90, 0f));
+            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30f, -90, 0f));
+        }
+    }
+
+    public void skill_E2_on()
+    {
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            SkillEffect = Instantiate(SkillE2_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30f, 90, 0f));
+        }
+        else
+        {
+            SkillEffect = Instantiate(SkillE2_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30f, -90, 0f));
         }
     }
 
