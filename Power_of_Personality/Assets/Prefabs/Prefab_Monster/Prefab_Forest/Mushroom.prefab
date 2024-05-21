@@ -471,7 +471,7 @@ Transform:
   - {fileID: 4776714082042513364}
   - {fileID: 8240956078160496629}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2670603883755573932
 GameObject:
@@ -766,6 +766,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4253186589519750528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1014902210970475670}
+  m_Layer: 6
+  m_Name: EffectGen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1014902210970475670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253186589519750528}
+  m_LocalRotation: {x: 0.6903455, y: -0.15304597, z: -0.6903455, w: 0.15304597}
+  m_LocalPosition: {x: -0, y: 0.35, z: 0.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4776714082042513364}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: -155}
 --- !u!1 &4438253098961745808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,6 +1150,7 @@ Transform:
   - {fileID: 8188267244955849075}
   - {fileID: 6702334645027461815}
   - {fileID: 6406708441226206801}
+  - {fileID: 1014902210970475670}
   m_Father: {fileID: 1802468368941791210}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -1155,11 +1187,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf6232205e1d134eae379f361bb1cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   HpBar: {fileID: 4142016463289508209}
+  curHP: 0
+  maxHP: 0
   ATK: 10
+  DEF: 0
+  MoveSpeed: 0
+  FireATTDEF: 0
+  IceATTDEF: 0
+  Damage: 0
+  matObj: {fileID: 0}
   targetObj: {fileID: 1855764469220507852}
+  PlayerTr: {fileID: 0}
+  Distance: 0
+  TraceRadius: 0
+  attackRadius: 0
+  AttackCoolTime: 0
   AttackCollider: {fileID: 4828276501851912601}
   Coin: {fileID: 9137955520889552415, guid: 5e136e1029a3c0a4f842505d52c8ea4f, type: 3}
+  isDie: 0
+  isHit: 0
+  IceHit: {fileID: 1387851562293694130, guid: e2789a389dac3ba4d817abc6b1fc8df2, type: 3}
+  FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
+  AttackEffect: {fileID: 1011157772751556, guid: 328a1ed90c1b36b4e80447ddfaaeca59, type: 3}
+  EffectGen: {fileID: 4253186589519750528}
 --- !u!65 &8780751718117221856
 BoxCollider:
   m_ObjectHideFlags: 0

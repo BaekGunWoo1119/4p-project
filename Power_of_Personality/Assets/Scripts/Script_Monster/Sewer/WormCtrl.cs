@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class WormCtrl : MonsterCtrl
 {
+    public GameObject AttackEffect;
+    public GameObject EffectGen;
     public override void Awake()
     {
         ATK = 10.0f;
@@ -61,6 +63,10 @@ public class WormCtrl : MonsterCtrl
     }
     public override Vector3 GetHPBarPosition()
     {
-        return transform.position + Vector3.up * 5.0f; // ¿øÇÏ´Â À§Ä¡·Î ¼öÁ¤
+        return transform.position + Vector3.up * 5.0f; // ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    }
+    public void Attack_On()
+    {
+        Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
     }
 }
