@@ -69,13 +69,17 @@ public class PlayerCtrl_Archer : MonoBehaviour
     public GameObject Skill_IceQ_Effect;
     public GameObject Skill_FireW_Effect;
     public GameObject Skill_IceW_Effect;
-    public GameObject Skill_FireE_Effect;
-    public GameObject Skill_IceE_Effect;
+    public GameObject Skill_FireE1_Effect;
+    public GameObject Skill_IceE1_Effect;
+    public GameObject Skill_FireE2_Effect;
+    public GameObject Skill_IceE2_Effect;
+    public GameObject Skill_SmokeEffect;
     private GameObject Attack1_Effect;
     private GameObject Attack2_Effect;
     private GameObject SkillQ_Effect;
     private GameObject SkillW_Effect;
-    private GameObject SkillE_Effect;
+    private GameObject SkillE1_Effect;
+    private GameObject SkillE2_Effect;
     private GameObject SkillEffect;
     private float SkillYRot;
 
@@ -141,7 +145,8 @@ public class PlayerCtrl_Archer : MonoBehaviour
             Attack2_Effect = commonAttack_Fire2_Effect;
             SkillQ_Effect = Skill_FireQ_Effect;
             SkillW_Effect = Skill_FireW_Effect;
-            SkillE_Effect = Skill_FireE_Effect;
+            SkillE1_Effect = Skill_FireE1_Effect;
+            SkillE2_Effect = Skill_FireE2_Effect;
         }
         else if (PlayerPrefs.GetString("property") == "Ice")
         {
@@ -149,7 +154,8 @@ public class PlayerCtrl_Archer : MonoBehaviour
             Attack2_Effect = commonAttack_Ice2_Effect;
             SkillQ_Effect = Skill_IceQ_Effect;
             SkillW_Effect = Skill_IceW_Effect;
-            SkillE_Effect = Skill_IceE_Effect;
+            SkillE1_Effect = Skill_IceE1_Effect;
+            SkillE2_Effect = Skill_IceE2_Effect;
         }
         else
         {
@@ -157,7 +163,8 @@ public class PlayerCtrl_Archer : MonoBehaviour
             Attack2_Effect = commonAttack_Ice2_Effect;
             SkillQ_Effect = Skill_IceQ_Effect;
             SkillW_Effect = Skill_IceW_Effect;
-            SkillE_Effect = Skill_IceE_Effect;
+            SkillE1_Effect = Skill_IceE1_Effect;
+            SkillE2_Effect = Skill_IceE2_Effect;
         }
 
         //벽 충돌체크
@@ -761,11 +768,25 @@ public class PlayerCtrl_Archer : MonoBehaviour
         SkillEffect.transform.parent = EffectGen.transform;
     }
 
-    public void skill_E_on()
+    public void skill_E1_on()
     {
-        SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(SkillE_Effect.transform.eulerAngles));
+        SkillEffect = Instantiate(SkillE1_Effect, EffectGen.transform.position, Quaternion.Euler(SkillE1_Effect.transform.eulerAngles));
         SkillEffect.transform.parent = EffectGen.transform;
     }
+
+    public void skill_E2_on()
+    {
+        SkillEffect = Instantiate(SkillE2_Effect, EffectGen.transform.position, Quaternion.Euler(SkillE2_Effect.transform.eulerAngles));
+        SkillEffect.transform.parent = EffectGen.transform;
+    }
+
+    public void skill_Jump_on()
+    {
+        SkillEffect = Instantiate(Skill_SmokeEffect, EffectGen.transform.position, Quaternion.Euler(-90f,0f,0f));
+        
+    }
+
+    
 
     IEnumerator TakeDamage()
     {
