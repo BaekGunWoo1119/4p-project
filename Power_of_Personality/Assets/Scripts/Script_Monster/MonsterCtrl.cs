@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Photon.Pun.Demo.Asteroids;
@@ -21,6 +21,10 @@ public class MonsterCtrl : MonoBehaviour
     public float FireATTDEF;     // 화 속성 방어력
     public float IceATTDEF;      // 빙 속성 방어력
     public float Damage;   // 받은 피해량
+
+
+    public string WeakProperty;
+
 
     public SkinnedMeshRenderer matObj;
     public GameObject targetObj;
@@ -169,7 +173,6 @@ public class MonsterCtrl : MonoBehaviour
     {
         if (maxHP != 0 || curHP > 0)
         {
-
             if (PlayerPrefs.GetString("property") == "Ice")
             {
                 Instantiate(IceHit, this.transform.position, Quaternion.Euler(0, 0, 0));
@@ -178,9 +181,12 @@ public class MonsterCtrl : MonoBehaviour
             {
                 Instantiate(FireHit, this.transform.position, Quaternion.Euler(0, 0, 0));
             }
-
+            if(PlayerPrefs.GetString("property") == WeakProperty)
+            {
+                Damage = Damage * 1.5f;
+            }
             Material[] materials = matObj.materials;
-            curHP -= Damage;
+            curHP -= Damage * (1 / (1 + DEF * 0.01f));
             CheckHP(); // ü�� ����
             anim.SetBool("TakeDamage", true);
             foreach (Material material in materials)
