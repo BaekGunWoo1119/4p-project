@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2053655256841987152
+--- !u!1 &3646135202010142116
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,49 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1630894597899459985}
-  - component: {fileID: 2465555424336252011}
-  - component: {fileID: 3237669270906249940}
-  - component: {fileID: 4681793270488474683}
-  - component: {fileID: 7118258226294227814}
-  - component: {fileID: 5052676218108643820}
+  - component: {fileID: 8995775133836532600}
+  - component: {fileID: 1478259111563108378}
+  - component: {fileID: 7595165922104491823}
+  - component: {fileID: 5108199958580391095}
+  - component: {fileID: 3591977459920913197}
+  - component: {fileID: 5448130399220913908}
   m_Layer: 0
-  m_Name: Item 0
+  m_Name: DEF_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1630894597899459985
+--- !u!4 &8995775133836532600
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053655256841987152}
+  m_GameObject: {fileID: 3646135202010142116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.52, y: 1, z: 0}
+  m_LocalPosition: {x: 12, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2465555424336252011
+--- !u!33 &1478259111563108378
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053655256841987152}
+  m_GameObject: {fileID: 3646135202010142116}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3237669270906249940
+--- !u!23 &7595165922104491823
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053655256841987152}
+  m_GameObject: {fileID: 3646135202010142116}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -86,13 +86,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4681793270488474683
+--- !u!65 &5108199958580391095
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053655256841987152}
+  m_GameObject: {fileID: 3646135202010142116}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -107,13 +107,13 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7118258226294227814
+--- !u!54 &3591977459920913197
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053655256841987152}
+  m_GameObject: {fileID: 3646135202010142116}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -134,38 +134,38 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5052676218108643820
+--- !u!114 &5448130399220913908
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053655256841987152}
+  m_GameObject: {fileID: 3646135202010142116}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4b16d3d539351149be73161323452cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: 21300000, guid: 4f939ae16be220545b1b38129d9ac38c, type: 3}
-  itemID: 0
-  SlotIndex: 0
-  Name: "0\uBC88 \uC544\uC774\uD15C"
-  Set: "0\uBC88 \uC544\uC774\uD15C \uC138\uD2B8\uC785\uB2C8\uB2E4"
+  itemSprite: {fileID: 21300000, guid: 4cacf8f3a3b920c4293162b1ed1cd74a, type: 3}
+  itemID: 5
+  SlotIndex: 5
+  Name: "\uD30C\uBE14\uB85C\uD504\uC758 \uAC00\uC2DC"
+  Set: "\uD30C\uBE14\uB85C\uD504\uC758 \uBC18\uC0AC"
   Grade: "\uB808\uC5B4"
-  Description: "0\uBC88 \uC544\uC774\uD15C \uC785\uB2C8\uB2E4."
-  FixedAD: 10
-  PercentAD: 10
-  FixedArmor: 10
-  PercentArmor: 10
-  FixedSpeed: 10
-  PercentSpeed: 10
-  FixedADC: 10
-  PercentADC: 10
-  FixedAP: 10
-  PercentAP: 10
-  FixedCooltime: 10
-  PercentCooltime: 10
-  FixedFire: 10
-  PercentFire: 10
-  FixedIce: 10
-  PercentIce: 10
+  Description: "\uBC29\uC5B4\uB825 + 20"
+  FixedAD: 0
+  PercentAD: 0
+  FixedArmor: 20
+  PercentArmor: 0
+  FixedSpeed: 0
+  PercentSpeed: 0
+  FixedADC: 0
+  PercentADC: 0
+  FixedAP: 0
+  PercentAP: 0
+  FixedCooltime: 0
+  PercentCooltime: 0
+  FixedFire: 0
+  PercentFire: 0
+  FixedIce: 0
+  PercentIce: 0
