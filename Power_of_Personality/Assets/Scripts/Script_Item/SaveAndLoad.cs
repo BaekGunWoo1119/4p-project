@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SaveAndLoad : MonoBehaviour
 {
-    Inventory Inv;
+    public Inventory Inv;
     public Item[] items;
 
     public void Start()
@@ -51,13 +51,20 @@ public class SaveAndLoad : MonoBehaviour
         Debug.Log("로딩 중...");
         List<ItemLoad> itemsToLoad = CustomJSON.FromJson<ItemLoad>(File.ReadAllText(Application.persistentDataPath + transform.name));
 
+
+    
         for(int i = itemsToLoad[0].slotIndex; i < Inv.slots.Length; i++)
         {
             foreach (ItemLoad z in itemsToLoad)
             {
                 if (i == z.slotIndex)
                 {
+                    
+                    Debug.Log(Inv.slots[i].transform);
+
                     Item b = Instantiate(items[z.Id], Inv.slots[i].transform).GetComponent<Item>();
+                    b.itemID =z.Id;
+                    b.SlotIndex = z.slotIndex;
                     b.Name = z.Name;
                     b.Set = z.Set;
                     b.Grade = z.Grade;

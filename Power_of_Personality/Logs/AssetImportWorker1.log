@@ -1,0 +1,505 @@
+Using pre-set license
+Built from '2022.2/staging' branch; Version is '2022.2.20f1 (c5d806317f84) revision 12965894'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 10  (10.0.19045) 64bit Core' Language: 'ko' Physical Memory: 32698 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2022.2.20f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+D:/Unity/POP/Power_of_Personality
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+63527
+Successfully changed project path to: D:/Unity/POP/Power_of_Personality
+D:/Unity/POP/Power_of_Personality
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [23196] Host "[IP] 192.168.0.23 [Port] 0 [Flags] 2 [Guid] 2888782466 [EditorId] 2888782466 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-IMUE91T) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [23196] Host "[IP] 192.168.0.23 [Port] 0 [Flags] 2 [Guid] 2888782466 [EditorId] 2888782466 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-IMUE91T) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 17.32 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.2.20f1 (c5d806317f84)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.2.20f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/Unity/POP/Power_of_Personality/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3070 (ID=0x2484)
+    Vendor:   NVIDIA
+    VRAM:     8018 MB
+    Driver:   31.0.15.5176
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.2.20f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.2.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.2.20f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56592
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.2.20f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.010960 seconds.
+- Loaded All Assemblies, in  0.506 seconds
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.443 seconds
+Domain Reload Profiling:
+	ReloadAssembly (285ms)
+		BeginReloadAssembly (126ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (1ms)
+		LoadAllAssembliesAndSetupDomain (0ms)
+			LoadAssemblies (123ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (209ms)
+				TypeCache.Initialize (208ms)
+					TypeCache.ScanAssembly (206ms)
+				ResolveRequiredComponents (1ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (336ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (14ms)
+				SetLoadedEditorAssemblies (11ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (236ms)
+				ProcessInitializeOnLoadMethodAttributes (74ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.429 seconds
+Refreshing native plugins compatible for Editor in 6.76 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.096 seconds
+Domain Reload Profiling:
+	ReloadAssembly (378ms)
+		BeginReloadAssembly (240ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (10ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (38ms)
+		LoadAllAssembliesAndSetupDomain (1047ms)
+			LoadAssemblies (466ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (681ms)
+				TypeCache.Initialize (593ms)
+					TypeCache.ScanAssembly (583ms)
+				ResolveRequiredComponents (31ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (762ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (11ms)
+				SetLoadedEditorAssemblies (8ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (125ms)
+				ProcessInitializeOnLoadAttributes (486ms)
+				ProcessInitializeOnLoadMethodAttributes (122ms)
+				AfterProcessingInitializeOnLoad (10ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (9ms)
+database is locked
+Failed to delete database file Library/ShaderCache.db
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.15 seconds
+Refreshing native plugins compatible for Editor in 6.37 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6018 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 73 unused Assets / (1.1 MB). Loaded Objects now: 6477.
+Memory consumption went from 244.2 MB to 243.1 MB.
+Total: 8.750800 ms (FindLiveObjects: 0.785100 ms CreateObjectMapping: 0.775500 ms MarkObjects: 6.690700 ms  DeleteObjects: 0.498000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 46191.313779 seconds.
+  path: Assets/Animations/Anim_Monster/Bee King/Legacy(Read-Only)/Bee King@Cast Spell 01.FBX
+  artifactKey: Guid(ff57e0d7732f7d54f86241cdcba4388b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Anim_Monster/Bee King/Legacy(Read-Only)/Bee King@Cast Spell 01.FBX using Guid(ff57e0d7732f7d54f86241cdcba4388b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '471b59495dcb8fd6d09d5ed607ff2cba') in 0.171751 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 77
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Models/Mesh_Cave/Foliage/Cavern_Bush-03.fbx
+  artifactKey: Guid(d699d16b42db60a4da9629e85a0522c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Cave/Foliage/Cavern_Bush-03.fbx using Guid(d699d16b42db60a4da9629e85a0522c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '93624ba21dfa546c01b93856e65566f4') in 0.477167 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Prefabs/Prefab_Cave/Rocks/Cavern_Boulder-03.prefab
+  artifactKey: Guid(bfb122cb74ededd4c9f64c3a16107ec5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Prefab_Cave/Rocks/Cavern_Boulder-03.prefab using Guid(bfb122cb74ededd4c9f64c3a16107ec5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6236b7ad08a4ba8f803c15a8f95be6a0') in 0.115835 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 13
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/DownloadAssets/100Effects/EffectsSet_2(ScriptBased)/Effects/Effect_46_CyberAirTroopInvader/Effect_46_SateliteBeamCannon.prefab
+  artifactKey: Guid(2c68ab591529ec446ac4ffdc7fb91291) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DownloadAssets/100Effects/EffectsSet_2(ScriptBased)/Effects/Effect_46_CyberAirTroopInvader/Effect_46_SateliteBeamCannon.prefab using Guid(2c68ab591529ec446ac4ffdc7fb91291) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e81594860e7d8efd94ed3f1140671e1a') in 0.936491 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 102
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Prefabs/Prefab_Cave/Foliage/Cavern_Bush-01.prefab
+  artifactKey: Guid(0a9b4cb7af551a34b8b1b88fd0e4cbbb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Prefab_Cave/Foliage/Cavern_Bush-01.prefab using Guid(0a9b4cb7af551a34b8b1b88fd0e4cbbb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '57fa7bb754ca912a682394372af2bd21') in 0.016461 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 12
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/Sounds/Free Sounds Pack/Cavern Atmosphere - Loop.wav
+  artifactKey: Guid(6d2e2db0b97a8c84e9b7aba22496d5fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sounds/Free Sounds Pack/Cavern Atmosphere - Loop.wav using Guid(6d2e2db0b97a8c84e9b7aba22496d5fe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '572b5194a38d98d2fe3d70a6d4646545') in 0.055030 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Prefabs/Prefab_Cave/Foliage/Cavern_BushTopper-01.prefab
+  artifactKey: Guid(1e685ccbd8b872e4699eb8fe7d42584c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Prefab_Cave/Foliage/Cavern_BushTopper-01.prefab using Guid(1e685ccbd8b872e4699eb8fe7d42584c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ee2ceb196c559f39ac78f3eacb10c8db') in 0.018408 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 12
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Models/Mesh_Cave/Foliage/Cavern_BushTopper-03.fbx
+  artifactKey: Guid(3a5dcc71d688a5b4c938c179416f117d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Cave/Foliage/Cavern_BushTopper-03.fbx using Guid(3a5dcc71d688a5b4c938c179416f117d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc2e23e11eb627642282648f2017b439') in 0.022818 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000019 seconds.
+  path: Assets/Models/Mesh_Castle/Props/Candle_02.fbx
+  artifactKey: Guid(b995879da8e0ef2419f2bb4eaa7f4533) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Castle/Props/Candle_02.fbx using Guid(b995879da8e0ef2419f2bb4eaa7f4533) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c11e15b592371e9958cc085603035071') in 0.027464 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 8
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Prefabs/Prefab_Cave/Foliage/Cavern_Bush-02.prefab
+  artifactKey: Guid(a800f3f2e19a63f47a387e08c8ceb15e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Prefab_Cave/Foliage/Cavern_Bush-02.prefab using Guid(a800f3f2e19a63f47a387e08c8ceb15e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1ded59fdf332b766ceb80b7f5c477b6') in 0.018487 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 12
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Models/Mesh_Cave/Rocks/Cavern_Boulder-02.fbx
+  artifactKey: Guid(1b9469760edb5054c8ebbec44fd3eb4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Cave/Rocks/Cavern_Boulder-02.fbx using Guid(1b9469760edb5054c8ebbec44fd3eb4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6030a1897e64a734253d3198032e010e') in 0.076545 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 11
+========================================================================
+Received Import Request.
+  Time since last request: 0.000036 seconds.
+  path: Assets/Animations/Anim_Monster/Bee King/Legacy(Read-Only)/Bee King@Cast Spell 02.FBX
+  artifactKey: Guid(31d0c627632a6544a9ba19ef645fa508) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Anim_Monster/Bee King/Legacy(Read-Only)/Bee King@Cast Spell 02.FBX using Guid(31d0c627632a6544a9ba19ef645fa508) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a6c07fd31c394db1e02e47e21b55ac01') in 0.031942 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 77
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/Models/Mesh_Cave/Foliage/Cavern_Bush-02.fbx
+  artifactKey: Guid(6f68698e7bbfdee41883d14ecdefbce5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/Mesh_Cave/Foliage/Cavern_Bush-02.fbx using Guid(6f68698e7bbfdee41883d14ecdefbce5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '784fc93540dc7c64d7cdf500c245410d') in 0.017416 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 10
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Prefabs/Platform/Cave_Platform Mid.prefab
+  artifactKey: Guid(50cbcc5b430c15c46bcf276fb476e179) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Platform/Cave_Platform Mid.prefab using Guid(50cbcc5b430c15c46bcf276fb476e179) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc44547e7156d9680b33e86ca1ec9b2e') in 0.063147 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 18
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Prefabs/Prefab_Cave/Foliage/Cavern_BushTopper-04.prefab
+  artifactKey: Guid(b3451004e9fe3fb41b5cd0a144b38b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Prefab_Cave/Foliage/Cavern_BushTopper-04.prefab using Guid(b3451004e9fe3fb41b5cd0a144b38b8e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c200b28d4bbbd206fb886c39b0e6d913') in 0.022682 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 12
+========================================================================
+Received Import Request.
+  Time since last request: 18.054404 seconds.
+  path: Assets/DownloadAssets/100Effects/EffectsSet_2(ScriptBased)/Effects/Effect_36_RisingAttack/Effect_36_RisingAttack.prefab
+  artifactKey: Guid(67294aa8ad75b954d866ba4da44f0aef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/DownloadAssets/100Effects/EffectsSet_2(ScriptBased)/Effects/Effect_36_RisingAttack/Effect_36_RisingAttack.prefab using Guid(67294aa8ad75b954d866ba4da44f0aef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a4b123b3a1fb052b0dc4178eb128ebfd') in 0.235057 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 56
+========================================================================
+Received Import Request.
+  Time since last request: 144.919750 seconds.
+  path: Assets/Resources/Effects/Effect_Boss/Druid/Scratch.prefab
+  artifactKey: Guid(2f04266f62c22e04c8da8b5527f70331) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Resources/Effects/Effect_Boss/Druid/Scratch.prefab using Guid(2f04266f62c22e04c8da8b5527f70331) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d3b6dde92281f7281d3125b695c519c') in 0.375505 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 41
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Images/Textures/Textures_UI_UX/Bars/ScrollBarHorizontalDown.png
+  artifactKey: Guid(64515587c50bef84782891fd5f457ee0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Textures/Textures_UI_UX/Bars/ScrollBarHorizontalDown.png using Guid(64515587c50bef84782891fd5f457ee0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dfd413de4c91d7662c4f4d8633679546') in 0.045487 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000039 seconds.
+  path: Assets/Images/Textures/Textures_UI_UX/Bars/ScrollBarHorizontalHover.png
+  artifactKey: Guid(4a85d66eba0f4704ab2f1232c2a34998) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Textures/Textures_UI_UX/Bars/ScrollBarHorizontalHover.png using Guid(4a85d66eba0f4704ab2f1232c2a34998) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b23de3d18b3e70650490df7bc5c898b9') in 0.027414 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image D:\Unity\POP\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.309 seconds
+Refreshing native plugins compatible for Editor in 5.51 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.741 seconds
+Domain Reload Profiling:
+	ReloadAssembly (391ms)
+		BeginReloadAssembly (262ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (14ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (101ms)
+		LoadAllAssembliesAndSetupDomain (916ms)
+			LoadAssemblies (458ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (553ms)
+				TypeCache.Initialize (528ms)
+					TypeCache.ScanAssembly (519ms)
+				ResolveRequiredComponents (25ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (735ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (9ms)
+				SetLoadedEditorAssemblies (11ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (135ms)
+				ProcessInitializeOnLoadAttributes (445ms)
+				ProcessInitializeOnLoadMethodAttributes (123ms)
+				AfterProcessingInitializeOnLoad (12ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (25ms)
+Refreshing native plugins compatible for Editor in 5.42 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5803 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 46 unused Assets / (1.1 MB). Loaded Objects now: 6542.
+Memory consumption went from 206.6 MB to 205.5 MB.
+Total: 5.618300 ms (FindLiveObjects: 0.643900 ms CreateObjectMapping: 0.742000 ms MarkObjects: 3.909000 ms  DeleteObjects: 0.322100 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 605.438917 seconds.
+  path: Assets/Sounds/Free Sounds Pack/Monster Bite.wav
+  artifactKey: Guid(ac6034ade498bb94b87620cdf6eac48b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sounds/Free Sounds Pack/Monster Bite.wav using Guid(ac6034ade498bb94b87620cdf6eac48b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bf6e80771cb15dd16e19ebfff61b0dae') in 0.081562 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Prefabs/Prefab_Monster/Prefab_Forest/Mushroom Monster.prefab
+  artifactKey: Guid(421d902985b72d94e865aa6938419e74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Prefab_Monster/Prefab_Forest/Mushroom Monster.prefab using Guid(421d902985b72d94e865aa6938419e74) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2921fb37f5b5161b03525457258656ac') in 0.753111 seconds
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 172
+========================================================================
+Received Import Request.
+  Time since last request: 0.000043 seconds.
+  path: Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Jump In Place.FBX
+  artifactKey: Guid(01da7b29f1312914eb89d0b9bbf4aa3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Jump In Place.FBX using Guid(01da7b29f1312914eb89d0b9bbf4aa3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe1d2cca53f635589c9b82812c8a6958') in 0.020205 seconds
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 59
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Spawn.FBX
+  artifactKey: Guid(2b611850d54285143bc58b4097172ecb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Spawn.FBX using Guid(2b611850d54285143bc58b4097172ecb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1fc7940ea65bb057bf94f386b44e7107') in 0.014428 seconds
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 59
+========================================================================
+Received Import Request.
+  Time since last request: 0.000029 seconds.
+  path: Assets/Images/Materials/Material_Monster/Slime Monster.mat
+  artifactKey: Guid(7df5935284e979440a60a8cff74d6cfc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Materials/Material_Monster/Slime Monster.mat using Guid(7df5935284e979440a60a8cff74d6cfc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '060490d00bae08bae8d7a658383fd0d4') in 0.046244 seconds
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Turn Right.FBX
+  artifactKey: Guid(9b9625806ec21474b934a737d3716b5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Turn Right.FBX using Guid(9b9625806ec21474b934a737d3716b5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0b4003727bb71f482e9b7fdd1ab35af6') in 0.021409 seconds
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 61
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Run Forward In Place.FBX
+  artifactKey: Guid(d31f8ac41e467cd4d8d2dbe3b1cb6701) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Run Forward In Place.FBX using Guid(d31f8ac41e467cd4d8d2dbe3b1cb6701) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '50f19fa3e1e1cb089744bd0fb6273f9e') in 0.016906 seconds
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 57
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Images/Textures/Textures_Monster/Mushroom Monster.psd
+  artifactKey: Guid(8db3f8cf0ad08bc44a648dcf05455e2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Textures/Textures_Monster/Mushroom Monster.psd using Guid(8db3f8cf0ad08bc44a648dcf05455e2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b290d2fb172bcca168baa7494d79424') in 0.033044 seconds
+Internal: JobTempAlloc has allocations that are more than the maximum lifespan of 4 frames old - this is not allowed and likely a leak
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 2
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Turn Left.FBX
+  artifactKey: Guid(f6d1bb491e506d64d8403b58daa39ed0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Turn Left.FBX using Guid(f6d1bb491e506d64d8403b58daa39ed0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5fcc51514c2f1ce4fd91e8154c785775') in 0.016345 seconds
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 61
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Walk Forward W Root.FBX
+  artifactKey: Guid(79f308f5b6b5abf49b897667d07c926e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Walk Forward W Root.FBX using Guid(79f308f5b6b5abf49b897667d07c926e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1c1308deb6ef90cab94fff2db6bbbfc') in 0.016696 seconds
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 57
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Take Damage.FBX
+  artifactKey: Guid(abc29cf0f28a4c84999af4de1740bb65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Animations/Anim_Monster/Mushroom/Legacy(Read-Only)/Mushroom Monster@Take Damage.FBX using Guid(abc29cf0f28a4c84999af4de1740bb65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e87d503d02bb53097a1f469f2ace694') in 0.014914 seconds
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 61
+========================================================================
+Received Import Request.
+  Time since last request: 34.853292 seconds.
+  path: Assets/Prefabs/Player_rogue.prefab
+  artifactKey: Guid(d01039c03a557834dba14be0adae8d05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Player_rogue.prefab using Guid(d01039c03a557834dba14be0adae8d05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7fb72da8a7fbc42f0b78c3fe3843afe4') in 3.949671 seconds
+Internal: There are remaining Allocations on the JobTempAlloc. This is a leak, and will impact performance
+To Debug, run app with -diag-job-temp-memory-leak-validation cmd line argument. This will output the callstacks of the leaked allocations.
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 5210
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+TcpMessagingSession - receive error: operation aborted. errorcode: 995, details: 스레드 종료 또는 응용 프로그램 요청 때문에 I/O 작업이 취소되었습니다.
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

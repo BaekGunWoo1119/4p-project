@@ -117143,6 +117143,7 @@ GameObject:
   - component: {fileID: 1075596631964990673}
   - component: {fileID: 7551082515509239175}
   - component: {fileID: 4956219308888043136}
+  - component: {fileID: -7876462745366856316}
   m_Layer: 0
   m_Name: Player_warrior
   m_TagString: Player
@@ -117226,7 +117227,7 @@ MonoBehaviour:
   LocalSkillYRot: 0
   EffectGen: {fileID: 0}
   SkillEffect: {fileID: 0}
-  cCol: {fileID: 0}
+  HpText: {fileID: 0}
   QSkill_Collider: {fileID: 6186884052317262959, guid: 01a0b81a8ebfe8c43b09ccd5af03f118, type: 3}
   Skill_FireE_Effect: {fileID: 101818329446047632, guid: add6f36b2dadaf84a864e7e0942308de, type: 3}
   Skill_IceE_Effect: {fileID: 101818329446047632, guid: 8a1e6c7cf8a8fe840a4f84d0431a5ef8, type: 3}
@@ -117699,6 +117700,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-7876462745366856316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7114715938675515446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3eab9530891aa48be1f8c1eaad5613, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryObject: {fileID: 0}
+  slots:
+  - {fileID: 0}
 --- !u!1 &7139166755890741705
 GameObject:
   m_ObjectHideFlags: 0

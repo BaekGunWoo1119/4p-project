@@ -9,12 +9,12 @@ public class Slot : MonoBehaviour
     public Item slotsItem;
 
     Sprite defaultSprite;
-    Text amountText;
+    //Text amountText;
     void Start()
     {
         defaultSprite = GetComponent<Image>().sprite;
-        amountText = transform.GetChild(0).GetComponent<Text>();
-        amountText.text = "";
+        //amountText = transform.GetChild(0).GetComponent<Text>();
+        //amountText.text = "";
     }
 
     void Update()
@@ -24,16 +24,16 @@ public class Slot : MonoBehaviour
     
     public void CheckForItem()
     {
-        if(transform.childCount > 3)
+        if(transform.childCount > 2)
         {
-            slotsItem = transform.GetChild(3).GetComponent<Item>();
+            slotsItem = transform.GetChild(2).GetComponent<Item>();
             GetComponent<Image>().sprite = slotsItem.itemSprite;
         }
         else
         {
             slotsItem = null;
             GetComponent<Image>().sprite = defaultSprite;
-            amountText.text = "";
+            //amountText.text = "";
         }
     }
 }
