@@ -9,11 +9,23 @@ public class Inventory : MonoBehaviour
 
     public Slot[] slots;
 
+    private Vector3 originalScale;
+    private Vector3 hiddenScale;
+
+    void Start()
+    {
+        originalScale = new Vector3(1, 1, 1);
+        hiddenScale = new Vector3(0, 0, 0);
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            inventoryObject.SetActive(!inventoryObject.activeInHierarchy);
+            if(inventoryObject.transform.localScale != hiddenScale)
+                inventoryObject.transform.localScale = hiddenScale;
+            else
+                inventoryObject.transform.localScale = originalScale;
         }
     }
 
