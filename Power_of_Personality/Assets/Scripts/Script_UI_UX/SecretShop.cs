@@ -27,6 +27,11 @@ public class SecretShop : MonoBehaviour
         }
 
         // 회전 진행
+        //StartCoroutine(RotateImages());
+    }
+
+    public void StartAtRandom()
+    {
         StartCoroutine(RotateImages());
     }
 
@@ -34,6 +39,7 @@ public class SecretShop : MonoBehaviour
     {
         StartCoroutine(StopImages());
     }
+
 
     IEnumerator StopImages()
     {

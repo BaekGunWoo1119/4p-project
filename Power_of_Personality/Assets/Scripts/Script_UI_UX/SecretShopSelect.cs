@@ -7,35 +7,26 @@ using UnityEngine.EventSystems;
 public class SecretShopSelect : MonoBehaviour
 {
     public GameObject eventSystem;
-    public SecretShop secretShop;
     // Start is called before the first frame update
     void Start()
     {
         //eventSystem의 SecretShop 받아옴
         eventSystem = GameObject.Find("EventSystem");
-        secretShop = eventSystem.GetComponent<SecretShop>();
         Button btn = GameObject.Find("Pick").GetComponent<Button>();
         btn.onClick.AddListener(PickatRandom);
     }
 
     public void PickatRandom()
     {
+        eventSystem.GetComponent<SecretShop>().StartAtRandom();
         Debug.Log("픽");
-        /*
-        for(int i = 1; i <= 10; i++)
-        {
-            secretShop.SlowRotate(0.3f);
-            Debug.Log("느려져라");
-        }
-
-        secretShop.StopAtRandom();
-        */
         StartCoroutine(PickItem());
     }
 
     public IEnumerator PickItem()
     {
         float count = 1;
+        yield return new WaitForSeconds(1.0f);
         while(count <= 10)
         {
             eventSystem.GetComponent<SecretShop>().SlowRotate(0.02f);

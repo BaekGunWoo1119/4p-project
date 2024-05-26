@@ -1,40 +1,50 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraCtrl : MonoBehaviour
 {
-    private Transform target; //Player
-    private Vector3 offset;
-    private Vector3 currentVelocity = Vector3.zero;
+    public Transform target; //Player
+    public Vector3 offset;
+    public Vector3 currentVelocity = Vector3.zero;
 
     //카메라 흔들림
-    private float shakeAmount = 0f;
-    private float shakeDuration = 0.03f;
-    private float shakeTimer = 0f;
+    public float shakeAmount = 0f;
+    public float shakeDuration = 0.03f;
+    public float shakeTimer = 0f;
 
     //카메라 고정
-    private Vector3 forwardDirection;
-    private Vector3 UpDirection;
-    private float focusTimer = 0f;
-    private float xPos;
-    private float yPos;
-    private float zPos;
-    private float xRot;
-    private float yRot;
-    private float zRot;
-    private string timeValue;
+    public Vector3 forwardDirection;
+    public Vector3 UpDirection;
+    public float focusTimer = 0f;
+    public float xPos;
+    public float yPos;
+    public float zPos;
+    public float xRot;
+    public float yRot;
+    public float zRot;
+    public string timeValue;
 
     private bool isMove;
 
-    void Start()
+    protected virtual void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    void LateUpdate()
+    protected virtual void LateUpdate()
     {
-        if( target == null){
+        FollowPlayer();
+
+        ShakeCamera_Update();
+
+        FocusCamera_Update();
+    }
+
+    protected virtual void FollowPlayer()
+    {
+        if(target == null){
             target = GameObject.FindGameObjectWithTag("Player").transform;
         }
         if (forwardDirection == null || forwardDirection != target.transform.root.transform.forward)
@@ -52,12 +62,43 @@ public class CameraCtrl : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref currentVelocity, 0f);
             transform.rotation = target.transform.root.GetComponentInParent<Transform>().rotation;
         }
+    }
 
+    protected virtual IEnumerator Setoffset(float wait)
+    {
+        yield return new WaitForSeconds(wait);
+        //if(offset != offsetOrigin && shakeTimer <= 0 && focusTimer <= 0)
+        //{
+        //    offset = offsetOrigin;
+        //    isMove = false;
+        //}
+    }
+
+    public virtual void moveStop(float seconds)
+    {
+        StartCoroutine(Setoffset(seconds));
+    }
+    
+    #region 카메라 흔들기 코드
+    //범용적으로 제작, 카메라 추가 필요할 시 적절히 넣어볼 것
+    public virtual void ShakeCamera(float Amount, float Duration, string zoom)
+    {
+        shakeAmount = Amount;
+        shakeDuration = Duration;
+        shakeTimer = shakeDuration;
+        if(zoom == "zoom")
+        {
+            offset = new Vector3(0, 2, -4);
+        }
+    }
+
+    public virtual void ShakeCamera_Update()
+    {
         if (shakeTimer > 0)
         {
             isMove = true;
             // 카메라를 흔들이기
-            transform.localPosition += Random.insideUnitSphere * shakeAmount;
+            transform.localPosition += UnityEngine.Random.insideUnitSphere * shakeAmount;
 
             // 흔들림 시간 감소
             shakeTimer -= Time.deltaTime;
@@ -68,7 +109,26 @@ public class CameraCtrl : MonoBehaviour
             shakeTimer = 0f;
             transform.localPosition = transform.localPosition;
         }
+    }
+    #endregion
 
+    #region 카메라 포커스 코드
+    //범용적으로 제작, 카메라 추가 필요할 시 적절히 넣어 볼 것
+    public virtual void FocusCamera(float xP, float yP, float zP, float R, float Duration, string value)
+    {   
+        xPos = xP;
+        yPos = yP;
+        zPos = zP;
+        yRot = R;
+        xRot = 5;
+        zRot = 0;
+
+        timeValue = value;
+        focusTimer = Duration;
+    }
+
+    public virtual void FocusCamera_Update()
+    {
         if (focusTimer > 0)
         {
             isMove = true;
@@ -114,43 +174,19 @@ public class CameraCtrl : MonoBehaviour
             isMove = false;
         }
     }
+    #endregion
 
-    public void ShakeCamera(float Amount, float Duration, string zoom)
+    #region 궁극기 카메라 코드
+    //상속시켜서 직업별로 다르게 할 예정
+    public virtual void UltimateCamera(float SkillYRot)
     {
-        shakeAmount = Amount;
-        shakeDuration = Duration;
-        shakeTimer = shakeDuration;
-        if(zoom == "zoom")
-        {
-            offset = new Vector3(0, 2, -4);
-        }
     }
+    #endregion
 
-    public void FocusCamera(float xP, float yP, float zP, float R, float Duration, string value)
-    {   
-        xPos = xP;
-        yPos = yP;
-        zPos = zP;
-        yRot = R;
-        xRot = 5;
-        zRot = 0;
-
-        timeValue = value;
-        focusTimer = Duration;
-    }
-
-    IEnumerator Setoffset(float wait)
+    #region 점프 카메라 코드
+    //달라지는 직업 있을 시 사용할 예정
+    public virtual void JumpCamera()
     {
-        yield return new WaitForSeconds(wait);
-        //if(offset != offsetOrigin && shakeTimer <= 0 && focusTimer <= 0)
-        //{
-        //    offset = offsetOrigin;
-        //    isMove = false;
-        //}
     }
-
-    public void moveStop(float seconds)
-    {
-        StartCoroutine(Setoffset(seconds));
-    }
+    #endregion
 }

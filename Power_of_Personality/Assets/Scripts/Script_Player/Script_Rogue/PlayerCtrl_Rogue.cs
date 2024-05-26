@@ -103,26 +103,9 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     //도적 스킬 E 카메라 무브 및 스킬 공격
     IEnumerator Skill_E_Move()
     {
-        //스킬 나갈 시 카메라 무빙(얼굴 포커스, 멈춤)
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 3.0f, transform.position.y + 1.5f, transform.position.z, -90, 1.1f, "forward");
-        }
-        else
-        {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x - 3.0f, transform.position.y + 1.5f, transform.position.z, 90, 1.1f, "forward");
-        }
-        yield return new WaitForSeconds(1.2f);
-        //스킬 사용 시 카메라 무빙(등 포커스)
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x - 3.0f, transform.position.y + 2.5f, transform.position.z, 90, 3.0f, "forward");
-        }
-        else
-        {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x + 3.0f, transform.position.y + 2.5f, transform.position.z, -90, 3.0f, "forward");
-        }
-        yield return new WaitForSeconds(1.0f);
+        mainCamera.GetComponent<CameraCtrl_Rogue>().UltimateCamera(SkillYRot);
+        //스킬 나갈 시 사운드 및 콜라이더(추가 예정)
+        yield return new WaitForSeconds(2.2f);
         ESkillCoolTime = 0;
     }
     public void comboAttack_1_on()
