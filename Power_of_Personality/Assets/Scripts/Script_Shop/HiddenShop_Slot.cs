@@ -4,20 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Slot : MonoBehaviour
+public class HiddenShop_Slot : MonoBehaviour
 {
     public Item slotsItem;
-    public int itemID;
 
     Sprite defaultSprite;
-    //Text amountText;
+
     void Start()
     {
         defaultSprite = GetComponent<Image>().sprite;
-        //amountText = transform.GetChild(0).GetComponent<Text>();
-        //amountText.text = "";
-
-        itemID = - 1;
     }
 
     void Update()
@@ -27,10 +22,9 @@ public class Slot : MonoBehaviour
     
     public void CheckForItem()
     {
-        if(transform.childCount > 2)
+        if(transform.childCount > 4)
         {
-            slotsItem = transform.GetChild(2).GetComponent<Item>();
-            itemID = transform.GetChild(2).GetComponent<Item>().itemID;
+            slotsItem = transform.GetChild(4).GetComponent<Item>();
             GetComponent<Image>().sprite = slotsItem.itemSprite;
         }
         else

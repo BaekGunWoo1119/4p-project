@@ -12,6 +12,9 @@ public class SecretShop : MonoBehaviour
     private int enableIndex = 0;
     private bool stopRotate;
 
+    public HiddenShop_Slot[] HS_Slots;
+    private Item slotsItem;
+
     void Start()
     {
         for (int i = 0; i < brightImages.Length; i++)
@@ -27,6 +30,11 @@ public class SecretShop : MonoBehaviour
         }
 
         // 회전 진행
+        //StartCoroutine(RotateImages());
+    }
+
+    public void StartAtRandom()
+    {
         StartCoroutine(RotateImages());
     }
 
@@ -34,6 +42,7 @@ public class SecretShop : MonoBehaviour
     {
         StartCoroutine(StopImages());
     }
+
 
     IEnumerator StopImages()
     {
@@ -68,6 +77,10 @@ public class SecretShop : MonoBehaviour
                 brightImages[i].SetActive(true);
                 strokeImages[i].SetActive(true);
             }
+
+            Debug.Log(currentIndex);
+            slotsItem = HS_Slots[currentIndex].transform.GetChild(4).GetComponent<Item>();
+            Debug.Log(slotsItem.Name);
         }
     }
 
