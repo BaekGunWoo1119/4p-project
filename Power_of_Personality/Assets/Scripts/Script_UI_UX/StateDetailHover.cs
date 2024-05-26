@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class StateDetailHover : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class StateDetailHover : MonoBehaviour
     private Vector3 originalScale;
     private Vector3 originalPosition;
     private RectTransform rectTransform;
+    //오브젝트 이름 인식 관련 코드
+    private string objName;
+
+    //텍스트 코드
+    public TMP_Text itemName;
     
     //y 좌표 추가 값
 
@@ -28,15 +34,18 @@ public class StateDetailHover : MonoBehaviour
         actObj.transform.localScale = new Vector3(0, 0, 0);
 
         tgtObj = GameObject.FindGameObjectsWithTag("StatHoverBox");
+
+        objName = actObj.ToString();
         int j = tgtObj.Length;
         for(int i = 0; i < j; i++)
         {
             EventTrigger trigger = tgtObj[i].gameObject.AddComponent<EventTrigger>();
+            int index = i;
 
             // PointerEnter �̺�Ʈ �߰�
             EventTrigger.Entry entryEnter = new EventTrigger.Entry();
             entryEnter.eventID = EventTriggerType.PointerEnter;
-            entryEnter.callback.AddListener((data) => { OnPointerEnter(); });
+            entryEnter.callback.AddListener((data) => { OnPointerEnter(index); });
             trigger.triggers.Add(entryEnter);
 
             // PointerExit �̺�Ʈ �߰�
@@ -53,7 +62,7 @@ public class StateDetailHover : MonoBehaviour
         float yRect = Input.mousePosition.y;
         if(yRect > 550)
         {
-            a = 800;
+            a = 820;
         }
         else if(yRect <= 550)
         {
@@ -62,11 +71,12 @@ public class StateDetailHover : MonoBehaviour
         actObj.GetComponent<RectTransform>().localPosition = new Vector3(Input.mousePosition.x - 900, Input.mousePosition.y - a, Input.mousePosition.z);
     }
 
-    public void OnPointerEnter()
+    public void OnPointerEnter(int index)
     {
         isHovering = true;
         actObj.transform.localScale = originalScale;
-        //actObj.GetComponent<RectTransform>().localPosition = new Vector3(Input.mousePosition.x - 900, Input.mousePosition.y - 850, Input.mousePosition.z);
+        //호버링 시 설명 추가
+        tgtObj[index].transform.parent.Find("HoverBox").GetComponent<TextChange>().ItemTextChange();
     }
 
     // ���콺�� ������ ��

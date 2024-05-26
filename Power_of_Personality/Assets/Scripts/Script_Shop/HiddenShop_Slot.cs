@@ -12,7 +12,7 @@ public class HiddenShop_Slot : MonoBehaviour
 
     void Start()
     {
-        defaultSprite = GetComponent<Image>().sprite;
+        defaultSprite = transform.GetChild(4).GetComponent<Image>().sprite;
     }
 
     void Update()
@@ -24,13 +24,13 @@ public class HiddenShop_Slot : MonoBehaviour
     {
         if(transform.childCount > 4)
         {
-            slotsItem = transform.GetChild(4).GetComponent<Item>();
-            GetComponent<Image>().sprite = slotsItem.itemSprite;
+            slotsItem = transform.GetChild(5).GetComponent<Item>();
+            transform.GetChild(3).GetComponent<Image>().sprite = slotsItem.itemSprite;
         }
         else
         {
             slotsItem = null;
-            GetComponent<Image>().sprite = defaultSprite;
+            transform.GetChild(3).GetComponent<Image>().sprite = defaultSprite;
             //amountText.text = "";
         }
     }

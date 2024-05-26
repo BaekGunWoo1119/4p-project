@@ -23,12 +23,6 @@ public class SecretShop : MonoBehaviour
             strokeImages[i].SetActive(false);
         }
 
-        if (brightImages.Length > 0)
-        {
-            brightImages[enableIndex].SetActive(true);
-            strokeImages[enableIndex].SetActive(true);
-        }
-
         // 회전 진행
         //StartCoroutine(RotateImages());
     }
@@ -79,7 +73,7 @@ public class SecretShop : MonoBehaviour
             }
 
             Debug.Log(currentIndex);
-            slotsItem = HS_Slots[currentIndex].transform.GetChild(4).GetComponent<Item>();
+            slotsItem = HS_Slots[currentIndex].transform.GetChild(5).GetComponent<Item>();
             Debug.Log(slotsItem.Name);
         }
     }
@@ -88,15 +82,15 @@ public class SecretShop : MonoBehaviour
     {
         while (stopRotate == false)
         {
+            brightImages[enableIndex].SetActive(true);
+            strokeImages[enableIndex].SetActive(true);
+
             yield return new WaitForSeconds(rotationSpeed);
 
             brightImages[enableIndex].SetActive(false);
             strokeImages[enableIndex].SetActive(false);
 
             enableIndex = (enableIndex + 1) % brightImages.Length;
-            //다음 이미지 활성화
-            brightImages[enableIndex].SetActive(true);
-            strokeImages[enableIndex].SetActive(true);
         }
     }
 
