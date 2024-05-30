@@ -12,7 +12,7 @@ public class HiddenShop_Slot : MonoBehaviour
 
     void Start()
     {
-        defaultSprite = transform.GetChild(4).GetComponent<Image>().sprite;
+        //defaultSprite = transform.GetChild(4).GetComponent<Image>().sprite;
     }
 
     void Update()

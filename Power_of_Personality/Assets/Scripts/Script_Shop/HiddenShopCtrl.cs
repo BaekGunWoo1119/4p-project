@@ -27,12 +27,12 @@ public class HiddenShopCtrl : MonoBehaviour
 
     public void GetRandomItemCode()
     {
-        int[] randItemCode = new int[8];
+        int[] randItemCode = new int[C_Slots];
         bool isSame;
         
         if(isSave == false)
         {
-            for (int i = 0; i < 8; ++i)
+            for (int i = 0; i < C_Slots; ++i)
             {
                 while (true)
                 {
@@ -51,7 +51,7 @@ public class HiddenShopCtrl : MonoBehaviour
                 }
             }
         
-            for (int i = 0; i < 8; ++i)
+            for (int i = 0; i < C_Slots; ++i)
             {
                 if (Items[randItemCode[i]] != null)
                 {
@@ -65,14 +65,14 @@ public class HiddenShopCtrl : MonoBehaviour
         }
         else if(isSave == true)
         {
-            for (int i = 0; i < 8; ++i)
+            for (int i = 0; i < C_Slots; ++i)
             {
                 if (newItem[i] != null)
                 {
                     Destroy(newItem[i]);
                 }
             }
-            for (int i = 0; i < 8; ++i)
+            for (int i = 0; i < C_Slots; ++i)
             {
                 while (true)
                 {
@@ -91,7 +91,7 @@ public class HiddenShopCtrl : MonoBehaviour
                 }
             }
         
-            for (int i = 0; i < 8; ++i)
+            for (int i = 0; i < C_Slots; ++i)
             {
                 if (Items[randItemCode[i]] != null)
                 {
