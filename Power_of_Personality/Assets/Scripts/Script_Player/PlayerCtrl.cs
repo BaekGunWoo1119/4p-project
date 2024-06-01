@@ -298,32 +298,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         UpdateCoroutineMoveState();
 
-        //점프공격 시 Y 포지션 고정
-        if (stateJumpAttack1 == true && !isJumpAttack)
-        {
-            Vector3 OriginPos = transform.position;
-            YPos = OriginPos.y;
-            isJumpAttack = true;
-        }
-        else if (stateJumpAttack1 == true)
-        {
-            rd.velocity = Vector3.zero;
-        }
-        else if (stateJumpAttack2 == true)
-        {
-            float upperUpTime = 0;
-            if (upperUpTime == 0)
-            {
-                //공중에서 고정되어 때리다가 떨어짐
-                Vector3 OriginPos = transform.position;
-                YPos = OriginPos.y;
-                upperUpTime += 1;
-            }
-            Vector3 newPos = transform.position;
-            newPos.y = YPos;
-            isAttack = false;
-        }
-        else if (stateFall == true && isJumpAttack == true)
+        if (stateFall == true && isJumpAttack == true)
         {
             StopAnim("CommonAttack");
         }
@@ -716,9 +691,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     protected virtual void UpdateCoroutineMoveState()
     {
-        if (!(anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1") ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2") ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3")))
+        if (!(stateAttack1 ||
+            stateAttack2 ||
+            stateAttack3))
         {
             ResetAttackInProgressStates();
         }

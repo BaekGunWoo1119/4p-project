@@ -11,6 +11,10 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     #region 변수 선언
     //애니메이션 컨트롤
     private bool isSkillQ;
+    
+    //점프공격 float
+    private float YOrgPos;
+    private float upperUpTime = 0;
 
     //캐릭터 공격 콜라이더
     private GameObject Attack_Collider_All;
@@ -58,6 +62,45 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         else if (PlayerPrefs.GetString("property") == "Ice")
         {
             SkillE_Effect = Skill_IceE_Effect;
+        }
+
+        //점프공격 시 Y 포지션 고정
+        if (stateJumpAttack1 == true && !isJumpAttack)
+        {
+            Vector3 OriginPos;
+            if (upperUpTime == 0)
+            {
+                OriginPos = transform.position;
+                YOrgPos = OriginPos.y;
+                upperUpTime += 1;
+                isJumpAttack = true;
+                Debug.Log(YOrgPos);
+            }
+            if(transform.position.y != YOrgPos)
+                transform.position = new Vector3(transform.position.x, YOrgPos, transform.position.z);
+        }
+        else if (stateJumpAttack1 == true)
+        {
+            rd.velocity = Vector3.zero;
+        }
+        else if (stateJumpAttack2 == true || stateJumpAttack3 == true)
+        {
+            Vector3 OriginPos;
+            if (upperUpTime == 0)
+            {
+                //공중에서 고정되어 때리다가 떨어짐
+                OriginPos = transform.position;
+                YOrgPos = OriginPos.y;
+                upperUpTime += 1;
+            }
+            if(transform.position.y != YOrgPos)
+                transform.position = new Vector3(transform.position.x, YOrgPos, transform.position.z);
+            Debug.Log(YOrgPos);
+            isAttack = false;
+        }
+        else if(stateJumpAttack1 == false && stateJumpAttack2 == false && stateJumpAttack3 == false)
+        {
+            upperUpTime = 0;
         }
     }
 
@@ -147,7 +190,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             StartCoroutine(Delay(0.4f));
             StartCoroutine(MoveForwardForSeconds(0.3f));
             StartCoroutine(Delay(0.2f));
-            mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.03f, null);
+            mainCamera.GetComponent<CameraCtrl_Warrior>().ShakeCamera(0.1f, 0.03f, null);
         }
 
         if(AttackNumber == 1)
@@ -155,7 +198,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             StartCoroutine(Attack1_Collider());
             StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
             StartCoroutine(Delay(0.2f));
-            mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.01f, null);
+            mainCamera.GetComponent<CameraCtrl_Warrior>().ShakeCamera(0.1f, 0.01f, null);
         }
 
         if(AttackNumber == 2)
@@ -165,26 +208,26 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             StartCoroutine(Attack1_Collider());
             StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
             StartCoroutine(Delay(5.0f));
-            mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.3f, 0.1f, null);
+            mainCamera.GetComponent<CameraCtrl_Warrior>().ShakeCamera(0.3f, 0.1f, null);
         }
 
         if(AttackNumber == 3)
         {
             isSound = false;
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.5f, "null");
+            mainCamera.GetComponent<CameraCtrl_Warrior>().JumpCamera();
             StartCoroutine(Attack1_Collider());
         }
 
         if(AttackNumber == 4)
         {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.6f, "null");
+            mainCamera.GetComponent<CameraCtrl_Warrior>().JumpCamera();
             StartCoroutine(Attack1_Collider());
             StartCoroutine(Delay(0.2f));
         }
 
         if(AttackNumber == 5)
         {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x, transform.position.y + 2, transform.position.z - 9, 0, 0.5f, "null");
+            mainCamera.GetComponent<CameraCtrl_Warrior>().JumpCamera();
             StartCoroutine(Attack1_Collider());
             StopAnim("CommonAttack");
         }
@@ -232,16 +275,8 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     IEnumerator SKill_E_Move()
     {
         float elapsedTime = 0;
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(2.0f);
         //스킬 사용 시 카메라 무빙(등 포커스)
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x - 5, transform.position.y + 2.5f, transform.position.z, 60, 5.3f, "round");
-        }
-        else
-        {
-            mainCamera.GetComponent<CameraCtrl>().FocusCamera(transform.position.x - 2.5f, transform.position.y + 2.5f, transform.position.z, -30, 5.3f, "round");
-        }
         yield return new WaitForSeconds(1.0f);
         while (elapsedTime < 0.3)
         {
@@ -271,46 +306,39 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     }
     IEnumerator WarriorSkill_E()
     {
-        yield return new WaitForSeconds(1.8f);
+        mainCamera.GetComponent<CameraCtrl_Warrior>().UltimateCamera(SkillYRot);
+        yield return new WaitForSeconds(2.0f);
         GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
-        //스킬 나갈 시 카메라 무빙(흔들림)
-        mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.3f, 0.1f, "zoom");
+        //스킬 나갈 시 사운드 및 콜라이더
         yield return new WaitForSeconds(0.6f);
         audioSources[3].Stop();
         SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
-        mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.5f, 0.1f, "zoom");
         yield return new WaitForSeconds(0.8f);
         audioSources[3].Stop();
         SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
-        mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.1f, "zoom");
         yield return new WaitForSeconds(0.4f);
         audioSources[3].Stop();
         SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
-        mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.2f, 0.1f, "zoom");
         yield return new WaitForSeconds(0.4f);
         audioSources[3].Stop();
         SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
-        mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.1f, "zoom");
         yield return new WaitForSeconds(1.2f);
         audioSources[3].Stop();
         SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
-        mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.3f, 0.1f, "zoom");
         yield return new WaitForSeconds(0.8f);
         audioSources[3].Stop();
         SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
-        mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.6f, 0.1f, "zoom");
         yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
         ESkillCoolTime = 0;
         Ecool.fillAmount = 1;
-        mainCamera.GetComponent<CameraCtrl>().moveStop(0.1f);
     }
 
     public void comboAttack_1_on()

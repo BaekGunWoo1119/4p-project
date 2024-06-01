@@ -75632,7 +75632,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -75664,6 +75664,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009d8a2b6d4d4634cac9048909cace88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
+  currentVelocity: {x: 0, y: 0, z: 0}
+  shakeAmount: 0
+  shakeDuration: 0.03
+  shakeTimer: 0
+  forwardDirection: {x: 0, y: 0, z: 0}
+  UpDirection: {x: 0, y: 0, z: 0}
+  focusTimer: 0
+  xPos: 0
+  yPos: 0
+  zPos: 0
+  xRot: 0
+  yRot: 0
+  zRot: 0
+  timeValue: 
 --- !u!1 &1562884636
 GameObject:
   m_ObjectHideFlags: 0
@@ -76141,7 +76157,11 @@ RectTransform:
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
+<<<<<<< HEAD
   m_AnchorMax: {x: 1, y: 0.8999999}
+=======
+  m_AnchorMax: {x: 1, y: 0.9}
+>>>>>>> origin/bgw
   m_AnchoredPosition: {x: -26.25, y: 0}
   m_SizeDelta: {x: -27.5, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
