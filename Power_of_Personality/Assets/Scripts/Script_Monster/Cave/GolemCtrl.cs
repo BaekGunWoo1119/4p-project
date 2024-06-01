@@ -67,6 +67,7 @@ public class GolemCtrl : MonsterCtrl
     }
     public void Attack_On()
     {
-        Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
+        GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
+        Destroy(effect_on,3f);
     }
 }

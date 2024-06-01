@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class BeeCtrl : MonsterCtrl
 {
+    public GameObject AttackEffect;
+    public GameObject EffectGen;
     public override void Awake()
     {
         ATK = 10.0f;
@@ -61,6 +63,11 @@ public class BeeCtrl : MonsterCtrl
     }
     public override Vector3 GetHPBarPosition()
     {
-        return base.GetHPBarPosition(); // ¿øÇÏ´Â À§Ä¡·Î ¼öÁ¤
+        return base.GetHPBarPosition(); // ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    }
+    public void Attack_On()
+    {
+        GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
+        Destroy(effect_on,3f);
     }
 }
