@@ -8,11 +8,11 @@ using UnityEngine.UI;
 
 public class BeeCtrl : MonsterCtrl
 {
-    public GameObject AttackEffect;
-    public GameObject EffectGen;
     public override void Awake()
     {
+        WeakProperty = "Fire";
         ATK = 10.0f;
+        DEF = 100;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
         TraceRadius = 10.0f;
@@ -22,6 +22,8 @@ public class BeeCtrl : MonsterCtrl
     public override void Update()
     {
         base.Update();
+        Debug.Log(curHP);
+        Debug.Log(PlayerPrefs.GetString("property"));
     }
 
     public override void SetHP(float amount)
@@ -63,11 +65,6 @@ public class BeeCtrl : MonsterCtrl
     }
     public override Vector3 GetHPBarPosition()
     {
-        return base.GetHPBarPosition(); // ���ϴ� ��ġ�� ����
-    }
-    public void Attack_On()
-    {
-        GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
-        Destroy(effect_on,3f);
+        return base.GetHPBarPosition(); // 원하는 위치로 수정
     }
 }

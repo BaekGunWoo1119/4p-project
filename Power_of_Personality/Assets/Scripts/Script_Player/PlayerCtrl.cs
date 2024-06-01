@@ -69,7 +69,6 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool stateDash = false;
     protected bool stateDie = false;
 
-
     // 코루틴 컨트롤
     protected bool coroutineMove = false;
 
@@ -121,7 +120,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     // HP Bar
     protected Slider HpBar;
-    protected TMP_Text HpText;
+    public TMP_Text HpText;
 
     // 쿨타임 관련
     protected float QSkillCoolTime;
@@ -149,9 +148,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         IceATT = 1.0f;
 
         // HP Bar 설정
-        // HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
-        // HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
-        // HpText.text = "HP 100/100";
+        HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
+        HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
+        HpText.text = "HP" + PlayerHP + "/" + maxHP;
 
         //쿨타임 UI(03.18)
         Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
@@ -278,7 +277,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
         else if(stateAttack1 == true ||
                 stateAttack2 == true ||
-                stateAttack1 == true)
+                stateAttack3 == true)
         {
             isAttack = true;
         }
