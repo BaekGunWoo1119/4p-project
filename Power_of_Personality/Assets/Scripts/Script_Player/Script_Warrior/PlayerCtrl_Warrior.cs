@@ -118,6 +118,11 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         yield return base.TakeDamage();
     }
+    //데미지 텍스트(06.01)
+    protected override  IEnumerator DamageTextAlpha()
+    {
+        yield return base.DamageTextAlpha();
+    }
     #endregion
 
     #region 이동 관련 함수
@@ -307,7 +312,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     IEnumerator WarriorSkill_E()
     {
         mainCamera.GetComponent<CameraCtrl_Warrior>().UltimateCamera(SkillYRot);
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.8f);
         GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
         //스킬 나갈 시 사운드 및 콜라이더
@@ -329,7 +334,6 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         audioSources[3].Play();
         yield return new WaitForSeconds(1.2f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(0.8f);
         audioSources[3].Stop();
