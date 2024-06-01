@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using Photon.Pun.Demo.Asteroids;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BeeCtrl : MonsterCtrl
 {
@@ -66,5 +67,9 @@ public class BeeCtrl : MonsterCtrl
     public override Vector3 GetHPBarPosition()
     {
         return base.GetHPBarPosition(); // 원하는 위치로 수정
+    }
+    public override IEnumerator DamageTextAlpha()
+    {
+        yield return base.DamageTextAlpha();
     }
 }

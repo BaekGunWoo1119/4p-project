@@ -4,6 +4,7 @@ using System.ComponentModel;
 using Photon.Pun.Demo.Asteroids;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MonsterCtrl : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class MonsterCtrl : MonoBehaviour
 
     public string WeakProperty;
 
+    public GameObject DamageText; //맞았을 때 나오는 데미지 텍스트
+    public Vector3 hpBarPosition;
 
     public SkinnedMeshRenderer matObj;
     public GameObject targetObj;
@@ -58,6 +61,7 @@ public class MonsterCtrl : MonoBehaviour
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
         PlayerTr = this.transform;          // 플레이어 Transform을 설정하기 전에 임시로 몬스터(스크립트가 들어있는 게임 오브젝트)의 Transform을 담아놓음.
         StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
+        DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0);
     }
 
     public virtual void Update()
@@ -121,7 +125,7 @@ public class MonsterCtrl : MonoBehaviour
         Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
         transform.Translate(movement, Space.World);
 
-        Vector3 hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
+        hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
         HpBar.transform.position = hpBarPosition;
 
         yield return null;
@@ -193,9 +197,12 @@ public class MonsterCtrl : MonoBehaviour
             {
                 material.color = Color.red;
             }
-            yield return new WaitForSeconds(0.5f);
+
+            StartCoroutine(DamageTextAlpha());
+
+            yield return new WaitForSeconds(0.1f);
             anim.SetBool("TakeDamage", false);
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(0.2f);
             if (anim.GetBool("TakeDamage") == false)
             {
                 isHit = false;
@@ -215,6 +222,30 @@ public class MonsterCtrl : MonoBehaviour
             Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
             Destroy(this.gameObject); // ü���� 0 ���϶� ����
             Destroy(HpBar.gameObject);
+        }
+    }
+    #endregion
+
+    #region 몬스터 피격 텍스트
+    public virtual IEnumerator DamageTextAlpha()
+    {
+        if(anim.GetBool("Die") == false)
+        {   
+            //데미지 텍스트 출력 부분(05.31)
+            DamageText.transform.position = new Vector3(hpBarPosition.x - 1, hpBarPosition.y - 2, hpBarPosition.z); 
+            DamageText.GetComponent<TMP_Text>().text = (Damage * (1 / (1 + DEF * 0.01f))).ToString("F0"); //소수점 날리고 데미지 표현
+            float time = 0f;
+            DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
+            Color fadecolor = DamageText.GetComponent<TMP_Text>().color;
+            yield return new WaitForSeconds(0.15f);
+            while(fadecolor.a >= 0)
+            {
+                time += Time.deltaTime;
+                fadecolor.a = Mathf.Lerp(1, 0, time);
+                DamageText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
+                DamageText.transform.position = new Vector3(hpBarPosition.x - 1, hpBarPosition.y + time - 2, hpBarPosition.z); // 서서히 올라감
+                yield return null;
+            }
         }
     }
     #endregion

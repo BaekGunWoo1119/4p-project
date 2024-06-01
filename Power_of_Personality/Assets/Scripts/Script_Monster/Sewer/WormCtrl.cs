@@ -61,6 +61,10 @@ public class WormCtrl : MonsterCtrl
     }
     public override Vector3 GetHPBarPosition()
     {
-        return transform.position + Vector3.up * 5.0f; // ¿øÇÏ´Â À§Ä¡·Î ¼öÁ¤
+        return transform.position + Vector3.up * 5.0f; // ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    }
+    public override IEnumerator DamageTextAlpha()
+    {
+        yield return base.DamageTextAlpha();
     }
 }

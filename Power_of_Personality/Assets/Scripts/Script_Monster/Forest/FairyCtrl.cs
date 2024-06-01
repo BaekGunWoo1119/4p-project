@@ -67,6 +67,10 @@ public class FairyCtrl : MonsterCtrl
     }
     public override Vector3 GetHPBarPosition()
     {
-        return base.GetHPBarPosition(); // ¿øÇÏ´Â À§Ä¡·Î ¼öÁ¤
+        return base.GetHPBarPosition(); // ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    }
+    public override IEnumerator DamageTextAlpha()
+    {
+        yield return base.DamageTextAlpha();
     }
 }
