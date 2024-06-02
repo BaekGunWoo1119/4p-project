@@ -347,31 +347,14 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
     public void comboAttack_1_on()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, 0, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
-            audioSources[0].Play();
-        }
-        else
-        {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, 180, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
-            audioSources[0].Play();
-        }
+        SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        audioSources[0].Play();
     }
     public void comboAttack_2_on()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, 0, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
-        }
-        else
-        {
-            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, 180, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
-        }
+        SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
     }
     public void comboAttack_off()
     {
@@ -379,39 +362,20 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     }
     public void jumpAttack_1_on()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, 0, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
-            audioSources[1].Play();
-        }
-        else
-        {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, 180, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
-            audioSources[1].Play();
-        }
+        SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        audioSources[1].Play();
     }
 
     public void skill_Q_on()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
-            setParticles1 = SkillQ_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-            setParticles2 = SkillQ_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-            StartCoroutine(RotateEffect(0f, 0f, 0f, setParticles1));
-            StartCoroutine(RotateEffect(0f, 0f, 0f, setParticles2));
-            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        }
-        else
-        {
-            setParticles1 = SkillQ_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-            setParticles2 = SkillQ_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-            StartCoroutine(RotateEffect(0f, 179.0f, 0f, setParticles1));
-            StartCoroutine(RotateEffect(0f, 179.0f, 0f, setParticles2));
-            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, -90, 0f));
-        }
+        //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
+        setParticles1 = SkillQ_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        setParticles2 = SkillQ_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles1));
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles2));
+        SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+
     }
 
     public void skill_W_on()
@@ -422,30 +386,15 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
     public void skill_E_on()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            setParticles1 = SkillE_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-            setParticles2 = SkillE_Effect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-            setParticles3 = SkillE_Effect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
-            setParticles4 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
-            StartCoroutine(RotateEffect(0.6f, 0f, 0f, setParticles1));
-            StartCoroutine(RotateEffect(-0.6f, 0f, 0f, setParticles2));
-            StartCoroutine(RotateEffect(0.8f, 0f, 0f, setParticles3));
-            StartCoroutine(RotateEffect(-0.8f, 0f, 0f, setParticles4));
-            SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        }
-        else
-        {
-            setParticles1 = SkillE_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-            setParticles2 = SkillE_Effect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-            setParticles3 = SkillE_Effect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
-            setParticles4 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
-            StartCoroutine(RotateEffect(0.6f, 179.0f, 0f, setParticles1));
-            StartCoroutine(RotateEffect(-0.6f, 179.0f, 0f, setParticles2));
-            StartCoroutine(RotateEffect(0.8f, 179.0f, 0f, setParticles3));
-            StartCoroutine(RotateEffect(-0.8f, 179.0f, 0f, setParticles4));
-            SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, -90, 0f));
-        }
+        setParticles1 = SkillE_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        setParticles2 = SkillE_Effect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        setParticles3 = SkillE_Effect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+        setParticles4 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+        StartCoroutine(RotateEffect(0.6f, (SkillYRot - 90f) / 60, 0f, setParticles1));
+        StartCoroutine(RotateEffect(-0.6f, (SkillYRot - 90f) / 60, 0f, setParticles2));
+        StartCoroutine(RotateEffect(0.8f, (SkillYRot - 90f) / 60, 0f, setParticles3));
+        StartCoroutine(RotateEffect(-0.8f, (SkillYRot - 90f) / 60, 0f, setParticles4));
+        SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
     }
     IEnumerator RotateEffect(float xR, float yR, float zR, ParticleSystem particle)
     {

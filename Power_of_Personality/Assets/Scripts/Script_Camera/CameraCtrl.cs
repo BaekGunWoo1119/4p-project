@@ -193,11 +193,4 @@ public class CameraCtrl : MonoBehaviour
     {
     }
     #endregion
-
-    public virtual void DamageCamera()
-    {
-        //cameraEffect.BlurCamera(1.15f);
-        //cameraEffect.ColorDiffuse(0.4f);
-        //cameraEffect.RoundCamera(0.4f, 255, 0, 0);
-    }
 }

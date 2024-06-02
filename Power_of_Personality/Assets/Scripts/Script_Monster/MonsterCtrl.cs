@@ -232,7 +232,7 @@ public class MonsterCtrl : MonoBehaviour
         if(anim.GetBool("Die") == false)
         {   
             //데미지 텍스트 출력 부분(05.31)
-            DamageText.transform.position = new Vector3(hpBarPosition.x, hpBarPosition.y + 0.5f, hpBarPosition.z); 
+            DamageText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + 0.5f, HpBar.transform.position.z); 
             DamageText.GetComponent<TMP_Text>().text = (Damage * (1 / (1 + DEF * 0.01f))).ToString("F0"); //소수점 날리고 데미지 표현
             float time = 0f;
             DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
@@ -243,7 +243,7 @@ public class MonsterCtrl : MonoBehaviour
                 time += Time.deltaTime;
                 fadecolor.a = Mathf.Lerp(1, 0, time);
                 DamageText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
-                DamageText.transform.position = new Vector3(hpBarPosition.x, hpBarPosition.y + time + 0.1f, hpBarPosition.z); // 서서히 올라감
+                DamageText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + time + 0.1f, HpBar.transform.position.z); // 서서히 올라감
                 yield return null;
             }
         }

@@ -108,10 +108,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public float LocalSkillYRot;
     public GameObject EffectGen;
     public GameObject SkillEffect;
-    public GameObject DamageText;
+    public GameObject DamageText; //텍스트
+    public GameObject PlayerCanvas;
 
     // 카메라, 사운드
     protected GameObject mainCamera;
+    protected GameObject cameraEffect;
     protected AudioClip[] effectAudio;
     protected bool isSound = false;
     protected AudioSource[] audioSources;
@@ -154,7 +156,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         HpText.text = "HP" + PlayerHP + "/" + maxHP;
         
         //데미지 텍스트 설정(06.01)
-        DamageText = GameObject.Find("DamageText - Player");
+        PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;
+        DamageText = PlayerCanvas.transform.Find("DamageText - Player").gameObject;
         DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0);
 
         //쿨타임 UI(03.18)
@@ -169,6 +172,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         initPos = trs.position; // initPos에 Transform.position 할당
         mainCamera = GameObject.FindWithTag("MainCamera");  // 메인 카메라 지정
+        cameraEffect = GameObject.FindWithTag("CameraEffect"); // 카메라 이펙트 볼륨 설정
         PlayAnim("isIdle");   // isIdle을 True로 설정해서 Idle 상태 지정
         EffectGen = transform.Find("EffectGen").gameObject; // EffectGen 지정
 
@@ -250,6 +254,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         // char 오브젝트 위치 고정
         transform.GetChild(0).localPosition = Vector3.zero;
 
+        //데미지 캔버스 Y값 고정
+        PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
 
         // Attack 함수 실행
         if (Input.GetKeyDown(KeyCode.A))
@@ -468,8 +474,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             CheckHp();
             PlayAnim("TakeDamage");
             StartCoroutine(DamageTextAlpha());
-            yield return new WaitForSeconds(0.5f);
+            cameraEffect.GetComponent<CameraEffectCtrl>().DamageCamera();
+            yield return new WaitForSeconds(0.2f);
             StopAnim("TakeDamage");
+            cameraEffect.GetComponent<CameraEffectCtrl>().ResetCameraEffect();
         }
 
         if (PlayerHP <= 0) // 플레이어가 죽으면 게임오버 창 띄움
@@ -498,7 +506,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if(anim.GetBool("Die") == false)
         {   
             //데미지 텍스트 출력 부분(05.31)
-            DamageText.transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z); 
+            DamageText.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z); 
             DamageText.GetComponent<TMP_Text>().text = (-Damage).ToString("F0"); //소수점 날리고 데미지 표현
             float time = 0f;
             DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
@@ -509,7 +517,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 time += Time.deltaTime;
                 fadecolor.a = Mathf.Lerp(1, 0, time);
                 DamageText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
-                DamageText.transform.position = new Vector3(transform.position.x, transform.position.y + time + 0.1f, transform.position.z); // 서서히 올라감
+                DamageText.transform.position = new Vector3(transform.position.x, transform.position.y + time + 0.5f, transform.position.z); // 서서히 올라감
                 yield return null;
             }
         }
