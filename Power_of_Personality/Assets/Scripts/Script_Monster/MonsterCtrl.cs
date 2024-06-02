@@ -154,8 +154,11 @@ public class MonsterCtrl : MonoBehaviour
 
     public virtual void Attack_On(float endEffect)
     {
-        GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
-        Destroy(effect_on, endEffect);
+        if(EffectGen != null && AttackEffect != null)
+        {
+            GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
+            Destroy(effect_on, endEffect);
+        }
     }
 
     #endregion
