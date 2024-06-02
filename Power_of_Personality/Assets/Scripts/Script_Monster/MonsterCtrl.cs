@@ -42,8 +42,10 @@ public class MonsterCtrl : MonoBehaviour
     public bool isDie;     //몬스터 사망체크
     public bool isHit;     //몬스터 피격체크
 
-    public GameObject IceHit;
-    public GameObject FireHit;
+    public GameObject IceHit; //몬스터 피격 이펙트(얼음)
+    public GameObject FireHit; //몬스터 피격 이펙트(불)
+    public GameObject AttackEffect; //몬스터 공격 이펙트
+    public GameObject EffectGen; //몬스터 공격 이펙트 소환 장소
      
 
     #endregion
@@ -131,6 +133,14 @@ public class MonsterCtrl : MonoBehaviour
         yield return null;
     }
 
+    public virtual Vector3 GetHPBarPosition()
+    {
+        return transform.position + Vector3.up * 3.5f;
+    }
+    #endregion
+
+    #region 몬스터의 공격
+
     public virtual IEnumerator Attack()
     {
         AttackCoolTime = 0;
@@ -142,10 +152,12 @@ public class MonsterCtrl : MonoBehaviour
         AttackCoolTime = 0;
     }
 
-    public virtual Vector3 GetHPBarPosition()
+    public virtual void Attack_On(float endEffect)
     {
-        return transform.position + Vector3.up * 3.5f;
+        GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
+        Destroy(effect_on, endEffect);
     }
+
     #endregion
 
     #region 몬스터 피격, 피해량 공식
