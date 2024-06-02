@@ -156,9 +156,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         HpText.text = "HP" + PlayerHP + "/" + maxHP;
         
         //데미지 텍스트 설정(06.01)
-        //PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;
-        //DamageText = PlayerCanvas.transform.Find("DamageText - Player").gameObject;
-        //DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0);
+        PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;
+        DamageText = PlayerCanvas.transform.Find("DamageText - Player").gameObject;
+        DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0);
 
         //쿨타임 UI(03.18)
         Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
@@ -255,7 +255,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         transform.GetChild(0).localPosition = Vector3.zero;
 
         //데미지 캔버스 Y값 고정
-        //PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
+        PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
 
         // Attack 함수 실행
         if (Input.GetKeyDown(KeyCode.A))
@@ -515,7 +515,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             while(fadecolor.a >= 0)
             {
                 time += Time.deltaTime;
-                fadecolor.a = Mathf.Lerp(1, 0, time * 1.5f);
+                fadecolor.a = Mathf.Lerp(1, 0, time * 2f);
                 DamageText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
                 DamageText.transform.position = new Vector3(transform.position.x, transform.position.y + time * 3f + 0.5f, transform.position.z); // 서서히 올라감
                 yield return null;

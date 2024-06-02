@@ -16,6 +16,13 @@ public class Inventory : MonoBehaviour
     {
         originalScale = new Vector3(1, 1, 1);
         hiddenScale = new Vector3(0, 0, 0);
+
+        GameObject[] TraitBoxes = GameObject.FindGameObjectsWithTag("TraitBox");
+        //(06.03) 슬롯 추가
+        for(int i = 0; i < TraitBoxes.Length; i++) // 각 TraitBox마다 하위 개체를 3개씩 가지고 있음. 아이템 추가시 변경 가능성 O
+        {
+            slots[i] = TraitBoxes[i].GetComponent<Slot>();
+        }
     }
 
     void Update()

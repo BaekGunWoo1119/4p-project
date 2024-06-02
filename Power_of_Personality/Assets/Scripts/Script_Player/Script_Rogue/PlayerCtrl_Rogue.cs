@@ -90,6 +90,16 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         base.CheckHp();
     }
+
+    protected override IEnumerator TakeDamage()
+    {
+        yield return base.TakeDamage();
+    }
+
+    protected override IEnumerator DamageTextAlpha()
+    {
+        yield return base.DamageTextAlpha();
+    }
     #endregion
 
     #region 이동 관련 함수
