@@ -21,6 +21,8 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     public GameObject QSkill_Collider;
     private GameObject WSkill_Collider;
     private GameObject Attack_1_Collider;
+    private GameObject Attack_2_Collider;
+    private GameObject Attack_3_Collider;
 
     //이펙트
     public GameObject Skill_FireE_Effect;
@@ -42,7 +44,11 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;
         WSkill_Collider.SetActive(false);
         Attack_1_Collider = Attack_Collider_All.transform.Find("Attack_1_Collider").gameObject;
+        Attack_2_Collider = Attack_Collider_All.transform.Find("Attack_2_Collider").gameObject;
+        Attack_3_Collider = Attack_Collider_All.transform.Find("Attack_3_Collider").gameObject;
         Attack_1_Collider.SetActive(false);
+        Attack_2_Collider.SetActive(false);
+        Attack_3_Collider.SetActive(false);
 
         isSkillQ = false;
     }
@@ -200,7 +206,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
         if(AttackNumber == 1)
         {
-            StartCoroutine(Attack1_Collider());
+            StartCoroutine(Attack2_Collider());
             StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
             StartCoroutine(Delay(0.2f));
             mainCamera.GetComponent<CameraCtrl_Warrior>().ShakeCamera(0.1f, 0.01f, null);
@@ -210,7 +216,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         {
             StartCoroutine(Delay(0.2f));
             StartCoroutine(MoveForwardForSeconds(0.3f));
-            StartCoroutine(Attack1_Collider());
+            StartCoroutine(Attack3_Collider());
             StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
             StartCoroutine(Delay(5.0f));
             mainCamera.GetComponent<CameraCtrl_Warrior>().ShakeCamera(0.3f, 0.1f, null);
@@ -241,12 +247,31 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
     IEnumerator Attack1_Collider()
     {
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.125f);
         Attack_1_Collider.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         if (Attack_1_Collider == true)
         {
             Attack_1_Collider.SetActive(false);
+        }
+    }
+    IEnumerator Attack2_Collider()
+    {
+        Attack_2_Collider.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        if (Attack_2_Collider == true)
+        {
+            Attack_2_Collider.SetActive(false);
+        }
+    }
+    IEnumerator Attack3_Collider()
+    {
+        yield return new WaitForSeconds(0.125f);
+        Attack_3_Collider.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        if (Attack_3_Collider == true)
+        {
+            Attack_3_Collider.SetActive(false);
         }
     }
     IEnumerator Attack_Sound(int AttackValue, float playsec)
@@ -437,21 +462,19 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         coroutineMove = true;
         float elapsedTime = 0;
-
+        
         while (elapsedTime < seconds)
         {
-
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-
             elapsedTime += Time.deltaTime;
+            if (!WallCollision)
+            {
+                transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            }
             yield return null;
         }
-
-        if (WSkill_Collider.activeSelf == true)
+        if(elapsedTime > seconds)
         {
             WSkill_Collider.SetActive(false);
-            WSkillCoolTime = 0;
-            Wcool.fillAmount = 1;
         }
     }
 

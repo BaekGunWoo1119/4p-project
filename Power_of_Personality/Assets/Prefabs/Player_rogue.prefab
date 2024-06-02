@@ -24820,6 +24820,68 @@ Transform:
   m_Father: {fileID: 3802328060141859787}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2551695974318826034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7899631065713516797}
+  - component: {fileID: 4679489307091077221}
+  - component: {fileID: 3721750070492821561}
+  m_Layer: 7
+  m_Name: ESkill_Collider4
+  m_TagString: RougeSkillE_4
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7899631065713516797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551695974318826034}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1416548392353821496}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4679489307091077221
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551695974318826034}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &3721750070492821561
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551695974318826034}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 6, z: 13}
+  m_Center: {x: 0, y: 2, z: 6.5}
 --- !u!1 &2670491512276318053
 GameObject:
   m_ObjectHideFlags: 0
@@ -24830,9 +24892,9 @@ GameObject:
   m_Component:
   - component: {fileID: 743368126340168235}
   - component: {fileID: 965148853478649042}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Attack_3_Collider
-  m_TagString: WarriorAttack1
+  m_TagString: RougeAttack3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24871,8 +24933,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.175928, y: 0.43601596, z: 0.59611434}
-  m_Center: {x: 0.09064007, y: -0.28199202, z: -0.20194285}
+  m_Size: {x: 1, y: -0.5, z: 1}
+  m_Center: {x: 0, y: -0.25, z: 0}
 --- !u!1 &2988489867890720896
 GameObject:
   m_ObjectHideFlags: 0
@@ -39450,9 +39512,9 @@ GameObject:
   - component: {fileID: 1100241775457416282}
   - component: {fileID: 1596190693224832135}
   - component: {fileID: 6223569108821867604}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WSkill_Last_Collider
-  m_TagString: WarriorSkillW
+  m_TagString: RougeSkillW_2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39466,7 +39528,7 @@ Transform:
   m_GameObject: {fileID: 3242438045581448325}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1416548392353821496}
@@ -39499,8 +39561,61 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.6306285, y: 1.6009231, z: 5.127611}
-  m_Center: {x: 0.008757869, y: -0.19953847, z: 2.4038074}
+  m_Size: {x: 1, y: 2.5, z: 14}
+  m_Center: {x: 0, y: 0.25, z: 7}
+--- !u!1 &3420724612574546041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1930729061875219827}
+  - component: {fileID: 6619805859434868633}
+  m_Layer: 7
+  m_Name: Attack_2_Collider
+  m_TagString: RougeAttack2
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1930729061875219827
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420724612574546041}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 1.5}
+  m_LocalScale: {x: 1, y: 4, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1416548392353821496}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6619805859434868633
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3420724612574546041}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 0.75}
+  m_Center: {x: 0, y: 0, z: -0.1}
 --- !u!1 &3506809181178871588
 GameObject:
   m_ObjectHideFlags: 0
@@ -53373,7 +53488,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3878296713333256880}
-  - component: {fileID: 3787268813630648060}
   - component: {fileID: 2961177158570412754}
   m_Layer: 0
   m_Name: Char_Rogue
@@ -53399,27 +53513,6 @@ Transform:
   m_Father: {fileID: 3802328060141859787}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3787268813630648060
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3879985862006686266}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: 038320a534bd8b444b43734860d1a211, type: 3}
-  m_Controller: {fileID: 9100000, guid: 0df2888b576cb484abcffe9f434011c6, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!65 &2961177158570412754
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -113624,9 +113717,9 @@ GameObject:
   - component: {fileID: 393358825741747608}
   - component: {fileID: 6884475470019406896}
   - component: {fileID: 5318881201000487970}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: QSkill_Last_Collider
-  m_TagString: WarriorSkillW
+  m_TagString: RougeSkillQ_2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113640,7 +113733,7 @@ Transform:
   m_GameObject: {fileID: 4070784027674399062}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1416548392353821496}
@@ -113673,8 +113766,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8183994, y: 2, z: 1.7982693}
-  m_Center: {x: 0.042937595, y: 0, z: -0.009633541}
+  m_Size: {x: 3, y: 2.5, z: 8}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &4089520028852372825
 GameObject:
   m_ObjectHideFlags: 0
@@ -113800,7 +113893,7 @@ Transform:
   - {fileID: 1784435491786528725}
   - {fileID: 1416548392353821496}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &9019101430542279754
 MonoBehaviour:
@@ -113814,16 +113907,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e029f084687309498f52b8483b4257c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerHP: 0
+  maxHP: 0
+  Damage: 0
+  PlayerATK: 0
+  PlayerDEF: 0
+  FireATT: 0
+  IceATT: 0
   moveSpeed: 7
+  moveSpd: 0
   JumpPower: 12
   fallPower: 4
-  ESkill_Last_Collider: {fileID: 6186884052317262959, guid: 01a0b81a8ebfe8c43b09ccd5af03f118, type: 3}
-  effectAudio:
-  - {fileID: 8300000, guid: ecff57830407ceb4ca193204e523c1da, type: 3}
-  - {fileID: 8300000, guid: 9addb1b0668b9b046b68c36ed77a2494, type: 3}
-  - {fileID: 8300000, guid: 7bdf727921fc7594bb97c55bf894b756, type: 3}
-  - {fileID: 8300000, guid: 4acc94de131bdcc44a1e80230a29ca14, type: 3}
-  - {fileID: 8300000, guid: 4acc94de131bdcc44a1e80230a29ca14, type: 3}
   commonAttack_Ice1_Effect: {fileID: 4328147310773701037, guid: 947615a8cc6b3fe46bf184773708d564, type: 3}
   commonAttack_Ice2_Effect: {fileID: 4328147310773701037, guid: 2855e32e91b8ed648bd8e1cc1c4a49bd, type: 3}
   commonAttack_Ice3_Effect: {fileID: 4328147310773701037, guid: 7e4ec70eeb92f814cb29e3382b6e77c6, type: 3}
@@ -113842,6 +113936,24 @@ MonoBehaviour:
   Skill_IceE2_Effect: {fileID: 8608939627572789504, guid: 5b576f74e4586a247b87e7ce93fb71a7, type: 3}
   Skill_IceE3_Effect: {fileID: 9157480004622603669, guid: d3aa6073dc35a1e4e8080c0c2bd39e80, type: 3}
   Skill_IceE4_Effect: {fileID: 8495003441705968104, guid: 9dace2b76a3aa4b4daeba27a593b0c13, type: 3}
+  Attack1_Effect: {fileID: 0}
+  Attack2_Effect: {fileID: 0}
+  Attack3_Effect: {fileID: 0}
+  SkillQ_Effect: {fileID: 0}
+  SkillW_Effect: {fileID: 0}
+  SkillE1_Effect: {fileID: 0}
+  SkillE2_Effect: {fileID: 0}
+  SkillE3_Effect: {fileID: 0}
+  SkillE4_Effect: {fileID: 0}
+  SkillYRot: 0
+  LocalSkillYRot: 0
+  EffectGen: {fileID: 0}
+  SkillEffect: {fileID: 0}
+  DamageText: {fileID: 0}
+  PlayerCanvas: {fileID: 0}
+  HpText: {fileID: 0}
+  QSkill_Collider: {fileID: 0}
+  QSkill_Last_Collider: {fileID: 0}
 --- !u!54 &7434710240885723541
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -113867,7 +113979,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!95 &5341020194043613003
 Animator:
@@ -114023,6 +114135,68 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &4212013970968259852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1517533383989861888}
+  - component: {fileID: 1535398303284390135}
+  - component: {fileID: 6306386009628127047}
+  m_Layer: 7
+  m_Name: ESkill_Collider3
+  m_TagString: RougeSkillE_3
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1517533383989861888
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4212013970968259852}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1416548392353821496}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1535398303284390135
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4212013970968259852}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &6306386009628127047
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4212013970968259852}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 6, z: 8}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &4286852153591535580
 GameObject:
   m_ObjectHideFlags: 0
@@ -114157,9 +114331,9 @@ GameObject:
   - component: {fileID: 5503002039486978857}
   - component: {fileID: 4103078801760245037}
   - component: {fileID: 6378567202107975545}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WSkill_Collider
-  m_TagString: WarriorSkillW
+  m_TagString: RougeSkillW_1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114173,7 +114347,7 @@ Transform:
   m_GameObject: {fileID: 4752142704412479852}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1416548392353821496}
@@ -114206,8 +114380,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.6306285, y: 1.6009231, z: 2.1684842}
-  m_Center: {x: 0.008757869, y: -0.19953847, z: 0.924242}
+  m_Size: {x: 1, y: 2.5, z: 7}
+  m_Center: {x: 0, y: 0.25, z: 3.5}
 --- !u!1 &4993699431144766848
 GameObject:
   m_ObjectHideFlags: 0
@@ -124016,6 +124190,68 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &6755393349386856276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 430093862281814487}
+  - component: {fileID: 7758583800768809786}
+  - component: {fileID: 7588994188933693029}
+  m_Layer: 7
+  m_Name: ESkill_Collider2
+  m_TagString: RougeSkillE_2
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &430093862281814487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6755393349386856276}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1416548392353821496}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7758583800768809786
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6755393349386856276}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &7588994188933693029
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6755393349386856276}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 4, z: 4}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &7375010250769033543
 GameObject:
   m_ObjectHideFlags: 0
@@ -128950,9 +129186,9 @@ GameObject:
   - component: {fileID: 3361750266740084561}
   - component: {fileID: 5040733258944229831}
   - component: {fileID: 4493754274477601193}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: QSkill_Collider
-  m_TagString: WarriorSkillW
+  m_TagString: RougeSkillQ_1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128966,7 +129202,7 @@ Transform:
   m_GameObject: {fileID: 7937732877308052716}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1416548392353821496}
@@ -128999,8 +129235,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1864533, y: 2, z: 1.2035234}
-  m_Center: {x: 0.0035310984, y: 0, z: -0.03231581}
+  m_Size: {x: 3, y: 2.5, z: 6}
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &7970269609160266903
 GameObject:
   m_ObjectHideFlags: 0
@@ -129012,9 +129248,9 @@ GameObject:
   - component: {fileID: 7874358907099034666}
   - component: {fileID: 4445013723208815904}
   - component: {fileID: 7941006472696382936}
-  m_Layer: 0
-  m_Name: ESkill_Collider
-  m_TagString: WarriorSkillW
+  m_Layer: 7
+  m_Name: ESkill_Collider1
+  m_TagString: RougeSkillE_1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129028,7 +129264,7 @@ Transform:
   m_GameObject: {fileID: 7970269609160266903}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1416548392353821496}
@@ -129061,8 +129297,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.90982413, y: 2.1490333, z: 1.1727896}
-  m_Center: {x: 0.04409524, y: 1.3562726, z: -0.032945238}
+  m_Size: {x: 1, y: 4, z: 4}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &8167415656440737279
 GameObject:
   m_ObjectHideFlags: 0
@@ -129073,9 +129309,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3900620504193745340}
   - component: {fileID: 1626426355556978655}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Attack_1_Collider
-  m_TagString: WarriorAttack1
+  m_TagString: RougeAttack1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129088,7 +129324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8167415656440737279}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 1.5}
+  m_LocalPosition: {x: 0, y: 2.06, z: 1.5}
   m_LocalScale: {x: 1, y: 4, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -129114,8 +129350,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.6423918, z: 0.80124736}
-  m_Center: {x: 0, y: -0.1788041, z: -0.0993764}
+  m_Size: {x: 1, y: 1, z: 0.75}
+  m_Center: {x: 0, y: 0, z: -0.1}
 --- !u!1 &8196372568516244033
 GameObject:
   m_ObjectHideFlags: 0
@@ -134044,8 +134280,12 @@ Transform:
   - {fileID: 393358825741747608}
   - {fileID: 1100241775457416282}
   - {fileID: 3900620504193745340}
+  - {fileID: 1930729061875219827}
   - {fileID: 743368126340168235}
   - {fileID: 7874358907099034666}
+  - {fileID: 430093862281814487}
+  - {fileID: 1517533383989861888}
+  - {fileID: 7899631065713516797}
   m_Father: {fileID: 3802328060141859787}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

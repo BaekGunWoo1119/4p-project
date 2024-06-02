@@ -11,9 +11,9 @@ public class CameraCtrl_Rogue : CameraCtrl
     }
 
     // Update is called once per frame
-    protected override void LateUpdate()
+    protected override void FixedUpdate()
     {
-        base.LateUpdate();
+        base.FixedUpdate();
     }
 
     protected override void FollowPlayer()

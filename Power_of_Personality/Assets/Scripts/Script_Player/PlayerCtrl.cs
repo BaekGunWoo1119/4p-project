@@ -156,9 +156,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         HpText.text = "HP" + PlayerHP + "/" + maxHP;
         
         //데미지 텍스트 설정(06.01)
-        PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;
-        DamageText = PlayerCanvas.transform.Find("DamageText - Player").gameObject;
-        DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0);
+        //PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;
+        //DamageText = PlayerCanvas.transform.Find("DamageText - Player").gameObject;
+        //DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0);
 
         //쿨타임 UI(03.18)
         Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
@@ -218,7 +218,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
 
         //스킬 쿨타임 UI(03.18)
-        if (Qcool.fillAmount != 0)
+        /*if (Qcool.fillAmount != 0)
         {
             Qcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
         }
@@ -229,7 +229,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (Ecool.fillAmount != 0)
         {
             Ecool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
-        }
+        }*/
         // 땅에 닿아있는지 체크
         isGrounded();
 
@@ -255,7 +255,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         transform.GetChild(0).localPosition = Vector3.zero;
 
         //데미지 캔버스 Y값 고정
-        PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
+        //PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
 
         // Attack 함수 실행
         if (Input.GetKeyDown(KeyCode.A))
@@ -763,6 +763,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
         else if(AnimationName == "isRun")
         {
+            Debug.Log("실행!!");
             anim.SetBool(AnimationName, moveVec != Vector3.zero);
         }
         else
