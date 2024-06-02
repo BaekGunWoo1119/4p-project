@@ -37,7 +37,7 @@ public class CameraCtrl : MonoBehaviour
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
-    protected virtual void LateUpdate()
+    protected virtual void FixedUpdate()
     {
         FollowPlayer();
 
@@ -63,7 +63,7 @@ public class CameraCtrl : MonoBehaviour
         if (target != null && focusTimer <= 0 && shakeTimer <= 0 && !isMove)
         {
             // 플레이어의 움직임을 살짝 딜레이를 주고 따라 감
-            transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref currentVelocity, 0f);
+            transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref currentVelocity, 0.1f);
             transform.rotation = target.transform.root.GetComponentInParent<Transform>().rotation;
         }
     }

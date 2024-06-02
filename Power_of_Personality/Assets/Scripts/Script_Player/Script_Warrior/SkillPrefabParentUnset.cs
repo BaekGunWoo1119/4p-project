@@ -11,7 +11,7 @@ public class SkillPrefabParentUnset : MonoBehaviour
     {
         RemainingTime += Time.deltaTime;
 
-        if (RemainingTime > 1)
+        if (RemainingTime > 0.7f)
         {
             gameObject.transform.SetParent(null);
         }

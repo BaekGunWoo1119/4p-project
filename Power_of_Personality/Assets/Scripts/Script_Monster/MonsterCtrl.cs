@@ -26,6 +26,8 @@ public class MonsterCtrl : MonoBehaviour
 
     public string WeakProperty;
 
+    public float TickCoolTime;
+
     public GameObject DamageText; //맞았을 때 나오는 데미지 텍스트
     public Vector3 hpBarPosition;
 
@@ -81,6 +83,7 @@ public class MonsterCtrl : MonoBehaviour
         {
             this.transform.rotation = Quaternion.Euler(0, -90, 0);
         }
+        TickCoolTime += Time.deltaTime;
     }
 
     #region 몬스터 HP 설정하는 부분
@@ -96,7 +99,6 @@ public class MonsterCtrl : MonoBehaviour
             HpBar.value = curHP / maxHP;
     }
     #endregion
-
 
     #region 플레이어 찾기, 플레이어와 거리 체크, 추적, 공격 함수, HP바 위치 설정
     public virtual IEnumerator FindPlayer()     // 플레이어를 찾아서 할당해주는 함수
@@ -166,6 +168,7 @@ public class MonsterCtrl : MonoBehaviour
     #region 몬스터 피격, 피해량 공식
     public virtual void OnTriggerEnter(Collider col)
     {
+        #region 전사
         if (col.tag == "WarriorAttack1")
         {
             isHit = true;
@@ -179,13 +182,93 @@ public class MonsterCtrl : MonoBehaviour
             Damage = 20;
             StartCoroutine(TakeDamage());
         }
-
-        if (col.tag == "WarriorSkillW")
+        #endregion
+        #region 도적
+        if (col.tag == "RougeAttack1")
         {
             isHit = true;
-            Damage = 20;
+            Damage = 10;
             StartCoroutine(TakeDamage());
         }
+        if (col.tag == "RougeAttack2")
+        {
+            isHit = true;
+            Damage = 10;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeAttack3")
+        {
+            isHit = true;
+            Damage = 15;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeSkillQ_2")
+        {
+            isHit = true;
+            Damage = 10;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeSkillW_2")
+        {
+            isHit = true;
+            Damage = 15;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeSkillE_1")
+        {
+            isHit = true;
+            Damage = 10;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeSkillE_2")
+        {
+            isHit = true;
+            Damage = 10;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeSkillE_4")
+        {
+            isHit = true;
+            Damage = 30;
+            StartCoroutine(TakeDamage());
+        }
+        #endregion
+    }
+
+    public virtual void OnTriggerStay(Collider col)
+    {
+        #region 전사
+        if (col.tag == "WarriorSkillW" && TickCoolTime >= 0.5f)
+        {
+            isHit = true;
+            Damage = 2;
+            StartCoroutine(TakeDamage());
+        }
+        #endregion
+        #region 도적
+        if (col.tag == "RougeSkillQ_1" && TickCoolTime >= 0.05f)
+        {
+            isHit = true;
+            Damage = 1;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+
+        if (col.tag == "RougeSkillW_1" && TickCoolTime >= 0.05f)
+        {
+            isHit = true;
+            Damage = 1;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        if (col.tag == "RougeSkillE_3" && TickCoolTime >= 0.01f)
+        {
+            isHit = true;
+            Damage = 1;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        #endregion
     }
 
     public virtual IEnumerator TakeDamage()
