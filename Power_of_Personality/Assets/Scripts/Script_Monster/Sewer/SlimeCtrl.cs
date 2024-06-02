@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class SlimeCtrl : MonsterCtrl
 {
+    public GameObject AttackEffect;
+    public GameObject EffectGen;
     public override void Awake()
     {
         ATK = 10.0f;
@@ -64,8 +66,15 @@ public class SlimeCtrl : MonsterCtrl
     {
         return base.GetHPBarPosition(); // ���ϴ� ��ġ�� ����
     }
+<<<<<<< HEAD
     public override IEnumerator DamageTextAlpha()
     {
         yield return base.DamageTextAlpha();
+=======
+    public void Attack_On()
+    {
+        GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
+        Destroy(effect_on,3f);
+>>>>>>> 69ad485245a5502374f104c1b296884cf76f889a
     }
 }

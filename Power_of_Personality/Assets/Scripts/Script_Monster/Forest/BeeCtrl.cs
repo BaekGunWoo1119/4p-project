@@ -9,6 +9,8 @@ using TMPro;
 
 public class BeeCtrl : MonsterCtrl
 {
+    public GameObject AttackEffect;
+    public GameObject EffectGen;
     public override void Awake()
     {
         WeakProperty = "Fire";
@@ -66,10 +68,19 @@ public class BeeCtrl : MonsterCtrl
     }
     public override Vector3 GetHPBarPosition()
     {
+<<<<<<< HEAD
         return base.GetHPBarPosition(); // 원하는 위치로 수정
     }
     public override IEnumerator DamageTextAlpha()
     {
         yield return base.DamageTextAlpha();
+=======
+        return base.GetHPBarPosition(); // ���ϴ� ��ġ�� ����
+    }
+    public void Attack_On()
+    {
+        GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
+        Destroy(effect_on,3f);
+>>>>>>> 69ad485245a5502374f104c1b296884cf76f889a
     }
 }
