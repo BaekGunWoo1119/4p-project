@@ -67,9 +67,8 @@ public class WormCtrl : MonsterCtrl
     {
         yield return base.DamageTextAlpha();
     }
-    public override void Attack_On(float endEffect)
+    public override void Attack_On()
     {
-        endEffect = 3f;
-        base.Attack_On(endEffect);
+        base.Attack_On();
     }
 }

@@ -515,9 +515,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             while(fadecolor.a >= 0)
             {
                 time += Time.deltaTime;
-                fadecolor.a = Mathf.Lerp(1, 0, time);
+                fadecolor.a = Mathf.Lerp(1, 0, time * 1.5f);
                 DamageText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
-                DamageText.transform.position = new Vector3(transform.position.x, transform.position.y + time + 0.5f, transform.position.z); // 서서히 올라감
+                DamageText.transform.position = new Vector3(transform.position.x, transform.position.y + time * 3f + 0.5f, transform.position.z); // 서서히 올라감
                 yield return null;
             }
         }

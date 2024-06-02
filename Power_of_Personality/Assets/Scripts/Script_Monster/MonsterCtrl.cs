@@ -152,12 +152,12 @@ public class MonsterCtrl : MonoBehaviour
         AttackCoolTime = 0;
     }
 
-    public virtual void Attack_On(float endEffect)
+    public virtual void Attack_On()
     {
         if(EffectGen != null && AttackEffect != null)
         {
             GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
-            Destroy(effect_on, endEffect);
+            Destroy(effect_on, 3f);
         }
     }
 

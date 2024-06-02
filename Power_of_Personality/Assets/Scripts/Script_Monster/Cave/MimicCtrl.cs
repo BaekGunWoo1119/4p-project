@@ -67,8 +67,8 @@ public class MimicCtrl : MonsterCtrl
     {
         yield return base.DamageTextAlpha();
     }
-    public override void Attack_On(float endEffect)
+    public override void Attack_On()
     {
-        base.Attack_On(endEffect);
+        base.Attack_On();
     }
 }
