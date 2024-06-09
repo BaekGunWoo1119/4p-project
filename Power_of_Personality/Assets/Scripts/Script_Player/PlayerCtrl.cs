@@ -157,8 +157,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         
         //데미지 텍스트 설정(06.01)
         PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;
-        DamageText = PlayerCanvas.transform.Find("DamageText - Player").gameObject;
-        DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0);
+        //DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0);
 
         //쿨타임 UI(03.18)
         Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
@@ -461,6 +460,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             SkillQ_Effect = Skill_IceQ_Effect;
             SkillW_Effect = Skill_IceW_Effect;
         }
+
+        // 플레이어 피가 30보다 작으면 지속적으로 화면이 깜빡임
+        if(PlayerHP <= 30)
+        {
+            cameraEffect.GetComponent<CameraEffectCtrl>().DangerousCamera();
+        }
     }
 
 
@@ -506,18 +511,20 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if(anim.GetBool("Die") == false)
         {   
             //데미지 텍스트 출력 부분(05.31)
-            DamageText.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z); 
-            DamageText.GetComponent<TMP_Text>().text = (-Damage).ToString("F0"); //소수점 날리고 데미지 표현
+            GameObject instText = Instantiate(DamageText);
+            instText.transform.SetParent(PlayerCanvas.transform, false);
+            instText.transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z); 
+            instText.GetComponent<TMP_Text>().text = (-Damage).ToString("F0"); //소수점 날리고 데미지 표현
             float time = 0f;
-            DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
-            Color fadecolor = DamageText.GetComponent<TMP_Text>().color;
+            instText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
+            Color fadecolor = instText.GetComponent<TMP_Text>().color;
             yield return new WaitForSeconds(0.15f);
             while(fadecolor.a >= 0)
             {
                 time += Time.deltaTime;
                 fadecolor.a = Mathf.Lerp(1, 0, time * 2f);
-                DamageText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
-                DamageText.transform.position = new Vector3(transform.position.x, transform.position.y + time * 3f + 0.5f, transform.position.z); // 서서히 올라감
+                instText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
+                instText.transform.position = new Vector3(transform.position.x, transform.position.y + time * 3f + 0.5f, transform.position.z); // 서서히 올라감
                 yield return null;
             }
         }

@@ -201,7 +201,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             StartCoroutine(Delay(0.4f));
             StartCoroutine(MoveForwardForSeconds(0.3f));
             StartCoroutine(Delay(0.2f));
-            mainCamera.GetComponent<CameraCtrl_Warrior>().ShakeCamera(0.1f, 0.03f, null);
+            mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.03f, null);
         }
 
         if(AttackNumber == 1)
@@ -209,7 +209,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             StartCoroutine(Attack2_Collider());
             StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
             StartCoroutine(Delay(0.2f));
-            mainCamera.GetComponent<CameraCtrl_Warrior>().ShakeCamera(0.1f, 0.01f, null);
+            mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.01f, null);
         }
 
         if(AttackNumber == 2)
@@ -219,26 +219,26 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             StartCoroutine(Attack3_Collider());
             StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
             StartCoroutine(Delay(5.0f));
-            mainCamera.GetComponent<CameraCtrl_Warrior>().ShakeCamera(0.3f, 0.1f, null);
+            mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.3f, 0.1f, null);
         }
 
         if(AttackNumber == 3)
         {
             isSound = false;
-            mainCamera.GetComponent<CameraCtrl_Warrior>().JumpCamera();
+            mainCamera.GetComponent<CameraCtrl>().JumpCamera_Warrior();
             StartCoroutine(Attack1_Collider());
         }
 
         if(AttackNumber == 4)
         {
-            mainCamera.GetComponent<CameraCtrl_Warrior>().JumpCamera();
+            mainCamera.GetComponent<CameraCtrl>().JumpCamera_Warrior();
             StartCoroutine(Attack1_Collider());
             StartCoroutine(Delay(0.2f));
         }
 
         if(AttackNumber == 5)
         {
-            mainCamera.GetComponent<CameraCtrl_Warrior>().JumpCamera();
+            mainCamera.GetComponent<CameraCtrl>().JumpCamera_Warrior();
             StartCoroutine(Attack1_Collider());
             StopAnim("CommonAttack");
         }
@@ -336,7 +336,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     }
     IEnumerator WarriorSkill_E()
     {
-        mainCamera.GetComponent<CameraCtrl_Warrior>().UltimateCamera(SkillYRot);
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(SkillYRot);
         yield return new WaitForSeconds(1.8f);
         GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();

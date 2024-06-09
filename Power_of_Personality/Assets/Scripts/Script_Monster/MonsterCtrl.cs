@@ -29,6 +29,7 @@ public class MonsterCtrl : MonoBehaviour
     public float TickCoolTime;
 
     public GameObject DamageText; //맞았을 때 나오는 데미지 텍스트
+    public GameObject MonsterCanvas;
     public Vector3 hpBarPosition;
 
     public SkinnedMeshRenderer matObj;
@@ -65,7 +66,6 @@ public class MonsterCtrl : MonoBehaviour
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
         PlayerTr = this.transform;          // 플레이어 Transform을 설정하기 전에 임시로 몬스터(스크립트가 들어있는 게임 오브젝트)의 Transform을 담아놓음.
         StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
-        DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0);
     }
 
     public virtual void Update()
@@ -330,18 +330,20 @@ public class MonsterCtrl : MonoBehaviour
         if(anim.GetBool("Die") == false)
         {   
             //데미지 텍스트 출력 부분(05.31)
-            DamageText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + 0.5f, HpBar.transform.position.z); 
-            DamageText.GetComponent<TMP_Text>().text = (Damage * (1 / (1 + DEF * 0.01f))).ToString("F0"); //소수점 날리고 데미지 표현
+            GameObject instText = Instantiate(DamageText);
+            instText.transform.SetParent(MonsterCanvas.transform, false);
+            instText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + 0.5f, HpBar.transform.position.z); 
+            instText.GetComponent<TMP_Text>().text = (Damage * (1 / (1 + DEF * 0.01f))).ToString("F0"); //소수점 날리고 데미지 표현
             float time = 0f;
-            DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
-            Color fadecolor = DamageText.GetComponent<TMP_Text>().color;
+            instText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
+            Color fadecolor = instText.GetComponent<TMP_Text>().color;
             yield return new WaitForSeconds(0.15f);
             while(fadecolor.a >= 0)
             {
                 time += Time.deltaTime;
                 fadecolor.a = Mathf.Lerp(1, 0, time);
-                DamageText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
-                DamageText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + time + 0.1f, HpBar.transform.position.z); // 서서히 올라감
+                instText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
+                instText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + time + 0.1f, HpBar.transform.position.z); // 서서히 올라감
                 yield return null;
             }
         }

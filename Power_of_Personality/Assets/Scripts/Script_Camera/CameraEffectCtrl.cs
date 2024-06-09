@@ -17,6 +17,29 @@ public class CameraEffectCtrl : MonoBehaviour
 
     private bool Reset = false;
 
+    #region 효과 Value 값
+
+    //페이드 시간
+    private float fadeTime;
+
+    //블러 효과 값들
+    private float blurValue;
+    private float blurTime = 0;
+    private bool bluring = false;
+
+    //색번짐 효과 값들
+    private float diffuseValue;
+    private float diffuseTime = 0;
+    private bool diffusing = false;
+
+
+    //테두리 효과 값들
+    private float roundValue;
+    private float roundTime = 0;
+    private bool rounding = false;
+
+    #endregion
+
     void Start()
     {
         globalVolume = this.GetComponent<Volume>();
@@ -73,45 +96,71 @@ public class CameraEffectCtrl : MonoBehaviour
         BlurCamera_Set();
         ColorDiffuse_Set();
 
+        RoundCamera_Set();
+
     }
 
     #region 값 범용적 효과들
 
-    public IEnumerator BlurCamera(float BlurValue)
+    public IEnumerator BlurCamera(float Value, float time)
     {
         // Depth Of Field의 블러 강도 조정
         depthOfField.active = true; // Depth Of Field 효과 활성화
         depthOfField.focusDistance.overrideState = true; // 효과 내 Focus Distance 항목 활성화
-        float blurTime = 0;
-        yield return new WaitForSeconds(0.1f);
-        while(blurTime == 1.5f)
-        {
-            blurTime += Time.deltaTime;
-            depthOfField.focusDistance.value = Mathf.Lerp(3, BlurValue, Time.deltaTime); // 포커스 거리 설정(0 ~ 100)
-        }
+        blurValue = Value;
+        fadeTime = time;
+        depthOfField.focusDistance.value = 2;
+        yield return new WaitForSeconds(0.03f);
+        bluring = true;
     }
 
     public void BlurCamera_Set()
     {
+        if(!bluring)
+        {
+            blurTime = 0;
+        }
+        else
+        {
+            blurTime += Time.deltaTime;
+            depthOfField.focusDistance.value = Mathf.Lerp(2, blurValue, Time.deltaTime); 
+        }
 
+        if(blurTime > fadeTime)
+        {
+            bluring = false;
+            depthOfField.active = false;
+        }
     }
 
-    public IEnumerator ColorDiffuse(float DiffuseValue)
+    public IEnumerator ColorDiffuse(float Value, float time)
     {
         chromaticAberration.active = true; // Chromatic Aberration 효과 활성화
         chromaticAberration.intensity.overrideState = true; // 효과 내 Intensity 항목 활성화
-        float diffuseTime = 0;
-        yield return new WaitForSeconds(0.1f);
-        while(diffuseTime == 1.5f)
-        {
-            diffuseTime  += Time.deltaTime;
-            chromaticAberration.intensity.value  = Mathf.Lerp(0, DiffuseValue, Time.deltaTime); // 포커스 거리 설정(0 ~ 100)
-        }
+        diffuseValue = Value;
+        fadeTime = time;
+        depthOfField.focusDistance.value = 0;
+        yield return new WaitForSeconds(0.03f);
+        diffusing = true;
     }
 
     public void ColorDiffuse_Set()
     {
-        
+        if(!diffusing)
+        {
+            diffuseTime = 0;
+        }
+        else
+        {
+            diffuseTime += Time.deltaTime;
+            chromaticAberration.intensity.value = Mathf.Lerp(0, diffuseValue, Time.deltaTime); // 포커스 거리 설정(0 ~ 100)          
+        }
+
+        if(diffuseTime > 0.3f)
+        {
+            diffusing = false;
+            chromaticAberration.active = false;
+        }
     }
 
     public IEnumerator ColorFilter(float FilterR, float FilterG, float FilterB, float contrastValue)
@@ -137,17 +186,42 @@ public class CameraEffectCtrl : MonoBehaviour
         paniniProjection.distance.value = zoomValue;
     }
     
-    public IEnumerator RoundCamera(float roundValue, float colorR, float colorG, float colorB)
+    public IEnumerator RoundCamera(float Value, float colorR, float colorG, float colorB, float time)
     {
         vignette.active = true;
+        vignette.intensity.value = 0;
         vignette.color.overrideState = true;
+        roundValue = Value;
+        fadeTime = time;
         vignette.color.value = new Color(colorR, colorG, colorB, 1f);
-        yield return new WaitForSeconds(0.1f);
-        vignette.intensity.value = Mathf.Lerp(0, roundValue, 1f); // 포커스 거리 설정(0 ~ 100)
-        yield return new WaitForSeconds(1.1f);
-        vignette.intensity.value = Mathf.Lerp(roundValue, 0, 1f); // 포커스 거리 설정(0 ~ 100)
-        yield return new WaitForSeconds(0.1f);
-        //vignette.active = false;
+        yield return new WaitForSeconds(0.03f);
+        rounding = true;
+    }
+
+    public void RoundCamera_Set()
+    {
+        if(!rounding)
+        {
+            roundTime = 0;
+        }
+        else
+        {
+            roundTime += Time.deltaTime;
+            vignette.intensity.value = Mathf.Lerp(0, roundValue, 1f); // 포커스 거리 설정(0 ~ 100)
+            Debug.Log("라운딩");
+        }
+
+        if(roundTime > fadeTime * 2)
+        {
+            rounding = false;
+            vignette.active = false;
+        }
+        else if(roundTime > fadeTime) // 페이드 아웃
+        {
+            roundTime += Time.deltaTime;
+            vignette.intensity.value = Mathf.Lerp(roundValue, 0, 1f);
+            Debug.Log("라운딩 페이드");
+        }
     }   
 
     #endregion
@@ -156,9 +230,14 @@ public class CameraEffectCtrl : MonoBehaviour
 
     public void DamageCamera()
     {
-        StartCoroutine(BlurCamera(2f));
-        StartCoroutine(ColorDiffuse(0.4f));
-        StartCoroutine(RoundCamera(0.4f, 1, 0, 0));
+        StartCoroutine(BlurCamera(2f, 0.3f));
+        StartCoroutine(ColorDiffuse(10f, 0.3f));
+        StartCoroutine(RoundCamera(0.4f, 1, 0, 0, 0.3f));
+    }
+
+    public void DangerousCamera()
+    {
+        StartCoroutine(RoundCamera(0.3f, 1, 0, 0, 1.0f));
     }
 
     #endregion
