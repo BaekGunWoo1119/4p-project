@@ -20,6 +20,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     private GameObject Attack_Collider_All;
     public GameObject QSkill_Collider;
     private GameObject WSkill_Collider;
+    public GameObject ESkill_Collider;
     private GameObject Attack_1_Collider;
     private GameObject Attack_2_Collider;
     private GameObject Attack_3_Collider;
@@ -337,7 +338,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     IEnumerator WarriorSkill_E()
     {
         mainCamera.GetComponent<CameraCtrl_Warrior>().UltimateCamera(SkillYRot);
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(2.2f);
         GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
         //스킬 나갈 시 사운드 및 콜라이더
@@ -360,9 +361,11 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         yield return new WaitForSeconds(1.2f);
         audioSources[3].Stop();
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.7f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        yield return new WaitForSeconds(0.1f);
+        SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(1f);
         audioSources[3].Stop();

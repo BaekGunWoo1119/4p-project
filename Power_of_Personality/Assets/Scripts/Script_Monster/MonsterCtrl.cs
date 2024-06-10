@@ -59,7 +59,7 @@ public class MonsterCtrl : MonoBehaviour
         {
             AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
         }
-        SetHP(100);                         // 몬스터의 기본 HP를 설정
+        SetHP(10000000000);                         // 몬스터의 기본 HP를 설정
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
@@ -172,14 +172,32 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "WarriorAttack1")
         {
             isHit = true;
-            Damage = 10;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WarriorAttack2")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WarriorAttack3")
+        {
+            isHit = true;
+            Damage = Status.TotalADC * 1.5f;
             StartCoroutine(TakeDamage());
         }
 
         if (col.tag == "WarriorSkillQ")
         {
             isHit = true;
-            Damage = 20;
+            Damage = Status.TotalAP * 2f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WarriorSkillE")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 4f;
             StartCoroutine(TakeDamage());
         }
         #endregion
@@ -187,49 +205,49 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "RougeAttack1")
         {
             isHit = true;
-            Damage = 10;
+            Damage = Status.TotalADC;
             StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeAttack2")
         {
             isHit = true;
-            Damage = 10;
+            Damage = Status.TotalADC;
             StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeAttack3")
         {
             isHit = true;
-            Damage = 15;
+            Damage = Status.TotalADC * 1.5f;
             StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeSkillQ_2")
         {
             isHit = true;
-            Damage = 10;
+            Damage = Status.TotalAP;
             StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeSkillW_2")
         {
             isHit = true;
-            Damage = 15;
+            Damage = Status.TotalAP * 1.5f;
             StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeSkillE_1")
         {
             isHit = true;
-            Damage = 10;
+            Damage = Status.TotalAP;
             StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeSkillE_2")
         {
             isHit = true;
-            Damage = 10;
+            Damage = Status.TotalAP;
             StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeSkillE_4")
         {
             isHit = true;
-            Damage = 30;
+            Damage = Status.TotalAP * 3f;
             StartCoroutine(TakeDamage());
         }
         #endregion
@@ -238,33 +256,33 @@ public class MonsterCtrl : MonoBehaviour
     public virtual void OnTriggerStay(Collider col)
     {
         #region 전사
-        if (col.tag == "WarriorSkillW" && TickCoolTime >= 0.5f)
+        if (col.tag == "WarriorSkillW" && TickCoolTime >= 0.75f)
         {
             isHit = true;
-            Damage = 2;
+            Damage = Status.TotalAP * 1.5f;
             StartCoroutine(TakeDamage());
         }
         #endregion
         #region 도적
-        if (col.tag == "RougeSkillQ_1" && TickCoolTime >= 0.05f)
+        if (col.tag == "RougeSkillQ_1" && TickCoolTime >= 0.25f)
         {
             isHit = true;
-            Damage = 1;
+            Damage = Status.TotalAP * 0.3f;
             StartCoroutine(TakeDamage());
             TickCoolTime = 0;
         }
 
-        if (col.tag == "RougeSkillW_1" && TickCoolTime >= 0.05f)
+        if (col.tag == "RougeSkillW_1" && TickCoolTime >= 0.3f)
         {
             isHit = true;
-            Damage = 1;
+            Damage = Status.TotalAP * 0.4f;
             StartCoroutine(TakeDamage());
             TickCoolTime = 0;
         }
-        if (col.tag == "RougeSkillE_3" && TickCoolTime >= 0.01f)
+        if (col.tag == "RougeSkillE_3" && TickCoolTime >= 0.25f)
         {
             isHit = true;
-            Damage = 1;
+            Damage = Status.TotalAP;
             StartCoroutine(TakeDamage());
             TickCoolTime = 0;
         }

@@ -48,6 +48,23 @@ public class Inventory : MonoBehaviour
         {
             itemToBeAdded.transform.parent = emptySlots[itemToBeAdded.SlotIndex].transform;
             itemToBeAdded.gameObject.SetActive(false);
+            Status.FixedAD += itemToBeAdded.FixedAD;
+            Status.PercentAD += itemToBeAdded.PercentAD;
+            Status.FixedArmor += itemToBeAdded.FixedArmor;
+            Status.PercentArmor += itemToBeAdded.PercentArmor;
+            Status.FixedSpeed += itemToBeAdded.FixedSpeed;
+            Status.PercentSpeed += itemToBeAdded.PercentSpeed;
+            Status.FixedADC += itemToBeAdded.FixedADC;
+            Status.PercentADC += itemToBeAdded.PercentADC;
+            Status.FixedAP += itemToBeAdded.FixedAP;
+            Status.PercentAP += itemToBeAdded.PercentAP;
+            Status.FixedCooltime += itemToBeAdded.FixedCooltime;
+            Status.PercentCooltime += itemToBeAdded.PercentCooltime;
+            Status.FixedFire += itemToBeAdded.FixedFire;
+            Status.PercentFire += itemToBeAdded.PercentFire;
+            Status.FixedIce += itemToBeAdded.FixedIce;
+            Status.PercentIce += itemToBeAdded.PercentIce;
+            Status.StatUpdate();
         }
     }
     private void OnTriggerEnter(Collider col)
