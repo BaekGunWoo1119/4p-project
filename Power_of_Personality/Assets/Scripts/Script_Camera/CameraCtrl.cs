@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Cinemachine;
 
 public class CameraCtrl : MonoBehaviour
 {
@@ -25,7 +26,6 @@ public class CameraCtrl : MonoBehaviour
     //public CameraEffect cameraEffect;
 
     //카메라 흔들림
-    public float shakeAmount = 0f;
     public float shakeDuration = 0.03f;
     public float shakeTimer = 0f;
 
@@ -45,11 +45,29 @@ public class CameraCtrl : MonoBehaviour
     private bool isMove;
 
     //카메라 여러 대
-    public Camera[] camera;
+    public CinemachineVirtualCamera[] virtualCameras;
+    private int cameraIdx;
+    private CinemachineBrain cinemachineBrain;
+    private CinemachineBasicMultiChannelPerlin shakeNoise;
+    private int focusingCamera = 0;
 
     protected virtual void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        StartCoroutine(SetTarget());
+        cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
+        if(!this.GetComponent<CinemachineBrain>())
+        {
+            shakeNoise = this.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        }
+        for (int i = 1; i < virtualCameras.Length; i++)
+        {
+            virtualCameras[i].gameObject.SetActive(true);
+        }
+        for (int i = 1; i < virtualCameras.Length; i++)
+        {
+            virtualCameras[i].gameObject.SetActive(false);
+        }
+        virtualCameras[focusingCamera].gameObject.SetActive(true);
     }
 
     protected virtual void FixedUpdate()
@@ -61,20 +79,20 @@ public class CameraCtrl : MonoBehaviour
         FocusCamera_Update();
     }
 
+    protected virtual IEnumerator SetTarget()
+    {
+        yield return new WaitForSeconds(0.03f);
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
     #region 카메라 켜기/끄기
 
     protected virtual void SetCamera(int cameraNumber)
     {
-        if(camera[0] = this.gameObject.GetComponent<Camera>())
+        for (int i = 0; i < virtualCameras.Length; i++)
         {
-            camera[cameraNumber].targetDisplay = 1;
-        }
-    }
-    protected virtual void UnSetCamera(int cameraNumber)
-    {
-        if(camera[0] = this.gameObject.GetComponent<Camera>())
-        {
-            camera[cameraNumber].targetDisplay = 2;
+            virtualCameras[i].gameObject.SetActive(i == cameraNumber);
+            Debug.Log("카메라 변경");
         }
     }
 
@@ -127,7 +145,11 @@ public class CameraCtrl : MonoBehaviour
     //범용적으로 제작, 카메라 추가 필요할 시 적절히 넣어볼 것
     public virtual void ShakeCamera(float Amount, float Duration, string zoom)
     {
-        shakeAmount = Amount;
+        if(shakeNoise != null)
+        {
+            shakeNoise.m_AmplitudeGain = Amount;
+            shakeNoise.m_FrequencyGain = Amount;
+        }
         shakeDuration = Duration;
         shakeTimer = shakeDuration;
         if(zoom == "zoom")
@@ -141,8 +163,6 @@ public class CameraCtrl : MonoBehaviour
         if (shakeTimer > 0)
         {
             isMove = true;
-            // 카메라를 흔들이기
-            transform.localPosition += UnityEngine.Random.insideUnitSphere * shakeAmount;
 
             // 흔들림 시간 감소
             shakeTimer -= Time.deltaTime;
@@ -151,7 +171,11 @@ public class CameraCtrl : MonoBehaviour
         {
             // 흔들림이 끝나면 초기 위치로 돌아가기
             shakeTimer = 0f;
-            transform.localPosition = transform.localPosition;
+            if(shakeNoise != null)
+            {
+                shakeNoise.m_AmplitudeGain = 0f;
+                shakeNoise.m_FrequencyGain = 0f;
+            }
         }
     }
     #endregion
@@ -230,30 +254,67 @@ public class CameraCtrl : MonoBehaviour
 
     IEnumerator Warrior_E_Camera(float SkillYRot)
     {
+        focusingCamera = 22;
+        SetCamera(focusingCamera);
+        float currentFOV = virtualCameras[focusingCamera].m_Lens.FieldOfView;
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = 30f;
         yield return new WaitForSeconds(2.0f);
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = currentFOV;
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            FocusCamera(target.transform.position.x - 5, target.transform.position.y + 2.5f, target.transform.position.z, 60, 5.3f, "round");
+            focusingCamera = 13;
+            SetCamera(focusingCamera);
         }
         else
         {
-            FocusCamera(target.transform.position.x - 2.5f, target.transform.position.y + 2.5f, target.transform.position.z, -30, 5.3f, "round");
+            focusingCamera = 21;
+            SetCamera(focusingCamera);
         }
-        ShakeCamera(0.3f, 0.1f, "zoom");
+        SubCameraCtrl CCT = virtualCameras[focusingCamera].transform.GetComponent<SubCameraCtrl>();
+        CCT.ShakeCamera(6f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.6f);
-        ShakeCamera(0.5f, 0.1f, "zoom");
+        CCT.ShakeCamera(10f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.8f);
-        ShakeCamera(0.1f, 0.1f, "zoom");
+        CCT.ShakeCamera(2f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.4f);
-        ShakeCamera(0.2f, 0.1f, "zoom");
+        CCT.ShakeCamera(4f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.4f);
-        ShakeCamera(0.1f, 0.1f, "zoom");
-        yield return new WaitForSeconds(1.2f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(1.0f);
-        ShakeCamera(0.6f, 0.1f, "zoom");
+        CCT.ShakeCamera(2f, 0.3f, "zoom");
+        yield return new WaitForSeconds(1.1f);
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            focusingCamera = 24;
+            SetCamera(focusingCamera);
+        }
+        else
+        {
+            focusingCamera = 30;
+            SetCamera(focusingCamera);
+        }
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = 60f;
+        yield return new WaitForSeconds(0.1f);
+        CCT.ShakeCamera(6f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.8f);
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            focusingCamera = 28;
+            SetCamera(focusingCamera);
+        }
+        else
+        {
+            focusingCamera = 35;
+            SetCamera(focusingCamera);
+        }
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = 60f;
+        yield return new WaitForSeconds(0.1f);
+        CCT.ShakeCamera(12f, 0.3f, "zoom");
         yield return new WaitForSeconds(1f);
         moveStop(0.1f);
+        SetCamera(0);
+        virtualCameras[24].m_Lens.FieldOfView = currentFOV; 
+        virtualCameras[30].m_Lens.FieldOfView = currentFOV; 
+        virtualCameras[28].m_Lens.FieldOfView = currentFOV; 
+        virtualCameras[35].m_Lens.FieldOfView = currentFOV; 
     }
 
     public virtual void UltimateCamera_Rogue(float SkillYRot)
@@ -265,61 +326,67 @@ public class CameraCtrl : MonoBehaviour
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SetCamera(9);
+            focusingCamera = 20;
+            SetCamera(focusingCamera);
         }
         else
         {
-            SetCamera(3);
+            focusingCamera = 14;
+            SetCamera(focusingCamera);
         }
-        UnSetCamera(0);
-        yield return new WaitForSeconds(1.1f);
+        yield return new WaitForSeconds(1.6f);
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SetCamera(1);
+            focusingCamera = 1;
+            SetCamera(focusingCamera);
         }
         else
         {
-            SetCamera(11);
+            focusingCamera = 11;
+            SetCamera(focusingCamera);
         }
-        UnSetCamera(9);
-        ShakeCamera(0.4f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.4f);
-        ShakeCamera(0.6f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.7f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.4f);
+        SubCameraCtrl CCT = virtualCameras[focusingCamera].transform.GetComponent<SubCameraCtrl>();
+        CCT.ShakeCamera(5f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.2f);
+        CCT.ShakeCamera(7f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.65f);
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            FocusCamera(target.transform.position.x - 8, target.transform.position.y + 2f, target.transform.position.z + 3.0f, 60, 2.3f, "round");
+            focusingCamera = 14;
+            SetCamera(focusingCamera);
         }
         else
         {
-            FocusCamera(target.transform.position.x - 5.5f, target.transform.position.y + 2.2f, target.transform.position.z + 3.0f, -30, 2.3f, "round");
+            focusingCamera = 20;
+            SetCamera(focusingCamera);
         }
-        yield return new WaitForSeconds(0.5f);
-        ShakeCamera(0.8f, 0.1f, "zoom");
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.8f, 0.1f, "zoom");
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.8f, 0.1f, "zoom");
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.8f, 0.1f, "zoom");
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.8f, 0.1f, "zoom");
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.05f);
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.05f);
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.8f);
+        CCT.ShakeCamera(10f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.05f);
+        CCT.ShakeCamera(10f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.05f);
+        CCT.ShakeCamera(10f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.05f);
+        CCT.ShakeCamera(10f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.05f);
+        CCT.ShakeCamera(10f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.05f);
         moveStop(0.1f);
+        yield return new WaitForSeconds(0.4f);
+        SetCamera(0);
         /*
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {

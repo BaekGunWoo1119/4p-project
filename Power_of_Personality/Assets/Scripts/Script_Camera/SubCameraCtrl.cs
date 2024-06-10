@@ -16,6 +16,11 @@ public class SubCameraCtrl : CameraCtrl
         base.FixedUpdate();
     }
 
+    protected override IEnumerator SetTarget()
+    {
+        yield return base.SetTarget();
+    }
+
     protected override void FollowPlayer()
     {
         base.FollowPlayer();
