@@ -567,6 +567,7 @@ public class PlayerCtrl_Archer : MonoBehaviour
     }
     IEnumerator Skill_E_Deal()
     {
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Archer(SkillYRot);
         yield return new WaitForSeconds(1.0f);
         //GameObject ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         yield return new WaitForSeconds(0.05f);
@@ -770,13 +771,20 @@ public class PlayerCtrl_Archer : MonoBehaviour
 
     public void skill_E1_on()
     {
-        SkillEffect = Instantiate(SkillE1_Effect, EffectGen.transform.position, Quaternion.Euler(SkillE1_Effect.transform.eulerAngles));
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x + 1.5f, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(SkillE1_Effect.transform.eulerAngles));
+        }
+        else
+        {
+            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x - 1.5f, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(SkillE1_Effect.transform.eulerAngles));
+        }
         SkillEffect.transform.parent = EffectGen.transform;
     }
 
     public void skill_E2_on()
     {
-        SkillEffect = Instantiate(SkillE2_Effect, EffectGen.transform.position, Quaternion.Euler(SkillE2_Effect.transform.eulerAngles));
+        SkillEffect = Instantiate(SkillE2_Effect, EffectGen.transform.position, Quaternion.Euler(EffectGen.transform.eulerAngles));
         SkillEffect.transform.parent = EffectGen.transform;
     }
 

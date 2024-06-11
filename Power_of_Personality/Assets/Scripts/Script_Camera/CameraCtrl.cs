@@ -254,7 +254,7 @@ public class CameraCtrl : MonoBehaviour
 
     IEnumerator Warrior_E_Camera(float SkillYRot)
     {
-        focusingCamera = 22;
+        focusingCamera = 46;
         SetCamera(focusingCamera);
         float currentFOV = virtualCameras[focusingCamera].m_Lens.FieldOfView;
         virtualCameras[focusingCamera].m_Lens.FieldOfView = 30f;
@@ -311,6 +311,7 @@ public class CameraCtrl : MonoBehaviour
         yield return new WaitForSeconds(1f);
         moveStop(0.1f);
         SetCamera(0);
+        virtualCameras[46].m_Lens.FieldOfView = currentFOV; 
         virtualCameras[24].m_Lens.FieldOfView = currentFOV; 
         virtualCameras[30].m_Lens.FieldOfView = currentFOV; 
         virtualCameras[28].m_Lens.FieldOfView = currentFOV; 
@@ -326,15 +327,17 @@ public class CameraCtrl : MonoBehaviour
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            focusingCamera = 20;
+            focusingCamera = 41;
             SetCamera(focusingCamera);
         }
         else
         {
-            focusingCamera = 14;
+            focusingCamera = 37;
             SetCamera(focusingCamera);
         }
-        yield return new WaitForSeconds(1.6f);
+        float currentFOV = virtualCameras[focusingCamera].m_Lens.FieldOfView;
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = 30f;
+        yield return new WaitForSeconds(1.7f);
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             focusingCamera = 1;
@@ -349,7 +352,7 @@ public class CameraCtrl : MonoBehaviour
         CCT.ShakeCamera(5f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.2f);
         CCT.ShakeCamera(7f, 0.3f, "zoom");
-        yield return new WaitForSeconds(0.65f);
+        yield return new WaitForSeconds(0.7f);
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             focusingCamera = 14;
@@ -387,63 +390,8 @@ public class CameraCtrl : MonoBehaviour
         moveStop(0.1f);
         yield return new WaitForSeconds(0.4f);
         SetCamera(0);
-        /*
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            FocusCamera(target.transform.position.x + 3.0f, target.transform.position.y + 1.5f, target.transform.position.z, -90, 1.1f, "forward");
-        }
-        else
-        {
-            FocusCamera(target.transform.position.x - 3.0f, target.transform.position.y + 1.5f, target.transform.position.z, 90, 1.1f, "forward");
-        }
-        yield return new WaitForSeconds(1.1f);
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            FocusCamera(target.transform.position.x, target.transform.position.y + 2.5f, target.transform.position.z - 5.0f, 0, 2.0f, "forward");
-        }
-        else
-        {
-            FocusCamera(target.transform.position.x, target.transform.position.y + 2.5f, target.transform.position.z - 5.0f, 180, 2.0f, "forward");
-        }
-        ShakeCamera(0.4f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.4f);
-        ShakeCamera(0.6f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.7f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.3f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.4f);
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            FocusCamera(target.transform.position.x - 8, target.transform.position.y + 2f, target.transform.position.z + 3.0f, 60, 2.3f, "round");
-        }
-        else
-        {
-            FocusCamera(target.transform.position.x - 5.5f, target.transform.position.y + 2.2f, target.transform.position.z + 3.0f, -30, 2.3f, "round");
-        }
-        yield return new WaitForSeconds(0.5f);
-        ShakeCamera(0.8f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.8f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.8f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.8f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        ShakeCamera(0.8f, 0.1f, "zoom");
-        yield return new WaitForSeconds(0.05f);
-        moveStop(0.1f);
-        */
+        virtualCameras[41].m_Lens.FieldOfView = currentFOV; 
+        virtualCameras[37].m_Lens.FieldOfView = currentFOV; 
     }
 
     public virtual void UltimateCamera_Archer(float SkillYRot)
@@ -453,7 +401,63 @@ public class CameraCtrl : MonoBehaviour
 
     IEnumerator Archer_E_Camera(float SkillYRot)
     {
-        yield return null;
+        focusingCamera = 46;
+        SetCamera(focusingCamera);
+        float currentFOV = virtualCameras[focusingCamera].m_Lens.FieldOfView;
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = 30f;
+        yield return new WaitForSeconds(1.7f);
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            focusingCamera = 43;
+            SetCamera(focusingCamera);
+            yield return new WaitForSeconds(0.1f);
+            focusingCamera = 41;
+            SetCamera(focusingCamera);
+        }
+        else
+        {
+            focusingCamera = 47;
+            SetCamera(focusingCamera);
+            yield return new WaitForSeconds(0.1f);
+            focusingCamera = 37;
+            SetCamera(focusingCamera);
+            
+        }
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = 60f;
+        yield return new WaitForSeconds(1.4f);
+        /*
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            focusingCamera = 14;
+            SetCamera(focusingCamera);
+        }
+        else
+        {
+            focusingCamera = 20;
+            SetCamera(focusingCamera);
+        }
+        */
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = 120f;
+        yield return new WaitForSeconds(0.1f);
+        SubCameraCtrl CCT = virtualCameras[focusingCamera].transform.GetComponent<SubCameraCtrl>();
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.03f);
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.03f);
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.03f);
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.03f);
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.03f);
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.03f);
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.6f);
+        SetCamera(0);
+        virtualCameras[46].m_Lens.FieldOfView = currentFOV; 
+        virtualCameras[14].m_Lens.FieldOfView = currentFOV; 
+        virtualCameras[20].m_Lens.FieldOfView = currentFOV; 
     }
 
     public virtual void UltimateCamera_Wizard(float SkillYRot)
