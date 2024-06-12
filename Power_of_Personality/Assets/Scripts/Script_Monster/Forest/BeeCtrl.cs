@@ -23,8 +23,6 @@ public class BeeCtrl : MonsterCtrl
     public override void Update()
     {
         base.Update();
-        Debug.Log(curHP);
-        Debug.Log(PlayerPrefs.GetString("property"));
     }
 
     public override void SetHP(float amount)

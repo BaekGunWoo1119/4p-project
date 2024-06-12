@@ -23,7 +23,7 @@ public class CameraCtrl : MonoBehaviour
     public float offsetRotZ;
     public Vector3 currentVelocity = Vector3.zero;
     
-    //public CameraEffect cameraEffect;
+    public GameObject cameraEffect;
 
     //카메라 흔들림
     public float shakeDuration = 0.03f;
@@ -55,6 +55,7 @@ public class CameraCtrl : MonoBehaviour
     {
         StartCoroutine(SetTarget());
         cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
+        cameraEffect = GameObject.FindWithTag("CameraEffect");
         if(!this.GetComponent<CinemachineBrain>())
         {
             shakeNoise = this.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
@@ -291,6 +292,7 @@ public class CameraCtrl : MonoBehaviour
             focusingCamera = 30;
             SetCamera(focusingCamera);
         }
+        CCT = virtualCameras[focusingCamera].transform.GetComponent<SubCameraCtrl>();
         virtualCameras[focusingCamera].m_Lens.FieldOfView = 60f;
         yield return new WaitForSeconds(0.1f);
         CCT.ShakeCamera(6f, 0.3f, "zoom");
@@ -305,8 +307,10 @@ public class CameraCtrl : MonoBehaviour
             focusingCamera = 35;
             SetCamera(focusingCamera);
         }
+        CCT = virtualCameras[focusingCamera].transform.GetComponent<SubCameraCtrl>();
         virtualCameras[focusingCamera].m_Lens.FieldOfView = 60f;
         yield return new WaitForSeconds(0.1f);
+        cameraEffect.GetComponent<CameraEffectCtrl>().BigAttackCamera();
         CCT.ShakeCamera(12f, 0.3f, "zoom");
         yield return new WaitForSeconds(1f);
         moveStop(0.1f);
@@ -336,7 +340,7 @@ public class CameraCtrl : MonoBehaviour
             SetCamera(focusingCamera);
         }
         float currentFOV = virtualCameras[focusingCamera].m_Lens.FieldOfView;
-        virtualCameras[focusingCamera].m_Lens.FieldOfView = 30f;
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = 20f;
         yield return new WaitForSeconds(1.7f);
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
@@ -377,6 +381,8 @@ public class CameraCtrl : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         CCT.ShakeCamera(3f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.8f);
+        CCT = virtualCameras[focusingCamera].transform.GetComponent<SubCameraCtrl>();
+        cameraEffect.GetComponent<CameraEffectCtrl>().BigAttackCamera();
         CCT.ShakeCamera(10f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.05f);
         CCT.ShakeCamera(10f, 0.3f, "zoom");
@@ -453,7 +459,7 @@ public class CameraCtrl : MonoBehaviour
         CCT.ShakeCamera(3f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.03f);
         CCT.ShakeCamera(3f, 0.3f, "zoom");
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(1.0f);
         SetCamera(0);
         virtualCameras[46].m_Lens.FieldOfView = currentFOV; 
         virtualCameras[14].m_Lens.FieldOfView = currentFOV; 
@@ -467,7 +473,50 @@ public class CameraCtrl : MonoBehaviour
 
     IEnumerator Wizard_E_Camera(float SkillYRot)
     {
-        yield return null;
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            focusingCamera = 41;
+            SetCamera(focusingCamera);
+        }
+        else
+        {
+            focusingCamera = 37;
+            SetCamera(focusingCamera);
+        }
+        float currentFOV = virtualCameras[focusingCamera].m_Lens.FieldOfView;
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = 20f;
+        yield return new WaitForSeconds(2.1f);
+        SubCameraCtrl CCT = virtualCameras[focusingCamera].transform.GetComponent<SubCameraCtrl>();
+        CCT.ShakeCamera(3f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.6f);
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            focusingCamera = 24;
+            SetCamera(focusingCamera);
+        }
+        else
+        {
+            focusingCamera = 35;
+            SetCamera(focusingCamera);
+        }
+        virtualCameras[focusingCamera].m_Lens.FieldOfView = 90f;
+        yield return new WaitForSeconds(2.0f);
+        CCT = virtualCameras[focusingCamera].transform.GetComponent<SubCameraCtrl>();
+        CCT.ShakeCamera(5f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.1f);
+        CCT.ShakeCamera(5f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.1f);
+        CCT.ShakeCamera(5f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.1f);
+        CCT.ShakeCamera(5f, 0.3f, "zoom");
+        yield return new WaitForSeconds(1.5f);
+        CCT.ShakeCamera(15f, 0.3f, "zoom");
+        yield return new WaitForSeconds(1.0f);
+        SetCamera(0);
+        virtualCameras[41].m_Lens.FieldOfView = currentFOV; 
+        virtualCameras[37].m_Lens.FieldOfView = currentFOV; 
+        virtualCameras[24].m_Lens.FieldOfView = currentFOV; 
+        virtualCameras[35].m_Lens.FieldOfView = currentFOV; 
     }
 
     #endregion

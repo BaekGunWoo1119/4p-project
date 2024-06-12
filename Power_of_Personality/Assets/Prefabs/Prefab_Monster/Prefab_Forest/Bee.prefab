@@ -388,7 +388,7 @@ Transform:
   - {fileID: 5685540294221872179}
   - {fileID: 1705528854061380351}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3462988163943559206
 GameObject:
@@ -627,7 +627,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -786,7 +786,7 @@ Animator:
   m_GameObject: {fileID: 5020608044954019465}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cb447d55ba99d5143881b25840b253bf, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5b9fa55ef43f69c49b0f484e1e0c4441, type: 2}
+  m_Controller: {fileID: 9100000, guid: 361b1f9418c5c9447ac1916d837e302f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -820,7 +820,9 @@ MonoBehaviour:
   IceATTDEF: 0
   Damage: 0
   WeakProperty: 
+  TickCoolTime: 0
   DamageText: {fileID: 3067159888125441533}
+  MonsterCanvas: {fileID: 0}
   hpBarPosition: {x: 0, y: 0, z: 0}
   matObj: {fileID: 0}
   targetObj: {fileID: 7487042011854067480}
@@ -835,6 +837,8 @@ MonoBehaviour:
   isHit: 0
   IceHit: {fileID: 1387851562293694130, guid: e2789a389dac3ba4d817abc6b1fc8df2, type: 3}
   FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
+  AttackEffect: {fileID: 0}
+  EffectGen: {fileID: 0}
 --- !u!136 &3395994194289041344
 CapsuleCollider:
   m_ObjectHideFlags: 0

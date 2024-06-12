@@ -426,6 +426,7 @@ public class PlayerCtrl_Wizard : MonoBehaviour
     }
     IEnumerator SKill_E_Move()
     {
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Wizard(SkillYRot);
         tgPos = new Vector3(transform.position.x , transform.position.y + 4.0f, transform.position.z);
         //rd.AddForce(Vector3.up * 7, ForceMode.Impulse);
         yield return new WaitForSeconds(4.0f);

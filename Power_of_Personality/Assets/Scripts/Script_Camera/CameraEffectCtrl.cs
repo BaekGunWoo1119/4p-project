@@ -176,6 +176,8 @@ public class CameraEffectCtrl : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         colorAdjustments.contrast.value = Mathf.Lerp(0, contrastValue, Time.deltaTime);
         colorAdjustments.colorFilter.value = new Color(FilterR, FilterG, FilterB, 1f);
+        yield return new WaitForSeconds(contrastValue);
+        colorAdjustments.active = false;
     }
 
     public IEnumerator WeakZoom(int zoomValue)
@@ -233,6 +235,12 @@ public class CameraEffectCtrl : MonoBehaviour
         StartCoroutine(BlurCamera(2f, 0.3f));
         StartCoroutine(ColorDiffuse(10f, 0.3f));
         StartCoroutine(RoundCamera(0.4f, 1, 0, 0, 0.3f));
+    }
+
+    public void BigAttackCamera()
+    {
+        StartCoroutine(ColorDiffuse(80f, 0.7f)); 
+        StartCoroutine(ColorFilter(1.2f, 1.2f, 1.2f, 0.7f));
     }
 
     public void DangerousCamera()

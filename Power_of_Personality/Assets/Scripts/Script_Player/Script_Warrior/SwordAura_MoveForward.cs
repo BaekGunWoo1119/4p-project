@@ -22,7 +22,7 @@ public class SwordAura_MoveForward : MonoBehaviour
     {
         transform.Translate(SkillDir * speed * Time.deltaTime);
         SkillDuration = SkillDuration + Time.deltaTime;
-        if (SkillDuration > 0.7)
+        if (SkillDuration > 1.5)
         {
             Destroy(this.gameObject);
             SkillDuration = 0;

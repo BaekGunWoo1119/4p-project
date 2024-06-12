@@ -5,6 +5,7 @@ using UnityEngine;
 public class Status : MonoBehaviour
 {
     public static float HP = 100f;
+    public static float MaxHP = 100f;
     public static float FixedAD = 50f; //공격력 고정
     public static float PercentAD = 100f; //공격력 비율
     public static float FixedArmor = 50f; //방어력 고정
@@ -37,6 +38,7 @@ public class Status : MonoBehaviour
     void Update()
     {
         SetDamage();
+        //Debug.Log(TotalADC);
     }
 
     //속성 설정
@@ -50,7 +52,7 @@ public class Status : MonoBehaviour
         }
     }
     //데미지 업데이트(아이템,레벨업 후에 사용)
-    void StatUpdate(){
+    public static void StatUpdate(){
         TotalAD = (FixedAD*(PercentAD*0.01f));
         TotalDamage = TotalAD*(FixedIce*(PercentIce*0.01f));
         TotalAP = TotalDamage*(FixedAP*(PercentAP*0.01f));

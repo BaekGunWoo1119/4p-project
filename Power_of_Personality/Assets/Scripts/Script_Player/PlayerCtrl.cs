@@ -22,13 +22,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected float YPos;
 
     //플레이어 스테이터스
-    public float PlayerHP;     //HP
-    public float maxHP;        //최대 체력
     public float Damage;       //받은 피해량
-    public float PlayerATK;    //공격력
-    public float PlayerDEF;    //방어력
-    public float FireATT;      //불 속성 데미지 배율
-    public float IceATT;       //얼음 속성 데미지 배율
     public float moveSpeed;     //이동속도
     public float moveSpd;      //이동속도
     public float JumpPower;     //점프력
@@ -145,20 +139,15 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         // 플레이어 스테이터스 초기화
         SetIce();
         SetHp(100);
-        PlayerATK = 100;
-        PlayerDEF = 10;
-        FireATT = 1.0f;
-        IceATT = 1.0f;
 
         // HP Bar 설정
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
         HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
-        HpText.text = "HP" + PlayerHP + "/" + maxHP;
+        HpText.text = "HP" + Status.HP + "/" + Status.MaxHP;
         
         //데미지 텍스트 설정(06.01)
         PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;
-        //DamageText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 0);
-
+        
         //쿨타임 UI(03.18)
         Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
         Wcool = GameObject.Find("CoolTime-W").GetComponent<Image>();
@@ -462,7 +451,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
 
         // 플레이어 피가 30보다 작으면 지속적으로 화면이 깜빡임
-        if(PlayerHP <= 30)
+        if(Status.HP <= 30)
         {
             cameraEffect.GetComponent<CameraEffectCtrl>().DangerousCamera();
         }
@@ -472,20 +461,21 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region HP 설정
     protected virtual IEnumerator TakeDamage()
     {
-        if (maxHP != 0 || PlayerHP > 0)
+        if (Status.MaxHP != 0 || Status.HP > 0)
         {
-            PlayerHP -= Damage;
-            Debug.Log(PlayerHP);
+            Status.HP -= Damage;
+            Debug.Log(Status.HP);
             CheckHp();
             PlayAnim("TakeDamage");
             StartCoroutine(DamageTextAlpha());
             cameraEffect.GetComponent<CameraEffectCtrl>().DamageCamera();
+            StartCoroutine(Immune(0.5f));   //무적 함수 실행
             yield return new WaitForSeconds(0.2f);
             StopAnim("TakeDamage");
             cameraEffect.GetComponent<CameraEffectCtrl>().ResetCameraEffect();
         }
 
-        if (PlayerHP <= 0) // 플레이어가 죽으면 게임오버 창 띄움
+        if (Status.HP <= 0) // 플레이어가 죽으면 게임오버 창 띄움
         {
             PlayAnim("isDie");
             yield return new WaitForSeconds(2.0f);
@@ -494,14 +484,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     public virtual void SetHp(float amount) // Hp 세팅
     {
-        maxHP = amount;
-        PlayerHP = maxHP;
+        Status.MaxHP = amount;
+        Status.HP = Status.MaxHP;
     }
     public virtual void CheckHp() // HP 체크
     {
-        string inputText = "HP " + PlayerHP.ToString("F0") + "/" + maxHP.ToString("F0");
+        string inputText = "HP " + Status.HP.ToString("F0") + "/" + Status.MaxHP.ToString("F0");
         if (HpBar != null)
-            HpBar.value = PlayerHP / maxHP;
+            HpBar.value = Status.HP / Status.MaxHP;
         if (HpText != null)
             HpText.text = inputText;
     }
@@ -528,6 +518,17 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 yield return null;
             }
         }
+    }
+    protected virtual IEnumerator Immune(float seconds)
+    {
+        Physics.IgnoreLayerCollision(7, 8, true);
+        while (seconds > 0)
+        {
+            Debug.Log(seconds);
+            seconds -= Time.deltaTime;
+            yield return null;
+        }
+        Physics.IgnoreLayerCollision(7, 8, false);
     }
     #endregion
 
@@ -770,7 +771,6 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
         else if(AnimationName == "isRun")
         {
-            Debug.Log("실행!!");
             anim.SetBool(AnimationName, moveVec != Vector3.zero);
         }
         else

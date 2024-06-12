@@ -116,7 +116,6 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     public override void Move()
     {
         base.Move();
-        Debug.Log("도적 무브 실행중");
     }
 
     protected override void Turn()
