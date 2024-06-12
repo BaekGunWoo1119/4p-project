@@ -49,7 +49,7 @@ public class MonsterCtrl : MonoBehaviour
     public GameObject FireHit; //몬스터 피격 이펙트(불)
     public GameObject AttackEffect; //몬스터 공격 이펙트
     public GameObject EffectGen; //몬스터 공격 이펙트 소환 장소
-     
+    
 
     #endregion
 
@@ -251,6 +251,38 @@ public class MonsterCtrl : MonoBehaviour
             StartCoroutine(TakeDamage());
         }
         #endregion
+        #region 마법사
+        if (col.tag == "WizardAttack1")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardAttack3")
+        {
+            isHit = true;
+            Damage = Status.TotalADC * 1.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardSkillW")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 3f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardSkillE_1")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 2.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardSkillE_2")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 5f;
+            StartCoroutine(TakeDamage());
+        }
+        #endregion
     }
 
     public virtual void OnTriggerStay(Collider col)
@@ -283,6 +315,15 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        #endregion
+        #region 마법사
+        if(col.tag == "WizardSkillQ" && TickCoolTime >= 0.25f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.75f;
             StartCoroutine(TakeDamage());
             TickCoolTime = 0;
         }

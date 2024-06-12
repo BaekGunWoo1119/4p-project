@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -76,7 +76,6 @@ public class DruidCtrl : MonoBehaviour
     {
         maxHP = amount;
         curHP = maxHP;
-        Debug.Log("보스체력"+curHP);
     }
 
     public void CheckHp() // HP ����
@@ -217,7 +216,7 @@ public class DruidCtrl : MonoBehaviour
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
 
         yield return new WaitForSeconds(2.5f);      // 스킬 콜라이더 ~~
-        Vine_Collider.SetActive(true);  
+        Vine_Collider.SetActive(true);
         isVine = true;
         yield return new WaitForSeconds(4f);
         isVine = false;
