@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 using System.Linq;
 
 public class ShopCtrl : MonoBehaviour
@@ -11,8 +12,9 @@ public class ShopCtrl : MonoBehaviour
 
     public HiddenShop_Slot[] HS_Slots;
     public Item[] Items;
-    public Button[] BuyButton;
-    public int buttonIndex;
+    private Button BuyButton1;
+    private Button BuyButton2;
+    private Button BuyButton3;
     private GameObject[] newItem;
     public float[] itemCost;
 
@@ -29,16 +31,18 @@ public class ShopCtrl : MonoBehaviour
         C_Items = Items.Length;
         newItem = new GameObject[C_Slots];
         itemCost = new float[C_Slots];
+        BuyButton1 = GameObject.Find("Pick(1)").GetComponent<Button>();
+        BuyButton2 = GameObject.Find("Pick(2)").GetComponent<Button>();
+        BuyButton3 = GameObject.Find("Pick(3)").GetComponent<Button>();
 
         InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
     }
 
     void Start()
     {
-        for(buttonIndex = 0; buttonIndex == BuyButton.Length; buttonIndex++)
-        {
-            BuyButton[buttonIndex].onClick.AddListener(BuyItem);
-        }
+        BuyButton1.onClick.AddListener(() => BuyItem(0));
+        BuyButton2.onClick.AddListener(() => BuyItem(1));
+        BuyButton3.onClick.AddListener(() => BuyItem(2));
 
         GetRandomItemCode();
     }
@@ -84,7 +88,6 @@ public class ShopCtrl : MonoBehaviour
                     newItem[i].transform.parent = HS_Slots[i].transform;
                     HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(newItem[i].GetComponent<Item>().Name, 0); 
                     HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(newItem[i].GetComponent<Item>().Description, 1); 
-                    HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(itemCost.ToString(), 2); 
 
                     //색깔 변경
                     if(newItem[i].GetComponent<Item>().Grade == "커먼")
@@ -107,6 +110,8 @@ public class ShopCtrl : MonoBehaviour
                         HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeTextColor(255, 255, 0, 0);
                         itemCost[i] = 20f;
                     }
+
+                    HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(itemCost[i].ToString(), 2); 
                     newItem[i].SetActive(false);
                 }
             }
@@ -160,7 +165,6 @@ public class ShopCtrl : MonoBehaviour
                         newItem[i].transform.parent = HS_Slots[i].transform;
                         HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(newItem[i].GetComponent<Item>().Name, 0); 
                         HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(newItem[i].GetComponent<Item>().Description, 1); 
-                        HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(itemCost.ToString(), 2); 
 
                         //색깔 변경
                         if(newItem[i].GetComponent<Item>().Grade == "커먼")
@@ -183,6 +187,9 @@ public class ShopCtrl : MonoBehaviour
                             HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeTextColor(255, 255, 0, 0);
                             itemCost[i] = 20f;
                         }
+                        //가격 적용
+                        HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(itemCost[i].ToString(), 2); 
+                        Debug.Log(itemCost[i] + "로 가격 변경 완료");
                         newItem[i].SetActive(false);
                     }
                 }
@@ -193,19 +200,20 @@ public class ShopCtrl : MonoBehaviour
         }
     }
 
-        void BuyItem()
+    void BuyItem(int index)
+    {
+        Debug.Log("구매 완료");
+        if(PlayerPrefs.GetFloat("Coin") >= itemCost[index])
         {
-
-            if(PlayerPrefs.GetFloat("Coin") >= itemCost[buttonIndex])
+            float currentCoin = PlayerPrefs.GetFloat("Coin");
+            PlayerPrefs.SetFloat("Coin", currentCoin - itemCost[index]);
+            GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
+            if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
             {
-                float currentCoin = PlayerPrefs.GetFloat("Coin", 0);
-                PlayerPrefs.SetFloat("Coin", currentCoin -3);
-                if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
-                {
-                    InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = newItem[buttonIndex].GetComponent<Item>().itemID;
-                }
-                    
-                    InvenCtrl.itemCount++;
+                InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = newItem[index].GetComponent<Item>().itemID;
             }
+                    
+            InvenCtrl.itemCount++;
         }
+    }
 }

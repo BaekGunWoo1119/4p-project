@@ -20,8 +20,8 @@ public class CoinCtrl : MonoBehaviour
             Destroy(this.gameObject);
             float currentCoin = PlayerPrefs.GetFloat("Coin", 0);
             PlayerPrefs.SetFloat("Coin", currentCoin + 1);
-            Debug.Log("ÄÚÀÎ = " + PlayerPrefs.GetFloat("Coin"));
-            CoinText.text = (currentCoin + 1).ToString();
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ = " + PlayerPrefs.GetFloat("Coin"));
+            CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
         }
     }
 }
