@@ -88,10 +88,8 @@ public class Inventory : MonoBehaviour
             if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
             {
                 InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = col.GetComponent<Item>().itemID;
-            }
-            
+            }        
             InvenCtrl.itemCount++;
-
         }
     }
 }

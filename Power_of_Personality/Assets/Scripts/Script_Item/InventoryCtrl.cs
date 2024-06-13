@@ -66,7 +66,7 @@ public class InventoryCtrl : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //Debug.Log("씬이 로드되었습니다: " + scene.name);
+        CheckInven();
 
         if(scene.name == "Hidden_Shop")
         {
@@ -78,7 +78,7 @@ public class InventoryCtrl : MonoBehaviour
         }
         else
         {
-            //InsertItem();
+
         }
 
     }
