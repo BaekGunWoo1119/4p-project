@@ -251,6 +251,26 @@ public class MonsterCtrl : MonoBehaviour
             StartCoroutine(TakeDamage());
         }
         #endregion
+        #region 궁수
+        if (col.tag == "ArcherAttack1")
+        {
+            isHit = true;
+            Damage = Status.TotalADC * 1.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "ArcherAttack2")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "ArcherSkillQ")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.1f;
+            StartCoroutine(TakeDamage());
+        }
+        #endregion
         #region 마법사
         if (col.tag == "WizardAttack1")
         {
@@ -319,8 +339,24 @@ public class MonsterCtrl : MonoBehaviour
             TickCoolTime = 0;
         }
         #endregion
+        #region 궁수
+        if (col.tag == "ArcherSkillW" && TickCoolTime >= 0.25f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.75f;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        if (col.tag == "ArcherSkillE" && TickCoolTime >= 0.2f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 3f;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        #endregion
         #region 마법사
-        if(col.tag == "WizardSkillQ" && TickCoolTime >= 0.25f)
+        if (col.tag == "WizardSkillQ" && TickCoolTime >= 0.25f)
         {
             isHit = true;
             Damage = Status.TotalAP * 0.75f;

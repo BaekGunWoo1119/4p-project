@@ -380,5 +380,5 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     {
         base.StopAnim(AnimationName);
     }
-        #endregion
-    }
+    #endregion
+}
