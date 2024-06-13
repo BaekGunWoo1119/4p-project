@@ -211,7 +211,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     //도적 스킬 E 카메라 무브 및 스킬 공격
     IEnumerator Skill_E_Move()
     {
-        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Rogue(SkillYRot);
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Rogue(LocalSkillYRot);
         yield return new WaitForSeconds(1.7f);
         ESkill_Collider1.SetActive(true);
         yield return new WaitForSeconds(0.25f);

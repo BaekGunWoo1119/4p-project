@@ -23,7 +23,6 @@ public class SubCameraCtrl : CameraCtrl
 
     protected override void FollowPlayer()
     {
-        base.FollowPlayer();
     }
 
     protected override IEnumerator Setoffset(float wait)
@@ -71,10 +70,4 @@ public class SubCameraCtrl : CameraCtrl
     public override void UltimateCamera_Wizard(float SkillYRot)
     {
     }
-
-    public override void JumpCamera_Warrior()
-    {
-        FocusCamera(target.transform.position.x, target.transform.position.y + 2, target.transform.position.z - 9, 0, 0.2f, "null");
-    }
-
 }

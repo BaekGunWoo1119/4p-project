@@ -337,7 +337,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     }
     IEnumerator WarriorSkill_E()
     {
-        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(SkillYRot);
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(LocalSkillYRot);
         yield return new WaitForSeconds(1.8f);
         GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         audioSources[3].Play();

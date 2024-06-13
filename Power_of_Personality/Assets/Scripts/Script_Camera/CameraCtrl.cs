@@ -60,15 +60,6 @@ public class CameraCtrl : MonoBehaviour
         {
             shakeNoise = this.GetComponent<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         }
-        for (int i = 1; i < virtualCameras.Length; i++)
-        {
-            virtualCameras[i].gameObject.SetActive(true);
-        }
-        for (int i = 1; i < virtualCameras.Length; i++)
-        {
-            virtualCameras[i].gameObject.SetActive(false);
-        }
-        virtualCameras[focusingCamera].gameObject.SetActive(true);
     }
 
     protected virtual void FixedUpdate()
@@ -84,6 +75,18 @@ public class CameraCtrl : MonoBehaviour
     {
         yield return new WaitForSeconds(0.03f);
         target = GameObject.FindGameObjectWithTag("Player").transform;
+
+        if(!this.GetComponent<CinemachineBrain>())
+        {
+        }
+        else
+        {
+            for (int i = 1; i < virtualCameras.Length; i++)
+            {
+                virtualCameras[i].gameObject.SetActive(false);
+            }
+            virtualCameras[focusingCamera].gameObject.SetActive(true);
+        }
     }
 
     #region 카메라 켜기/끄기
@@ -117,24 +120,24 @@ public class CameraCtrl : MonoBehaviour
             BothDirection = target.transform.root.transform.right;
         }
         offset = forwardDirection * offsetPosZ + UpDirection * offsetPosY + BothDirection * offsetPosX;
-        if (target != null && focusTimer <= 0 && shakeTimer <= 0 && !isMove)
+        if (target != null && focusTimer <= 0 && !isMove)
         {
             // 플레이어의 움직임을 살짝 딜레이를 주고 따라 감
-            transform.position = Vector3.SmoothDamp(transform.position, target.position+offset, ref currentVelocity, 0.1f);
-            transform.rotation = Quaternion.Euler(target.transform.root.GetComponentInParent<Transform>().eulerAngles.x + offsetRotX, 
-            target.transform.root.GetComponentInParent<Transform>().eulerAngles.y + offsetRotY, 
-            target.transform.root.GetComponentInParent<Transform>().eulerAngles.z + offsetRotZ);
+            transform.parent.position = Vector3.SmoothDamp(transform.parent.position, target.position, ref currentVelocity, 0.1f);
+            transform.parent.rotation = Quaternion.Euler(target.transform.root.GetComponentInParent<Transform>().eulerAngles.x, 
+                                                        target.transform.root.GetComponentInParent<Transform>().eulerAngles.y + 90, 
+                                                        target.transform.root.GetComponentInParent<Transform>().eulerAngles.z);
         }
     }
 
     protected virtual IEnumerator Setoffset(float wait)
     {
         yield return new WaitForSeconds(wait);
-        //if(offset != offsetOrigin && shakeTimer <= 0 && focusTimer <= 0)
-        //{
-        //    offset = offsetOrigin;
-        //    isMove = false;
-        //}
+        if(shakeTimer <= 0 && focusTimer <= 0)
+        {
+            //offset = offsetOrigin;
+            isMove = false;
+        }
     }
 
     public virtual void moveStop(float seconds)
@@ -311,6 +314,7 @@ public class CameraCtrl : MonoBehaviour
         virtualCameras[focusingCamera].m_Lens.FieldOfView = 60f;
         yield return new WaitForSeconds(0.1f);
         cameraEffect.GetComponent<CameraEffectCtrl>().BigAttackCamera();
+        cameraEffect.GetComponent<CameraEffectCtrl>().PropEffectCamera(2, 0.2f);
         CCT.ShakeCamera(12f, 0.3f, "zoom");
         yield return new WaitForSeconds(1f);
         moveStop(0.1f);
@@ -357,6 +361,7 @@ public class CameraCtrl : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         CCT.ShakeCamera(7f, 0.3f, "zoom");
         yield return new WaitForSeconds(0.7f);
+        /*
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             focusingCamera = 14;
@@ -365,6 +370,18 @@ public class CameraCtrl : MonoBehaviour
         else
         {
             focusingCamera = 20;
+            SetCamera(focusingCamera);
+        }
+        카메라 반대 각도로 뒤집는게 이뻐보여서 뒤집어 봤음(반대 의견 많을 시 롤백)
+        */
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            focusingCamera = 20;
+            SetCamera(focusingCamera);
+        }
+        else
+        {
+            focusingCamera = 14;
             SetCamera(focusingCamera);
         }
         CCT.ShakeCamera(3f, 0.3f, "zoom");
@@ -500,17 +517,29 @@ public class CameraCtrl : MonoBehaviour
             SetCamera(focusingCamera);
         }
         virtualCameras[focusingCamera].m_Lens.FieldOfView = 90f;
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1.3f);
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            focusingCamera = 48;
+            SetCamera(focusingCamera);
+        }
+        else
+        {
+            focusingCamera = 49;
+            SetCamera(focusingCamera);
+        }
+        yield return new WaitForSeconds(0.6f);
         CCT = virtualCameras[focusingCamera].transform.GetComponent<SubCameraCtrl>();
-        CCT.ShakeCamera(5f, 0.3f, "zoom");
-        yield return new WaitForSeconds(0.1f);
-        CCT.ShakeCamera(5f, 0.3f, "zoom");
-        yield return new WaitForSeconds(0.1f);
-        CCT.ShakeCamera(5f, 0.3f, "zoom");
-        yield return new WaitForSeconds(0.1f);
-        CCT.ShakeCamera(5f, 0.3f, "zoom");
-        yield return new WaitForSeconds(1.5f);
         CCT.ShakeCamera(15f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.1f);
+        CCT.ShakeCamera(15f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.1f);
+        CCT.ShakeCamera(15f, 0.3f, "zoom");
+        yield return new WaitForSeconds(0.1f);
+        CCT.ShakeCamera(15f, 0.3f, "zoom");
+        yield return new WaitForSeconds(1.5f);
+        CCT.ShakeCamera(45f, 0.3f, "zoom");
+        cameraEffect.GetComponent<CameraEffectCtrl>().PropEffectCamera(0, 1);
         yield return new WaitForSeconds(1.0f);
         SetCamera(0);
         virtualCameras[41].m_Lens.FieldOfView = currentFOV; 

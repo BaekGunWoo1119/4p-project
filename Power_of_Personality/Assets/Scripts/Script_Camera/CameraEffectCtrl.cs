@@ -12,6 +12,7 @@ public class CameraEffectCtrl : MonoBehaviour
     private DepthOfField depthOfField; //Depth Of Field 효과(블러)
     private ChromaticAberration chromaticAberration; //Chromatic Aberration 효과(색번짐)
     private ColorAdjustments colorAdjustments; //Color Adjustments 효과(색필터)
+    private Bloom bloom; //Bloom 효과(고급 색상 필터)
     private PaniniProjection paniniProjection; //Panini Projection 효과(볼록렌즈)
     private Vignette vignette; //Vignette 효과 (카메라 테두리)
 
@@ -32,6 +33,11 @@ public class CameraEffectCtrl : MonoBehaviour
     private float diffuseTime = 0;
     private bool diffusing = false;
 
+    //고급필터 효과 값들
+    private float fillterValue;
+    private float fillterTime = 0;
+    private bool filltering = false;
+    public Texture[] texture;
 
     //테두리 효과 값들
     private float roundValue;
@@ -73,6 +79,12 @@ public class CameraEffectCtrl : MonoBehaviour
             return;
         }
 
+        if(!volumeProfile.TryGet(out bloom))
+        {
+            Debug.LogError("Bloom 파라미터를 찾을 수 없습니다.");
+            return;
+        }
+
         if(!volumeProfile.TryGet(out paniniProjection))
         {
             Debug.LogError("Panini Projection 파라미터를 찾을 수 없습니다.");
@@ -95,6 +107,7 @@ public class CameraEffectCtrl : MonoBehaviour
 
         BlurCamera_Set();
         ColorDiffuse_Set();
+        Filter_Set();
 
         RoundCamera_Set();
 
@@ -180,6 +193,40 @@ public class CameraEffectCtrl : MonoBehaviour
         colorAdjustments.active = false;
     }
 
+    public IEnumerator RoyalFilter(float Value, float time, float FilterR, float FilterG, float FilterB, float dirtInt, Texture dirtTexture)
+    {
+        bloom.active = true;
+        bloom.threshold.value = 0.9f;
+        bloom.scatter.value = 0.7f;
+        bloom.tint.value = new Color(FilterR, FilterG, FilterB, 1f);
+        bloom.dirtTexture.value = dirtTexture;
+        bloom.dirtIntensity.value = dirtInt;
+        fillterValue = Value;
+        fillterTime = time;
+        yield return new WaitForSeconds(0.03f);
+        filltering = true;
+    }
+
+
+    public void Filter_Set()
+    {
+        if(!filltering)
+        {
+            fillterTime = 0;
+        }
+        else
+        {
+            fillterTime += Time.deltaTime;
+            bloom.intensity.value = Mathf.Lerp(0, fillterValue, 0.5f); // 포커스 거리 설정(0 ~ 100)          
+        }
+
+        if(fillterTime > 0.8f)
+        {
+            filltering = false;
+            bloom.active = false;
+        }
+    }
+
     public IEnumerator WeakZoom(int zoomValue)
     {
         paniniProjection.active = true;
@@ -240,12 +287,28 @@ public class CameraEffectCtrl : MonoBehaviour
     public void BigAttackCamera()
     {
         StartCoroutine(ColorDiffuse(80f, 0.7f)); 
-        StartCoroutine(ColorFilter(1.2f, 1.2f, 1.2f, 0.7f));
     }
 
     public void DangerousCamera()
     {
         StartCoroutine(RoundCamera(0.3f, 1, 0, 0, 1.0f));
+    }
+
+    public void PropEffectCamera(int Num, float time)
+    {
+        if(PlayerPrefs.GetString("property") == "Ice")
+        {
+            StartCoroutine(RoyalFilter(4, time, 1.3f, 1.7f, 2.5f, 4, texture[Num]));
+        }
+        else if(PlayerPrefs.GetString("property") == "Fire")
+        {
+            StartCoroutine(RoyalFilter(4, time, 2.3f, 0.9f, 0.3f, 4, texture[Num]));
+        }
+    }
+
+    public void poisonEffectCamera()
+    {
+        StartCoroutine(RoyalFilter(4, 0.5f, 121, 0, 255, 4, texture[1]));
     }
 
     #endregion

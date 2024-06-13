@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using Unity.Burst.CompilerServices;
+using UnityEngine.SceneManagement;
 
 public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttack
 {
@@ -137,7 +138,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected virtual void Start()
     {
         //상점 씬 등에 거쳐왔을 시 플레이어 위치 초기화(06.13)
-        if(PlayerPrefs.GetFloat("PlayerXPos") != null)
+        if(PlayerPrefs.GetFloat("PlayerXPos") != null && PlayerPrefs.GetString("Hidden_Shop_Spawn_Scene") == SceneManager.GetActiveScene().name)
         {
             transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerXPos"), PlayerPrefs.GetFloat("PlayerYPos"), PlayerPrefs.GetFloat("PlayerZPos"));
         }

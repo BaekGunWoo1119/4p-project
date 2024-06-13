@@ -253,17 +253,17 @@ public class Server_PlayerCtrl : MonoBehaviourPun
             //기본공격1 & 기본공격3 시 전진 애니메이션
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack1") && !isCommonAttack1InProgress)
             {
-                CommonAttack1();
+                Attack(0);
                 isCommonAttack1InProgress = true;
             }
             else if (anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack2") && !isCommonAttack2InProgress && !isSound)
             {
-                CommonAttack2();
+                Attack(1);
                 isCommonAttack2InProgress = true;
             }
             else if (anim.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack3") && !isCommonAttack3InProgress)
             {
-                CommonAttack3();
+                Attack(2);
                 isCommonAttack3InProgress = true;
             }
 
@@ -640,27 +640,7 @@ public class Server_PlayerCtrl : MonoBehaviourPun
     {
     }
     [PunRPC]
-    protected virtual void CommonAttack1()
-    {
-    }
-    [PunRPC]
-    protected virtual void CommonAttack2()
-    {
-    }
-    [PunRPC]
-    protected virtual void CommonAttack3()
-    {
-    }
-    [PunRPC]
-    protected virtual void JumpAttack1()
-    {
-    }
-    [PunRPC]
-    protected virtual void JumpAttack2()
-    {
-    }
-    [PunRPC]
-    protected virtual void JumpAttack3()
+    public virtual void Attack(int AttackNumber)
     {
     }
     [PunRPC]
