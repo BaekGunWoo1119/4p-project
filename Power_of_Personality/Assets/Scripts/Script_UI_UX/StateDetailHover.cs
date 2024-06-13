@@ -51,7 +51,7 @@ public class StateDetailHover : MonoBehaviour
             // PointerExit �̺�Ʈ �߰�
             EventTrigger.Entry entryExit = new EventTrigger.Entry();
             entryExit.eventID = EventTriggerType.PointerExit;
-            entryExit.callback.AddListener((data) => { OnPointerExit(); });
+            entryExit.callback.AddListener((data) => { OnPointerExit(index); });
             trigger.triggers.Add(entryExit);
         }
     }
@@ -62,27 +62,41 @@ public class StateDetailHover : MonoBehaviour
         float yRect = Input.mousePosition.y;
         if(yRect > 550)
         {
-            a = 820;
+            a = 830;
         }
         else if(yRect <= 550)
         {
             a = 280;
         }
-        actObj.GetComponent<RectTransform>().localPosition = new Vector3(Input.mousePosition.x - 900, Input.mousePosition.y - a, Input.mousePosition.z);
+        
+        if (isHovering)
+        {
+            actObj.GetComponent<RectTransform>().localPosition = new Vector3(Input.mousePosition.x - 900, Input.mousePosition.y - a, Input.mousePosition.z);
+        }
+        
+        if(itemName.text == "이름")
+        {
+            actObj.transform.localScale = new Vector3(0, 0, 0);
+        }
     }
 
     public void OnPointerEnter(int index)
     {
         isHovering = true;
-        actObj.transform.localScale = originalScale;
+        if(actObj.transform.localScale != originalScale)
+        {
+            actObj.transform.localScale = originalScale;
+        }
         //호버링 시 설명 추가
         tgtObj[index].transform.parent.Find("HoverBox").GetComponent<TextChange>().ItemTextChange();
+        Debug.Log(index + "번 박스 호버");
     }
 
     // ���콺�� ������ ��
-    public void OnPointerExit()
+    public void OnPointerExit(int index)
     {
         isHovering = false;
         actObj.transform.localScale = new Vector3(0, 0, 0);
+        tgtObj[index].transform.parent.Find("HoverBox").GetComponent<TextChange>().ItemTextReset();
     }
 }

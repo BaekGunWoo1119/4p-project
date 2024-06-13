@@ -32,7 +32,7 @@ public class SecretShopSelect : MonoBehaviour
             eventSystem.GetComponent<SecretShop>().SlowRotate(0.02f);
             count = count + 1;
             Debug.Log(count);
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.6f);
             if(count >= 10)
             {
                 Debug.Log("멈춰");

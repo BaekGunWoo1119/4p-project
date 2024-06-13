@@ -15,8 +15,11 @@ public class SecretShop : MonoBehaviour
     public HiddenShop_Slot[] HS_Slots;
     private Item slotsItem;
 
+    private GameObject exitBtn;
+
     void Start()
     {
+        exitBtn = GameObject.Find("Exit_Shop");
         for (int i = 0; i < brightImages.Length; i++)
         {
             brightImages[i].SetActive(false);
@@ -41,16 +44,20 @@ public class SecretShop : MonoBehaviour
     IEnumerator StopImages()
     {
         Debug.Log("멈췄다");
-        StopCoroutine(RotateImages());
         stopRotate = true;
+        StopCoroutine(RotateImages());
         int i = enableIndex;
         int currentIndex = Random.Range(0, brightImages.Length);
+        Debug.Log(currentIndex);
         while (i < brightImages.Length)
         {
             if(i == currentIndex)
             {
                 yield return new WaitForSeconds(0.6f);
+                brightImages[i].SetActive(true);
+                strokeImages[i].SetActive(true);
                 strokeImages[i].GetComponent<Image>().color = new Color(255f, 0f, 0f, 1f);
+                exitBtn.SetActive(true);
                 yield break;
             }
             else if(i == 7)

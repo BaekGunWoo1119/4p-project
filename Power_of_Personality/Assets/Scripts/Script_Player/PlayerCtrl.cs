@@ -136,6 +136,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     protected virtual void Start()
     {
+        //상점 씬 등에 거쳐왔을 시 플레이어 위치 초기화(06.13)
+        if(PlayerPrefs.GetFloat("PlayerXPos") != null)
+        {
+            transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerXPos"), PlayerPrefs.GetFloat("PlayerYPos"), PlayerPrefs.GetFloat("PlayerZPos"));
+        }
+
         // 플레이어 스테이터스 초기화
         SetIce();
         SetHp(100);
