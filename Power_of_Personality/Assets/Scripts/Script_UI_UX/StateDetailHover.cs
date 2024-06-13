@@ -11,24 +11,24 @@ public class StateDetailHover : MonoBehaviour
     private Vector3 originalScale;
     private Vector3 originalPosition;
     private RectTransform rectTransform;
-    //ì˜¤ë¸Œì íŠ¸ ì´ë¦„ ì¸ì‹ ê´€ë ¨ ì½”ë“œ
+    //¿ÀºêÁ§Æ® ÀÌ¸§ ÀÎ½Ä °ü·Ã ÄÚµå
     private string objName;
 
-    //í…ìŠ¤íŠ¸ ì½”ë“œ
+    //ÅØ½ºÆ® ÄÚµå
     public TMP_Text itemName;
     
-    //y ì¢Œí‘œ ì¶”ê°€ ê°’
+    //y ÁÂÇ¥ Ãß°¡ °ª
 
     private float a;
 
-    //ëª¨ë“  hover ì˜¤ë¸Œì íŠ¸
+    //¸ğµç hover ¿ÀºêÁ§Æ®
     private GameObject[] tgtObj; 
     private bool isHovering = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        //ê¸°ë³¸ ìŠ¤ì¼€ì¼ ì„¤ì •
+        //±âº» ½ºÄÉÀÏ ¼³Á¤
         originalScale = new Vector3(1, 1, 1);
 
         actObj.transform.localScale = new Vector3(0, 0, 0);
@@ -42,13 +42,13 @@ public class StateDetailHover : MonoBehaviour
             EventTrigger trigger = tgtObj[i].gameObject.AddComponent<EventTrigger>();
             int index = i;
 
-            // PointerEnter ï¿½Ìºï¿½Æ® ï¿½ß°ï¿½
+            // PointerEnter ???? ???
             EventTrigger.Entry entryEnter = new EventTrigger.Entry();
             entryEnter.eventID = EventTriggerType.PointerEnter;
             entryEnter.callback.AddListener((data) => { OnPointerEnter(index); });
             trigger.triggers.Add(entryEnter);
 
-            // PointerExit ï¿½Ìºï¿½Æ® ï¿½ß°ï¿½
+            // PointerExit ???? ???
             EventTrigger.Entry entryExit = new EventTrigger.Entry();
             entryExit.eventID = EventTriggerType.PointerExit;
             entryExit.callback.AddListener((data) => { OnPointerExit(index); });
@@ -58,7 +58,7 @@ public class StateDetailHover : MonoBehaviour
 
     void Update() 
     {
-        //í˜¸ë²„ ìœ„ì¹˜ ê° ë°•ìŠ¤ë§ˆë‹¤ ê³ ì •(03.20)'
+        //È£¹ö À§Ä¡ °¢ ¹Ú½º¸¶´Ù °íÁ¤(03.20)'
         float yRect = Input.mousePosition.y;
         if(yRect > 550)
         {
@@ -74,7 +74,7 @@ public class StateDetailHover : MonoBehaviour
             actObj.GetComponent<RectTransform>().localPosition = new Vector3(Input.mousePosition.x - 900, Input.mousePosition.y - a, Input.mousePosition.z);
         }
         
-        if(itemName.text == "ì´ë¦„")
+        if(itemName.text == "ÀÌ¸§")
         {
             actObj.transform.localScale = new Vector3(0, 0, 0);
         }
@@ -87,12 +87,12 @@ public class StateDetailHover : MonoBehaviour
         {
             actObj.transform.localScale = originalScale;
         }
-        //í˜¸ë²„ë§ ì‹œ ì„¤ëª… ì¶”ê°€
+        //È£¹ö¸µ ½Ã ¼³¸í Ãß°¡
         tgtObj[index].transform.parent.Find("HoverBox").GetComponent<TextChange>().ItemTextChange();
-        Debug.Log(index + "ë²ˆ ë°•ìŠ¤ í˜¸ë²„");
+        //Debug.Log(index + "¹ø ¹Ú½º È£¹ö");
     }
 
-    // ï¿½ï¿½ï¿½ì½ºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    // ???²J?? ?????? ??
     public void OnPointerExit(int index)
     {
         isHovering = false;

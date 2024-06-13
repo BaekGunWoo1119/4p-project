@@ -10,11 +10,16 @@ public class NextStage : MonoBehaviour
     private GameObject portalInstance; //포탈 생성
     public string sceneName; 
     // Start is called before the first frame update
+
     void Start()
     {
         OpenPortal();
         if(portalInstance != null)
             portalInstance.transform.localPosition = portalPos;
+
+        PlayerPrefs.SetString("Hidden_Shop_Spawn_Scene", "a");
+        PlayerPrefs.SetString("Before_Scene_Name", "b");
+
     }
 
     // Update is called once per frame

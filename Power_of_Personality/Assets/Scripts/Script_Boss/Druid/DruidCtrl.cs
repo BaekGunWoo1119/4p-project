@@ -166,7 +166,7 @@ public class DruidCtrl : MonoBehaviour
     // 공격 애니메이션 && 콜라이더 스크립트
     IEnumerator MeleeWeakAttack()
     {
-        Debug.Log("실행 근접평타");
+        //Debug.Log("실행 근접평타");
         anim.SetTrigger("doMeleeWeakAttack");   // 애니메이션
 
         yield return new WaitForSeconds(0.75f); // 스킬 콜라이더 ~~
@@ -184,7 +184,7 @@ public class DruidCtrl : MonoBehaviour
 
     IEnumerator MeleeStrongAttack()
     {
-        Debug.Log("실행 근접강공");
+        //Debug.Log("실행 근접강공");
         anim.SetTrigger("doMeleeStrongAttack");     //애니메이션
 
         yield return new WaitForSeconds(1f);        // 스킬 콜라이더 ~~
@@ -204,7 +204,7 @@ public class DruidCtrl : MonoBehaviour
 
     IEnumerator RangedWeakAttack()
     {
-        Debug.Log("실행 원거리평타");
+        //Debug.Log("실행 원거리평타");
         anim.SetTrigger("doRangedWeakAttack");      // 애니메이션
         yield return new WaitForSeconds(4f);
 
@@ -213,7 +213,7 @@ public class DruidCtrl : MonoBehaviour
 
     IEnumerator RangedStrongAttack()
     {
-        Debug.Log("실행 원거리강공");
+        //Debug.Log("실행 원거리강공");
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
 
         yield return new WaitForSeconds(2.5f);      // 스킬 콜라이더 ~~
@@ -230,7 +230,7 @@ public class DruidCtrl : MonoBehaviour
 
     IEnumerator Skill_1()
     {
-        Debug.Log("실행 스킬1");
+        //Debug.Log("실행 스킬1");
         anim.SetTrigger("doSkill1");
 
 
@@ -276,7 +276,7 @@ public class DruidCtrl : MonoBehaviour
 
     IEnumerator Skill_2()
     {
-        Debug.Log("실행 스킬2");
+        //Debug.Log("실행 스킬2");
         anim.SetTrigger("doSkill2");
         yield return new WaitForSeconds(0.75f);
         ToxicPortal_Collider.SetActive(true);

@@ -33,7 +33,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
 
         //플레이어 어택 콜라이더 인식 방식 변경 (서버에 맞게)
         Attack_Collider_All = transform.Find("AttackColliders").gameObject;
-        Debug.Log(Attack_Collider_All);
+        //Debug.Log(Attack_Collider_All);
         QSkill_Collider = Attack_Collider_All.transform.Find("QSkill_Collider").gameObject;
         QSkill_Last_Collider = Attack_Collider_All.transform.Find("QSkill_Last_Collider").gameObject;
         WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;

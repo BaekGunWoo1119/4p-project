@@ -706,7 +706,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         if (collision.gameObject.tag == "Floor" )    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
         {
-            Debug.Log("실행");
+            //Debug.Log("실행");
             Fall();
         }
     }
