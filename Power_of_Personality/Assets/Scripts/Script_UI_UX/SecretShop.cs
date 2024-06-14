@@ -44,6 +44,13 @@ public class SecretShop : MonoBehaviour
     public void StopAtRandom()
     {
         StartCoroutine(StopImages());
+
+        if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
+        {
+            InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = slotsItem.itemID;
+        }
+                
+        InvenCtrl.itemCount++;
     }
 
 
@@ -64,6 +71,7 @@ public class SecretShop : MonoBehaviour
                 strokeImages[i].SetActive(true);
                 strokeImages[i].GetComponent<Image>().color = new Color(255f, 0f, 0f, 1f);
                 exitBtn.SetActive(true);
+
                 yield break;
             }
             else if(i == 7)
@@ -88,13 +96,6 @@ public class SecretShop : MonoBehaviour
             Debug.Log(currentIndex);
             slotsItem = HS_Slots[currentIndex].transform.GetChild(5).GetComponent<Item>();
             Debug.Log(slotsItem.Name);
-
-            if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
-            {
-                InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = slotsItem.itemID;
-            }
-            
-            InvenCtrl.itemCount++;
 
         }
     }

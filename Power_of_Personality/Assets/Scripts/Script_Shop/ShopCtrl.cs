@@ -19,11 +19,13 @@ public class ShopCtrl : MonoBehaviour
 
     private GameObject warningWindow;
 
+
+
     bool isSave = false;
+    public int[] L_ItemID;
 
     int C_Slots;
     int C_Items;
-
 
     //아이템 가격
 
@@ -69,12 +71,13 @@ public class ShopCtrl : MonoBehaviour
                 {
                     randItemCode[i] = Random.Range(0, C_Items);
 
-                    if (InvenCtrl.collectedItemsID.Contains(randItemCode[i]))
+                    if (InvenCtrl.collectedItemsID.Contains(randItemCode[i]) || L_ItemID.Contains(randItemCode[i]))
                     {
                         continue;
                     }
 
                     isSame = false;
+                    
                     for (int j = 0; j < i; ++j)
                     {
                         if (randItemCode[j] == randItemCode[i])
@@ -147,7 +150,7 @@ public class ShopCtrl : MonoBehaviour
                         randItemCode[i] = Random.Range(0, C_Items);
                         soldOut[i].SetActive(false);
 
-                        if (InvenCtrl.collectedItemsID.Contains(randItemCode[i]))
+                        if (InvenCtrl.collectedItemsID.Contains(randItemCode[i])|| L_ItemID.Contains(randItemCode[i]))
                         {
                             continue;
                         }

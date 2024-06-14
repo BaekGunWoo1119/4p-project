@@ -9,7 +9,6 @@ public class HiddenShopCtrl : MonoBehaviour
 
     public HiddenShop_Slot[] HS_Slots;
     public Item[] Items;
-    public Item[] Legendary;
     private GameObject[] newItem;
 
     bool isSave = false;
@@ -32,8 +31,8 @@ public class HiddenShopCtrl : MonoBehaviour
         GetRandomItemCode();
 
         // 레전더리 하나 랜덤으로 띄워주는 코드
-        int legendary_int = Random.Range(0, Legendary.Length);
-        newItem[7] = Instantiate(Legendary[legendary_int].gameObject, HS_Slots[0].transform.position, Quaternion.identity);
+        int legendary_int = Random.Range(32, 36);
+        newItem[7] = Instantiate(Items[legendary_int].gameObject, HS_Slots[0].transform.position, Quaternion.identity);
         newItem[7].transform.parent = HS_Slots[7].transform;
         newItem[7].SetActive(false);
     }
