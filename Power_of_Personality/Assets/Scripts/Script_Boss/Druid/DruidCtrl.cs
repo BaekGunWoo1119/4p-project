@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DruidCtrl : MonoBehaviour
+public class DruidCtrl : BossCtrl
 {
-    private float curHP;
-    private float maxHP;
-    private float Damage;
-    public BoxCollider ownCollider;
-
-    public GameObject EffectGen;
+    #region 변수 선언
     public GameObject Scratch_Effect;
     private GameObject Scratch_Collider;
 
@@ -18,7 +15,6 @@ public class DruidCtrl : MonoBehaviour
     private GameObject GroundStrike_Collider_S;
     private GameObject GroundStrike_Collider_M;
     private GameObject GroundStrike_Collider_L;
-
     public GameObject Projectile_Effect;
     public GameObject Projectile_Collider;
 
@@ -30,16 +26,14 @@ public class DruidCtrl : MonoBehaviour
     public GameObject ToxicPortal_Effect;
     private GameObject ToxicPortal_Collider;
 
-    private GameObject SkillEffect;
-    private GameObject SkillCollider;
-    private float SkillYRot;
+    // 보스 공격 컨트롤
+    private bool canTraceAttack;
+    #endregion
 
-    Animator anim;
-    public Slider HpBar;
-
-    void Awake()
+    #region Awake, Start, Update문
+    protected override void Awake()
     {
-        ownCollider = GetComponent<BoxCollider>();
+        base.Awake();
         SkillYRot = transform.eulerAngles.y;
         Scratch_Collider = GameObject.Find("Scratch");
         GroundStrike_Collider_S = GameObject.Find("GroundStrike_S");
@@ -47,20 +41,18 @@ public class DruidCtrl : MonoBehaviour
         GroundStrike_Collider_L = GameObject.Find("GroundStrike_L");
         Vine_Collider = GameObject.Find("Vine");
         ToxicPortal_Collider = GameObject.Find("ToxicPortal");
-        StartCoroutine(Think());
     }
 
-    void Start()
+    protected override void Start()
     {
-        SetHp(100);
-        CheckHp();
+        base.Start();
         Scratch_Collider.SetActive(false);
         GroundStrike_Collider_S.SetActive(false);
         GroundStrike_Collider_M.SetActive(false);
         GroundStrike_Collider_L.SetActive(false);
         Vine_Collider.SetActive(false);
         ToxicPortal_Collider.SetActive(false);
-        anim = GetComponent<Animator>();
+        StartCoroutine(Think());
     }
 
     private void Update()
@@ -72,98 +64,358 @@ public class DruidCtrl : MonoBehaviour
             Vine_Collider.transform.localScale = newScale;
         }
     }
-    public void SetHp(float amount) // Hp����
+    #endregion
+
+    #region HP 관련
+    protected override void SetHP(float amount) // Hp����
     {
         maxHP = amount;
         curHP = maxHP;
     }
 
-    public void CheckHp() // HP ����
+    protected override void CheckHP() // HP ����
     {
         if (HpBar != null)
             HpBar.value = curHP / maxHP;
     }
+    #endregion
 
-    private void OnTriggerEnter(Collider col)
+    #region 보스 피격, 피해량 공식
+    public override void OnTriggerEnter(Collider col)
     {
+        #region 전사
         if (col.tag == "WarriorAttack1")
         {
-            Damage = 10;
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WarriorAttack2")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WarriorAttack3")
+        {
+            isHit = true;
+            Damage = Status.TotalADC * 1.5f;
             StartCoroutine(TakeDamage());
         }
 
         if (col.tag == "WarriorSkillQ")
         {
-            Damage = 20;
+            isHit = true;
+            Damage = Status.TotalAP * 2f;
             StartCoroutine(TakeDamage());
         }
-
-        if (col.tag == "WarriorSkillW")
+        if (col.tag == "WarriorSkillE")
         {
-            Damage = 20;
+            isHit = true;
+            Damage = Status.TotalAP * 4f;
             StartCoroutine(TakeDamage());
         }
+        #endregion
+        #region 도적
+        if (col.tag == "RougeAttack1")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeAttack2")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeAttack3")
+        {
+            isHit = true;
+            Damage = Status.TotalADC * 1.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeSkillQ_2")
+        {
+            isHit = true;
+            Damage = Status.TotalAP;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeSkillW_2")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 1.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeSkillE_1")
+        {
+            isHit = true;
+            Damage = Status.TotalAP;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeSkillE_2")
+        {
+            isHit = true;
+            Damage = Status.TotalAP;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "RougeSkillE_4")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 3f;
+            StartCoroutine(TakeDamage());
+        }
+        #endregion
+        #region 궁수
+        if (col.tag == "ArcherAttack1")
+        {
+            isHit = true;
+            Damage = Status.TotalADC * 1.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "ArcherAttack2")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "ArcherSkillQ")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.1f;
+            StartCoroutine(TakeDamage());
+        }
+        #endregion
+        #region 마법사
+        if (col.tag == "WizardAttack1")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardAttack3")
+        {
+            isHit = true;
+            Damage = Status.TotalADC * 1.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardSkillW")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 3f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardSkillE_1")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 2.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardSkillE_2")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 5f;
+            StartCoroutine(TakeDamage());
+        }
+        #endregion
     }
 
-    IEnumerator TakeDamage()
+    public override void OnTriggerStay(Collider col)
+    {
+        #region 전사
+        if (col.tag == "WarriorSkillW" && TickCoolTime >= 0.75f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 1.5f;
+            StartCoroutine(TakeDamage());
+        }
+        #endregion
+        #region 도적
+        if (col.tag == "RougeSkillQ_1" && TickCoolTime >= 0.25f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.3f;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+
+        if (col.tag == "RougeSkillW_1" && TickCoolTime >= 0.3f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.4f;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        if (col.tag == "RougeSkillE_3" && TickCoolTime >= 0.25f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        #endregion
+        #region 궁수
+        if (col.tag == "ArcherSkillW" && TickCoolTime >= 0.25f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.75f;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        if (col.tag == "ArcherSkillE" && TickCoolTime >= 0.2f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 3f;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        #endregion
+        #region 마법사
+        if (col.tag == "WizardSkillQ" && TickCoolTime >= 0.25f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.75f;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        #endregion
+    }
+    protected override IEnumerator TakeDamage()
     {
         if (maxHP != 0 || curHP > 0)
         {
-            //Material[] materials = matObj.materials;
-            curHP -= Damage;
-            Debug.Log(curHP);
-            CheckHp();
-            //anim.SetBool("TakeDamage", true);
-            /*foreach (Material material in materials)
+            if (PlayerPrefs.GetString("property") == "Ice")
+            {
+                Instantiate(IceHit, this.transform.position, Quaternion.Euler(0, 0, 0));
+            }
+            if (PlayerPrefs.GetString("property") == "Fire")
+            {
+                Instantiate(FireHit, this.transform.position, Quaternion.Euler(0, 0, 0));
+            }
+            if (PlayerPrefs.GetString("property") == WeakProperty)
+            {
+                Damage = Damage * 1.5f;
+            }
+            Material[] materials = matObj.materials;
+            curHP -= Damage * (1 / (1 + DEF * 0.01f));
+            CheckHP(); // ü�� ����
+            anim.SetBool("TakeDamage", true);
+            foreach (Material material in materials)
             {
                 material.color = Color.red;
-            }*/
-            yield return new WaitForSeconds(0.5f);
-           // anim.SetBool("TakeDamage", false);
-            /*foreach (Material material in materials)
+            }
+
+            //StartCoroutine(DamageTextAlpha());
+
+            yield return new WaitForSeconds(0.1f);
+            anim.SetBool("TakeDamage", false);
+            yield return new WaitForSeconds(0.2f);
+            if (anim.GetBool("TakeDamage") == false)
+            {
+                isHit = false;
+            }
+            foreach (Material material in materials)
             {
                 material.color = Color.white;
-            }*/
+            }
         }
 
-        if (curHP <= 0)
+        if (curHP <= 0) // ü���� 0�϶�
         {
+            isDie = true;
             anim.SetBool("Die", true);
             yield return new WaitForSeconds(1.5f);
-            Destroy(this.gameObject);
+            Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
+            Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
+            Destroy(this.gameObject); // ü���� 0 ���϶� ����
+            Destroy(HpBar.gameObject);
         }
     }
+    #endregion
 
-    IEnumerator Think()
+    #region 보스 패턴 관련
+    protected override IEnumerator FindPlayer()     // 플레이어를 찾아서 할당해주는 함수
     {
-        yield return new WaitForSeconds(0.1f);
-        int ranAction = Random.Range(0,6);
-
-        switch (ranAction)
+        yield return base.FindPlayer();
+    }
+    protected override void DistanceCheck()
+    {
+        base.DistanceCheck();
+        Debug.Log("Distance = "+ Distance);
+        //여기서부턴 세부 구현, 각 스크립트에서 보스 패턴에 맞게 구현
+    }
+    public IEnumerator Trace()
+    {
+        // 플레이어를 향해 이동하는 로직
+        Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
+        Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
+        transform.Translate(movement, Space.World);
+        yield return null;
+        if(Distance <= 4)
         {
-            case 0: //팔을 휘두름(손톱처럼 3줄로 대각선 횡베기 이펙트) - 근접 약공
-                StartCoroutine(MeleeWeakAttack());
-                break;
-            case 1: //지팡이로 바닥을 찍음 (바닥에 원형으로 이펙트) - 근접 강공
-                StartCoroutine(MeleeStrongAttack());
-                break;
-            case 2: //지팡이를 휘두름(초록색 이펙트가 일직선으로 날아감) - 원거리 약공
-                StartCoroutine(RangedWeakAttack());
-                break;
-            case 3: //팔을 휘두르고 공중으로 도약 후 지팡이로 바닥을 찍음(팔을 휘두를 때 도약할 때 원거리 투사체, 바닥을 찍을 때 식물 덩굴 발사) - 원거리 강공
-                StartCoroutine(RangedStrongAttack());
-                break;
-            case 4: //바닥을 지팡이로 세번 내리찍음 (점점 범위가 넓어지는 원형 이펙트)
-                StartCoroutine(Skill_1());
-                break;
-            case 5: //허공으로 손을 휘저음 (범위가 넓어지는 독 구름)
-                StartCoroutine(Skill_2());
-                break;
+            canTraceAttack = true;
+        }
+        StartCoroutine(Think());
+    }
+    void BackDash()
+    {
+        Vector3 prevPosition = transform.position;
+        Vector3 ReverseDirectionToPlayer = -(PlayerTr.position - transform.position).normalized;
+        Vector3 movement = new Vector3(ReverseDirectionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
+        while (Vector3.Distance(prevPosition, transform.position) > 4.0f)
+        {
+            transform.Translate(movement, Space.World);
+        }
+        StartCoroutine(Think());
+    }
+    protected override IEnumerator Think()
+    {
+        DistanceCheck();
+        yield return new WaitForSeconds(0.1f);
+        if(Distance <= 12f)
+        {
+            int ranAction = Random.Range(0, 2);
+            switch (ranAction)
+            {
+                case 0:
+                    Debug.Log("Trace 선택됨");
+                    Trace();
+                    break;
+                case 1:
+                    Debug.Log("BackDash 선택됨");
+                    BackDash();
+                    break;
+            }
+        }
+        else
+        {
+            int ranAction = Random.Range(0, 3);
+            switch (ranAction)
+            {
+                case 0:
+                    int chooseAttack = Random.Range(0, 2);
+                    switch (chooseAttack)
+                    {
+                        case 0:
+                            Debug.Log("원거리 약공 선택됨");
+                            StartCoroutine(RangedWeakAttack());
+                            break;
+                        case 1:
+                            Debug.Log("원거리 강공 선택됨");
+                            StartCoroutine(RangedStrongAttack());
+                            break;
+                    }
+                    break;
+                case 1:
+                    Debug.Log("스킬 2 선택됨");
+                    StartCoroutine(Skill_2());
+                    break;
+            }
         }
     }
 
     // 공격 애니메이션 && 콜라이더 스크립트
-    IEnumerator MeleeWeakAttack()
+    protected override IEnumerator MeleeWeakAttack()
     {
         Debug.Log("실행 근접평타");
         anim.SetTrigger("doMeleeWeakAttack");   // 애니메이션
@@ -181,7 +433,7 @@ public class DruidCtrl : MonoBehaviour
         StartCoroutine(Think());
     }
 
-    IEnumerator MeleeStrongAttack()
+    protected override IEnumerator MeleeStrongAttack()
     {
         Debug.Log("실행 근접강공");
         anim.SetTrigger("doMeleeStrongAttack");     //애니메이션
@@ -201,7 +453,7 @@ public class DruidCtrl : MonoBehaviour
         StartCoroutine(Think());
     }
 
-    IEnumerator RangedWeakAttack()
+    protected override IEnumerator RangedWeakAttack()
     {
         Debug.Log("실행 원거리평타");
         anim.SetTrigger("doRangedWeakAttack");      // 애니메이션
@@ -210,7 +462,7 @@ public class DruidCtrl : MonoBehaviour
         StartCoroutine(Think());
     }
 
-    IEnumerator RangedStrongAttack()
+    protected override IEnumerator RangedStrongAttack()
     {
         Debug.Log("실행 원거리강공");
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
@@ -227,11 +479,10 @@ public class DruidCtrl : MonoBehaviour
         StartCoroutine(Think());
     }
 
-    IEnumerator Skill_1()
+    protected override IEnumerator Skill_1()
     {
         Debug.Log("실행 스킬1");
         anim.SetTrigger("doSkill1");
-
 
         yield return new WaitForSeconds(1f);          // 스킬 콜라이더 ~~
         GroundStrike_Collider_S.SetActive(true);        // 1-1 On
@@ -273,7 +524,7 @@ public class DruidCtrl : MonoBehaviour
         StartCoroutine(Think());
     }
 
-    IEnumerator Skill_2()
+    protected override IEnumerator Skill_2()
     {
         Debug.Log("실행 스킬2");
         anim.SetTrigger("doSkill2");
@@ -284,8 +535,9 @@ public class DruidCtrl : MonoBehaviour
 
         StartCoroutine(Think());
     }
+    #endregion
 
-    // 공격 이펙트 스크립트
+    #region 공격 이펙트 스크립트
     public void Scratch_1()
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
@@ -351,4 +603,5 @@ public class DruidCtrl : MonoBehaviour
             SkillEffect = Instantiate(ToxicPortal_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(90, -90, 0));
         }
     }
+    #endregion
 }

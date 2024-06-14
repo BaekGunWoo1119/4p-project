@@ -5,15 +5,15 @@ using UnityEngine;
 public class Druid_Projectile : MonoBehaviour
 {
     private float SkillDuration;
-    private GameObject EffectGen_Druid;
+    private GameObject EffectGen;
     private Rigidbody rb;
     public float ATK = 10;
 
     private void Awake()
     {
-        EffectGen_Druid = GameObject.Find("EffectGen_Druid");
+        EffectGen = GameObject.Find("EffectGen");
         rb = GetComponent<Rigidbody>();
-        rb.AddForce(EffectGen_Druid.transform.forward.normalized * 10, ForceMode.Impulse);
+        rb.AddForce(EffectGen.transform.forward.normalized * 10, ForceMode.Impulse);
     }
 
     private void OnTriggerEnter(Collider col)
