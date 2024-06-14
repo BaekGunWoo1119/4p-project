@@ -60,15 +60,15 @@ public class StateDetailHover : MonoBehaviour
     {
         //호버 위치 각 박스마다 고정(03.20)'
         float yRect = Input.mousePosition.y;
-        if(yRect > 550)
+        if(yRect > 600)
         {
             a = 830;
         }
-        else if(yRect <= 550)
+        else if(yRect <= 600)
         {
-            a = 280;
+            a = 220;
         }
-        
+
         if (isHovering)
         {
             actObj.GetComponent<RectTransform>().localPosition = new Vector3(Input.mousePosition.x - 900, Input.mousePosition.y - a, Input.mousePosition.z);
@@ -98,5 +98,6 @@ public class StateDetailHover : MonoBehaviour
         isHovering = false;
         actObj.transform.localScale = new Vector3(0, 0, 0);
         tgtObj[index].transform.parent.Find("HoverBox").GetComponent<TextChange>().ItemTextReset();
+        Debug.Log(index + "번 박스 호버 취소");
     }
 }

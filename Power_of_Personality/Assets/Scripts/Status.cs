@@ -22,10 +22,15 @@ public class Status : MonoBehaviour
     public static float PercentFire = 100f; // 화속성 데미지 비율
     public static float FixedIce = 50f; // 빙속성 데미지 고정
     public static float PercentIce = 100f; // 빙속성 데미지 비율
-    public static float TotalAD = 0f; // 총 공격력
-    public static float TotalDamage = 0f; // 총 데미지 (속성뎀 포함)
-    public static float TotalAP = 0f; // 총 스킬뎀
-    public static float TotalADC = 0f; //총 평타뎀
+    public static float TotalAD = 1f; // 총 공격력
+    public static float TotalDamage = 1f; // 총 데미지 (속성뎀 포함)
+    public static float TotalAP = 1f; // 총 스킬뎀
+    public static float TotalADC = 1f; //총 평타뎀
+    public static float TotalArmor = 1f; //총 방어력
+    public static float TotalFire = 1f; //총 화속성 데미지
+    public static float TotalIce = 1f; //총 빙속성 데미지
+    public static float TotalCooltime = 1f; //총 쿨타임
+    public static float TotalSpeed = 1f; //총 행동속도
     public static float EXP = 0f; // 현재 경험치
     public string CurProperty; //현재 플레이어 속성
 

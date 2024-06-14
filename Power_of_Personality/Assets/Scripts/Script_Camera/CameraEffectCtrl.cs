@@ -196,7 +196,7 @@ public class CameraEffectCtrl : MonoBehaviour
     public IEnumerator RoyalFilter(float Value, float time, float FilterR, float FilterG, float FilterB, float dirtInt, Texture dirtTexture)
     {
         bloom.active = true;
-        bloom.threshold.value = 0.9f;
+        bloom.threshold.value = 1.2f;
         bloom.scatter.value = 0.7f;
         bloom.tint.value = new Color(FilterR, FilterG, FilterB, 1f);
         bloom.dirtTexture.value = dirtTexture;
@@ -257,7 +257,6 @@ public class CameraEffectCtrl : MonoBehaviour
         {
             roundTime += Time.deltaTime;
             vignette.intensity.value = Mathf.Lerp(0, roundValue, 1f); // 포커스 거리 설정(0 ~ 100)
-            Debug.Log("라운딩");
         }
 
         if(roundTime > fadeTime * 2)
@@ -269,7 +268,6 @@ public class CameraEffectCtrl : MonoBehaviour
         {
             roundTime += Time.deltaTime;
             vignette.intensity.value = Mathf.Lerp(roundValue, 0, 1f);
-            Debug.Log("라운딩 페이드");
         }
     }   
 
@@ -298,7 +296,7 @@ public class CameraEffectCtrl : MonoBehaviour
     {
         if(PlayerPrefs.GetString("property") == "Ice")
         {
-            StartCoroutine(RoyalFilter(4, time, 1.3f, 1.7f, 2.5f, 4, texture[Num]));
+            StartCoroutine(RoyalFilter(4, time, 0f, 0.4f, 1.2f, 4, texture[Num]));
         }
         else if(PlayerPrefs.GetString("property") == "Fire")
         {
