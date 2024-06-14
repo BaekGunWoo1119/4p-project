@@ -44,23 +44,16 @@ public class SecretShop : MonoBehaviour
     public void StopAtRandom()
     {
         StartCoroutine(StopImages());
-
-        if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
-        {
-            InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = slotsItem.itemID;
-        }
-                
-        InvenCtrl.itemCount++;
     }
 
 
     IEnumerator StopImages()
     {
+        int currentIndex = 7;//Random.Range(0, brightImages.Length);
         Debug.Log("멈췄다");
         stopRotate = true;
         StopCoroutine(RotateImages());
         int i = enableIndex;
-        int currentIndex = Random.Range(0, brightImages.Length);
         Debug.Log(currentIndex);
         while (i < brightImages.Length)
         {
@@ -71,8 +64,15 @@ public class SecretShop : MonoBehaviour
                 strokeImages[i].SetActive(true);
                 strokeImages[i].GetComponent<Image>().color = new Color(255f, 0f, 0f, 1f);
                 exitBtn.SetActive(true);
-
-                yield break;
+                if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
+                {
+                    slotsItem = HS_Slots[currentIndex].transform.GetChild(5).GetComponent<Item>();
+                    InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = slotsItem.itemID;
+                    Debug.Log(currentIndex);
+                    Debug.Log(slotsItem.Name);
+                    InvenCtrl.itemCount++;
+                    yield break;
+                }
             }
             else if(i == 7)
             {
@@ -92,11 +92,6 @@ public class SecretShop : MonoBehaviour
                 brightImages[i].SetActive(true);
                 strokeImages[i].SetActive(true);
             }
-
-            Debug.Log(currentIndex);
-            slotsItem = HS_Slots[currentIndex].transform.GetChild(5).GetComponent<Item>();
-            Debug.Log(slotsItem.Name);
-
         }
     }
 

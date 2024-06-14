@@ -16,6 +16,7 @@ public class HiddenShopCtrl : MonoBehaviour
     int C_Slots;
     int C_Items;
 
+    public int[] L_ItemID;
 
     void Awake()
     {
@@ -44,14 +45,14 @@ public class HiddenShopCtrl : MonoBehaviour
 
         if(isSave == false)
         {
-            for (int i = 0; i < C_Slots; ++i)
+            for (int i = 0; i < C_Slots - 1; ++i)
             {
                 while (true)
                 {
                     randItemCode[i] = Random.Range(0, C_Items);
 
                     // 배제된 인덱스인지 확인
-                    if (InvenCtrl.collectedItemsID.Contains(randItemCode[i]))
+                    if (InvenCtrl.collectedItemsID.Contains(randItemCode[i]) || L_ItemID.Contains(randItemCode[i]))
                     {
                         continue;
                     }
@@ -83,21 +84,21 @@ public class HiddenShopCtrl : MonoBehaviour
         }
         else if(isSave == true)
         {
-            for (int i = 0; i < C_Slots; ++i)
+            for (int i = 0; i < C_Slots - 1; ++i)
             {
                 if (newItem[i] != null)
                 {
                     Destroy(newItem[i]);
                 }
             }
-            for (int i = 0; i < C_Slots; ++i)
+            for (int i = 0; i < C_Slots - 1; ++i)
             {
                 while (true)
                 {
                     randItemCode[i] = Random.Range(0, C_Items);
 
                     // 배제된 인덱스인지 확인
-                    if (InvenCtrl.collectedItemsID.Contains(randItemCode[i]))
+                    if (InvenCtrl.collectedItemsID.Contains(randItemCode[i]) || L_ItemID.Contains(randItemCode[i]))
                     {
                         continue;
                     }
