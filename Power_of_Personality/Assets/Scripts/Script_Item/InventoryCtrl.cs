@@ -29,6 +29,7 @@ public class InventoryCtrl : MonoBehaviour
 
         // 이렇게 하면 다음 scene으로 넘어가도 오브젝트가 사라지지 않습니다.
         DontDestroyOnLoad(gameObject);
+
     }
 
     void Start()
@@ -44,7 +45,8 @@ public class InventoryCtrl : MonoBehaviour
         collectedItems = new Item[inventory[0].slots.Length];
         collectedItemsID = new int[inventory[0].slots.Length];
 
-        
+        PlayerPrefs.SetFloat("Coin", 0);
+
         for(int i = 0; i < collectedItemsID.Length; i++)
         {
             collectedItemsID[i] = -1;
