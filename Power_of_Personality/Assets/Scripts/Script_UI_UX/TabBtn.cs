@@ -7,13 +7,13 @@ using System.ComponentModel;
 
 public class TabBtn : MonoBehaviour
 {
-    public Button button; // ï¿½Ç¹ï¿½Æ°
+    public Button button; // ????
     public GameObject innerImg;
     public Color fireColor; 
     public Color iceColor;
     public Sprite fireImage;
     public Sprite iceImage;
-    //ìŠ¤í‚¬ ì´ë¯¸ì§€ë¥¼ ë°›ì•„ì˜¤ê¸° ìœ„í•œ ë°°ì—´
+    //½ºÅ³ ÀÌ¹ÌÁö¸¦ ¹Ş¾Æ¿À±â À§ÇÑ ¹è¿­
     public Sprite[] skillImage;
 
     public GameObject fireHit;
@@ -32,13 +32,13 @@ public class TabBtn : MonoBehaviour
     {
         if (button != null)
         {
-            Debug.Log("ï¿½Ò·ï¿½ ï¿½ï¿½ï¿½ï¿½");
+            Debug.Log("??? ????");
             ColorBlock colors = button.colors;
             colors.normalColor = fireColor;
             button.colors = colors;
             Image btnImage = innerImg.GetComponent<Image>();
             btnImage.sprite = fireImage;
-            //ìŠ¤í‚¬ ì´ë¯¸ì§€ ì„¤ì •
+            //½ºÅ³ ÀÌ¹ÌÁö ¼³Á¤
             Image skillImageQ = GameObject.Find("SkillImg-Q").GetComponent<Image>();
             skillImageQ.sprite = skillImage[0];
             Image skillImageW = GameObject.Find("SkillImg-W").GetComponent<Image>();
@@ -55,13 +55,13 @@ public class TabBtn : MonoBehaviour
     {
         if (button != null)
         {
-            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+            Debug.Log("???????? ????");
             ColorBlock colors = button.colors;
             colors.normalColor = iceColor;
             button.colors = colors;
             Image btnImage = innerImg.GetComponent<Image>();
             btnImage.sprite = iceImage;
-            //ìŠ¤í‚¬ ì´ë¯¸ì§€ ì„¤ì •
+            //½ºÅ³ ÀÌ¹ÌÁö ¼³Á¤
             Image skillImageQ = GameObject.Find("SkillImg-Q").GetComponent<Image>();
             skillImageQ.sprite = skillImage[3];
             Image skillImageW = GameObject.Find("SkillImg-W").GetComponent<Image>();

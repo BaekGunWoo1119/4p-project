@@ -120,6 +120,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected Slider HpBar;
     public TMP_Text HpText;
 
+    //스탯 UI 관련
+    protected TMP_Text[] StateText; 
+
     // 쿨타임 관련
     protected float QSkillCoolTime;
     protected float WSkillCoolTime;
@@ -151,6 +154,15 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
         HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
         HpText.text = "HP" + Status.HP + "/" + Status.MaxHP;
+
+        //스텟 UI 변동 설정(06.14)
+        StateText = new TMP_Text[8];
+        for(int i = 0; i <= 7; i++)
+        {
+            string statname = "StatText-" + i;
+            Debug.Log(statname);
+            StateText[i] = GameObject.Find(statname).GetComponent<TMP_Text>();
+        }
         
         //데미지 텍스트 설정(06.01)
         PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;
@@ -186,6 +198,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     protected virtual void FixedUpdate()
     {
+        CheckState();
         // Move 함수 실행
         if (!isSkill && !isAttack && !stateAttack3)
         {
@@ -539,6 +552,22 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     #endregion
 
+    #region 스탯 UI 관련 함수
+
+    protected virtual void CheckState()
+    {
+        StateText[0].text = Status.TotalAD.ToString();
+        StateText[1].text = Status.TotalArmor.ToString();
+        StateText[2].text = Status.TotalADC.ToString();
+        StateText[3].text = Status.TotalAP.ToString();
+        StateText[4].text = Status.TotalFire.ToString();
+        StateText[5].text = Status.TotalIce.ToString();
+        StateText[6].text = Status.TotalSpeed.ToString();
+        StateText[6].text = Status.TotalCooltime.ToString();
+    }
+
+    #endregion
+
     #region 이동 관련 함수
     protected virtual void WallCheck()
     {
@@ -707,7 +736,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         if (collision.gameObject.tag == "Floor" )    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
         {
-            Debug.Log("실행");
+            //Debug.Log("실행");
             Fall();
         }
     }

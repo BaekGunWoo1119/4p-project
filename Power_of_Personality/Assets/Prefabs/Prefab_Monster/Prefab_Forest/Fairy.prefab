@@ -6087,6 +6087,11 @@ MonoBehaviour:
   FireATTDEF: 0
   IceATTDEF: 0
   Damage: 0
+  WeakProperty: 
+  TickCoolTime: 0
+  DamageText: {fileID: 1880031391497513284, guid: 3f08f33154c6df6418d46b2e12f8cf2a, type: 3}
+  MonsterCanvas: {fileID: 7180510246375967267}
+  hpBarPosition: {x: 0, y: 0, z: 0}
   matObj: {fileID: 1895443360443724017}
   targetObj: {fileID: 1991097227128066193}
   PlayerTr: {fileID: 0}
@@ -6098,6 +6103,10 @@ MonoBehaviour:
   Coin: {fileID: 9137955520889552415, guid: 5e136e1029a3c0a4f842505d52c8ea4f, type: 3}
   isDie: 0
   isHit: 0
+  IceHit: {fileID: 0}
+  FireHit: {fileID: 0}
+  AttackEffect: {fileID: 0}
+  EffectGen: {fileID: 0}
   FirePos: {fileID: 6961965807982210036}
 --- !u!65 &7420906413871300462
 BoxCollider:
@@ -6402,7 +6411,7 @@ Transform:
   - {fileID: 1993577665877171773}
   - {fileID: 2272541430430598838}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &5368798161755675681
 GameObject:

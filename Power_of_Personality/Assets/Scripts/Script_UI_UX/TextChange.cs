@@ -106,9 +106,9 @@ public class TextChange : MonoBehaviour
             ChangeText("불 데미지", 5);
             ChangeText("고정 데미지", 6);
             ChangeText("데미지 증가 비율", 7);
-            ChangeText(Status.TotalAP.ToString(), 8);
-            ChangeText(Status.FixedAP.ToString(), 9);
-            ChangeText(Status.PercentAP.ToString(), 10);
+            ChangeText(Status.TotalFire.ToString(), 8);
+            ChangeText(Status.FixedFire.ToString(), 9);
+            ChangeText(Status.PercentFire.ToString(), 10);
         }
         else if(this.transform.parent.gameObject.name == "TraitBox-T")
         {
@@ -120,9 +120,9 @@ public class TextChange : MonoBehaviour
             ChangeText("얼음 데미지", 5);
             ChangeText("고정 데미지", 6);
             ChangeText("데미지 증가 비율", 7);
-            ChangeText(Status.TotalAP.ToString(), 8);
-            ChangeText(Status.FixedAP.ToString(), 9);
-            ChangeText(Status.PercentAP.ToString(), 10);
+            ChangeText(Status.TotalIce.ToString(), 8);
+            ChangeText(Status.FixedIce.ToString(), 9);
+            ChangeText(Status.PercentIce.ToString(), 10);
         }
         else if(this.transform.parent.gameObject.name == "TraitBox-J")
         {
@@ -134,9 +134,9 @@ public class TextChange : MonoBehaviour
             ChangeText("행동속도", 5);
             ChangeText("고정 행동속도", 6);
             ChangeText("행동속도 증가 비율", 7);
-            ChangeText(Status.TotalAP.ToString(), 8);
-            ChangeText(Status.FixedAP.ToString(), 9);
-            ChangeText(Status.PercentAP.ToString(), 10);
+            ChangeText(Status.TotalSpeed.ToString(), 8);
+            ChangeText(Status.FixedSpeed.ToString(), 9);
+            ChangeText(Status.PercentSpeed.ToString(), 10);
         }
         else if(this.transform.parent.gameObject.name == "TraitBox-P")
         {
@@ -148,9 +148,9 @@ public class TextChange : MonoBehaviour
             ChangeText("쿨타임", 5);
             ChangeText("고정 쿨타임", 6);
             ChangeText("쿨타임 증가 비율", 7);
-            ChangeText(Status.TotalAP.ToString(), 8);
-            ChangeText(Status.FixedAP.ToString(), 9);
-            ChangeText(Status.PercentAP.ToString(), 10);
+            ChangeText(Status.TotalCooltime.ToString(), 8);
+            ChangeText(Status.FixedCooltime.ToString(), 9);
+            ChangeText(Status.PercentCooltime.ToString(), 10);
         }
 
         else

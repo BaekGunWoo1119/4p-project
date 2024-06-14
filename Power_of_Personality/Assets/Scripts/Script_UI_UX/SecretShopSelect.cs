@@ -8,6 +8,7 @@ public class SecretShopSelect : MonoBehaviour
 {
     public GameObject eventSystem;
     // Start is called before the first frame update
+
     void Start()
     {
         //eventSystem의 SecretShop 받아옴
@@ -18,9 +19,14 @@ public class SecretShopSelect : MonoBehaviour
 
     public void PickatRandom()
     {
-        eventSystem.GetComponent<SecretShop>().StartAtRandom();
-        Debug.Log("픽");
-        StartCoroutine(PickItem());
+        if(PlayerPrefs.GetFloat("Coin") >= 5)
+        {
+            float currentCoin = PlayerPrefs.GetFloat("Coin", 0);
+            PlayerPrefs.SetFloat("Coin", currentCoin -5);
+            eventSystem.GetComponent<SecretShop>().StartAtRandom();
+            Debug.Log("픽");
+            StartCoroutine(PickItem());
+        }
     }
 
     public IEnumerator PickItem()

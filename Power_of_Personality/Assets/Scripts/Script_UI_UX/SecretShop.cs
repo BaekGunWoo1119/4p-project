@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SecretShop : MonoBehaviour
 {
+    public InventoryCtrl InvenCtrl;
 
     public GameObject[] brightImages;
     public GameObject[] strokeImages;
@@ -16,6 +17,11 @@ public class SecretShop : MonoBehaviour
     private Item slotsItem;
 
     private GameObject exitBtn;
+
+    void Awake()
+    {
+        InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
+    }
 
     void Start()
     {
@@ -82,6 +88,14 @@ public class SecretShop : MonoBehaviour
             Debug.Log(currentIndex);
             slotsItem = HS_Slots[currentIndex].transform.GetChild(5).GetComponent<Item>();
             Debug.Log(slotsItem.Name);
+
+            if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
+            {
+                InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = slotsItem.itemID;
+            }
+            
+            InvenCtrl.itemCount++;
+
         }
     }
 
