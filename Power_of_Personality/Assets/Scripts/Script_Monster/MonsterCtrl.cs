@@ -71,15 +71,8 @@ public class MonsterCtrl : MonoBehaviour
             DistanceCheck();    // 플레이어와의 거리를 계산
         }
         AttackCoolTime += Time.deltaTime;
-        if (this.transform.position.x - PlayerTr.transform.position.x < 0)
-        {
-            this.transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-        else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
-        {
-            this.transform.rotation = Quaternion.Euler(0, -90, 0);
-        }
         TickCoolTime += Time.deltaTime;
+        Turn();
     }
 
     #region 몬스터 HP 설정하는 부분
@@ -117,7 +110,17 @@ public class MonsterCtrl : MonoBehaviour
             StartCoroutine(Attack());
         }
     }
-
+    public virtual void Turn()
+    {
+        if (this.transform.position.x - PlayerTr.transform.position.x < 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+    }
     public virtual IEnumerator Trace()
     {
         // 플레이어를 향해 이동하는 로직

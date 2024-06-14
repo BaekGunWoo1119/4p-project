@@ -12,6 +12,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //Raycast 관련
     protected float raycastDistance = 0.5f;
     protected RaycastHit hit;
+    protected GameObject BossWall1;
+    protected GameObject BossWall2;
+    protected BoxCollider BossWall1Collider;
+    protected BoxCollider BossWall2Collider;
 
     // GetAxis 값
     protected float hAxis;
@@ -140,6 +144,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         // 플레이어 스테이터스 초기화
         SetIce();
         SetHp(100);
+
+        // 보스 문 할당
+        BossWall1 = GameObject.Find("BossWall1").gameObject;
+        BossWall1Collider = BossWall1.GetComponent<BoxCollider>();
+        BossWall2 = GameObject.Find("BossWall2").gameObject;
+        BossWall2Collider = BossWall2.GetComponent<BoxCollider>();
 
         // HP Bar 설정
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
@@ -702,6 +712,17 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (collision.gameObject.tag == "Floor" && !stateSkillE && !stateSkillE)    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
         {
             Fall();
+        }
+    }
+
+    protected virtual void OnTriggerExit(Collider col)
+    {
+        if(BossWall1.transform.position.x - transform.position.x < 0)
+        {
+            BossWall1.layer = 3;
+            BossWall2.layer = 3;
+            BossWall1Collider.isTrigger = false;
+            BossWall2Collider.isTrigger = false;
         }
     }
     #endregion

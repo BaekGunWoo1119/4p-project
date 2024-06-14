@@ -28,6 +28,12 @@ public class DruidCtrl : BossCtrl
 
     // 보스 공격 컨트롤
     private bool canTraceAttack;
+    private float TraceTime = 0;
+    private bool TraceOn;
+    private bool BackDashOn;
+    private Vector3 PrevPosition;
+    private GameObject LeftTPpoint;
+    private GameObject RightTPpoint;
     #endregion
 
     #region Awake, Start, Update문
@@ -41,11 +47,14 @@ public class DruidCtrl : BossCtrl
         GroundStrike_Collider_L = GameObject.Find("GroundStrike_L");
         Vine_Collider = GameObject.Find("Vine");
         ToxicPortal_Collider = GameObject.Find("ToxicPortal");
+        LeftTPpoint = GameObject.Find("LeftTPpoint");
+        RightTPpoint = GameObject.Find("RightTPpoint");
     }
 
     protected override void Start()
     {
         base.Start();
+        MoveSpeed = 7f;
         Scratch_Collider.SetActive(false);
         GroundStrike_Collider_S.SetActive(false);
         GroundStrike_Collider_M.SetActive(false);
@@ -55,13 +64,28 @@ public class DruidCtrl : BossCtrl
         StartCoroutine(Think());
     }
 
-    private void Update()
+    protected override void Update()
     {
-        if(isVine == true && Vine_Collider.transform.localScale.x <= 12.0)
+        base.Update();
+        DistanceCheck();
+        if (isVine == true && Vine_Collider.transform.localScale.x <= 12.0)
         {
             Vector3 newScale = Vine_Collider.transform.localScale;
             newScale.x += Vine_xGrowthRate * Time.deltaTime;
             Vine_Collider.transform.localScale = newScale;
+        }
+        if(TraceOn == true)
+        {
+            TraceTime += Time.deltaTime;
+        }
+        if (TraceTime >= 3f)
+        {
+            TraceTime = 0;
+            TraceOn = false;
+        }
+        if(BackDashOn == true)
+        {
+            StartCoroutine(BackDash());
         }
     }
     #endregion
@@ -340,9 +364,13 @@ public class DruidCtrl : BossCtrl
     }
     protected override void DistanceCheck()
     {
-        base.DistanceCheck();
-        Debug.Log("Distance = "+ Distance);
+        Distance = Vector3.Distance(transform.position, PlayerTr.position);
         //여기서부턴 세부 구현, 각 스크립트에서 보스 패턴에 맞게 구현
+        if(TraceOn == true)
+        {
+            StartCoroutine(Trace());
+        }
+
     }
     public IEnumerator Trace()
     {
@@ -350,46 +378,102 @@ public class DruidCtrl : BossCtrl
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
         Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
         transform.Translate(movement, Space.World);
-        yield return null;
-        if(Distance <= 4)
+        if (Distance <= 3)
         {
-            canTraceAttack = true;
-        }
-        StartCoroutine(Think());
-    }
-    void BackDash()
-    {
-        Vector3 prevPosition = transform.position;
-        Vector3 ReverseDirectionToPlayer = -(PlayerTr.position - transform.position).normalized;
-        Vector3 movement = new Vector3(ReverseDirectionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
-        while (Vector3.Distance(prevPosition, transform.position) > 4.0f)
-        {
-            transform.Translate(movement, Space.World);
-        }
-        StartCoroutine(Think());
-    }
-    protected override IEnumerator Think()
-    {
-        DistanceCheck();
-        yield return new WaitForSeconds(0.1f);
-        if(Distance <= 12f)
-        {
-            int ranAction = Random.Range(0, 2);
+            int ranAction = Random.Range(0, 3);
             switch (ranAction)
             {
                 case 0:
-                    Debug.Log("Trace 선택됨");
-                    Trace();
+                    Debug.Log("근접 약공 선택됨");
+                    StartCoroutine(MeleeWeakAttack());
+                    TraceOn = false;
                     break;
                 case 1:
-                    Debug.Log("BackDash 선택됨");
-                    BackDash();
+                    Debug.Log("근접 강공 선택됨");
+                    StartCoroutine(MeleeStrongAttack());
+                    TraceOn = false;
+                    break;
+                case 2:
+                    Debug.Log("스킬 1 선택됨");
+                    StartCoroutine(Skill_1());
+                    TraceOn = false;
                     break;
             }
         }
         else
         {
-            int ranAction = Random.Range(0, 3);
+            transform.Translate(movement, Space.World);
+        }
+        if(TraceTime > 3)
+        {
+            TraceOn = false;
+        }
+        yield return null;
+    }
+
+
+
+    public IEnumerator BackDash()
+    {
+        if(canTeleport == false)
+        {
+            Vector3 ReversedirectionToPlayer = -(PlayerTr.position - transform.position).normalized;
+            Vector3 movement = new Vector3(ReversedirectionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
+            transform.Translate(movement, Space.World);
+            if (Vector3.Distance(PrevPosition, transform.position) >= 3)
+            {
+                BackDashOn = false;
+                StartCoroutine(Think());
+            }
+            yield return null;
+        }
+        else
+        {
+            BackDashOn = false;
+            Teleport();
+        }
+    }
+    public void Teleport()
+    {
+        if (Vector3.Distance(LeftTPpoint.transform.position, transform.position) < Vector3.Distance(RightTPpoint.transform.position, transform.position)) 
+        { 
+            transform.position = RightTPpoint.transform.position;
+            StartCoroutine(Think());
+        }
+        else
+        {
+            transform.position = LeftTPpoint.transform.position;
+            StartCoroutine(Think());
+        }
+    }
+    protected override IEnumerator Think()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Debug.Log("Distance = " + Distance);
+        Debug.Log("여기까지는 잘 돼요");
+        if(Distance <= 12f)
+        {
+            Debug.Log("1번 들어옴");
+            int ranAction = Random.Range(0, 2);
+            Debug.Log("선택된 번호는 ? = " + ranAction);
+            switch (ranAction)
+            {
+                case 0:
+                    Debug.Log("Trace 선택됨");
+                    TraceOn = true;
+                    break;
+                case 1:
+                    Debug.Log("BackDash 선택됨");
+                    BackDashOn = true;
+                    PrevPosition = transform.position;
+                    break;
+            }
+        }
+        else
+        {
+            Debug.Log("2번 들어옴");
+            int ranAction = Random.Range(0, 2);
+            Debug.Log("선택된 번호는 ? = " + ranAction);
             switch (ranAction)
             {
                 case 0:
@@ -417,7 +501,7 @@ public class DruidCtrl : BossCtrl
     // 공격 애니메이션 && 콜라이더 스크립트
     protected override IEnumerator MeleeWeakAttack()
     {
-        Debug.Log("실행 근접평타");
+        isAttacking = true;
         anim.SetTrigger("doMeleeWeakAttack");   // 애니메이션
 
         yield return new WaitForSeconds(0.75f); // 스킬 콜라이더 ~~
@@ -428,14 +512,14 @@ public class DruidCtrl : BossCtrl
         Scratch_Collider.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         Scratch_Collider.SetActive(false);
+        isAttacking = false;
         yield return new WaitForSeconds(4f);    // ~~ 스킬 콜라이더
-
         StartCoroutine(Think());
     }
 
     protected override IEnumerator MeleeStrongAttack()
     {
-        Debug.Log("실행 근접강공");
+        isAttacking = true;
         anim.SetTrigger("doMeleeStrongAttack");     //애니메이션
 
         yield return new WaitForSeconds(1f);        // 스킬 콜라이더 ~~
@@ -448,14 +532,14 @@ public class DruidCtrl : BossCtrl
         GroundStrike_Collider_L.SetActive(true);
         yield return new WaitForSeconds(1f);
         GroundStrike_Collider_L.SetActive(false);
+        isAttacking = false;
         yield return new WaitForSeconds(3f);        // ~~ 스킬 콜라이더
-
         StartCoroutine(Think());
     }
 
     protected override IEnumerator RangedWeakAttack()
     {
-        Debug.Log("실행 원거리평타");
+        isAttacking = true;
         anim.SetTrigger("doRangedWeakAttack");      // 애니메이션
         yield return new WaitForSeconds(4f);
 
@@ -464,7 +548,7 @@ public class DruidCtrl : BossCtrl
 
     protected override IEnumerator RangedStrongAttack()
     {
-        Debug.Log("실행 원거리강공");
+        isAttacking = true;
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
 
         yield return new WaitForSeconds(2.5f);      // 스킬 콜라이더 ~~
@@ -474,6 +558,7 @@ public class DruidCtrl : BossCtrl
         isVine = false;
         Vine_Collider.SetActive(false);
         Vine_Collider.transform.localScale = new Vector3(1, 1, 1);
+        isAttacking = false;
         yield return new WaitForSeconds(1.5f);      // ~~ 스킬 콜라이더
 
         StartCoroutine(Think());
@@ -481,7 +566,7 @@ public class DruidCtrl : BossCtrl
 
     protected override IEnumerator Skill_1()
     {
-        Debug.Log("실행 스킬1");
+        isAttacking = true;
         anim.SetTrigger("doSkill1");
 
         yield return new WaitForSeconds(1f);          // 스킬 콜라이더 ~~
@@ -518,7 +603,7 @@ public class DruidCtrl : BossCtrl
         GroundStrike_Collider_L.SetActive(true);        // 2-3 On
         yield return new WaitForSeconds(0.25f);         // 0.25초 대기
         GroundStrike_Collider_L.SetActive(false);       // 2-3 Off
-
+        isAttacking = false;
         yield return new WaitForSeconds(3f);            // ~~ 스킬 콜라이더
 
         StartCoroutine(Think());
@@ -526,13 +611,13 @@ public class DruidCtrl : BossCtrl
 
     protected override IEnumerator Skill_2()
     {
-        Debug.Log("실행 스킬2");
+        isAttacking = true;
         anim.SetTrigger("doSkill2");
         yield return new WaitForSeconds(0.75f);
         ToxicPortal_Collider.SetActive(true);
         yield return new WaitForSeconds(2.75f);
         ToxicPortal_Collider.SetActive(false);
-
+        isAttacking = false;
         StartCoroutine(Think());
     }
     #endregion

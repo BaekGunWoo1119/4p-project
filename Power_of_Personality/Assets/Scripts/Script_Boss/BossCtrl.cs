@@ -4,14 +4,19 @@ using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class BossCtrl : MonoBehaviour
 {
     #region 변수 선언
     protected Animator anim;   // 애니메이터
-    protected Slider HpBar;    // HP바 슬라이더
+    protected UnityEngine.UI.Slider HpBar;    // HP바 슬라이더
     public SkinnedMeshRenderer matObj;
     public GameObject targetObj;
+    protected GameObject BossWall1;
+    protected GameObject BossWall2;
+    protected BoxCollider BossWall1Collider;
+    protected BoxCollider BossWall2Collider;
 
     // 보스의 스테이터스
     protected float curHP;     // 현재 체력
@@ -44,7 +49,9 @@ public class BossCtrl : MonoBehaviour
     // 보스 상태 체크
     protected bool isDie;
     protected bool isHit;
+    protected bool isAttacking;
     protected float TickCoolTime;  // 틱 피해량 쿨타임
+    protected bool canTeleport;
 
     #endregion
     protected virtual void Awake()
@@ -59,9 +66,54 @@ public class BossCtrl : MonoBehaviour
 
     protected virtual void Start()
     {
+        // 보스 문 할당
+        BossWall1 = GameObject.Find("BossWall1").gameObject;
+        BossWall1Collider = BossWall1.GetComponent<BoxCollider>();
+        BossWall2 = GameObject.Find("BossWall2").gameObject;
+        BossWall2Collider = BossWall2.GetComponent<BoxCollider>();
         SetHP(100);
         CheckHP();
     }
+
+    protected virtual void Update()
+    {
+        TeleportCheck();
+        if (!isAttacking)
+        {
+            Turn();
+        }
+        // 레이캐스트의 시작점
+        Vector3 rayOrigin = transform.position + new Vector3(0, 1.0f, 0);
+        // 레이캐스트의 방향 (여기서는 transform.forward의 반대 방향으로 설정)
+        Vector3 rayDirection = -transform.forward;
+        // 레이의 최대 길이
+        float rayLength = 4f;
+
+        // 레이캐스트를 실행하여 결과를 저장
+        bool canTeleport = Physics.Raycast(rayOrigin, rayDirection, rayLength, LayerMask.GetMask("Wall"));
+
+        // 시각화를 위해 Debug.DrawRay를 사용하여 레이를 그림
+        Debug.DrawRay(rayOrigin, rayDirection * rayLength, canTeleport ? Color.green : Color.red);
+
+    }
+    #region 이동 관련
+    public virtual void Turn()
+    {
+        if (this.transform.position.x - PlayerTr.transform.position.x < 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+    }
+    protected virtual void TeleportCheck()
+    {
+        canTeleport = Physics.Raycast(transform.position + new Vector3(0, 1.0f, 0), -transform.forward, 4f, LayerMask.GetMask("Wall"));
+        Debug.Log(canTeleport);
+    }
+    #endregion
 
     #region HP 관련
     protected virtual void SetHP(float amount) // HP 설정
@@ -321,6 +373,8 @@ public class BossCtrl : MonoBehaviour
         {
             isDie = true;
             anim.SetBool("Die", true);
+            BossWall1.SetActive(false);
+            BossWall2.SetActive(false);
             yield return new WaitForSeconds(1.5f);
             Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
             Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
@@ -401,6 +455,7 @@ public class BossCtrl : MonoBehaviour
         yield return null;
     }
     #endregion
+
     #region 몬스터 피격 텍스트
     public virtual IEnumerator DamageTextAlpha()
     {
