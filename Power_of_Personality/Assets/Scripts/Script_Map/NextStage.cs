@@ -25,7 +25,7 @@ public class NextStage : MonoBehaviour
     // Update is called once per frame
     void OpenPortal()
     {
-        if(sceneName == "Hidden_Shop" && PlayerPrefs.GetString("Hidden_Shop_Spawn_Scene") == PlayerPrefs.GetString("Before_Scene_Name"))
+        if((sceneName == "Hidden_Shop" && PlayerPrefs.GetString("Hidden_Shop_Spawn_Scene") == PlayerPrefs.GetString("Before_Scene_Name")))
         {
         }
         else

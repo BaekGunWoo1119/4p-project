@@ -10,6 +10,7 @@ public class CoinCtrl : MonoBehaviour
 
     private void Start()
     {
+        PlayerPrefs.SetFloat("Coin", 0);
         CoinText = GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>();
     }
 

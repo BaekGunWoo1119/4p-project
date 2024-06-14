@@ -386,14 +386,19 @@ public class SceneLoader : MonoBehaviour
             GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
             if(Hidden_Shop_Exit != null)
             {
-                Hidden_Shop_Exit.GetComponent<Button>().onClick.AddListener(Hidden_Shop_Exit_Pressed);
+                Hidden_Shop_Exit.GetComponent<Button>().onClick.AddListener(Shop_Exit_Pressed);
                 Hidden_Shop_Exit.SetActive(false);
             }
         }
 
         if(SceneManager.GetActiveScene().name == "Normal_Shop")
         {
+            GameObject Normal_Shop_Exit = GameObject.Find("Exit_Shop");
             GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
+            if(Normal_Shop_Exit != null)
+            {
+                Normal_Shop_Exit.GetComponent<Button>().onClick.AddListener(Shop_Exit_Pressed);
+            }
         }
         
 
@@ -611,7 +616,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene("Forest_Example");
     }
 
-    void Hidden_Shop_Exit_Pressed()
+    void Shop_Exit_Pressed()
     {
         SceneManager.LoadScene(PlayerPrefs.GetString("Before_Scene_Name"));
     }

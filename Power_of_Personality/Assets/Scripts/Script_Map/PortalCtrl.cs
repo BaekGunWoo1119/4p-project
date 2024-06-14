@@ -22,7 +22,7 @@ public class PortalCtrl : MonoBehaviour
 
         else if(sceneName == "Normal_Shop")
         {
-            //현재 씬 이름 받아와서 다음 스테이지로 넘기는 코드 추가 예정
+            PlayerPrefs.SetString("Before_Scene_Name", SceneManager.GetActiveScene().name);
         }
 
         SceneManager.LoadScene(sceneName);

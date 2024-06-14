@@ -12,16 +12,18 @@ public class ShopCtrl : MonoBehaviour
 
     public HiddenShop_Slot[] HS_Slots;
     public Item[] Items;
-    private Button BuyButton1;
-    private Button BuyButton2;
-    private Button BuyButton3;
-    private GameObject[] newItem;
+    public GameObject[] BuyButton;
+    public GameObject[] newItem;
     public float[] itemCost;
+    public GameObject[] soldOut;
+
+    private GameObject warningWindow;
 
     bool isSave = false;
 
     int C_Slots;
     int C_Items;
+
 
     //아이템 가격
 
@@ -31,26 +33,31 @@ public class ShopCtrl : MonoBehaviour
         C_Items = Items.Length;
         newItem = new GameObject[C_Slots];
         itemCost = new float[C_Slots];
-        BuyButton1 = GameObject.Find("Pick(1)").GetComponent<Button>();
-        BuyButton2 = GameObject.Find("Pick(2)").GetComponent<Button>();
-        BuyButton3 = GameObject.Find("Pick(3)").GetComponent<Button>();
 
         InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
+        warningWindow = GameObject.Find("Sold_Warning");
     }
 
     void Start()
     {
-        BuyButton1.onClick.AddListener(() => BuyItem(0));
-        BuyButton2.onClick.AddListener(() => BuyItem(1));
-        BuyButton3.onClick.AddListener(() => BuyItem(2));
+        ShopCtrl currentInstance = this;
+        //for문에다 넣으니 자꾸 에러 떠서 따로 빼둠...
+        BuyButton[0].GetComponent<Button>().onClick.AddListener(() => currentInstance.BuyItem(0));
+        BuyButton[1].GetComponent<Button>().onClick.AddListener(() => currentInstance.BuyItem(1));
+        BuyButton[2].GetComponent<Button>().onClick.AddListener(() => currentInstance.BuyItem(2));
+
+        for(int i = 0; i < BuyButton.Length; i++)
+        {
+            soldOut[i].SetActive(false);
+        }
+
+        warningWindow.SetActive(false);
 
         GetRandomItemCode();
     }
 
     public void GetRandomItemCode()
     {
-        
-
         int[] randItemCode = new int[C_Slots];
         bool isSame;
         
@@ -124,6 +131,7 @@ public class ShopCtrl : MonoBehaviour
             {
                 float currentCoin = PlayerPrefs.GetFloat("Coin", 0);
                 PlayerPrefs.SetFloat("Coin", currentCoin -3);
+                GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
 
                 for (int i = 0; i < C_Slots; ++i)
                 {
@@ -137,6 +145,7 @@ public class ShopCtrl : MonoBehaviour
                     while (true)
                     {
                         randItemCode[i] = Random.Range(0, C_Items);
+                        soldOut[i].SetActive(false);
 
                         if (InvenCtrl.collectedItemsID.Contains(randItemCode[i]))
                         {
@@ -202,18 +211,46 @@ public class ShopCtrl : MonoBehaviour
 
     void BuyItem(int index)
     {
-        Debug.Log("구매 완료");
-        if(PlayerPrefs.GetFloat("Coin") >= itemCost[index])
+        float iCost = itemCost[index];
+        if(PlayerPrefs.GetFloat("Coin") >= iCost)
         {
             float currentCoin = PlayerPrefs.GetFloat("Coin");
-            PlayerPrefs.SetFloat("Coin", currentCoin - itemCost[index]);
+            PlayerPrefs.SetFloat("Coin", currentCoin - iCost);
             GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
             if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
             {
                 InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = newItem[index].GetComponent<Item>().itemID;
             }
-                    
+            
+            Debug.Log(index + "번 구매 완료");
+            soldOut[index].SetActive(true);
+
             InvenCtrl.itemCount++;
+        }
+        else
+        {
+            StartCoroutine(Sold_Warning());
+        }
+    }
+
+    IEnumerator Sold_Warning()
+    {
+        if(warningWindow.activeSelf == false)
+        {
+            warningWindow.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            warningWindow.SetActive(false);
+        }
+        else
+        {
+            while(warningWindow.activeSelf == true)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+            yield return new WaitForSeconds(0.05f);
+            warningWindow.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            warningWindow.SetActive(false);
         }
     }
 }
