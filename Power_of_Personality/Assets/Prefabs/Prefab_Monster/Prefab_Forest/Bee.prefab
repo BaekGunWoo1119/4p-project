@@ -253,7 +253,7 @@ Transform:
   - {fileID: 5685540294221872179}
   - {fileID: 1705528854061380351}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3462988163943559206
 GameObject:
@@ -370,6 +370,37 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.34488338
   m_Center: {x: -0.43108475, y: -0.000000048061672, z: -0.06950699}
+--- !u!1 &3626740544139670766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7802382920095844088}
+  m_Layer: 6
+  m_Name: EffectGen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7802382920095844088
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3626740544139670766}
+  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
+  m_LocalPosition: {x: 0.6950704, y: 1.2827985, z: 0.14778596}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5685540294221872179}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!1 &3694983162275265018
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,6 +668,7 @@ Transform:
   - {fileID: 2911346240007166801}
   - {fileID: 8175943372675019288}
   - {fileID: 5885691486361903440}
+  - {fileID: 7802382920095844088}
   m_Father: {fileID: 8391705492062251499}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -680,8 +712,6 @@ MonoBehaviour:
   ATK: 15
   DEF: 0
   MoveSpeed: 0
-  FireATTDEF: 0
-  IceATTDEF: 0
   Damage: 0
   WeakProperty: 
   TickCoolTime: 0
@@ -701,8 +731,8 @@ MonoBehaviour:
   isHit: 0
   IceHit: {fileID: 1387851562293694130, guid: e2789a389dac3ba4d817abc6b1fc8df2, type: 3}
   FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
-  AttackEffect: {fileID: 0}
-  EffectGen: {fileID: 0}
+  AttackEffect: {fileID: 1893033738566276, guid: 21b42dc3fcd1b4b43bc2b1d6dbff49a7, type: 3}
+  EffectGen: {fileID: 3626740544139670766}
 --- !u!136 &3395994194289041344
 CapsuleCollider:
   m_ObjectHideFlags: 0

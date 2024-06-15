@@ -137,7 +137,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     }
     protected override IEnumerator Immune(float seconds)
     {
-        Debug.Log("무적핑크");
+        Debug.Log(seconds + "만큼 무적");
         yield return base.Immune(seconds);
     }
     #endregion

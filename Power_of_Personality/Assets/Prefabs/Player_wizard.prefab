@@ -19973,7 +19973,7 @@ GameObject:
   - component: {fileID: 5013584768051847750}
   - component: {fileID: 6574281608763343400}
   - component: {fileID: 1526207877267717933}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player_wizard
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -19999,6 +19999,7 @@ Transform:
   - {fileID: 9194509742502753687}
   - {fileID: 3623157717674804360}
   - {fileID: 93284461192429929}
+  - {fileID: 7812265294032567745}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -20051,9 +20052,13 @@ MonoBehaviour:
   LocalSkillYRot: 0
   EffectGen: {fileID: 0}
   SkillEffect: {fileID: 0}
-  DamageText: {fileID: 0}
+  DamageText: {fileID: 5357283400005317788, guid: c87b9d34b3435f643a71a71e49449700, type: 3}
+  Damage_Effect: {fileID: 2292867600362698915, guid: 356dc8270444ffd4eace122d8aa26061, type: 3}
+  Heal_Effect: {fileID: 4313010620861098664, guid: cb0e3529083d1a849875beded1854e79, type: 3}
   PlayerCanvas: {fileID: 0}
   HpText: {fileID: 0}
+  InvenCtrl: {fileID: 0}
+  hpPotionValue: {fileID: 0}
   CommonAttack1_Collider: {fileID: 5858708933020538311, guid: 07ab5303c1881e1458b44559f314e749, type: 3}
   CommonAttack3_Collider: {fileID: 5858708933020538311, guid: 8c3c9f14d299acc429838397bb0b760f, type: 3}
   Skill_Fire_Aura_Effect: {fileID: 1740466170388134702, guid: 63c28630f26b433439f94107cecf4e9b, type: 3}
@@ -39990,6 +39995,108 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1 &5068777710982250172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7812265294032567745}
+  - component: {fileID: 3751861529587639374}
+  - component: {fileID: 7798658435869183156}
+  - component: {fileID: 8964554636567171365}
+  m_Layer: 7
+  m_Name: Canvas - Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7812265294032567745
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5068777710982250172}
+  m_LocalRotation: {x: 0.00000049424375, y: -0.7071082, z: 0.0000013925359, w: 0.70710546}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 0.6999998, y: 0.7, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 894842059209348796}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 3}
+  m_SizeDelta: {x: 5, y: 2}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &3751861529587639374
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5068777710982250172}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &7798658435869183156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5068777710982250172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!114 &8964554636567171365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5068777710982250172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &5282295001356610857
 GameObject:
   m_ObjectHideFlags: 0

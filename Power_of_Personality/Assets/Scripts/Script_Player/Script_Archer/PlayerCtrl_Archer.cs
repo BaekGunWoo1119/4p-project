@@ -60,9 +60,17 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         base.CheckHp();
     }
+    public override void HealHp()
+    {
+        base.HealHp();
+    }
     protected override IEnumerator TakeDamage()
     {
         yield return base.TakeDamage();
+    }
+    protected override IEnumerator DamageTextAlpha()
+    {
+        yield return base.DamageTextAlpha();
     }
     #endregion
 
@@ -268,12 +276,26 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, 0, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, 180, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, -90, 0));
+            SkillEffect.transform.parent = EffectGen.transform;
+        }
+    }
+
+    public void jumpAttack_2_on()
+    {
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, 0, 0));
+            SkillEffect.transform.parent = EffectGen.transform;
+        }
+        else
+        {
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, 180, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
     }
@@ -319,6 +341,22 @@ public class PlayerCtrl_Archer : PlayerCtrl
         SkillEffect = Instantiate(Skill_SmokeEffect, EffectGen.transform.position, Quaternion.Euler(-90f, 0f, 0f));
 
     }
+
+    public override IEnumerator Heal_on()
+    {
+        yield return base.Heal_on();
+    }
+
+    public override void Damaged_on()
+    {
+        base.Damaged_on();
+    }
+
+    public override void Destroyed_Effect()
+    {
+        base.Destroyed_Effect();
+    }
+    
     #endregion
 
     #region 스킬이나 공격 움직임, Delay 등 세부 조정 함수

@@ -582,12 +582,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected virtual IEnumerator Immune(float seconds)
     {
         Physics.IgnoreLayerCollision(7, 8, true);
-        while (seconds > 0)
-        {
-            Debug.Log(seconds);
-            seconds -= Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(seconds);
         Physics.IgnoreLayerCollision(7, 8, false);
     }
     #endregion
