@@ -19,14 +19,10 @@ public class MonsterCtrl : MonoBehaviour
     public float ATK;  // 공격력
     public float DEF;       // 방어력
     public float MoveSpeed;  // 이동 속도
-    public float FireATTDEF;     // 화 속성 방어력
-    public float IceATTDEF;      // 빙 속성 방어력
     public float Damage;   // 받은 피해량
+    public string WeakProperty; // 약점 속성
 
-
-    public string WeakProperty;
-
-    public float TickCoolTime;
+    public float TickCoolTime;  // 틱 피해량 쿨타임
 
     public GameObject DamageText; //맞았을 때 나오는 데미지 텍스트
     public GameObject MonsterCanvas;
@@ -49,7 +45,7 @@ public class MonsterCtrl : MonoBehaviour
     public GameObject FireHit; //몬스터 피격 이펙트(불)
     public GameObject AttackEffect; //몬스터 공격 이펙트
     public GameObject EffectGen; //몬스터 공격 이펙트 소환 장소
-     
+    
 
     #endregion
 
@@ -75,15 +71,8 @@ public class MonsterCtrl : MonoBehaviour
             DistanceCheck();    // 플레이어와의 거리를 계산
         }
         AttackCoolTime += Time.deltaTime;
-        if (this.transform.position.x - PlayerTr.transform.position.x < 0)
-        {
-            this.transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-        else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
-        {
-            this.transform.rotation = Quaternion.Euler(0, -90, 0);
-        }
         TickCoolTime += Time.deltaTime;
+        Turn();
     }
 
     #region 몬스터 HP 설정하는 부분
@@ -121,7 +110,17 @@ public class MonsterCtrl : MonoBehaviour
             StartCoroutine(Attack());
         }
     }
-
+    public virtual void Turn()
+    {
+        if (this.transform.position.x - PlayerTr.transform.position.x < 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0, 90, 0);
+        }
+        else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0, -90, 0);
+        }
+    }
     public virtual IEnumerator Trace()
     {
         // 플레이어를 향해 이동하는 로직
@@ -251,6 +250,58 @@ public class MonsterCtrl : MonoBehaviour
             StartCoroutine(TakeDamage());
         }
         #endregion
+        #region 궁수
+        if (col.tag == "ArcherAttack1")
+        {
+            isHit = true;
+            Damage = Status.TotalADC * 1.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "ArcherAttack2")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "ArcherSkillQ")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.1f;
+            StartCoroutine(TakeDamage());
+        }
+        #endregion
+        #region 마법사
+        if (col.tag == "WizardAttack1")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardAttack3")
+        {
+            isHit = true;
+            Damage = Status.TotalADC * 1.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardSkillW")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 3f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardSkillE_1")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 2.5f;
+            StartCoroutine(TakeDamage());
+        }
+        if (col.tag == "WizardSkillE_2")
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 5f;
+            StartCoroutine(TakeDamage());
+        }
+        #endregion
     }
 
     public virtual void OnTriggerStay(Collider col)
@@ -283,6 +334,31 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        #endregion
+        #region 궁수
+        if (col.tag == "ArcherSkillW" && TickCoolTime >= 0.25f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.75f;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        if (col.tag == "ArcherSkillE" && TickCoolTime >= 0.2f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 3f;
+            StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
+        }
+        #endregion
+        #region 마법사
+        if (col.tag == "WizardSkillQ" && TickCoolTime >= 0.25f)
+        {
+            isHit = true;
+            Damage = Status.TotalAP * 0.75f;
             StartCoroutine(TakeDamage());
             TickCoolTime = 0;
         }

@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-//전사 애니메이션
 public class PlayerCtrl_Warrior : PlayerCtrl
 {
     #region 변수 선언
@@ -36,6 +35,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     private ParticleSystem setParticles4;
     #endregion
 
+    #region Start, FixedUpdate, Update
     protected override void Start()
     {
         base.Start();
@@ -110,6 +110,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             upperUpTime = 0;
         }
     }
+    #endregion
 
     #region HP 설정
     public override void SetHp(float amount)
@@ -481,7 +482,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         }
     }
 
-    IEnumerator Delay(float seconds)
+    protected override IEnumerator Delay(float seconds)
     {
         yield return new WaitForSeconds(seconds);
 

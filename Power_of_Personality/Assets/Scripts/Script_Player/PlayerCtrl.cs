@@ -13,6 +13,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //Raycast 관련
     protected float raycastDistance = 0.5f;
     protected RaycastHit hit;
+    protected GameObject BossWall1;
+    protected GameObject BossWall2;
+    protected BoxCollider BossWall1Collider;
+    protected BoxCollider BossWall2Collider;
 
     // GetAxis 값
     protected float hAxis;
@@ -60,6 +64,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool stateSkillQ = false;
     protected bool stateSkillW = false;
     protected bool stateSkillE = false;
+    protected bool stateSkillE_Wait = false;
     protected bool stateDamage = false;
     protected bool stateDash = false;
     protected bool stateDie = false;
@@ -68,7 +73,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool coroutineMove = false;
 
     // 애니메이터, Rigidbody
-    protected Animator anim;
+    public Animator anim;
     protected Rigidbody rd;
 
     // 이펙트
@@ -150,6 +155,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         SetIce();
         SetHp(100);
 
+        // 보스 문 할당
+        BossWall1 = GameObject.Find("BossWall1").gameObject;
+        BossWall1Collider = BossWall1.GetComponent<BoxCollider>();
+        BossWall2 = GameObject.Find("BossWall2").gameObject;
+        BossWall2Collider = BossWall2.GetComponent<BoxCollider>();
+
         // HP Bar 설정
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
         HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
@@ -165,7 +176,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
         
         //데미지 텍스트 설정(06.01)
-        PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;
+        //PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;     //잠시
         
         //쿨타임 UI(03.18)
         Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
@@ -173,7 +184,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Ecool = GameObject.Find("CoolTime-E").GetComponent<Image>();
 
         // 애니메이션, Rigidbody, Transform 컴포넌트 지정
-        anim = GetComponent<Animator>();
+        anim = this.GetComponent<Animator>();
         rd = GetComponent<Rigidbody>();
         trs = GetComponentInChildren<Transform>();
 
@@ -263,7 +274,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         transform.GetChild(0).localPosition = Vector3.zero;
 
         //데미지 캔버스 Y값 고정
-        PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
+        //PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);  //잠시
 
         // Attack 함수 실행
         if (Input.GetKeyDown(KeyCode.A))
@@ -563,7 +574,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         StateText[4].text = Status.TotalFire.ToString();
         StateText[5].text = Status.TotalIce.ToString();
         StateText[6].text = Status.TotalSpeed.ToString();
-        StateText[6].text = Status.TotalCooltime.ToString();
+        StateText[7].text = Status.TotalCooltime.ToString();
     }
 
     #endregion
@@ -734,10 +745,20 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     protected virtual void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor" )    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
+        if (collision.gameObject.tag == "Floor" && !stateSkillE && !stateSkillE)    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
         {
-            //Debug.Log("실행");
             Fall();
+        }
+    }
+
+    protected virtual void OnTriggerExit(Collider col)
+    {
+        if(BossWall1.transform.position.x - transform.position.x < 0)
+        {
+            BossWall1.layer = 3;
+            BossWall2.layer = 3;
+            BossWall1Collider.isTrigger = false;
+            BossWall2Collider.isTrigger = false;
         }
     }
     #endregion
@@ -817,7 +838,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     public virtual void StopAnim(string AnimationName)
     {
-        if(AnimationName == "CommonAttack" || AnimationName == "Skill_Q" || AnimationName == "Skill_W" || AnimationName == "Skill_E" || AnimationName == "isDodge")
+        if (AnimationName == "CommonAttack" || AnimationName == "Skill_Q" || AnimationName == "Skill_W" || AnimationName == "Skill_E" || AnimationName == "isDodge")
         {
             anim.ResetTrigger(AnimationName);
         }
@@ -896,8 +917,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E"))
             stateSkillE = true;
         else
-            stateSkillE = false;    
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
+            stateSkillE = false;
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E_Wait"))
+            stateSkillE_Wait = true;
+        else
+            stateSkillE_Wait = false;
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
             stateDash = true;
         else
             stateDash = false;
