@@ -78,6 +78,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "1 (Main)")
         {
+            PlayerPrefs.SetFloat("PlayerHP", 100);
             Main_Single = GameObject.Find("SinglePlay").GetComponent<Button>();
             Main_Multi = GameObject.Find("MultiPlay").GetComponent<Button>();
             Main_Setting = GameObject.Find("Settings").GetComponent<Button>();

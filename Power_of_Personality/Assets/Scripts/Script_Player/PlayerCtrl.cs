@@ -109,6 +109,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public GameObject EffectGen;
     public GameObject SkillEffect;
     public GameObject DamageText; //텍스트
+    public GameObject Damage_Effect;
+    public GameObject Heal_Effect;
     public GameObject PlayerCanvas;
 
     // 카메라, 사운드
@@ -124,6 +126,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     // HP Bar
     protected Slider HpBar;
     public TMP_Text HpText;
+
+    //포션
+    public InventoryCtrl InvenCtrl;
+    public TMP_Text hpPotionValue;
 
     //스탯 UI 관련
     protected TMP_Text[] StateText; 
@@ -153,7 +159,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         // 플레이어 스테이터스 초기화
         SetIce();
-        SetHp(100);
+        Status.HP = PlayerPrefs.GetFloat("PlayerHP");
+        Debug.Log(PlayerPrefs.GetFloat("PlayerHP"));
 
         // 보스 문 할당
         BossWall1 = GameObject.Find("BossWall1").gameObject;
@@ -165,6 +172,11 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
         HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
         HpText.text = "HP" + Status.HP + "/" + Status.MaxHP;
+        CheckHp();
+
+        //포션 설정(06.15)
+        InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
+        hpPotionValue = GameObject.Find("Potion - Text").GetComponent<TMP_Text>();
 
         //스텟 UI 변동 설정(06.14)
         StateText = new TMP_Text[8];
@@ -176,7 +188,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
         
         //데미지 텍스트 설정(06.01)
-        //PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;     //잠시
+        PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;     //잠시
         
         //쿨타임 UI(03.18)
         Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
@@ -405,6 +417,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (Input.GetKeyDown(KeyCode.R))
         {
             PlayAnim("isDodge");
+            StartCoroutine(Immune(0.5f));
         }
         if (stateWait == true)
         {
@@ -413,6 +426,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (stateDodge == true)
         {
             StopAnim("isJump");
+        }
+        
+        // 힐 Potion 먹는 함수
+        hpPotionValue.text = InvenCtrl.PotionCount.ToString();
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            HealHp();
         }
 
         //Idle일때 스킬 및 공격 false 판정
@@ -495,6 +515,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (Status.MaxHP != 0 || Status.HP > 0)
         {
             Status.HP -= Damage;
+            PlayerPrefs.SetFloat("PlayerHP", Status.HP);
             Debug.Log(Status.HP);
             CheckHp();
             PlayAnim("TakeDamage");
@@ -525,6 +546,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             HpBar.value = Status.HP / Status.MaxHP;
         if (HpText != null)
             HpText.text = inputText;
+    }
+    public virtual void HealHp()
+    {
+        InvenCtrl.PotionCount -= 1; 
+        Status.HP = Status.MaxHP;
+        PlayerPrefs.SetFloat("PlayerHP", Status.HP);
+        CheckHp();
+        StartCoroutine(Heal_on());
     }
     //(06.01)
     protected virtual IEnumerator DamageTextAlpha()
@@ -817,6 +846,29 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
         yield return null;
     }
+    #endregion
+
+    #region 이펙트 함수
+
+    public virtual IEnumerator Heal_on()
+    {
+        SkillEffect = Instantiate(Heal_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        yield return new WaitForSeconds(1.0f);
+        Destroy(SkillEffect);
+    }
+
+    public virtual void Damaged_on()
+    {
+        SkillEffect = Instantiate(Damage_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+    }
+
+    public virtual void Destroyed_Effect()
+    {
+        Destroy(SkillEffect);
+    }
+
     #endregion
 
     #region 애니메이션 

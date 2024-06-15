@@ -121,15 +121,24 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         base.CheckHp();
     }
+    public override void HealHp()
+    {
+        base.HealHp();
+    }
 
     protected override IEnumerator TakeDamage()
     {
         yield return base.TakeDamage();
     }
     //데미지 텍스트(06.01)
-    protected override  IEnumerator DamageTextAlpha()
+    protected override IEnumerator DamageTextAlpha()
     {
         yield return base.DamageTextAlpha();
+    }
+    protected override IEnumerator Immune(float seconds)
+    {
+        Debug.Log("무적핑크");
+        yield return base.Immune(seconds);
     }
     #endregion
 
@@ -374,6 +383,10 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         Ecool.fillAmount = 1;
     }
 
+    #endregion
+
+    #region 이펙트 함수
+
     public void comboAttack_1_on()
     {
         SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
@@ -433,6 +446,21 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         mainModule.startRotationZ = zR;
         yield return null;
     }
+
+    public override IEnumerator Heal_on()
+    {
+        yield return base.Heal_on();
+    }
+
+    public override void Damaged_on()
+    {
+        base.Damaged_on();
+    }
+
+    public override void Destroyed_Effect()
+    {
+        base.Destroyed_Effect();
+    }
     #endregion
 
     #region 스킬이나 공격 움직임, Delay 등 세부 조정 함수
@@ -445,6 +473,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             isSkillQ = true;
             PlayAnim("Skill_Q");
             StartCoroutine(Spawn_SwordAura());
+            StartCoroutine(Immune(0.5f));
         }
 
         if(skillName == "W")
@@ -452,6 +481,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             WSkill_Collider.SetActive(true);
             PlayAnim("Skill_W");
             StartCoroutine(MoveForwardForSeconds(1.35f));
+            StartCoroutine(Immune(1f));
         }
 
         if(skillName == "E")
@@ -459,6 +489,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             PlayAnim("Skill_E");
             StartCoroutine(SKill_E_Move());
             StartCoroutine(WarriorSkill_E());
+            StartCoroutine(Immune(5f));
         }
     }
 
