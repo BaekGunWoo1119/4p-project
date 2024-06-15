@@ -5,8 +5,9 @@ using Photon.Pun.Demo.Asteroids;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
-public class MonsterCtrl : MonoBehaviour
+public class Server_MonsterCtrl : MonoBehaviour
 {
     #region 변수 선언
 
@@ -34,8 +35,10 @@ public class MonsterCtrl : MonoBehaviour
 
     public SkinnedMeshRenderer matObj;
     public GameObject targetObj;
-
+    public GameObject[] Targets;    // 모든 플레이어 오브젝트 배열
     public Transform PlayerTr;     // 플레이어 Transform
+    public float PlayerDistance;        // 타겟 플레이어와 몬스터 간의 거리
+    public float TempDistance;         // 타겟 플레이어와 몬스터 간의 거리 (저장용)
     public float Distance;         // 플레이어와 몬스터 간의 거리
     public float TraceRadius;  // 몬스터가 플레이어를 추적(Trace)하기 시작하는 거리
     public float attackRadius;  // 몬스터가 플레이어를 공격(Attack)하기 시작하는 거리
@@ -49,15 +52,14 @@ public class MonsterCtrl : MonoBehaviour
     public GameObject FireHit; //몬스터 피격 이펙트(불)
     public GameObject AttackEffect; //몬스터 공격 이펙트
     public GameObject EffectGen; //몬스터 공격 이펙트 소환 장소
-
-
-    protected Rigidbody rd; // 리지드바디 
+    private PhotonView photonview; //포톤뷰 (멀티)
      
 
     #endregion
 
     public virtual void Awake()
     {
+
         // 몬스터 기본 설정
         if (this.tag == "Monster_Melee")     // 이 몬스터가 근접 몬스터일때
         {
@@ -68,28 +70,30 @@ public class MonsterCtrl : MonoBehaviour
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
         PlayerTr = this.transform;          // 플레이어 Transform을 설정하기 전에 임시로 몬스터(스크립트가 들어있는 게임 오브젝트)의 Transform을 담아놓음.
-        StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
-        rd = GetComponent<Rigidbody>();     // 리지드바디 초기화
+        TempDistance = -4f;                 // 플레이어 거리 측정 전 임시 수치
+        if (PhotonNetwork.IsMasterClient){
+            StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
+        }
     }
 
     public virtual void Update()
     {
-        if (!isDie)     // 죽어있는 상태가 아니면
-        {
-            DistanceCheck();    // 플레이어와의 거리를 계산
+        if (PhotonNetwork.IsMasterClient){
+            if (!isDie)     // 죽어있는 상태가 아니면
+            {
+                DistanceCheck();    // 플레이어와의 거리를 계산
+            }
+            AttackCoolTime += Time.deltaTime;
+            if (this.transform.position.x - PlayerTr.transform.position.x < 0)
+            {
+                this.transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
+            else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
+            {
+                this.transform.rotation = Quaternion.Euler(0, -90, 0);
+            }
+            TickCoolTime += Time.deltaTime;
         }
-        AttackCoolTime += Time.deltaTime;
-        if (this.transform.position.x - PlayerTr.transform.position.x < 0)
-        {
-            this.transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-        else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
-        {
-            this.transform.rotation = Quaternion.Euler(0, -90, 0);
-        }
-        TickCoolTime += Time.deltaTime;
-
-        rd.AddForce(Vector3.down * 4, ForceMode.VelocityChange);
     }
 
     #region 몬스터 HP 설정하는 부분
@@ -110,7 +114,9 @@ public class MonsterCtrl : MonoBehaviour
     public virtual IEnumerator FindPlayer()     // 플레이어를 찾아서 할당해주는 함수
     {
         yield return new WaitForSeconds(0.1f);
-        PlayerTr = GameObject.FindWithTag("Player").transform;
+        Targets = GameObject.FindGameObjectsWithTag("Target");
+        Settarget();
+        //PlayerTr = GameObject.FindWithTag("Player").transform;
     }
 
     public virtual void DistanceCheck()
@@ -121,10 +127,27 @@ public class MonsterCtrl : MonoBehaviour
         {
             StartCoroutine(Trace());
         }
+        else if (Distance > TraceRadius){ 
+            Settarget();
+        }
 
         if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && !isHit)
         {
-            StartCoroutine(Attack());
+            photonview.RPC("Server_Attack", RpcTarget.All);
+            //StartCoroutine(Attack());
+        }
+    }
+    public virtual void Settarget()
+    {
+        TempDistance = -4f;
+
+        foreach (GameObject Player in Targets){
+            Transform TargetTr = Player.transform.parent.gameObject.transform;
+            PlayerDistance = Vector3.Distance(transform.position, TargetTr.position);
+            if (PlayerDistance < TempDistance || TempDistance < 1f){
+                TempDistance = PlayerDistance;
+                PlayerTr = TargetTr;
+            }   
         }
     }
 
@@ -148,7 +171,11 @@ public class MonsterCtrl : MonoBehaviour
     #endregion
 
     #region 몬스터의 공격
-
+    //photonview.RPC("Attack", RpcTarget.All);
+    [PunRPC]
+    public virtual void Server_Attack(){
+        StartCoroutine(Attack());
+    }
     public virtual IEnumerator Attack()
     {
         AttackCoolTime = 0;
