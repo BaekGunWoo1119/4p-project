@@ -193,10 +193,10 @@ public class CameraEffectCtrl : MonoBehaviour
         colorAdjustments.active = false;
     }
 
-    public IEnumerator RoyalFilter(float Value, float time, float FilterR, float FilterG, float FilterB, float dirtInt, Texture dirtTexture)
+    public IEnumerator RoyalFilter(float Value, float time, float FilterR, float FilterG, float FilterB, float dirtInt, Texture dirtTexture, float thresValue)
     {
         bloom.active = true;
-        bloom.threshold.value = 1.2f;
+        bloom.threshold.value = thresValue;
         bloom.scatter.value = 0.7f;
         bloom.tint.value = new Color(FilterR, FilterG, FilterB, 1f);
         bloom.dirtTexture.value = dirtTexture;
@@ -292,21 +292,21 @@ public class CameraEffectCtrl : MonoBehaviour
         StartCoroutine(RoundCamera(0.3f, 1, 0, 0, 1.0f));
     }
 
-    public void PropEffectCamera(int Num, float time)
+    public void PropEffectCamera(int Num, float time, float Value)
     {
         if(PlayerPrefs.GetString("property") == "Ice")
         {
-            StartCoroutine(RoyalFilter(4, time, 0f, 0.4f, 1.2f, 4, texture[Num]));
+            StartCoroutine(RoyalFilter(4, time, 0f, 0.4f, 1.2f, 4, texture[Num], Value));
         }
         else if(PlayerPrefs.GetString("property") == "Fire")
         {
-            StartCoroutine(RoyalFilter(4, time, 2.3f, 0.9f, 0.3f, 4, texture[Num]));
+            StartCoroutine(RoyalFilter(4, time, 2.3f, 0.9f, 0.3f, 4, texture[Num], Value));
         }
     }
 
     public void poisonEffectCamera()
     {
-        StartCoroutine(RoyalFilter(4, 0.5f, 121, 0, 255, 4, texture[1]));
+        StartCoroutine(RoyalFilter(4, 0.5f, 121, 0, 255, 4, texture[1], 0.9f));
     }
 
     #endregion

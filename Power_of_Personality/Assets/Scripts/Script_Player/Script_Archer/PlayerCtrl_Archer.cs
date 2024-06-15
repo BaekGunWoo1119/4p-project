@@ -185,6 +185,7 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         anim.SetTrigger("Skill_E");
         isSkill = true;
+        StartCoroutine(Skill_E_Deal());
         StartCoroutine(SKill_Up_Move(20.0f, 0.5f, 2.5f, 1.2f));
         yield return new WaitForSeconds(3.1f);
         ESkill_Collider.SetActive(true);
