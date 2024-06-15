@@ -268,12 +268,26 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, 0, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, 180, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, -90, 0));
+            SkillEffect.transform.parent = EffectGen.transform;
+        }
+    }
+
+    public void jumpAttack_2_on()
+    {
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, 0, 0));
+            SkillEffect.transform.parent = EffectGen.transform;
+        }
+        else
+        {
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, 180, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
     }

@@ -248,14 +248,29 @@ public class PlayerCtrl_Wizard : PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, 0, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
+            SkillEffect.transform.position = EffectGen.transform.position;
         }
         else
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, 180, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
+            SkillEffect.transform.position = EffectGen.transform.position;
         }
     }
+
+    public void jumpAttack_2_on()
+    {
+        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        {
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, 0, 0));
+            SkillEffect.transform.position = EffectGen.transform.position;
+        }
+        else
+        {
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, 180, 0));
+            SkillEffect.transform.position = EffectGen.transform.position;
+        }
+    }
+
     public void skill_Aura_on()
     {
         SkillEffect = Instantiate(Skill_Aura_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y - 1, EffectGen.transform.position.z), Quaternion.Euler(0f, 90, 0f));
