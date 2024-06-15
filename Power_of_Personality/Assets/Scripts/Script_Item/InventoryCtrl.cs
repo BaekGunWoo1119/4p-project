@@ -16,6 +16,9 @@ public class InventoryCtrl : MonoBehaviour
     public GameObject NormalShopSlots;
 
     public int itemCount;
+
+    public int PotionCount;
+    public int StatPoint;
     
     void Awake()
     {
@@ -42,8 +45,8 @@ public class InventoryCtrl : MonoBehaviour
             inventory[i] = player[i].GetComponent<Inventory>();
         }
 
-        collectedItems = new Item[inventory[0].slots.Length];
-        collectedItemsID = new int[inventory[0].slots.Length];
+        collectedItems = new Item[itemList.Length];
+        collectedItemsID = new int[itemList.Length];
 
         PlayerPrefs.SetFloat("Coin", 0);
 
@@ -51,6 +54,9 @@ public class InventoryCtrl : MonoBehaviour
         {
             collectedItemsID[i] = -1;
         }
+
+        PotionCount = 0;
+        StatPoint = 0;
         
     }   
 

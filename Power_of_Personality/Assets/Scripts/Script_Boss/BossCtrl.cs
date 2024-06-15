@@ -111,7 +111,7 @@ public class BossCtrl : MonoBehaviour
     protected virtual void TeleportCheck()
     {
         canTeleport = Physics.Raycast(transform.position + new Vector3(0, 1.0f, 0), -transform.forward, 4f, LayerMask.GetMask("Wall"));
-        Debug.Log(canTeleport);
+        //Debug.Log(canTeleport);
     }
     #endregion
 

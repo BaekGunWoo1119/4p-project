@@ -222,7 +222,20 @@ public class ShopCtrl : MonoBehaviour
             GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
             if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
             {
-                InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = newItem[index].GetComponent<Item>().itemID;
+                if(newItem[index].GetComponent<Item>().itemID == 50)
+                {
+                    InvenCtrl.PotionCount ++;
+                    Debug.Log("포션 :" + InvenCtrl.PotionCount + "개 보유중");
+                    InvenCtrl.itemCount--;
+                }else if(newItem[index].GetComponent<Item>().itemID == 51)
+                {
+                    InvenCtrl.StatPoint ++;
+                    Debug.Log("스탯포인트 :" + InvenCtrl.StatPoint + "개 보유중");
+                    InvenCtrl.itemCount--;
+                }else
+                {                
+                    InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = newItem[index].GetComponent<Item>().itemID;
+                }
             }
             
             Debug.Log(index + "번 구매 완료");

@@ -88,10 +88,13 @@ public class Inventory : MonoBehaviour
             Debug.Log("삽입 실행실행");
             AddItem(col.GetComponent<Item>());
 
+
+            /*
             if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
             {
                 InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = col.GetComponent<Item>().itemID;
-            }        
+            }
+            */        
             //InvenCtrl.itemCount++;
         }
     }
