@@ -92,6 +92,11 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     {
         yield return base.DamageTextAlpha();
     }
+    protected override IEnumerator Immune(float seconds)
+    {
+        Debug.Log(seconds + "만큼 무적");
+        yield return base.Immune(seconds);
+    }
     #endregion
 
     #region 이동 관련 함수
@@ -181,6 +186,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     }
     public IEnumerator Skill_Q()
     {
+        StartCoroutine(Immune(4f));
         yield return new WaitForSeconds(1.25f);
         QSkill_Collider.SetActive(true);
         isSkillQ = true;
@@ -191,6 +197,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     }
     public IEnumerator Skill_W()
     {
+        StartCoroutine(Immune(3f));
         yield return new WaitForSeconds(1f);
         WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1f);
@@ -199,6 +206,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     public IEnumerator Skill_E_Move()
     {
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Wizard(SkillYRot);
+        StartCoroutine(Immune(6f));
         tgPos = new Vector3(transform.position.x, transform.position.y + 4.0f, transform.position.z);
         rd.useGravity = false;
         yield return new WaitForSeconds(6.0f);
@@ -209,16 +217,16 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     public IEnumerator Spawn_CommonAttack1()
     {
         yield return new WaitForSeconds(0.3f);
-        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 90f, 0f));
     }
     public IEnumerator Spawn_CommonAttack2()
     {
         yield return new WaitForSeconds(0.1f);
-        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 90f, 0f));
     }
     public IEnumerator Spawn_CommonAttack3()
     {
-        GameObject CommonAttack = Instantiate(CommonAttack3_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        GameObject CommonAttack = Instantiate(CommonAttack3_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 90f, 0f));
         yield return null;
     }
     public void comboAttack_1_on()

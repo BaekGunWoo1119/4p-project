@@ -364,6 +364,7 @@ public class DruidCtrl : BossCtrl
     }
     protected override void DistanceCheck()
     {
+        
         Distance = Vector3.Distance(transform.position, PlayerTr.position);
         //여기서부턴 세부 구현, 각 스크립트에서 보스 패턴에 맞게 구현
         if(TraceOn == true)
@@ -687,6 +688,7 @@ public class DruidCtrl : BossCtrl
         {
             SkillEffect = Instantiate(ToxicPortal_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(90, -90, 0));
         }
+        GameObject.FindWithTag("CameraEffect").GetComponent<CameraEffectCtrl>().poisonEffectCamera();
     }
     #endregion
 }

@@ -72,6 +72,11 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         yield return base.DamageTextAlpha();
     }
+    protected override IEnumerator Immune(float seconds)
+    {
+        Debug.Log(seconds + "만큼 무적");
+        yield return base.Immune(seconds);
+    }
     #endregion
 
     #region 이동 관련 함수
@@ -162,28 +167,30 @@ public class PlayerCtrl_Archer : PlayerCtrl
     public IEnumerator Spawn_CommonAttack1()
     {
         yield return new WaitForSeconds(0.3f);
-        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack2()
     {
         yield return new WaitForSeconds(0.1f);
-        GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack3()
     {
-        GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         yield return null;
     }
     public void Skill_Q()
     {
         isSkill = true;
         anim.SetTrigger("Skill_Q");
+        StartCoroutine(Immune(2f));
     }
     IEnumerator Skill_W()
     {
         anim.SetTrigger("Skill_W");
         isSkill = true;
         StartCoroutine(SKill_Up_Move(10.0f, 0.5f, 1f, 0.0f));
+        StartCoroutine(Immune(2.5f));
         yield return new WaitForSeconds(0.5f);
         WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1f);
@@ -195,6 +202,7 @@ public class PlayerCtrl_Archer : PlayerCtrl
         isSkill = true;
         StartCoroutine(Skill_E_Deal());
         StartCoroutine(SKill_Up_Move(20.0f, 0.5f, 2.5f, 1.2f));
+        StartCoroutine(Immune(5.5f));
         yield return new WaitForSeconds(3.1f);
         ESkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1.5f);

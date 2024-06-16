@@ -134,6 +134,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //스탯 UI 관련
     protected TMP_Text[] StateText; 
 
+    //보스 관련
+    public GameObject Druid;
+    public GameObject DruidGen;
+
     // 쿨타임 관련
     protected float QSkillCoolTime;
     protected float WSkillCoolTime;
@@ -204,7 +208,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         mainCamera = GameObject.FindWithTag("MainCamera");  // 메인 카메라 지정
         cameraEffect = GameObject.FindWithTag("CameraEffect"); // 카메라 이펙트 볼륨 설정
         PlayAnim("isIdle");   // isIdle을 True로 설정해서 Idle 상태 지정
-        EffectGen = transform.Find("EffectGen").gameObject; // EffectGen 지정
+        EffectGen = transform.Find("EffectGen - Player").gameObject; // EffectGen 지정
 
         // 애니메이션, 스킬 관리하는 bool값을 false로 초기화
         isSkill = false;
@@ -783,6 +787,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             BossWall2.layer = 3;
             BossWall1Collider.isTrigger = false;
             BossWall2Collider.isTrigger = false;
+            Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
         }
     }
     #endregion

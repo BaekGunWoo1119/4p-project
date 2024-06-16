@@ -60,7 +60,7 @@ public class BossCtrl : MonoBehaviour
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
         EffectGen = transform.Find("EffectGen").gameObject;
         SkillYRot = transform.eulerAngles.y;
-        //StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행 <<< Awake에 있으니까 맵 나갔다 들어올 때 계속 오류뜸
+        StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행 <<< Awake에 있으니까 맵 나갔다 들어올 때 계속 오류뜸
     }
 
     protected virtual void Start()
@@ -99,13 +99,16 @@ public class BossCtrl : MonoBehaviour
     #region 이동 관련
     public virtual void Turn()
     {
-        if (this.transform.position.x - PlayerTr.transform.position.x < 0)
+        if(PlayerTr != null)
         {
-            this.transform.rotation = Quaternion.Euler(0, 90, 0);
-        }
-        else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
-        {
-            this.transform.rotation = Quaternion.Euler(0, -90, 0);
+            if (this.transform.position.x - PlayerTr.transform.position.x < 0)
+            {
+                this.transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
+            else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
+            {
+                this.transform.rotation = Quaternion.Euler(0, -90, 0);
+            }
         }
     }
     protected virtual void TeleportCheck()

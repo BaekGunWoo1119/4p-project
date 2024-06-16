@@ -21,12 +21,10 @@ public class Inventory : MonoBehaviour
         GameObject[] TraitBoxes = GameObject.FindGameObjectsWithTag("TraitBox");
         InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
         //(06.03) 슬롯 추가
-        /*
         for(int i = 0; i < TraitBoxes.Length; i++) 
         {
             slots[i] = TraitBoxes[i].GetComponent<Slot>();
         }
-        */
 
         for(int i = 0; i < InvenCtrl.itemCount; i++)
         {
