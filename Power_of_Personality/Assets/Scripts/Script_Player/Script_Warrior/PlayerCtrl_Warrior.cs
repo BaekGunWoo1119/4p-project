@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-//전사 애니메이션
 public class PlayerCtrl_Warrior : PlayerCtrl
 {
     #region 변수 선언
@@ -36,6 +35,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     private ParticleSystem setParticles4;
     #endregion
 
+    #region Start, FixedUpdate, Update
     protected override void Start()
     {
         base.Start();
@@ -110,6 +110,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             upperUpTime = 0;
         }
     }
+    #endregion
 
     #region HP 설정
     public override void SetHp(float amount)
@@ -120,15 +121,24 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         base.CheckHp();
     }
+    public override void HealHp()
+    {
+        base.HealHp();
+    }
 
     protected override IEnumerator TakeDamage()
     {
         yield return base.TakeDamage();
     }
     //데미지 텍스트(06.01)
-    protected override  IEnumerator DamageTextAlpha()
+    protected override IEnumerator DamageTextAlpha()
     {
         yield return base.DamageTextAlpha();
+    }
+    protected override IEnumerator Immune(float seconds)
+    {
+        Debug.Log(seconds + "만큼 무적");
+        yield return base.Immune(seconds);
     }
     #endregion
 
@@ -292,7 +302,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         isSkillQ = false;
         yield return new WaitForSeconds(0.2f);
-        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         yield return new WaitForSeconds(0.1f);
         audioSources[3].Play();
         yield return new WaitForSeconds(0.3f);
@@ -337,41 +347,45 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     }
     IEnumerator WarriorSkill_E()
     {
-        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(SkillYRot);
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(LocalSkillYRot);
         yield return new WaitForSeconds(1.8f);
-        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         audioSources[3].Play();
         //스킬 나갈 시 사운드 및 콜라이더
         yield return new WaitForSeconds(0.6f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(0.8f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(0.4f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(0.4f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(1.2f);
         audioSources[3].Stop();
         audioSources[3].Play();
         yield return new WaitForSeconds(0.7f);
         audioSources[3].Stop();
-        GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         yield return new WaitForSeconds(0.1f);
-        SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+        SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
         ESkillCoolTime = 0;
         Ecool.fillAmount = 1;
     }
+
+    #endregion
+
+    #region 이펙트 함수
 
     public void comboAttack_1_on()
     {
@@ -432,6 +446,21 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         mainModule.startRotationZ = zR;
         yield return null;
     }
+
+    public override IEnumerator Heal_on()
+    {
+        yield return base.Heal_on();
+    }
+
+    public override void Damaged_on()
+    {
+        base.Damaged_on();
+    }
+
+    public override void Destroyed_Effect()
+    {
+        base.Destroyed_Effect();
+    }
     #endregion
 
     #region 스킬이나 공격 움직임, Delay 등 세부 조정 함수
@@ -444,6 +473,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             isSkillQ = true;
             PlayAnim("Skill_Q");
             StartCoroutine(Spawn_SwordAura());
+            StartCoroutine(Immune(1f));
         }
 
         if(skillName == "W")
@@ -451,6 +481,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             WSkill_Collider.SetActive(true);
             PlayAnim("Skill_W");
             StartCoroutine(MoveForwardForSeconds(1.35f));
+            StartCoroutine(Immune(2f));
         }
 
         if(skillName == "E")
@@ -458,6 +489,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             PlayAnim("Skill_E");
             StartCoroutine(SKill_E_Move());
             StartCoroutine(WarriorSkill_E());
+            StartCoroutine(Immune(5.5f));
         }
     }
 
@@ -481,7 +513,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         }
     }
 
-    IEnumerator Delay(float seconds)
+    protected override IEnumerator Delay(float seconds)
     {
         yield return new WaitForSeconds(seconds);
 

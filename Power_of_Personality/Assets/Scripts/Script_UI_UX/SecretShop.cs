@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class SecretShop : MonoBehaviour
 {
+    public InventoryCtrl InvenCtrl;
 
     public GameObject[] brightImages;
     public GameObject[] strokeImages;
@@ -15,8 +16,16 @@ public class SecretShop : MonoBehaviour
     public HiddenShop_Slot[] HS_Slots;
     private Item slotsItem;
 
+    private GameObject exitBtn;
+
+    void Awake()
+    {
+        InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
+    }
+
     void Start()
     {
+        exitBtn = GameObject.Find("Exit_Shop");
         for (int i = 0; i < brightImages.Length; i++)
         {
             brightImages[i].SetActive(false);
@@ -40,18 +49,30 @@ public class SecretShop : MonoBehaviour
 
     IEnumerator StopImages()
     {
+        int currentIndex = 7;//Random.Range(0, brightImages.Length);
         Debug.Log("멈췄다");
-        StopCoroutine(RotateImages());
         stopRotate = true;
+        StopCoroutine(RotateImages());
         int i = enableIndex;
-        int currentIndex = Random.Range(0, brightImages.Length);
+        Debug.Log(currentIndex);
         while (i < brightImages.Length)
         {
             if(i == currentIndex)
             {
                 yield return new WaitForSeconds(0.6f);
+                brightImages[i].SetActive(true);
+                strokeImages[i].SetActive(true);
                 strokeImages[i].GetComponent<Image>().color = new Color(255f, 0f, 0f, 1f);
-                yield break;
+                exitBtn.SetActive(true);
+                if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
+                {
+                    slotsItem = HS_Slots[currentIndex].transform.GetChild(5).GetComponent<Item>();
+                    InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = slotsItem.itemID;
+                    Debug.Log(currentIndex);
+                    Debug.Log(slotsItem.Name);
+                    InvenCtrl.itemCount++;
+                    yield break;
+                }
             }
             else if(i == 7)
             {
@@ -71,10 +92,6 @@ public class SecretShop : MonoBehaviour
                 brightImages[i].SetActive(true);
                 strokeImages[i].SetActive(true);
             }
-
-            Debug.Log(currentIndex);
-            slotsItem = HS_Slots[currentIndex].transform.GetChild(5).GetComponent<Item>();
-            Debug.Log(slotsItem.Name);
         }
     }
 

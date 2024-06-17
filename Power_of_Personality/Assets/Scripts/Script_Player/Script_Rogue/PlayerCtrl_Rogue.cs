@@ -33,7 +33,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
 
         //플레이어 어택 콜라이더 인식 방식 변경 (서버에 맞게)
         Attack_Collider_All = transform.Find("AttackColliders").gameObject;
-        Debug.Log(Attack_Collider_All);
+        //Debug.Log(Attack_Collider_All);
         QSkill_Collider = Attack_Collider_All.transform.Find("QSkill_Collider").gameObject;
         QSkill_Last_Collider = Attack_Collider_All.transform.Find("QSkill_Last_Collider").gameObject;
         WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;
@@ -90,6 +90,10 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         base.CheckHp();
     }
+    public override void HealHp()
+    {
+        base.HealHp();
+    }
 
     protected override IEnumerator TakeDamage()
     {
@@ -99,6 +103,11 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     protected override IEnumerator DamageTextAlpha()
     {
         yield return base.DamageTextAlpha();
+    }
+    protected override IEnumerator Immune(float seconds)
+    {
+        Debug.Log(seconds + "만큼 무적");
+        yield return base.Immune(seconds);
     }
     #endregion
 
@@ -211,7 +220,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     //도적 스킬 E 카메라 무브 및 스킬 공격
     IEnumerator Skill_E_Move()
     {
-        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Rogue(SkillYRot);
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Rogue(LocalSkillYRot);
         yield return new WaitForSeconds(1.7f);
         ESkill_Collider1.SetActive(true);
         yield return new WaitForSeconds(0.25f);
@@ -357,6 +366,21 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         base.SkillCoolTimeCharge();
     }
+
+     public override IEnumerator Heal_on()
+    {
+        yield return base.Heal_on();
+    }
+
+    public override void Damaged_on()
+    {
+        base.Damaged_on();
+    }
+
+    public override void Destroyed_Effect()
+    {
+        base.Destroyed_Effect();
+    }
     #endregion
 
     #region 도적 Dash 함수
@@ -431,6 +455,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         {
             PlayAnim("Skill_Q");
             StartCoroutine(MoveForwardForSeconds(1.0f));
+            StartCoroutine(Immune(2.5f));
             QSkillCoolTime = 0;
         }
 
@@ -438,6 +463,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         {
             PlayAnim("Skill_W");
             StartCoroutine(Skill_W());
+            StartCoroutine(Immune(3f));
             WSkillCoolTime = 0;
         }
 
@@ -445,6 +471,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         {
             PlayAnim("Skill_E");
             StartCoroutine(Skill_E_Move());
+            StartCoroutine(Immune(5.5f));
         }
     }
 

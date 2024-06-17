@@ -78,6 +78,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "1 (Main)")
         {
+            PlayerPrefs.SetFloat("PlayerHP", 100);
             Main_Single = GameObject.Find("SinglePlay").GetComponent<Button>();
             Main_Multi = GameObject.Find("MultiPlay").GetComponent<Button>();
             Main_Setting = GameObject.Find("Settings").GetComponent<Button>();
@@ -297,6 +298,7 @@ public class SceneLoader : MonoBehaviour
             Exit_Game =  GameObject.Find("Exit").GetComponent<Button>();
             Setting_Back = GameObject.Find("OK").GetComponent<Button>();
             GameObject.Find("Player-MBTI").GetComponent<TMP_Text>().text = PlayerPrefs.GetString("PlayerMBTI");
+            GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
 
             Time.timeScale = 1.0f;
             Exit_Game.onClick.AddListener(Setting_Back_Pressed);
@@ -377,6 +379,27 @@ public class SceneLoader : MonoBehaviour
                     }
                 }
             }   
+        }
+
+        if(SceneManager.GetActiveScene().name == "Hidden_Shop")
+        {
+            GameObject Hidden_Shop_Exit = GameObject.Find("Exit_Shop");
+            GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
+            if(Hidden_Shop_Exit != null)
+            {
+                Hidden_Shop_Exit.GetComponent<Button>().onClick.AddListener(Shop_Exit_Pressed);
+                Hidden_Shop_Exit.SetActive(false);
+            }
+        }
+
+        if(SceneManager.GetActiveScene().name == "Normal_Shop")
+        {
+            GameObject Normal_Shop_Exit = GameObject.Find("Exit_Shop");
+            GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
+            if(Normal_Shop_Exit != null)
+            {
+                Normal_Shop_Exit.GetComponent<Button>().onClick.AddListener(Shop_Exit_Pressed);
+            }
         }
         
 
@@ -592,5 +615,10 @@ public class SceneLoader : MonoBehaviour
     void BonusStat_Start_Pressed()
     {
         SceneManager.LoadScene("Forest_Example");
+    }
+
+    void Shop_Exit_Pressed()
+    {
+        SceneManager.LoadScene(PlayerPrefs.GetString("Before_Scene_Name"));
     }
 }

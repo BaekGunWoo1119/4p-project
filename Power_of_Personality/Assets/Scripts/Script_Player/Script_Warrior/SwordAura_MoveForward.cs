@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class SwordAura_MoveForward : MonoBehaviour
 {
-    private float speed = 20f;
+    private float speed = 18.5f;
     private float SkillDuration;
     private Vector3 SkillDir;
     private GameObject EffectGen;

@@ -10,11 +10,7 @@ public class MultiPlayStart : MonoBehaviourPunCallbacks
     void Start()
     {
         Transform SpawnPoint = GameObject.Find("SpawnPoint").GetComponent<Transform>();
-        PhotonNetwork.Instantiate("Server/Rogue/Server_Player_rogue",SpawnPoint.position,SpawnPoint.rotation,0);
-
-        if (PhotonNetwork.IsMasterClient){
-            PhotonNetwork.Instantiate("Server/Monster/Cave/Server_Spider",SpawnPoint.position,SpawnPoint.rotation,0);
-        }
+        PhotonNetwork.Instantiate("Rogue/Server_Player_rogue",SpawnPoint.position,SpawnPoint.rotation,0);
     }
 
     // Update is called once per frame

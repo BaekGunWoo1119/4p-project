@@ -6,6 +6,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public GameObject inventoryObject;
+    public InventoryCtrl InvenCtrl;
 
     public Slot[] slots;
 
@@ -18,10 +19,20 @@ public class Inventory : MonoBehaviour
         hiddenScale = new Vector3(0, 0, 0);
 
         GameObject[] TraitBoxes = GameObject.FindGameObjectsWithTag("TraitBox");
+        InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
         //(06.03) 슬롯 추가
-        for(int i = 0; i < TraitBoxes.Length; i++) // 각 TraitBox마다 하위 개체를 3개씩 가지고 있음. 아이템 추가시 변경 가능성 O
+        for(int i = 0; i < TraitBoxes.Length; i++) 
         {
             slots[i] = TraitBoxes[i].GetComponent<Slot>();
+        }
+
+        for(int i = 0; i < InvenCtrl.itemCount; i++)
+        {
+            if(InvenCtrl.collectedItems[i] != null)
+            {
+                Debug.Log(InvenCtrl.collectedItemsID[i]);
+                Instantiate(InvenCtrl.itemList[InvenCtrl.collectedItemsID[i]], this.transform.position, Quaternion.identity);
+            }
         }
     }
 
@@ -67,12 +78,23 @@ public class Inventory : MonoBehaviour
             Status.StatUpdate();
         }
     }
+    
     private void OnTriggerEnter(Collider col)
     {
         if (col.GetComponent<Item>())
         {
-            Debug.Log("실행");
+            Debug.Log("삽입 실행실행");
             AddItem(col.GetComponent<Item>());
+
+
+            /*
+            if(InvenCtrl.collectedItems[InvenCtrl.itemCount] == null)
+            {
+                InvenCtrl.collectedItemsID[InvenCtrl.itemCount] = col.GetComponent<Item>().itemID;
+            }
+            */        
+            //InvenCtrl.itemCount++;
         }
     }
+    
 }

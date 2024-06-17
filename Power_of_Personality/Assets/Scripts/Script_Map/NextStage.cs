@@ -10,23 +10,35 @@ public class NextStage : MonoBehaviour
     private GameObject portalInstance; //포탈 생성
     public string sceneName; 
     // Start is called before the first frame update
+
     void Start()
     {
         OpenPortal();
-        portalInstance.transform.localPosition = portalPos;
+        if(portalInstance != null)
+            portalInstance.transform.localPosition = portalPos;
+
+        PlayerPrefs.SetString("Hidden_Shop_Spawn_Scene", "a");
+        PlayerPrefs.SetString("Before_Scene_Name", "b");
+
     }
 
     // Update is called once per frame
     void OpenPortal()
     {
-        portalInstance = Instantiate(portal, portalPos, Quaternion.identity, portalSpawner.transform);
-        portalInstance.transform.localRotation = Quaternion.Euler(0, 80, 0);
-        PortalCtrl portalCtrl = portalInstance.GetComponent<PortalCtrl>();
-
-        if (portalCtrl != null)
+        if((sceneName == "Hidden_Shop" && PlayerPrefs.GetString("Hidden_Shop_Spawn_Scene") == PlayerPrefs.GetString("Before_Scene_Name")))
         {
-            // 프리팹의 스크립트에 변수를 설정
-            portalCtrl.SetSceneName(sceneName);
+        }
+        else
+        {
+            portalInstance = Instantiate(portal, portalPos, Quaternion.identity, portalSpawner.transform);
+            portalInstance.transform.localRotation = Quaternion.Euler(0, 80, 0);
+            PortalCtrl portalCtrl = portalInstance.GetComponent<PortalCtrl>();
+
+            if (portalCtrl != null)
+            {
+                // 프리팹의 스크립트에 변수를 설정
+                portalCtrl.SetSceneName(sceneName);
+            }
         }
     }
 }

@@ -90020,7 +90020,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6175277700021307094}
   m_Layer: 0
-  m_Name: EffectGen
+  m_Name: EffectGen - Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117353,7 +117353,7 @@ GameObject:
   - component: {fileID: 4956219308888043136}
   - component: {fileID: -7876462745366856316}
   - component: {fileID: 8060065125909236035}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player_warrior
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -117396,10 +117396,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 0
-  moveSpeed: 15
+  moveSpeed: 7
   moveSpd: 0
   JumpPower: 12
   fallPower: 4
+  anim: {fileID: 0}
   commonAttack_Ice1_Effect: {fileID: 4328147310773701037, guid: 465834e8a910b1241bb37df1e6a3b151, type: 3}
   commonAttack_Ice2_Effect: {fileID: 7207131974424221420, guid: 5b9c16d03f63f204a9025f8d926ae01c, type: 3}
   commonAttack_Ice3_Effect: {fileID: 0}
@@ -117432,8 +117433,14 @@ MonoBehaviour:
   EffectGen: {fileID: 0}
   SkillEffect: {fileID: 0}
   DamageText: {fileID: 5357283400005317788, guid: c87b9d34b3435f643a71a71e49449700, type: 3}
+  Damage_Effect: {fileID: 2292867600362698915, guid: 356dc8270444ffd4eace122d8aa26061, type: 3}
+  Heal_Effect: {fileID: 4313010620861098664, guid: cb0e3529083d1a849875beded1854e79, type: 3}
   PlayerCanvas: {fileID: 0}
   HpText: {fileID: 0}
+  InvenCtrl: {fileID: 0}
+  hpPotionValue: {fileID: 0}
+  Druid: {fileID: 1108093252336457045, guid: 9f29281a70e34b74caaf5fa843a45b96, type: 3}
+  DruidGen: {fileID: 8712608940472733577, guid: 575576ae99a386a41b7ca5076db6efa0, type: 3}
   QSkill_Collider: {fileID: 6186884052317262959, guid: 01a0b81a8ebfe8c43b09ccd5af03f118, type: 3}
   ESkill_Collider: {fileID: 6186884052317262959, guid: 5e13d88fd57468b48a58e1ebc5f3b821, type: 3}
   Skill_FireE_Effect: {fileID: 101818329446047632, guid: add6f36b2dadaf84a864e7e0942308de, type: 3}
@@ -117920,7 +117927,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryObject: {fileID: 0}
+  InvenCtrl: {fileID: 0}
   slots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -117985,6 +118009,40 @@ MonoBehaviour:
   - {fileID: 5448130399220913908, guid: 5e1559dfce51bbf4782ebfa4cebad814, type: 3}
   - {fileID: 5448130399220913908, guid: 0299a8768e0d03d43a9cd18b63797318, type: 3}
   - {fileID: 5448130399220913908, guid: 631ffdebda213804b820975287929bcd, type: 3}
+  - {fileID: 5448130399220913908, guid: 6d9a88560e2a6d4489cc08f8a192229e, type: 3}
+  - {fileID: 5448130399220913908, guid: 167566b3da911a841969a590bbc72fce, type: 3}
+  - {fileID: 5448130399220913908, guid: 3d51ea9c3fd747b49a5858bb1c4f44cb, type: 3}
+  - {fileID: 5448130399220913908, guid: 847e1c2af7152d84b8e8d1a98d314c91, type: 3}
+  - {fileID: 5448130399220913908, guid: a00f864a4633eba4280e7195e5d2dc3b, type: 3}
+  - {fileID: 5448130399220913908, guid: 14772995fe89e8a418d950f1edaaadf8, type: 3}
+  - {fileID: 5448130399220913908, guid: 3e77a629713a87e4d834254fdffa668a, type: 3}
+  - {fileID: 5448130399220913908, guid: 84267c791343e6a4bbdf64ed5691f6a6, type: 3}
+  - {fileID: 5448130399220913908, guid: 292ba1997f35fbe4ba5d187acafb2cf1, type: 3}
+  - {fileID: 5448130399220913908, guid: 66d39eb175e3fd54299af0cb067697ae, type: 3}
+  - {fileID: 5448130399220913908, guid: 9c7efe57119584a4b8bf41b852d23904, type: 3}
+  - {fileID: 5448130399220913908, guid: fb8318719fef6f54d90d4c92c8f6ce99, type: 3}
+  - {fileID: 5448130399220913908, guid: be8fcce02ec14484590cdd7bd7384736, type: 3}
+  - {fileID: 5448130399220913908, guid: 5c7edec8b6877024b982a6c7cd493f52, type: 3}
+  - {fileID: 5448130399220913908, guid: e3247b08545e10f4f8b7208cf3a5a2bf, type: 3}
+  - {fileID: 5448130399220913908, guid: 9ee140059593072429db64e9bdfcb88e, type: 3}
+  - {fileID: 5448130399220913908, guid: 394110a5bec984b4e926142a12dbc4cb, type: 3}
+  - {fileID: 5448130399220913908, guid: 0be83cbba795fed4eabcbc503d7d7921, type: 3}
+  - {fileID: 5448130399220913908, guid: ce470917c6d416d42aaea3e6cacb11f6, type: 3}
+  - {fileID: 5448130399220913908, guid: 764ce48cddc0b2f4daec652062046c4a, type: 3}
+  - {fileID: 5448130399220913908, guid: 8a73edf6287f2694bb012c80fd14a1bb, type: 3}
+  - {fileID: 5448130399220913908, guid: 141384a03f5eb8f4c9c6da64652b89cb, type: 3}
+  - {fileID: 5448130399220913908, guid: c9a3df331bff73041b67f0ae76085964, type: 3}
+  - {fileID: 5448130399220913908, guid: 553e085073e96a648b26a8b7d9d3b96b, type: 3}
+  - {fileID: 5448130399220913908, guid: ab22e5473bfa76340a95468f7ee0b891, type: 3}
+  - {fileID: 5448130399220913908, guid: 2078e78a201b10f4484d2ec24dbf8b26, type: 3}
+  - {fileID: 5448130399220913908, guid: a9d8b63ab174f1a4e9fd57d19ea92c94, type: 3}
+  - {fileID: 5448130399220913908, guid: 0705fbd19bf27344f885ca13436b2022, type: 3}
+  - {fileID: 5448130399220913908, guid: 909e3e407b49a77498c580a570d229fc, type: 3}
+  - {fileID: 5448130399220913908, guid: 2e8f60ada5dbf254f8055c7fade47c5f, type: 3}
+  - {fileID: 5448130399220913908, guid: 3951e67f6c6d5dd4c83258a057d4da1a, type: 3}
+  - {fileID: 5448130399220913908, guid: 92358642a262b054f9c3e45e9c8b6ca7, type: 3}
+  - {fileID: 5448130399220913908, guid: e94ed09acc5b35b4abcd0ee3c77c7089, type: 3}
+  - {fileID: 5448130399220913908, guid: efa3cf26d49430c4fa7c1d24f148e2d6, type: 3}
 --- !u!1 &7139166755890741705
 GameObject:
   m_ObjectHideFlags: 0

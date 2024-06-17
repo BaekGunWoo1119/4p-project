@@ -11,24 +11,24 @@ public class StateDetailHover : MonoBehaviour
     private Vector3 originalScale;
     private Vector3 originalPosition;
     private RectTransform rectTransform;
-    //오브젝트 이름 인식 관련 코드
+    //������Ʈ �̸� �ν� ���� �ڵ�
     private string objName;
 
-    //텍스트 코드
+    //�ؽ�Ʈ �ڵ�
     public TMP_Text itemName;
     
-    //y 좌표 추가 값
+    //y ��ǥ �߰� ��
 
     private float a;
 
-    //모든 hover 오브젝트
+    //��� hover ������Ʈ
     private GameObject[] tgtObj; 
     private bool isHovering = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        //기본 스케일 설정
+        //�⺻ ������ ����
         originalScale = new Vector3(1, 1, 1);
 
         actObj.transform.localScale = new Vector3(0, 0, 0);
@@ -42,47 +42,62 @@ public class StateDetailHover : MonoBehaviour
             EventTrigger trigger = tgtObj[i].gameObject.AddComponent<EventTrigger>();
             int index = i;
 
-            // PointerEnter �̺�Ʈ �߰�
+            // PointerEnter ???? ???
             EventTrigger.Entry entryEnter = new EventTrigger.Entry();
             entryEnter.eventID = EventTriggerType.PointerEnter;
             entryEnter.callback.AddListener((data) => { OnPointerEnter(index); });
             trigger.triggers.Add(entryEnter);
 
-            // PointerExit �̺�Ʈ �߰�
+            // PointerExit ???? ???
             EventTrigger.Entry entryExit = new EventTrigger.Entry();
             entryExit.eventID = EventTriggerType.PointerExit;
-            entryExit.callback.AddListener((data) => { OnPointerExit(); });
+            entryExit.callback.AddListener((data) => { OnPointerExit(index); });
             trigger.triggers.Add(entryExit);
         }
     }
 
     void Update() 
     {
-        //호버 위치 각 박스마다 고정(03.20)'
+        //ȣ�� ��ġ �� �ڽ����� ����(03.20)'
         float yRect = Input.mousePosition.y;
-        if(yRect > 550)
+        if(yRect > 600)
         {
-            a = 820;
+            a = 830;
         }
-        else if(yRect <= 550)
+        else if(yRect <= 600)
         {
-            a = 280;
+            a = 220;
         }
-        actObj.GetComponent<RectTransform>().localPosition = new Vector3(Input.mousePosition.x - 900, Input.mousePosition.y - a, Input.mousePosition.z);
+
+        if (isHovering)
+        {
+            actObj.GetComponent<RectTransform>().localPosition = new Vector3(Input.mousePosition.x - 900, Input.mousePosition.y - a, Input.mousePosition.z);
+        }
+        
+        if(itemName.text == "이름")
+        {
+            actObj.transform.localScale = new Vector3(0, 0, 0);
+        }
     }
 
     public void OnPointerEnter(int index)
     {
         isHovering = true;
-        actObj.transform.localScale = originalScale;
-        //호버링 시 설명 추가
+        if(actObj.transform.localScale != originalScale)
+        {
+            actObj.transform.localScale = originalScale;
+        }
+        //ȣ���� �� ���� �߰�
         tgtObj[index].transform.parent.Find("HoverBox").GetComponent<TextChange>().ItemTextChange();
+        //Debug.Log(index + "�� �ڽ� ȣ��");
     }
 
-    // ���콺�� ������ ��
-    public void OnPointerExit()
+    // ???�J?? ?????? ??
+    public void OnPointerExit(int index)
     {
         isHovering = false;
         actObj.transform.localScale = new Vector3(0, 0, 0);
+        tgtObj[index].transform.parent.Find("HoverBox").GetComponent<TextChange>().ItemTextReset();
+        Debug.Log(index + "번 박스 호버 취소");
     }
 }

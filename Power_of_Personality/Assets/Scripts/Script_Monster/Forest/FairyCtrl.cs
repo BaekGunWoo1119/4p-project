@@ -60,7 +60,10 @@ public class FairyCtrl : MonsterCtrl
     {
         base.OnTriggerEnter(col);
     }
-
+    public override void OnTriggerStay(Collider col)
+    {
+        base.OnTriggerStay(col);
+    }
     public override IEnumerator TakeDamage()
     {
         yield return base.TakeDamage();

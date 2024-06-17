@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using Unity.Burst.CompilerServices;
+using UnityEngine.SceneManagement;
 
 public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttack
 {
@@ -12,6 +13,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //Raycast 관련
     protected float raycastDistance = 0.5f;
     protected RaycastHit hit;
+    protected GameObject BossWall1;
+    protected GameObject BossWall2;
+    protected BoxCollider BossWall1Collider;
+    protected BoxCollider BossWall2Collider;
 
     // GetAxis 값
     protected float hAxis;
@@ -59,6 +64,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool stateSkillQ = false;
     protected bool stateSkillW = false;
     protected bool stateSkillE = false;
+    protected bool stateSkillE_Wait = false;
     protected bool stateDamage = false;
     protected bool stateDash = false;
     protected bool stateDie = false;
@@ -67,7 +73,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool coroutineMove = false;
 
     // 애니메이터, Rigidbody
-    protected Animator anim;
+    public Animator anim;
     protected Rigidbody rd;
 
     // 이펙트
@@ -103,6 +109,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public GameObject EffectGen;
     public GameObject SkillEffect;
     public GameObject DamageText; //텍스트
+    public GameObject Damage_Effect;
+    public GameObject Heal_Effect;
     public GameObject PlayerCanvas;
 
     // 카메라, 사운드
@@ -118,6 +126,17 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     // HP Bar
     protected Slider HpBar;
     public TMP_Text HpText;
+
+    //포션
+    public InventoryCtrl InvenCtrl;
+    public TMP_Text hpPotionValue;
+
+    //스탯 UI 관련
+    protected TMP_Text[] StateText; 
+
+    //보스 관련
+    public GameObject Druid;
+    public GameObject DruidGen;
 
     // 쿨타임 관련
     protected float QSkillCoolTime;
@@ -136,17 +155,44 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     protected virtual void Start()
     {
+        //상점 씬 등에 거쳐왔을 시 플레이어 위치 초기화(06.13)
+        if(PlayerPrefs.GetFloat("PlayerXPos") != null && PlayerPrefs.GetString("Hidden_Shop_Spawn_Scene") == SceneManager.GetActiveScene().name)
+        {
+            transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerXPos"), PlayerPrefs.GetFloat("PlayerYPos"), PlayerPrefs.GetFloat("PlayerZPos"));
+        }
+
         // 플레이어 스테이터스 초기화
         SetIce();
-        SetHp(100);
+        Status.HP = PlayerPrefs.GetFloat("PlayerHP");
+        Debug.Log(PlayerPrefs.GetFloat("PlayerHP"));
+
+        // 보스 문 할당
+        BossWall1 = GameObject.Find("BossWall1").gameObject;
+        BossWall1Collider = BossWall1.GetComponent<BoxCollider>();
+        BossWall2 = GameObject.Find("BossWall2").gameObject;
+        BossWall2Collider = BossWall2.GetComponent<BoxCollider>();
 
         // HP Bar 설정
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
         HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
         HpText.text = "HP" + Status.HP + "/" + Status.MaxHP;
+        CheckHp();
+
+        //포션 설정(06.15)
+        InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
+        hpPotionValue = GameObject.Find("Potion - Text").GetComponent<TMP_Text>();
+
+        //스텟 UI 변동 설정(06.14)
+        StateText = new TMP_Text[8];
+        for(int i = 0; i <= 7; i++)
+        {
+            string statname = "StatText-" + i;
+            Debug.Log(statname);
+            StateText[i] = GameObject.Find(statname).GetComponent<TMP_Text>();
+        }
         
         //데미지 텍스트 설정(06.01)
-        PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;
+        PlayerCanvas = this.transform.Find("Canvas - Player").gameObject;     //잠시
         
         //쿨타임 UI(03.18)
         Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
@@ -154,7 +200,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Ecool = GameObject.Find("CoolTime-E").GetComponent<Image>();
 
         // 애니메이션, Rigidbody, Transform 컴포넌트 지정
-        anim = GetComponent<Animator>();
+        anim = this.GetComponent<Animator>();
         rd = GetComponent<Rigidbody>();
         trs = GetComponentInChildren<Transform>();
 
@@ -162,7 +208,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         mainCamera = GameObject.FindWithTag("MainCamera");  // 메인 카메라 지정
         cameraEffect = GameObject.FindWithTag("CameraEffect"); // 카메라 이펙트 볼륨 설정
         PlayAnim("isIdle");   // isIdle을 True로 설정해서 Idle 상태 지정
-        EffectGen = transform.Find("EffectGen").gameObject; // EffectGen 지정
+        EffectGen = transform.Find("EffectGen - Player").gameObject; // EffectGen 지정
 
         // 애니메이션, 스킬 관리하는 bool값을 false로 초기화
         isSkill = false;
@@ -179,6 +225,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     protected virtual void FixedUpdate()
     {
+        CheckState();
         // Move 함수 실행
         if (!isSkill && !isAttack && !stateAttack3)
         {
@@ -243,7 +290,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         transform.GetChild(0).localPosition = Vector3.zero;
 
         //데미지 캔버스 Y값 고정
-        PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
+        //PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);  //잠시
 
         // Attack 함수 실행
         if (Input.GetKeyDown(KeyCode.A))
@@ -374,6 +421,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (Input.GetKeyDown(KeyCode.R))
         {
             PlayAnim("isDodge");
+            StartCoroutine(Immune(0.5f));
         }
         if (stateWait == true)
         {
@@ -382,6 +430,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (stateDodge == true)
         {
             StopAnim("isJump");
+        }
+        
+        // 힐 Potion 먹는 함수
+        hpPotionValue.text = InvenCtrl.PotionCount.ToString();
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            HealHp();
         }
 
         //Idle일때 스킬 및 공격 false 판정
@@ -464,6 +519,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (Status.MaxHP != 0 || Status.HP > 0)
         {
             Status.HP -= Damage;
+            PlayerPrefs.SetFloat("PlayerHP", Status.HP);
             Debug.Log(Status.HP);
             CheckHp();
             PlayAnim("TakeDamage");
@@ -495,6 +551,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (HpText != null)
             HpText.text = inputText;
     }
+    public virtual void HealHp()
+    {
+        InvenCtrl.PotionCount -= 1; 
+        Status.HP = Status.MaxHP;
+        PlayerPrefs.SetFloat("PlayerHP", Status.HP);
+        CheckHp();
+        StartCoroutine(Heal_on());
+    }
     //(06.01)
     protected virtual IEnumerator DamageTextAlpha()
     {
@@ -522,14 +586,25 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected virtual IEnumerator Immune(float seconds)
     {
         Physics.IgnoreLayerCollision(7, 8, true);
-        while (seconds > 0)
-        {
-            Debug.Log(seconds);
-            seconds -= Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(seconds);
         Physics.IgnoreLayerCollision(7, 8, false);
     }
+    #endregion
+
+    #region 스탯 UI 관련 함수
+
+    protected virtual void CheckState()
+    {
+        StateText[0].text = Status.TotalAD.ToString();
+        StateText[1].text = Status.TotalArmor.ToString();
+        StateText[2].text = Status.TotalADC.ToString();
+        StateText[3].text = Status.TotalAP.ToString();
+        StateText[4].text = Status.TotalFire.ToString();
+        StateText[5].text = Status.TotalIce.ToString();
+        StateText[6].text = Status.TotalSpeed.ToString();
+        StateText[7].text = Status.TotalCooltime.ToString();
+    }
+
     #endregion
 
     #region 이동 관련 함수
@@ -698,10 +773,21 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     protected virtual void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor" )    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
+        if (collision.gameObject.tag == "Floor" && !stateSkillE && !stateSkillE)    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
         {
-            Debug.Log("실행");
             Fall();
+        }
+    }
+
+    protected virtual void OnTriggerExit(Collider col)
+    {
+        if(BossWall1.transform.position.x - transform.position.x < 0)
+        {
+            BossWall1.layer = 3;
+            BossWall2.layer = 3;
+            BossWall1Collider.isTrigger = false;
+            BossWall2Collider.isTrigger = false;
+            Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
         }
     }
     #endregion
@@ -762,6 +848,29 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     #endregion
 
+    #region 이펙트 함수
+
+    public virtual IEnumerator Heal_on()
+    {
+        SkillEffect = Instantiate(Heal_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        yield return new WaitForSeconds(1.0f);
+        Destroy(SkillEffect);
+    }
+
+    public virtual void Damaged_on()
+    {
+        SkillEffect = Instantiate(Damage_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+    }
+
+    public virtual void Destroyed_Effect()
+    {
+        Destroy(SkillEffect);
+    }
+
+    #endregion
+
     #region 애니메이션 
     public virtual void PlayAnim(string AnimationName)
     {
@@ -781,7 +890,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     public virtual void StopAnim(string AnimationName)
     {
-        if(AnimationName == "CommonAttack" || AnimationName == "Skill_Q" || AnimationName == "Skill_W" || AnimationName == "Skill_E" || AnimationName == "isDodge")
+        if (AnimationName == "CommonAttack" || AnimationName == "Skill_Q" || AnimationName == "Skill_W" || AnimationName == "Skill_E" || AnimationName == "isDodge")
         {
             anim.ResetTrigger(AnimationName);
         }
@@ -860,8 +969,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E"))
             stateSkillE = true;
         else
-            stateSkillE = false;    
-        if(anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
+            stateSkillE = false;
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Skill_E_Wait"))
+            stateSkillE_Wait = true;
+        else
+            stateSkillE_Wait = false;
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
             stateDash = true;
         else
             stateDash = false;
