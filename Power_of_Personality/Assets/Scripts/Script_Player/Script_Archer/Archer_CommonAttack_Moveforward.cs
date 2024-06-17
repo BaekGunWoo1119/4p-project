@@ -11,7 +11,7 @@ public class Archer_CommonAttack_Moveforward : MonoBehaviour
     void Start()
     {
         SkillDuration = 0;
-        EffectGen = GameObject.Find("EffectGen");
+        EffectGen = GameObject.Find("EffectGen - Player");
         SkillDir = EffectGen.transform.forward;
     }
 

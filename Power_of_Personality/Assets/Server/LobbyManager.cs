@@ -152,24 +152,28 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
     public static void ClassSelectArcher(){
         PlayerProperties["PlayerClass"]="Archer";
         PlayerProperties["IsReady"]=false;
+        PlayerPrefs.SetString("PlayerClass","Archer");
         PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties);
     }
     //전사 선택
     public static void ClassSelectWarrior(){
         PlayerProperties["PlayerClass"]="Warrior";
         PlayerProperties["IsReady"]=false;
+        PlayerPrefs.SetString("PlayerClass","Warrior");
         PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties);
     }
     //도적 선택
     public static void ClassSelectRogue(){
         PlayerProperties["PlayerClass"]="Rogue";
         PlayerProperties["IsReady"]=false;
+        PlayerPrefs.SetString("PlayerClass","Rogue");
         PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties);
     }
     //법사 선택
     public static void ClassSelectWizard(){
         PlayerProperties["PlayerClass"]="Wizard";
         PlayerProperties["IsReady"]=false;
+        PlayerPrefs.SetString("PlayerClass","Wizard");
         PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties);
     }
 
@@ -186,6 +190,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
     }
     public static void PlayerPropertiesAdd(){
         PlayerProperties["PlayerClass"]="Warrior";
+        PlayerPrefs.SetString("PlayerClass","Warrior");
         PlayerProperties["IsReady"]=(bool)false;
     }
 
