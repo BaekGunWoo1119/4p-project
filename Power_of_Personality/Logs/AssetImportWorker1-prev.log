@@ -1,23 +1,23 @@
 Using pre-set license
 Built from '2022.2/staging' branch; Version is '2022.2.20f1 (c5d806317f84) revision 12965894'; Using compiler version '192829333'; Build Type 'Release'
-OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'ko' Physical Memory: 32729 MB
+OS: 'Windows 10  (10.0.19045) 64bit Professional' Language: 'ko' Physical Memory: 11645 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
 
 COMMAND LINE ARGUMENTS:
-G:\Unity\2022.2.20f1\Editor\Unity.exe
+C:\Program Files\Unity 2022.2.20f1\Editor\Unity.exe
 -adb2
 -batchMode
 -noUpm
 -name
 AssetImportWorker1
 -projectPath
-G:/4p-project/Power_of_Personality
+C:/Users/jun gyeong/Documents/4p-project/Power_of_Personality
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-9927
-Successfully changed project path to: G:/4p-project/Power_of_Personality
-G:/4p-project/Power_of_Personality
+49842
+Successfully changed project path to: C:/Users/jun gyeong/Documents/4p-project/Power_of_Personality
+C:/Users/jun gyeong/Documents/4p-project/Power_of_Personality
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
     "memorysetup-bucket-allocator-granularity=16"
     "memorysetup-bucket-allocator-bucket-count=8"
@@ -47,23 +47,32 @@ G:/4p-project/Power_of_Personality
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
 Player connection [21268] Host "[IP] 192.168.0.26 [Port] 0 [Flags] 2 [Guid] 346749439 [EditorId] 346749439 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-JGTGNHB) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
 Player connection [21268] Host "[IP] 192.168.0.26 [Port] 0 [Flags] 2 [Guid] 346749439 [EditorId] 346749439 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-JGTGNHB) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
 Refreshing native plugins compatible for Editor in 23.95 ms, found 3 plugins.
+=======
+Player connection [7560] Host "[IP] 192.168.40.1 [Port] 0 [Flags] 2 [Guid] 1444415719 [EditorId] 1444415719 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-53RHHV9) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+
+Player connection [7560] Host "[IP] 192.168.40.1 [Port] 0 [Flags] 2 [Guid] 1444415719 [EditorId] 1444415719 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-53RHHV9) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+
+Refreshing native plugins compatible for Editor in 23.41 ms, found 3 plugins.
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.2.20f1 (c5d806317f84)
-[Subsystems] Discovering subsystems at path G:/Unity/2022.2.20f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path G:/4p-project/Power_of_Personality/Assets
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity 2022.2.20f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/jun gyeong/Documents/4p-project/Power_of_Personality/Assets
 GfxDevice: creating device client; threaded=0; jobified=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
-    Renderer: NVIDIA GeForce GTX 1060 6GB (ID=0x1b83)
-    Vendor:   NVIDIA
-    VRAM:     6044 MB
-    Driver:   31.0.15.4617
+    Renderer: AMD Radeon(TM) Graphics (ID=0x1636)
+    Vendor:   ATI
+    VRAM:     5822 MB
+    Driver:   26.20.14040.0
 Initialize mono
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
 Mono path[0] = 'G:/Unity/2022.2.20f1/Editor/Data/Managed'
 Mono path[1] = 'G:/Unity/2022.2.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'G:/Unity/2022.2.20f1/Editor/Data/MonoBleedingEdge/etc'
@@ -82,21 +91,47 @@ Mono: successfully reloaded assembly
 Domain Reload Profiling:
 	ReloadAssembly (333ms)
 		BeginReloadAssembly (188ms)
+=======
+Mono path[0] = 'C:/Program Files/Unity 2022.2.20f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity 2022.2.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity 2022.2.20f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56620
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity 2022.2.20f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.011743 seconds.
+- Loaded All Assemblies, in  0.442 seconds
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.328 seconds
+Domain Reload Profiling:
+	ReloadAssembly (261ms)
+		BeginReloadAssembly (126ms)
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
 		LoadAllAssembliesAndSetupDomain (0ms)
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
 			LoadAssemblies (186ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
 			SetupTypeCache (292ms)
 				TypeCache.Initialize (291ms)
 					TypeCache.ScanAssembly (288ms)
+=======
+			LoadAssemblies (122ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (168ms)
+				TypeCache.Initialize (167ms)
+					TypeCache.ScanAssembly (165ms)
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 				ResolveRequiredComponents (1ms)
 		FinalizeReload (0ms)
 			ReleaseScriptCaches (0ms)
 			RebuildScriptCaches (0ms)
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
 			SetupLoadedEditorAssemblies (1046ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (766ms)
@@ -105,6 +140,16 @@ Domain Reload Profiling:
 				BeforeProcessingInitializeOnLoad (2ms)
 				ProcessInitializeOnLoadAttributes (172ms)
 				ProcessInitializeOnLoadMethodAttributes (99ms)
+=======
+			SetupLoadedEditorAssemblies (255ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (11ms)
+				SetLoadedEditorAssemblies (9ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (169ms)
+				ProcessInitializeOnLoadMethodAttributes (64ms)
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
@@ -112,13 +157,20 @@ Domain Reload Profiling:
 ========================================================================
 Worker process is ready to serve import requests
 Begin MonoManager ReloadAssembly
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
 Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 - Loaded All Assemblies, in  1.603 seconds
 Refreshing native plugins compatible for Editor in 8.15 ms, found 3 plugins.
+=======
+Symbol file LoadedFromMemory doesn't match image C:\Users\jun gyeong\Documents\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\jun gyeong\Documents\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.343 seconds
+Refreshing native plugins compatible for Editor in 9.66 ms, found 3 plugins.
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 Native extension for WindowsStandalone target not found
-Native extension for Android target not found
 Mono: successfully reloaded assembly
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
 - Finished resetting the current domain, in  1.309 seconds
 Domain Reload Profiling:
 	ReloadAssembly (402ms)
@@ -157,6 +209,46 @@ Unloading 6199 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 86 unused Assets / (1.4 MB). Loaded Objects now: 6667.
 Memory consumption went from 252.8 MB to 251.4 MB.
 Total: 8.814300 ms (FindLiveObjects: 0.897100 ms CreateObjectMapping: 2.117700 ms MarkObjects: 5.335500 ms  DeleteObjects: 0.462600 ms)
+=======
+- Finished resetting the current domain, in  0.959 seconds
+Domain Reload Profiling:
+	ReloadAssembly (317ms)
+		BeginReloadAssembly (200ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (9ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (33ms)
+		LoadAllAssembliesAndSetupDomain (1019ms)
+			LoadAssemblies (581ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (532ms)
+				TypeCache.Initialize (479ms)
+					TypeCache.ScanAssembly (471ms)
+				ResolveRequiredComponents (17ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (711ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (9ms)
+				SetLoadedEditorAssemblies (6ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (119ms)
+				ProcessInitializeOnLoadAttributes (457ms)
+				ProcessInitializeOnLoadMethodAttributes (107ms)
+				AfterProcessingInitializeOnLoad (14ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (8ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.09 seconds
+Refreshing native plugins compatible for Editor in 8.61 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6196 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 86 unused Assets / (1.2 MB). Loaded Objects now: 6653.
+Memory consumption went from 245.5 MB to 244.4 MB.
+Total: 5.202600 ms (FindLiveObjects: 0.745500 ms CreateObjectMapping: 0.491500 ms MarkObjects: 3.439700 ms  DeleteObjects: 0.524100 ms)
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
@@ -171,6 +263,7 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
   Time since last request: 233676.626274 seconds.
   path: Assets/Prefabs/Player_wizard.prefab
   artifactKey: Guid(bcd7b0f6c6480da4a85ea60244c2c2de) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
@@ -586,6 +679,116 @@ Unloading 5983 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 47 unused Assets / (1.1 MB). Loaded Objects now: 6839.
 Memory consumption went from 212.5 MB to 211.4 MB.
 Total: 17.122800 ms (FindLiveObjects: 1.651800 ms CreateObjectMapping: 6.696800 ms MarkObjects: 8.084100 ms  DeleteObjects: 0.688000 ms)
+=======
+  Time since last request: 268342.328898 seconds.
+  path: Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsBlack.png
+  artifactKey: Guid(00aeafacabda9cb4f867837aeaf43ffc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsBlack.png using Guid(00aeafacabda9cb4f867837aeaf43ffc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f7bc1b0ae9044eaffdb500f9de62227') in 0.117550 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Images/Textures/Textures_UI_UX/Icons/8/Statistics.png
+  artifactKey: Guid(3ae8bced346425d41bcae8dd47f59f56) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Textures/Textures_UI_UX/Icons/8/Statistics.png using Guid(3ae8bced346425d41bcae8dd47f59f56) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d403940d0ed3d3ecc1cfae52f897548') in 0.036105 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000022 seconds.
+  path: Assets/Scripts/Status.cs
+  artifactKey: Guid(a6d337ef1d9d9b548b0ab8a223691060) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Status.cs using Guid(a6d337ef1d9d9b548b0ab8a223691060) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5fdc8eb924758b9afe08467f7211e4a1') in 0.001425 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.000138 seconds.
+  path: Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsYellowDark.png
+  artifactKey: Guid(35e7aca381b4cb14682b82f1348bcfd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsYellowDark.png using Guid(35e7aca381b4cb14682b82f1348bcfd7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4d8b95bdb103e076f0a9f5aa3983a307') in 0.021385 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsGrey.png
+  artifactKey: Guid(b61342c4c70872941ba731f322550fef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsGrey.png using Guid(b61342c4c70872941ba731f322550fef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8efe996e5489678b5b098a9d3958b685') in 0.022088 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000111 seconds.
+  path: Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsYellow.png
+  artifactKey: Guid(682f6d07644e4014295489826c5d078d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsYellow.png using Guid(682f6d07644e4014295489826c5d078d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8d79bdfc973376f3109e10255b84465b') in 0.022598 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000023 seconds.
+  path: Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsGreen.png
+  artifactKey: Guid(2aaec1a9c860bd247be89f85ba9d8266) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsGreen.png using Guid(2aaec1a9c860bd247be89f85ba9d8266) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd67d406f241b405ecfa7740b70b26406') in 0.027172 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsGreenDark.png
+  artifactKey: Guid(bd775d01d3406364aa4b8b781dfae36e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images/Textures/Textures_UI_UX/Icons/8/StatisticsGreenDark.png using Guid(bd775d01d3406364aa4b8b781dfae36e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '92c3a15843a6a6cc7f74f6572ed1a2cc') in 0.025592 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\jun gyeong\Documents\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\jun gyeong\Documents\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.024 seconds
+Refreshing native plugins compatible for Editor in 9.03 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.775 seconds
+Domain Reload Profiling:
+	ReloadAssembly (272ms)
+		BeginReloadAssembly (179ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (5ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (50ms)
+		LoadAllAssembliesAndSetupDomain (746ms)
+			LoadAssemblies (432ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (385ms)
+				TypeCache.Initialize (359ms)
+					TypeCache.ScanAssembly (351ms)
+				ResolveRequiredComponents (18ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (551ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (7ms)
+				SetLoadedEditorAssemblies (5ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (107ms)
+				ProcessInitializeOnLoadAttributes (317ms)
+				ProcessInitializeOnLoadMethodAttributes (101ms)
+				AfterProcessingInitializeOnLoad (14ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (13ms)
+Refreshing native plugins compatible for Editor in 8.21 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5983 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 47 unused Assets / (1.1 MB). Loaded Objects now: 6677.
+Memory consumption went from 207.4 MB to 206.3 MB.
+Total: 4.505500 ms (FindLiveObjects: 0.754900 ms CreateObjectMapping: 0.514000 ms MarkObjects: 2.943600 ms  DeleteObjects: 0.291500 ms)
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -602,21 +805,35 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Begin MonoManager ReloadAssembly
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
 Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 - Loaded All Assemblies, in  1.346 seconds
 Refreshing native plugins compatible for Editor in 7.53 ms, found 3 plugins.
+=======
+Symbol file LoadedFromMemory doesn't match image C:\Users\jun gyeong\Documents\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\jun gyeong\Documents\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.034 seconds
+Refreshing native plugins compatible for Editor in 8.22 ms, found 3 plugins.
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 Native extension for WindowsStandalone target not found
-Native extension for Android target not found
 Mono: successfully reloaded assembly
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
 - Finished resetting the current domain, in  1.888 seconds
 Domain Reload Profiling:
 	ReloadAssembly (356ms)
 		BeginReloadAssembly (243ms)
+=======
+- Finished resetting the current domain, in  1.775 seconds
+Domain Reload Profiling:
+	ReloadAssembly (271ms)
+		BeginReloadAssembly (177ms)
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (9ms)
+			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
 			CreateAndSetChildDomain (67ms)
 		LoadAllAssembliesAndSetupDomain (987ms)
 			LoadAssemblies (508ms)
@@ -2866,6 +3083,37 @@ Unloading 5983 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 47 unused Assets / (1.1 MB). Loaded Objects now: 7485.
 Memory consumption went from 213.0 MB to 211.8 MB.
 Total: 5.654000 ms (FindLiveObjects: 0.715300 ms CreateObjectMapping: 0.619300 ms MarkObjects: 4.004100 ms  DeleteObjects: 0.314000 ms)
+=======
+			CreateAndSetChildDomain (46ms)
+		LoadAllAssembliesAndSetupDomain (756ms)
+			LoadAssemblies (458ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (374ms)
+				TypeCache.Initialize (359ms)
+					TypeCache.ScanAssembly (351ms)
+				ResolveRequiredComponents (15ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (536ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (7ms)
+				SetLoadedEditorAssemblies (5ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (104ms)
+				ProcessInitializeOnLoadAttributes (316ms)
+				ProcessInitializeOnLoadMethodAttributes (92ms)
+				AfterProcessingInitializeOnLoad (12ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (12ms)
+Refreshing native plugins compatible for Editor in 9.10 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 5983 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 47 unused Assets / (1.1 MB). Loaded Objects now: 6694.
+Memory consumption went from 207.5 MB to 206.3 MB.
+Total: 3.852400 ms (FindLiveObjects: 0.556200 ms CreateObjectMapping: 0.259200 ms MarkObjects: 2.750400 ms  DeleteObjects: 0.285100 ms)
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 
 Prepare: number of updated asset objects reloaded= 0
 AssetImportParameters requested are different than current active one (requested -> active):
@@ -2880,6 +3128,7 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
+<<<<<<< HEAD:Power_of_Personality/Logs/AssetImportWorker1-prev.log
 Received Prepare
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
@@ -4559,5 +4808,14 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+=======
+Received Import Request.
+  Time since last request: 40.946131 seconds.
+  path: Assets/Scripts/Status.cs
+  artifactKey: Guid(a6d337ef1d9d9b548b0ab8a223691060) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Status.cs using Guid(a6d337ef1d9d9b548b0ab8a223691060) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '40cd3facd7b54c40ee3ecf730bc90b49') in 0.003882 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+>>>>>>> a425ac87b5be53aec99eaec0a02986442764b91f:Power_of_Personality/Logs/AssetImportWorker0-prev.log
 TcpMessagingSession - receive error
 AssetImportWorkerClient::OnTransportError - code=10054 error=현재 연결은 원격 호스트에 의해 강제로 끊겼습니다.

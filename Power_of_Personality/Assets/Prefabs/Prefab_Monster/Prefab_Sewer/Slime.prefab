@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 6003477545944231330}
   - component: {fileID: 967932514397386064}
   m_Layer: 6
-  m_Name: Slime Monster
+  m_Name: Monster(Script)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,9 +143,12 @@ MonoBehaviour:
   ATK: 0
   DEF: 0
   MoveSpeed: 0
-  FireATTDEF: 0
-  IceATTDEF: 0
   Damage: 0
+  WeakProperty: 
+  TickCoolTime: 0
+  DamageText: {fileID: 0}
+  MonsterCanvas: {fileID: 0}
+  hpBarPosition: {x: 0, y: 0, z: 0}
   matObj: {fileID: 0}
   targetObj: {fileID: 2182671393685695109}
   PlayerTr: {fileID: 0}
@@ -157,8 +160,8 @@ MonoBehaviour:
   Coin: {fileID: 9137955520889552415, guid: 5e136e1029a3c0a4f842505d52c8ea4f, type: 3}
   isDie: 0
   isHit: 0
-  IceHit: {fileID: 0}
-  FireHit: {fileID: 0}
+  IceHit: {fileID: 1387851562293694130, guid: e2789a389dac3ba4d817abc6b1fc8df2, type: 3}
+  FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
   AttackEffect: {fileID: 1011157772751556, guid: a8f365a03303a7042b0029847851cba0, type: 3}
   EffectGen: {fileID: 4133465542806013081}
 --- !u!54 &6003477545944231330
@@ -254,7 +257,7 @@ GameObject:
   - component: {fileID: 3792919069182626511}
   - component: {fileID: 3838076238221900037}
   m_Layer: 6
-  m_Name: Slime Monster
+  m_Name: Slime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,7 +454,7 @@ GameObject:
   - component: {fileID: 4724174422388436222}
   - component: {fileID: 4187352518696053885}
   m_Layer: 7
-  m_Name: Mushroom_AttackCollider
+  m_Name: Slime_AttackCollider
   m_TagString: Monster_Melee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
