@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 4366714281629000541}
   - component: {fileID: 7789654057584240516}
   m_Layer: 0
-  m_Name: Mimic Chest Sliver Monster
+  m_Name: Monster(Script)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -802,9 +802,12 @@ MonoBehaviour:
   ATK: 10
   DEF: 0
   MoveSpeed: 2
-  FireATTDEF: 0
-  IceATTDEF: 0
   Damage: 10
+  WeakProperty: 
+  TickCoolTime: 0
+  DamageText: {fileID: 0}
+  MonsterCanvas: {fileID: 0}
+  hpBarPosition: {x: 0, y: 0, z: 0}
   matObj: {fileID: 0}
   targetObj: {fileID: 3849467089227110329}
   PlayerTr: {fileID: 0}
@@ -816,8 +819,8 @@ MonoBehaviour:
   Coin: {fileID: 9137955520889552415, guid: 5e136e1029a3c0a4f842505d52c8ea4f, type: 3}
   isDie: 0
   isHit: 0
-  IceHit: {fileID: 0}
-  FireHit: {fileID: 0}
+  IceHit: {fileID: 1387851562293694130, guid: e2789a389dac3ba4d817abc6b1fc8df2, type: 3}
+  FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
   AttackEffect: {fileID: 696893655172728521, guid: 8df8bac702bc6644885979ab797ff592, type: 3}
   EffectGen: {fileID: 4639143377729052715}
 --- !u!65 &4366714281629000541

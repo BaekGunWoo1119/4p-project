@@ -432,7 +432,7 @@ GameObject:
   - component: {fileID: 6231057130003111752}
   - component: {fileID: 8108924023970631925}
   m_Layer: 0
-  m_Name: Rock Golem
+  m_Name: Monster(Script)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -497,9 +497,12 @@ MonoBehaviour:
   ATK: 10
   DEF: 0
   MoveSpeed: 2
-  FireATTDEF: 0
-  IceATTDEF: 0
   Damage: 10
+  WeakProperty: 
+  TickCoolTime: 0
+  DamageText: {fileID: 0}
+  MonsterCanvas: {fileID: 0}
+  hpBarPosition: {x: 0, y: 0, z: 0}
   matObj: {fileID: 0}
   targetObj: {fileID: 407582262823573740}
   PlayerTr: {fileID: 0}
@@ -511,8 +514,8 @@ MonoBehaviour:
   Coin: {fileID: 9137955520889552415, guid: 5e136e1029a3c0a4f842505d52c8ea4f, type: 3}
   isDie: 0
   isHit: 0
-  IceHit: {fileID: 0}
-  FireHit: {fileID: 0}
+  IceHit: {fileID: 1387851562293694130, guid: e2789a389dac3ba4d817abc6b1fc8df2, type: 3}
+  FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
   AttackEffect: {fileID: 1893033738566276, guid: d1ae0182bafa2f34e9f014dff4d7c2e4, type: 3}
   EffectGen: {fileID: 8485779869835011176}
 --- !u!65 &6231057130003111752

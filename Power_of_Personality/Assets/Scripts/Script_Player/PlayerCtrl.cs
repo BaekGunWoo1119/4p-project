@@ -42,6 +42,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool isForward = true;
     protected bool isJumpAttack;
     protected bool isFall = false;
+    protected bool isDodge = false;
     protected bool isCommonAttack1InProgress = false;
     protected bool isCommonAttack2InProgress = false;
     protected bool isCommonAttack3InProgress = false;
@@ -148,6 +149,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool canTakeDamage = true; // 데미지를 가져올 수 있는지
     protected float damageCooldown = 1.0f; // 1초마다 틱데미지를 가져오기 위함
 
+    // 무적 관련
+    protected int ImmuneCount = 0;
+    protected bool isImmune;
+
     // 회전 관련
     protected GameObject CurrentFloor;
     protected Vector3 moveVec;
@@ -163,8 +168,6 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         // 플레이어 스테이터스 초기화
         SetIce();
-        Status.HP = PlayerPrefs.GetFloat("PlayerHP");
-        Debug.Log(PlayerPrefs.GetFloat("PlayerHP"));
 
         // 보스 문 할당
         BossWall1 = GameObject.Find("BossWall1").gameObject;
@@ -416,22 +419,16 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             Jump();
         }
-
         // Dodge 함수 실행
         if (Input.GetKeyDown(KeyCode.R))
         {
-            PlayAnim("isDodge");
-            StartCoroutine(Immune(0.5f));
-        }
-        if (stateWait == true)
-        {
-            StopAnim("isDodge");
+            StartCoroutine(Dodge());
         }
         if (stateDodge == true)
         {
             StopAnim("isJump");
         }
-        
+
         // 힐 Potion 먹는 함수
         hpPotionValue.text = InvenCtrl.PotionCount.ToString();
         if(Input.GetKeyDown(KeyCode.Alpha1))
@@ -440,7 +437,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
 
         //Idle일때 스킬 및 공격 false 판정
-        if (stateIdle == true)
+        if (stateIdle == true && isDodge == false)
         {
             PlayAnim("isIdle");
             isAttack = false;
@@ -519,8 +516,6 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (Status.MaxHP != 0 || Status.HP > 0)
         {
             Status.HP -= Damage;
-            PlayerPrefs.SetFloat("PlayerHP", Status.HP);
-            Debug.Log(Status.HP);
             CheckHp();
             PlayAnim("TakeDamage");
             StartCoroutine(DamageTextAlpha());
@@ -555,7 +550,6 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         InvenCtrl.PotionCount -= 1; 
         Status.HP = Status.MaxHP;
-        PlayerPrefs.SetFloat("PlayerHP", Status.HP);
         CheckHp();
         StartCoroutine(Heal_on());
     }
@@ -585,9 +579,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     protected virtual IEnumerator Immune(float seconds)
     {
-        Physics.IgnoreLayerCollision(7, 8, true);
+        ImmuneCount++;
+        isImmune = true;
         yield return new WaitForSeconds(seconds);
-        Physics.IgnoreLayerCollision(7, 8, false);
+        ImmuneCount--;
+        if(ImmuneCount <= 0)
+        {
+            isImmune = false;
+        }
     }
     #endregion
 
@@ -621,7 +620,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public virtual void Move()
     {
         PlayAnim("isRun");
-        if(hAxis != 0)
+        if (hAxis != 0)
         {
             moveVec = AdjustDirectionToSlope(transform.forward);
         }
@@ -634,6 +633,15 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             transform.position += moveVec * moveSpd * Time.fixedDeltaTime;
         }
         StartCoroutine(Delay(0.2f));
+    }
+    public virtual IEnumerator Dodge()
+    {
+        StartCoroutine(Immune(0.5f));
+        PlayAnim("isDodge");
+        isDodge = true;
+        yield return new WaitForSeconds(0.5f);
+        StopAnim("isDodge");
+        isDodge = false;
     }
 
     protected virtual Vector3 AdjustDirectionToSlope(Vector3 direction)
@@ -695,11 +703,22 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region 충돌 관련 함수
     protected virtual void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Monster_Melee")
+        if (col.gameObject.tag == "Monster_Melee" && !isImmune)
         {
-            // 충돌한 몬스터 오브젝트에서 해당 스크립트를 가져옵니다.
-            MonoBehaviour monsterCtrl = col.gameObject.transform.root.GetComponentInChildren<MonoBehaviour>();
+            // 특정 이름을 가진 부모 객체를 찾습니다.
+            string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
+            Transform parent = col.transform;
+            MonoBehaviour monsterCtrl = null;
 
+            while (parent != null)
+            {
+                if (parent.name == targetParentName)
+                {
+                    monsterCtrl = parent.GetComponentInChildren<MonoBehaviour>();
+                    break;
+                }
+                parent = parent.parent;
+            }
             // 가져온 몬스터 스크립트가 유효한지 확인합니다.
             if (monsterCtrl != null)
             {
@@ -727,7 +746,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             }
         }
 
-        else if (col.gameObject.tag == "Monster_Ranged")
+        else if (col.gameObject.tag == "Monster_Ranged" && !isImmune)
         {
             // 충돌한 몬스터 공격에서 해당 스크립트를 가져옵니다.
             MonoBehaviour monsterCtrl = col.gameObject.GetComponent<MonoBehaviour>();
@@ -781,7 +800,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     protected virtual void OnTriggerExit(Collider col)
     {
-        if(BossWall1.transform.position.x - transform.position.x < 0)
+        if(col.gameObject.tag == "BossWall1" && BossWall1.transform.localPosition.x - transform.localPosition.x < 0)
         {
             BossWall1.layer = 3;
             BossWall2.layer = 3;
@@ -874,6 +893,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region 애니메이션 
     public virtual void PlayAnim(string AnimationName)
     {
+        Debug.Log(AnimationName + " 실행");
         if(AnimationName == "CommonAttack" || AnimationName == "Skill_Q" || AnimationName == "Skill_W" || AnimationName == "Skill_E" || AnimationName == "isDodge")
         {
             anim.SetTrigger(AnimationName);

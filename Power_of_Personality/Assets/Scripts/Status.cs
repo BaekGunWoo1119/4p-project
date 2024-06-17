@@ -37,6 +37,8 @@ public class Status : MonoBehaviour
 
     void Start()    
     {
+        HP = 100f;
+        MaxHP = 100f;
         StatUpdate();
     }
 

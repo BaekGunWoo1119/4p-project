@@ -45,7 +45,8 @@ public class MonsterCtrl : MonoBehaviour
     public GameObject FireHit; //몬스터 피격 이펙트(불)
     public GameObject AttackEffect; //몬스터 공격 이펙트
     public GameObject EffectGen; //몬스터 공격 이펙트 소환 장소
-    
+
+    public Transform desiredParent;
 
     #endregion
 
@@ -112,15 +113,20 @@ public class MonsterCtrl : MonoBehaviour
     }
     public virtual void Turn()
     {
-        if (this.transform.position.x - PlayerTr.transform.position.x < 0)
+        desiredParent = this.transform.parent.parent;
+        Vector3 localPosition = desiredParent.InverseTransformPoint(transform.position);
+        Vector3 playerLocalPosition = desiredParent.InverseTransformPoint(PlayerTr.position);
+
+        if (localPosition.x < playerLocalPosition.x)
         {
-            this.transform.rotation = Quaternion.Euler(0, 90, 0);
+            this.transform.localRotation = Quaternion.Euler(0, 90, 0);
         }
-        else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
+        else if (localPosition.x > playerLocalPosition.x)
         {
-            this.transform.rotation = Quaternion.Euler(0, -90, 0);
+            this.transform.localRotation = Quaternion.Euler(0, -90, 0);
         }
     }
+
     public virtual IEnumerator Trace()
     {
         // 플레이어를 향해 이동하는 로직
