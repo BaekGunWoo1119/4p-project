@@ -710,7 +710,7 @@ MonoBehaviour:
   curHP: 0
   maxHP: 0
   ATK: 15
-  DEF: 0
+  DEF: 10
   MoveSpeed: 0
   Damage: 0
   WeakProperty: 
@@ -733,6 +733,7 @@ MonoBehaviour:
   FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
   AttackEffect: {fileID: 1893033738566276, guid: 21b42dc3fcd1b4b43bc2b1d6dbff49a7, type: 3}
   EffectGen: {fileID: 3626740544139670766}
+  desiredParent: {fileID: 0}
 --- !u!136 &3395994194289041344
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -748,7 +749,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -781,7 +782,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &5031760696621390564
 GameObject:

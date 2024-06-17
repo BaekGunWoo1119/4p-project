@@ -6105,6 +6105,7 @@ MonoBehaviour:
   FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
   AttackEffect: {fileID: 0}
   EffectGen: {fileID: 0}
+  desiredParent: {fileID: 0}
   FirePos: {fileID: 6961965807982210036}
 --- !u!65 &7420906413871300462
 BoxCollider:
@@ -6121,7 +6122,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -6152,7 +6153,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &1991599760521528191
 GameObject:
@@ -6409,7 +6410,7 @@ Transform:
   - {fileID: 1993577665877171773}
   - {fileID: 2272541430430598838}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &5368798161755675681
 GameObject:

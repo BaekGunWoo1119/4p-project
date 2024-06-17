@@ -609,7 +609,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region 이동 관련 함수
     protected virtual void WallCheck()
     {
-        WallCollision = Physics.Raycast(transform.position + new Vector3(0, 1.0f, 0), transform.forward, 0.6f, LayerMask.GetMask("Wall", "Monster"));
+        WallCollision = Physics.Raycast(transform.position + new Vector3(0, 1.0f, 0), transform.forward, 0.6f, LayerMask.GetMask("Wall"));
     }
 
     protected virtual void GetInput()
@@ -893,7 +893,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region 애니메이션 
     public virtual void PlayAnim(string AnimationName)
     {
-        Debug.Log(AnimationName + " 실행");
+        //Debug.Log(AnimationName + " 실행");
         if(AnimationName == "CommonAttack" || AnimationName == "Skill_Q" || AnimationName == "Skill_W" || AnimationName == "Skill_E" || AnimationName == "isDodge")
         {
             anim.SetTrigger(AnimationName);

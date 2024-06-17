@@ -48,10 +48,12 @@ public class MonsterCtrl : MonoBehaviour
 
     public Transform desiredParent;
 
+    protected Rigidbody rd; // 리지드바디
     #endregion
 
     public virtual void Awake()
     {
+        rd = GetComponent<Rigidbody>();
         // 몬스터 기본 설정
         if (this.tag == "Monster_Melee")     // 이 몬스터가 근접 몬스터일때
         {
@@ -67,6 +69,8 @@ public class MonsterCtrl : MonoBehaviour
 
     public virtual void Update()
     {
+        rd.AddForce(Vector3.down * 4, ForceMode.VelocityChange);
+
         if (!isDie)     // 죽어있는 상태가 아니면
         {
             DistanceCheck();    // 플레이어와의 거리를 계산

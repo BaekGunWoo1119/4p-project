@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 119908547}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641293, b: 0.57481545, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.4964134, b: 0.57481605, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3731,7 +3731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4115901552313966247, guid: d01039c03a557834dba14be0adae8d05, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7780166297294088714, guid: d01039c03a557834dba14be0adae8d05, type: 3}
       propertyPath: m_Enabled
@@ -21688,7 +21688,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461512519736245918, guid: 96c7dd7c60d5fbe48b8fd5ca840c160e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3865933409300922773, guid: 96c7dd7c60d5fbe48b8fd5ca840c160e, type: 3}
       propertyPath: m_SizeDelta.x
@@ -21704,7 +21704,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5307043942301625491, guid: 96c7dd7c60d5fbe48b8fd5ca840c160e, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5307043942301625491, guid: 96c7dd7c60d5fbe48b8fd5ca840c160e, type: 3}
       propertyPath: m_SizeDelta.x
@@ -28755,6 +28755,7 @@ GameObject:
   - component: {fileID: 1752445577}
   - component: {fileID: 1752445579}
   - component: {fileID: 1752445578}
+  - component: {fileID: 1752445580}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -29080,6 +29081,19 @@ MonoBehaviour:
   portal: {fileID: 3992058561654064293, guid: 1d6debf3c293e9e4da18fbaa7f8af0e4, type: 3}
   portalSpawner: {fileID: 1800962075}
   sceneName: Hidden_Shop
+--- !u!114 &1752445580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752445559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6d337ef1d9d9b548b0ab8a223691060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurProperty: 
 --- !u!1001 &1757251878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30450,9 +30464,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mushroom
       objectReference: {fileID: 0}
+    - target: {fileID: 2463201624562091160, guid: bc15bb8db3a9d264a9ce09590385284b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4172816357920373565, guid: bc15bb8db3a9d264a9ce09590385284b, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31933,11 +31951,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1768634977187624498, guid: ab3ba30dd08cabc42994f0820ada905c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3092335694254568385, guid: ab3ba30dd08cabc42994f0820ada905c, type: 3}
       propertyPath: m_Name
       value: Fairy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3092335694254568385, guid: ab3ba30dd08cabc42994f0820ada905c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8481428953735996938, guid: ab3ba30dd08cabc42994f0820ada905c, type: 3}
       propertyPath: m_RootOrder

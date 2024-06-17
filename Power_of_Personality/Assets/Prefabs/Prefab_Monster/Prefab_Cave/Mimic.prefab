@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 4541180391028121707}
   - component: {fileID: 4366714281629000541}
   - component: {fileID: 7789654057584240516}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Monster(Script)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -805,8 +805,8 @@ MonoBehaviour:
   Damage: 10
   WeakProperty: 
   TickCoolTime: 0
-  DamageText: {fileID: 0}
-  MonsterCanvas: {fileID: 0}
+  DamageText: {fileID: 1880031391497513284, guid: 3f08f33154c6df6418d46b2e12f8cf2a, type: 3}
+  MonsterCanvas: {fileID: 1237014400044891944}
   hpBarPosition: {x: 0, y: 0, z: 0}
   matObj: {fileID: 0}
   targetObj: {fileID: 3849467089227110329}
@@ -823,6 +823,7 @@ MonoBehaviour:
   FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
   AttackEffect: {fileID: 696893655172728521, guid: 8df8bac702bc6644885979ab797ff592, type: 3}
   EffectGen: {fileID: 4639143377729052715}
+  desiredParent: {fileID: 0}
 --- !u!65 &4366714281629000541
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -838,7 +839,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -869,7 +870,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &8089816676977739427
 GameObject:
