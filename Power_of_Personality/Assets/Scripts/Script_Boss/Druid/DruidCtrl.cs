@@ -34,6 +34,7 @@ public class DruidCtrl : BossCtrl
     private Vector3 PrevPosition;
     private GameObject LeftTPpoint;
     private GameObject RightTPpoint;
+    private GameObject shopPortal;
     #endregion
 
     #region Awake, Start, Update문
@@ -49,6 +50,7 @@ public class DruidCtrl : BossCtrl
         ToxicPortal_Collider = GameObject.Find("ToxicPortal");
         LeftTPpoint = GameObject.Find("LeftTPpoint");
         RightTPpoint = GameObject.Find("RightTPpoint");
+        shopPortal = GameObject.Find("Normal_Shop_Portal");
     }
 
     protected override void Start()
@@ -61,6 +63,7 @@ public class DruidCtrl : BossCtrl
         GroundStrike_Collider_L.SetActive(false);
         Vine_Collider.SetActive(false);
         ToxicPortal_Collider.SetActive(false);
+        shopPortal.SetActive(false);
         StartCoroutine(Think());
     }
 
@@ -351,6 +354,12 @@ public class DruidCtrl : BossCtrl
             yield return new WaitForSeconds(1.5f);
             Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
             Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
+            Destroy(BossWall1);
+            Destroy(BossWall2);
+            //상점 생성
+            shopPortal.SetActive(true);
+            shopPortal.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 2, this.transform.position.z);
+            //오브젝트 및 체력 바 파괴
             Destroy(this.gameObject); // ü���� 0 ���϶� ����
             Destroy(HpBar.gameObject);
         }
@@ -364,8 +373,8 @@ public class DruidCtrl : BossCtrl
     }
     protected override void DistanceCheck()
     {
-        
-        Distance = Vector3.Distance(transform.position, PlayerTr.position);
+        if(PlayerTr != null)
+            Distance = Vector3.Distance(transform.position, PlayerTr.position);
         //여기서부턴 세부 구현, 각 스크립트에서 보스 패턴에 맞게 구현
         if(TraceOn == true)
         {
@@ -379,9 +388,11 @@ public class DruidCtrl : BossCtrl
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
         Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
         transform.Translate(movement, Space.World);
+        anim.SetBool("doMove", true);
         if (Distance <= 3)
         {
             int ranAction = Random.Range(0, 3);
+            anim.SetBool("doMove", false);
             switch (ranAction)
             {
                 case 0:
@@ -404,6 +415,7 @@ public class DruidCtrl : BossCtrl
         else
         {
             transform.Translate(movement, Space.World);
+            anim.SetBool("doMove", true);
         }
         if(TraceTime > 3)
         {
@@ -421,9 +433,11 @@ public class DruidCtrl : BossCtrl
             Vector3 ReversedirectionToPlayer = -(PlayerTr.position - transform.position).normalized;
             Vector3 movement = new Vector3(ReversedirectionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
             transform.Translate(movement, Space.World);
+            anim.SetBool("doBack", true);
             if (Vector3.Distance(PrevPosition, transform.position) >= 3)
             {
                 BackDashOn = false;
+                anim.SetBool("doBack", false);
                 StartCoroutine(Think());
             }
             yield return null;

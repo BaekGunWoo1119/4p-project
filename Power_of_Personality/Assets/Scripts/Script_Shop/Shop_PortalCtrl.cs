@@ -17,20 +17,14 @@ public class Shop_PortalCtrl : MonoBehaviour
 
     void Start()
     {
-        GameObject[] player = GameObject.FindGameObjectsWithTag("Player");
-        inventory = new Inventory[player.Length];
-        for (int i = 0; i < player.Length; i++)
-        {
-            inventory[i] = player[i].GetComponent<Inventory>();
-        }
+        StartCoroutine(FindInventory());
     }
 
     void OnTriggerStay(Collider col)
     {
-        Debug.Log("플레이어가 아니라는데요~");
         if(col.gameObject.tag == "Player")
         {
-            Debug.Log("S키를 눌러 상점 진입");
+            //Debug.Log("S키를 눌러 상점 진입");
             if(Input.GetKeyDown(KeyCode.S))
             {            
                 //현재 플레이어 위치 및 현재 스테이지 저장 후 씬 넘기기
@@ -47,10 +41,20 @@ public class Shop_PortalCtrl : MonoBehaviour
 
     void OnTriggerExit(Collider col)
     {
-        Debug.Log("플레이어가 아니라는데요~");
         if(col.gameObject.tag == "Player")
         {
-            Debug.Log("꺼져");
+            //Debug.Log("상점 콜라이더 지나침");
+        }
+    }
+
+    IEnumerator FindInventory()
+    {
+        yield return new WaitForSeconds(0.03f);
+        GameObject[] player = GameObject.FindGameObjectsWithTag("Player");
+        inventory = new Inventory[player.Length];
+        for (int i = 0; i < player.Length; i++)
+        {
+            inventory[i] = player[i].GetComponent<Inventory>();
         }
     }
 

@@ -10,7 +10,7 @@ public class BossCtrl : MonoBehaviour
 {
     #region 변수 선언
     protected Animator anim;   // 애니메이터
-    protected UnityEngine.UI.Slider HpBar;    // HP바 슬라이더
+    public UnityEngine.UI.Slider HpBar;    // HP바 슬라이더
     public SkinnedMeshRenderer matObj;
     public GameObject targetObj;
     protected GameObject BossWall1;
@@ -38,7 +38,7 @@ public class BossCtrl : MonoBehaviour
     public GameObject FireHit; //몬스터 피격 이펙트(불)
     protected GameObject DamageText; //맞았을 때 나오는 데미지 텍스트
     protected GameObject MonsterCanvas;
-    protected GameObject Coin;     //몬스터를 죽이면 드랍되는 코인
+    public GameObject Coin;     //몬스터를 죽이면 드랍되는 코인
 
     // 플레이어 추적 관련
     protected Transform PlayerTr;     // 플레이어 Transform
@@ -58,7 +58,7 @@ public class BossCtrl : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
-        EffectGen = transform.Find("EffectGen").gameObject;
+        EffectGen = transform.Find("EffectGen-Boss").gameObject;
         SkillYRot = transform.eulerAngles.y;
         StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행 <<< Awake에 있으니까 맵 나갔다 들어올 때 계속 오류뜸
     }

@@ -11,7 +11,7 @@ public class Druid_Projectile : MonoBehaviour
 
     private void Awake()
     {
-        EffectGen = GameObject.Find("EffectGen");
+        EffectGen = GameObject.Find("EffectGen-Boss");
         rb = GetComponent<Rigidbody>();
         rb.AddForce(EffectGen.transform.forward.normalized * 10, ForceMode.Impulse);
     }
