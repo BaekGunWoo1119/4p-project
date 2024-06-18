@@ -27,6 +27,8 @@ public class MultiPlayStart : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient){
             PhotonNetwork.Instantiate("Server/Monster/Cave/Server_Spider",SpawnPoint.position,SpawnPoint.rotation,0);
+            PhotonNetwork.Instantiate("Server/Monster/Cave/Server_Mimic",SpawnPoint.position,SpawnPoint.rotation,0);
+            PhotonNetwork.Instantiate("Server/Monster/Cave/Server_Golem",SpawnPoint.position,SpawnPoint.rotation,0);
         }
     }
 
