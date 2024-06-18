@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Shop_PortalCtrl : MonoBehaviour
 {
+    
+    public static Inventory[] inventory;
+
     public Transform shopPos;
     public GameObject shopWindow;
     public GameObject orgWindow;
@@ -11,6 +14,16 @@ public class Shop_PortalCtrl : MonoBehaviour
     private Vector3 playerPos;
     private float orgSpd;
     public static bool isShop = false;
+
+    void Start()
+    {
+        GameObject[] player = GameObject.FindGameObjectsWithTag("Player");
+        inventory = new Inventory[player.Length];
+        for (int i = 0; i < player.Length; i++)
+        {
+            inventory[i] = player[i].GetComponent<Inventory>();
+        }
+    }
 
     void OnTriggerStay(Collider col)
     {
@@ -48,9 +61,6 @@ public class Shop_PortalCtrl : MonoBehaviour
         shopWindow.transform.localScale = new Vector3(0, 0, 0);
         orgWindow.transform.localScale = new Vector3(1, 1, 1);
         GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().CheckInven();
-        GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().InsertItem();
-        GameObject.Find("InventoryCtrl").GetComponent<Inventory>().ItemPlus();
-        //shopWindow.transform.localScale = new Vector3(0, 0, 0);
-        //orgWindow.transform.localScale = new Vector3(1, 1, 1);
+        inventory[0].ItemPlus();
     }
 }
