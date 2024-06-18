@@ -167,6 +167,7 @@ public class PlayerCtrl_Archer : PlayerCtrl
     public IEnumerator Spawn_CommonAttack1()
     {
         yield return new WaitForSeconds(0.3f);
+        
         GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack2()
@@ -254,12 +255,12 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, 90, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, -90, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
     }
@@ -267,12 +268,12 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, 90, 0));
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
-            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, -90, 0));
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
     }
@@ -284,12 +285,12 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, 90, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, -90, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
     }
@@ -298,12 +299,12 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, 0, 0));
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
-            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, 180, 0));
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
         }
     }
@@ -312,11 +313,11 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         }
         else
         {
-            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, -90, 0f));
+            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         }
     }
 
@@ -329,13 +330,15 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x + 1.5f, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(SkillE1_Effect.transform.eulerAngles));
+            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot, 0f));
         }
         else
         {
-            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x - 1.5f, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(SkillE1_Effect.transform.eulerAngles));
+            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot, 0f));
         }
         SkillEffect.transform.parent = EffectGen.transform;
+
+
     }
 
     public void skill_E2_on()

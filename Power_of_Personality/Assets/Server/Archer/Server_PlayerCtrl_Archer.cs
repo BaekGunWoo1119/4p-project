@@ -274,7 +274,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, 90, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
@@ -282,7 +282,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         }
         else
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, -90, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
@@ -293,7 +293,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, 90, 0));
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
@@ -301,7 +301,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         }
         else
         {
-            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, -90, 0));
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
@@ -316,7 +316,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, 90, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
@@ -324,7 +324,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         }
         else
         {
-            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, -90, 0));
+            SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
@@ -336,7 +336,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, 0, 0));
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
@@ -344,7 +344,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         }
         else
         {
-            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, 180, 0));
+            SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
@@ -356,14 +356,14 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
+            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
         }
         else
         {
-            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, -90, 0f));
+            SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
@@ -382,14 +382,14 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
-            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x + 1.5f, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(SkillE1_Effect.transform.eulerAngles));
+            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot, 0f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
         }
         else
         {
-            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x - 1.5f, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(SkillE1_Effect.transform.eulerAngles));
+            SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot, 0f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
