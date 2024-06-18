@@ -49,7 +49,7 @@ public class SecretShop : MonoBehaviour
 
     IEnumerator StopImages()
     {
-        int currentIndex = 7;//Random.Range(0, brightImages.Length);
+        int currentIndex = Random.Range(0, brightImages.Length); //7
         Debug.Log("멈췄다");
         stopRotate = true;
         StopCoroutine(RotateImages());

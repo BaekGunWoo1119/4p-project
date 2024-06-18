@@ -245,267 +245,275 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     protected virtual void Update()
     {
-        if (!canTakeDamage)
+        // 해당 bool값 실행 시 모든 행동 멈춤
+        if(!Shop_PortalCtrl.isShop)
         {
-            damageCooldown -= Time.deltaTime;
-            if (damageCooldown < 0)
+            if (!canTakeDamage)
             {
-                canTakeDamage = true;
-                damageCooldown = 1.0f;
+                damageCooldown -= Time.deltaTime;
+                if (damageCooldown < 0)
+                {
+                    canTakeDamage = true;
+                    damageCooldown = 1.0f;
+                }
+            }
+
+            //스킬 쿨타임 UI(03.18)
+            /*if (Qcool.fillAmount != 0)
+            {
+                Qcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
+            }
+            if (Wcool.fillAmount != 0)
+            {
+                Wcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
+            }
+            if (Ecool.fillAmount != 0)
+            {
+                Ecool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
+            }*/
+            // 땅에 닿아있는지 체크
+            isGrounded();
+
+            // 벽 충돌체크 함수 실행
+            WallCheck();
+
+            // 애니메이션 업데이트
+            GetInput();
+
+            //스킬 쿨타임 충전
+            SkillCoolTimeCharge();
+
+            //애니메이션 상태 확인
+            AnimState();
+
+            //로테이션 고정 코드(04.10 백건우 수정, 굴절구간 문제 생길 시 아래 코드 대신 사용)
+            YRot = transform.eulerAngles.y;
+
+            //Z 포지션 고정
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
+
+            // char 오브젝트 위치 고정
+            transform.GetChild(0).localPosition = Vector3.zero;
+
+            //데미지 캔버스 Y값 고정
+            //PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);  //잠시
+
+            // Attack 함수 실행
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                Attack_anim();
+            }
+
+            //기본공격1 & 기본공격3 시 전진 애니메이션
+            if (stateAttack1 == true && !isCommonAttack1InProgress)
+            {
+                Attack(0);
+                isCommonAttack1InProgress = true;
+            }
+            else if (stateAttack2 == true && !isCommonAttack2InProgress && !isSound)
+            {
+                Attack(1);
+                isCommonAttack2InProgress = true;
+            }
+            else if (stateAttack3 == true && !isCommonAttack3InProgress)
+            {
+                Attack(2);
+                isCommonAttack3InProgress = true;
+            }
+
+            //지상공격 2타, 3타 시 방향전환 되도록
+            if(stateAttack1_Wait == true ||
+            stateAttack2_Wait == true)
+            {
+                isAttack = false;
+            }
+            else if(stateAttack1 == true ||
+                    stateAttack2 == true ||
+                    stateAttack3 == true)
+            {
+                isAttack = true;
+            }
+
+            //점프공격 카메라 && 사운드
+            else if (stateJumpAttack1 == true && !coroutineMove)
+            {
+                Attack(3);
+            }
+            else if (stateJumpAttack2 == true && !isSound)
+            {
+                Attack(4);
+            }
+            else if (stateJumpAttack3 == true && !coroutineMove)
+            {
+                Attack(5);
+            }
+
+            UpdateCoroutineMoveState();
+
+            if (stateFall == true && isJumpAttack == true)
+            {
+                StopAnim("CommonAttack");
+            }
+            //한 번 점프 시 한 번의 점프공격 콤보만 되게
+            else if (stateWait == true && isJumpAttack == true)
+            {
+                StopAnim("CommonAttack");
+                isJumpAttack = false;
+                isAttack = false;
+            }
+            else if (stateRun == true && isJumpAttack == true)
+            {
+                StopAnim("CommonAttack");
+                isJumpAttack = false;
+                isAttack = false;
+            }
+
+            if (stateJump == true && isJumpAttack == true)
+            {
+                StopAnim("CommonAttack");
+                isAttack = false;
+            }
+
+            //Skill_Q
+            if (Input.GetKeyDown(KeyCode.Q)
+            && !isSkill
+            && !isJumping
+            && !anim.GetBool("isFall")
+            && QSkillCoolTime >= 3.0f
+            && !isAttack)
+            {
+                UseSkill("Q");
+            }
+            
+            //Skill_W
+            if (Input.GetKeyDown(KeyCode.W)
+            && !isSkill
+            && !isJumping
+            && !anim.GetBool("isFall")
+            && WSkillCoolTime >= 3.0f
+            && !isAttack)
+            {
+                UseSkill("W");
+            }
+
+            //Skill_E
+            if (Input.GetKeyDown(KeyCode.E)
+            && !isSkill
+            && !isJumping
+            && !anim.GetBool("isFall")
+            && ESkillCoolTime >= 3.0f
+            && !isAttack)
+            {
+                UseSkill("E");
+            }
+
+            //Jump
+            if (Input.GetKeyDown(KeyCode.Space) && !isSkill && !isAttack && !isJumping
+                && !stateJump && !stateFall && !anim.GetBool("isFall"))
+            {
+                isJumping = true;
+            }
+            else
+            {
+                isJumping = false;
+            }
+            //점프 모션이 실행되야만 점프가 실행되게(애니메이션 딜레이 및 더블점프 강제 제거)
+            if (isJumping == true)
+            {
+                Jump();
+            }
+            // Dodge 함수 실행
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                StartCoroutine(Dodge());
+            }
+            if (stateDodge == true)
+            {
+                StopAnim("isJump");
+            }
+
+            // 힐 Potion 먹는 함수
+            hpPotionValue.text = InvenCtrl.PotionCount.ToString();
+            if(Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                HealHp();
+            }
+
+            //Idle일때 스킬 및 공격 false 판정
+            if (stateIdle == true && isDodge == false)
+            {
+                PlayAnim("isIdle");
+                isAttack = false;
+                isSkill = false;
+                StopAnim("CommonAttack");
+            }
+
+            //다른 모션일 때, 혹시라도 Move가 실행되도 달리지 못하게
+            if (stateWait == true || stateIdle == true || stateAttack1 == true ||
+            stateAttack1_Wait == true || stateAttack2 == true || stateAttack2_Wait == true ||
+            stateAttack3 == true || stateSkillQ == true || stateSkillW == true ||
+            stateSkillE == true || stateJumpAttack2 == true ||
+            (stateJump == true && !anim.GetBool("isRun")) ||
+            (stateFall == true && !anim.GetBool("isRun")))
+            {
+                moveSpd = 0;
+            }
+
+            //대쉬일 때
+            else if (stateDash == true)
+            {
+                moveSpd = moveSpeed * 1.25f;
+            }
+            else
+            {
+                moveSpd = moveSpeed;
+            }
+
+            //캐릭터 스킬 이펙트
+            LocalSkillYRot = transform.localEulerAngles.y;
+            SkillYRot = transform.eulerAngles.y;
+            if (PlayerPrefs.GetString("property") == "Fire")
+            {
+                Attack1_Effect = commonAttack_Fire1_Effect;
+                Attack2_Effect = commonAttack_Fire2_Effect;
+                Attack3_Effect = commonAttack_Fire3_Effect;
+                SkillQ_Effect = Skill_FireQ_Effect;
+                SkillW_Effect = Skill_FireW_Effect;
+                SkillE1_Effect = Skill_FireE1_Effect;
+                SkillE2_Effect = Skill_FireE2_Effect;
+                SkillE3_Effect = Skill_FireE3_Effect;
+                SkillE4_Effect = Skill_FireE4_Effect;
+            }
+            else if (PlayerPrefs.GetString("property") == "Ice")
+            {
+                Attack1_Effect = commonAttack_Ice1_Effect;
+                Attack2_Effect = commonAttack_Ice2_Effect;
+                Attack3_Effect = commonAttack_Ice3_Effect;
+                SkillQ_Effect = Skill_IceQ_Effect;
+                SkillW_Effect = Skill_IceW_Effect;
+                SkillE1_Effect = Skill_IceE1_Effect;
+                SkillE2_Effect = Skill_IceE2_Effect;
+                SkillE3_Effect = Skill_IceE3_Effect;
+                SkillE4_Effect = Skill_IceE4_Effect;
+            }
+            else
+            {
+                Attack1_Effect = commonAttack_Ice1_Effect;
+                Attack2_Effect = commonAttack_Ice2_Effect;
+                Attack3_Effect = commonAttack_Ice3_Effect;
+                SkillQ_Effect = Skill_IceQ_Effect;
+                SkillW_Effect = Skill_IceW_Effect;
+            }
+
+            // 플레이어 피가 30보다 작으면 지속적으로 화면이 깜빡임
+            if(Status.HP <= 30)
+            {
+                cameraEffect.GetComponent<CameraEffectCtrl>().DangerousCamera();
             }
         }
-
-        //스킬 쿨타임 UI(03.18)
-        /*if (Qcool.fillAmount != 0)
-        {
-            Qcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
-        }
-        if (Wcool.fillAmount != 0)
-        {
-            Wcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
-        }
-        if (Ecool.fillAmount != 0)
-        {
-            Ecool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
-        }*/
-        // 땅에 닿아있는지 체크
-        isGrounded();
-
-        // 벽 충돌체크 함수 실행
-        WallCheck();
-
-        // 애니메이션 업데이트
-        GetInput();
-
-        //스킬 쿨타임 충전
-        SkillCoolTimeCharge();
-
-        //애니메이션 상태 확인
-        AnimState();
-
-        //로테이션 고정 코드(04.10 백건우 수정, 굴절구간 문제 생길 시 아래 코드 대신 사용)
-        YRot = transform.eulerAngles.y;
-
-        //Z 포지션 고정
-        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
-
-        // char 오브젝트 위치 고정
-        transform.GetChild(0).localPosition = Vector3.zero;
-
-        //데미지 캔버스 Y값 고정
-        //PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);  //잠시
-
-        // Attack 함수 실행
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Attack_anim();
-        }
-
-        //기본공격1 & 기본공격3 시 전진 애니메이션
-        if (stateAttack1 == true && !isCommonAttack1InProgress)
-        {
-            Attack(0);
-            isCommonAttack1InProgress = true;
-        }
-        else if (stateAttack2 == true && !isCommonAttack2InProgress && !isSound)
-        {
-            Attack(1);
-            isCommonAttack2InProgress = true;
-        }
-        else if (stateAttack3 == true && !isCommonAttack3InProgress)
-        {
-            Attack(2);
-            isCommonAttack3InProgress = true;
-        }
-
-         //지상공격 2타, 3타 시 방향전환 되도록
-        if(stateAttack1_Wait == true ||
-           stateAttack2_Wait == true)
-        {
-            isAttack = false;
-        }
-        else if(stateAttack1 == true ||
-                stateAttack2 == true ||
-                stateAttack3 == true)
-        {
-            isAttack = true;
-        }
-
-        //점프공격 카메라 && 사운드
-        else if (stateJumpAttack1 == true && !coroutineMove)
-        {
-            Attack(3);
-        }
-        else if (stateJumpAttack2 == true && !isSound)
-        {
-            Attack(4);
-        }
-        else if (stateJumpAttack3 == true && !coroutineMove)
-        {
-            Attack(5);
-        }
-
-        UpdateCoroutineMoveState();
-
-        if (stateFall == true && isJumpAttack == true)
-        {
-            StopAnim("CommonAttack");
-        }
-        //한 번 점프 시 한 번의 점프공격 콤보만 되게
-        else if (stateWait == true && isJumpAttack == true)
-        {
-            StopAnim("CommonAttack");
-            isJumpAttack = false;
-            isAttack = false;
-        }
-        else if (stateRun == true && isJumpAttack == true)
-        {
-            StopAnim("CommonAttack");
-            isJumpAttack = false;
-            isAttack = false;
-        }
-
-        if (stateJump == true && isJumpAttack == true)
-        {
-            StopAnim("CommonAttack");
-            isAttack = false;
-        }
-
-        //Skill_Q
-        if (Input.GetKeyDown(KeyCode.Q)
-        && !isSkill
-        && !isJumping
-        && !anim.GetBool("isFall")
-        && QSkillCoolTime >= 3.0f
-        && !isAttack)
-        {
-            UseSkill("Q");
-        }
-        
-        //Skill_W
-        if (Input.GetKeyDown(KeyCode.W)
-        && !isSkill
-        && !isJumping
-        && !anim.GetBool("isFall")
-        && WSkillCoolTime >= 3.0f
-        && !isAttack)
-        {
-            UseSkill("W");
-        }
-
-        //Skill_E
-        if (Input.GetKeyDown(KeyCode.E)
-        && !isSkill
-        && !isJumping
-        && !anim.GetBool("isFall")
-        && ESkillCoolTime >= 3.0f
-        && !isAttack)
-        {
-            UseSkill("E");
-        }
-
-        //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && !isSkill && !isAttack && !isJumping
-            && !stateJump && !stateFall && !anim.GetBool("isFall"))
-        {
-            isJumping = true;
-        }
         else
-        {
-            isJumping = false;
-        }
-        //점프 모션이 실행되야만 점프가 실행되게(애니메이션 딜레이 및 더블점프 강제 제거)
-        if (isJumping == true)
-        {
-            Jump();
-        }
-        // Dodge 함수 실행
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartCoroutine(Dodge());
-        }
-        if (stateDodge == true)
-        {
-            StopAnim("isJump");
-        }
-
-        // 힐 Potion 먹는 함수
-        hpPotionValue.text = InvenCtrl.PotionCount.ToString();
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            HealHp();
-        }
-
-        //Idle일때 스킬 및 공격 false 판정
-        if (stateIdle == true && isDodge == false)
-        {
-            PlayAnim("isIdle");
-            isAttack = false;
-            isSkill = false;
-            StopAnim("CommonAttack");
-        }
-
-        //다른 모션일 때, 혹시라도 Move가 실행되도 달리지 못하게
-        if (stateWait == true || stateIdle == true || stateAttack1 == true ||
-           stateAttack1_Wait == true || stateAttack2 == true || stateAttack2_Wait == true ||
-           stateAttack3 == true || stateSkillQ == true || stateSkillW == true ||
-           stateSkillE == true || stateJumpAttack2 == true ||
-           (stateJump == true && !anim.GetBool("isRun")) ||
-           (stateFall == true && !anim.GetBool("isRun")))
         {
             moveSpd = 0;
-        }
-
-        //대쉬일 때
-        else if (stateDash == true)
-        {
-            moveSpd = moveSpeed * 1.25f;
-        }
-        else
-        {
-            moveSpd = moveSpeed;
-        }
-
-        //캐릭터 스킬 이펙트
-        LocalSkillYRot = transform.localEulerAngles.y;
-        SkillYRot = transform.eulerAngles.y;
-        if (PlayerPrefs.GetString("property") == "Fire")
-        {
-            Attack1_Effect = commonAttack_Fire1_Effect;
-            Attack2_Effect = commonAttack_Fire2_Effect;
-            Attack3_Effect = commonAttack_Fire3_Effect;
-            SkillQ_Effect = Skill_FireQ_Effect;
-            SkillW_Effect = Skill_FireW_Effect;
-            SkillE1_Effect = Skill_FireE1_Effect;
-            SkillE2_Effect = Skill_FireE2_Effect;
-            SkillE3_Effect = Skill_FireE3_Effect;
-            SkillE4_Effect = Skill_FireE4_Effect;
-        }
-        else if (PlayerPrefs.GetString("property") == "Ice")
-        {
-            Attack1_Effect = commonAttack_Ice1_Effect;
-            Attack2_Effect = commonAttack_Ice2_Effect;
-            Attack3_Effect = commonAttack_Ice3_Effect;
-            SkillQ_Effect = Skill_IceQ_Effect;
-            SkillW_Effect = Skill_IceW_Effect;
-            SkillE1_Effect = Skill_IceE1_Effect;
-            SkillE2_Effect = Skill_IceE2_Effect;
-            SkillE3_Effect = Skill_IceE3_Effect;
-            SkillE4_Effect = Skill_IceE4_Effect;
-        }
-        else
-        {
-            Attack1_Effect = commonAttack_Ice1_Effect;
-            Attack2_Effect = commonAttack_Ice2_Effect;
-            Attack3_Effect = commonAttack_Ice3_Effect;
-            SkillQ_Effect = Skill_IceQ_Effect;
-            SkillW_Effect = Skill_IceW_Effect;
-        }
-
-        // 플레이어 피가 30보다 작으면 지속적으로 화면이 깜빡임
-        if(Status.HP <= 30)
-        {
-            cameraEffect.GetComponent<CameraEffectCtrl>().DangerousCamera();
         }
     }
 

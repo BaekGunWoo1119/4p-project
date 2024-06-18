@@ -98,7 +98,7 @@ public class InventoryCtrl : MonoBehaviour
         CheckInven();
     }
 
-    void CheckInven()
+    public void CheckInven()
     {
 
         for(int i = 0; i < itemCount; i++)
