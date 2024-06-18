@@ -190,7 +190,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         for(int i = 0; i <= 7; i++)
         {
             string statname = "StatText-" + i;
-            Debug.Log(statname);
+            //Debug.Log(statname);
             StateText[i] = GameObject.Find(statname).GetComponent<TMP_Text>();
         }
         
@@ -711,12 +711,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region 충돌 관련 함수
     protected virtual void OnTriggerEnter(Collider col)
     {
+        Debug.Log(col);
         if (col.gameObject.tag == "Monster_Melee" && !isImmune)
         {
             // 특정 이름을 가진 부모 객체를 찾습니다.
             string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
             Transform parent = col.transform;
             MonoBehaviour monsterCtrl = null;
+            Debug.Log(col);
 
             while (parent != null)
             {

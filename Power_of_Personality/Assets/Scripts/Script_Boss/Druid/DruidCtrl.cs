@@ -41,7 +41,6 @@ public class DruidCtrl : BossCtrl
     protected override void Awake()
     {
         base.Awake();
-        SkillYRot = transform.eulerAngles.y;
         Scratch_Collider = GameObject.Find("Scratch");
         GroundStrike_Collider_S = GameObject.Find("GroundStrike_S");
         GroundStrike_Collider_M = GameObject.Find("GroundStrike_M");
@@ -70,6 +69,7 @@ public class DruidCtrl : BossCtrl
     protected override void Update()
     {
         base.Update();
+        SkillYRot = transform.localEulerAngles.y;
         DistanceCheck();
         if (isVine == true && Vine_Collider.transform.localScale.x <= 12.0)
         {
@@ -640,25 +640,25 @@ public class DruidCtrl : BossCtrl
     #region 공격 이펙트 스크립트
     public void Scratch_1()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30, -30, 90));
+            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30, SkillYRot - 120f, 90));
         }
         else
         {
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30, 150, 90));
+            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30, SkillYRot - 120f, 90));
         }
     }
 
     public void Scratch_2()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
+        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(-30, -30, 90));
+            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(-30, SkillYRot - 120f, 90));
         }
         else
         {
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(-30, 150, 90));
+            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(-30, SkillYRot - 120f, 90));
         }
     }
     public void GroundStrike()
@@ -668,41 +668,19 @@ public class DruidCtrl : BossCtrl
 
     public void Projectile()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            SkillEffect = Instantiate(Projectile_Effect, EffectGen.transform.position, Quaternion.Euler(0, 0, 0));
-            SkillCollider = Instantiate(Projectile_Collider, EffectGen.transform.position, Quaternion.Euler(0, 0, 0));
-        }
-        else
-        {
-            SkillEffect = Instantiate(Projectile_Effect, EffectGen.transform.position, Quaternion.Euler(0, 180, 0));
-            SkillCollider = Instantiate(Projectile_Collider, EffectGen.transform.position, Quaternion.Euler(0, 0, 0));
-        }
+        SkillEffect = Instantiate(Projectile_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-180, 0));
+        SkillCollider = Instantiate(Projectile_Collider, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-180, 0));
     }
 
     public void Vine()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            SkillEffect = Instantiate(Vine_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(90, 0, 0));
-        }
-        else
-        {
-            SkillEffect = Instantiate(Vine_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(90, 180, 0));
-        }
+        SkillEffect = Instantiate(Vine_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(90, SkillYRot-180, 0));
     }
 
     public void ToxicPortal()
     {
-        if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
-        {
-            SkillEffect = Instantiate(ToxicPortal_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(90, 90, 0));
-        }
-        else
-        {
-            SkillEffect = Instantiate(ToxicPortal_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(90, -90, 0));
-        }
-        GameObject.FindWithTag("CameraEffect").GetComponent<CameraEffectCtrl>().poisonEffectCamera();
+        SkillEffect = Instantiate(ToxicPortal_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(90, 0, 0));
+        //GameObject.FindWithTag("CameraEffect").GetComponent<CameraEffectCtrl>().poisonEffectCamera();
     }
     #endregion
 }

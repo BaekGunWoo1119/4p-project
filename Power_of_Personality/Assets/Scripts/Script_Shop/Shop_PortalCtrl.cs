@@ -12,11 +12,13 @@ public class Shop_PortalCtrl : MonoBehaviour
     public GameObject orgWindow;
     private GameObject playerObj;
     private Vector3 playerPos;
+    private GameObject thisObj;
     private float orgSpd;
     public static bool isShop = false;
 
     void Start()
     {
+        thisObj = this.gameObject;
         StartCoroutine(FindInventory());
     }
 
@@ -66,5 +68,7 @@ public class Shop_PortalCtrl : MonoBehaviour
         orgWindow.transform.localScale = new Vector3(1, 1, 1);
         GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().CheckInven();
         inventory[0].ItemPlus();
+        Destroy(GameObject.Find("Shop_Info_Canvas"));
+        Destroy(thisObj);
     }
 }
