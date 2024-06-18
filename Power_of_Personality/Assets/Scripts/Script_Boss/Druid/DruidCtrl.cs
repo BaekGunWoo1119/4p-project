@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -105,6 +106,7 @@ public class DruidCtrl : BossCtrl
         if (HpBar != null)
             HpBar.value = curHP / maxHP;
     }
+
     #endregion
 
     #region 보스 피격, 피해량 공식
@@ -332,7 +334,7 @@ public class DruidCtrl : BossCtrl
                 material.color = Color.red;
             }
 
-            //StartCoroutine(DamageTextAlpha());
+            StartCoroutine(DamageTextAlpha());
 
             yield return new WaitForSeconds(0.1f);
             anim.SetBool("TakeDamage", false);
@@ -423,8 +425,6 @@ public class DruidCtrl : BossCtrl
         }
         yield return null;
     }
-
-
 
     public IEnumerator BackDash()
     {

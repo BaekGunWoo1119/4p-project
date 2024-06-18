@@ -18,6 +18,10 @@ public class SpiderCtrl : MonsterCtrl
         attackRadius = 5.0f;
         base.Awake();
     }
+    public override void Start()
+    {
+        base.Start();
+    }
     public override void Update()
     {
         base.Update();

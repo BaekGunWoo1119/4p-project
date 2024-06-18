@@ -14,7 +14,6 @@ public class Shop_PortalCtrl : MonoBehaviour
     private Vector3 playerPos;
     private GameObject thisObj;
     private float orgSpd;
-    public static bool isShop = false;
 
     void Start()
     {
@@ -32,11 +31,12 @@ public class Shop_PortalCtrl : MonoBehaviour
                 //현재 플레이어 위치 및 현재 스테이지 저장 후 씬 넘기기
                 playerObj = col.gameObject;
                 playerPos = col.gameObject.transform.position;
-                col.gameObject.transform.position = shopPos.position;
+                Transform col_trs = col.gameObject.transform;
+                col_trs.position = shopPos.position;
                 shopWindow.transform.localScale = new Vector3(1, 1, 1);
                 GameObject.Find("Exit_Shop").SetActive(false);
                 orgWindow.transform.localScale = new Vector3(0, 0, 0);
-                isShop = true;
+                PlayerCtrl.isShop = true;
             }
         }
     }
@@ -63,7 +63,7 @@ public class Shop_PortalCtrl : MonoBehaviour
     public void Exit_Shop()
     {
         playerObj.transform.position = playerPos;
-        isShop = false;
+        PlayerCtrl.isShop = false;
         shopWindow.transform.localScale = new Vector3(0, 0, 0);
         orgWindow.transform.localScale = new Vector3(1, 1, 1);
         GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().CheckInven();

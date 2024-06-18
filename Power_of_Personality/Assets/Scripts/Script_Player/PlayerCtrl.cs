@@ -135,6 +135,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //스탯 UI 관련
     protected TMP_Text[] StateText; 
 
+    public static bool isShop = false;
+
     //보스 관련
     public GameObject Druid;
     public GameObject DruidGen;
@@ -246,7 +248,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected virtual void Update()
     {
         // 해당 bool값 실행 시 모든 행동 멈춤
-        if(!Shop_PortalCtrl.isShop)
+        if(!isShop)
         {
             if (!canTakeDamage)
             {
@@ -296,7 +298,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             transform.GetChild(0).localPosition = Vector3.zero;
 
             //데미지 캔버스 Y값 고정
-            //PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);  //잠시
+            PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
 
             // Attack 함수 실행
             if (Input.GetKeyDown(KeyCode.A))
@@ -712,7 +714,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected virtual void OnTriggerEnter(Collider col)
     {
         Debug.Log(col);
-        if (col.gameObject.tag == "Monster_Melee" && !isImmune)
+        if (col.gameObject.tag == "Monster_Melee" /*&& !isImmune */)
         {
             // 특정 이름을 가진 부모 객체를 찾습니다.
             string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
