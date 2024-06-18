@@ -6,18 +6,17 @@ public class Archer_CommonAttack_Moveforward : MonoBehaviour
     private float speed = 30f;
     private float SkillDuration;
     private Vector3 SkillDir;
-    private GameObject EffectGen;
 
-    void Start()
+    void Awake()
     {
         SkillDuration = 0;
-        EffectGen = GameObject.Find("EffectGen - Player");
-        SkillDir = EffectGen.transform.forward;
+        SkillDir = new Vector3(0, 0, 1);
     }
 
     void Update()
+
     {
-        transform.Translate(SkillDir * speed * Time.deltaTime);
+        transform.Translate(-SkillDir * speed * Time.deltaTime);
         SkillDuration = SkillDuration + Time.deltaTime;
         if (SkillDuration > 1.5)
         {
