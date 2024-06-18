@@ -103,7 +103,8 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             if(transform.position.y != YOrgPos)
                 transform.position = new Vector3(transform.position.x, YOrgPos, transform.position.z);
             Debug.Log(YOrgPos);
-            isAttack = false;
+            //isAttack = false;
+            rd.velocity = Vector3.zero;
         }
         else if(stateJumpAttack1 == false && stateJumpAttack2 == false && stateJumpAttack3 == false)
         {
@@ -349,33 +350,33 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(LocalSkillYRot);
         yield return new WaitForSeconds(1.8f);
-        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         audioSources[3].Play();
         //스킬 나갈 시 사운드 및 콜라이더
         yield return new WaitForSeconds(0.6f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(0.8f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(0.4f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(0.4f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(1.2f);
         audioSources[3].Stop();
         audioSources[3].Play();
         yield return new WaitForSeconds(0.7f);
         audioSources[3].Stop();
-        GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
         yield return new WaitForSeconds(0.1f);
-        SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
@@ -414,8 +415,10 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
         setParticles1 = SkillQ_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
         setParticles2 = SkillQ_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles5 = SkillQ_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
         StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles1));
         StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles2));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles5));
         SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
 
     }
@@ -432,10 +435,14 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         setParticles2 = SkillE_Effect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
         setParticles3 = SkillE_Effect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
         setParticles4 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles5 = SkillE_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles6 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
         StartCoroutine(RotateEffect(0.6f, (SkillYRot - 90f) / 60, 0f, setParticles1));
         StartCoroutine(RotateEffect(-0.6f, (SkillYRot - 90f) / 60, 0f, setParticles2));
         StartCoroutine(RotateEffect(0.8f, (SkillYRot - 90f) / 60, 0f, setParticles3));
         StartCoroutine(RotateEffect(-0.8f, (SkillYRot - 90f) / 60, 0f, setParticles4));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles5));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles6));
         SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
     }
     IEnumerator RotateEffect(float xR, float yR, float zR, ParticleSystem particle)

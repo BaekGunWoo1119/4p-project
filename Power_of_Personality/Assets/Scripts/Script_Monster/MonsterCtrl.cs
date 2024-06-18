@@ -63,8 +63,13 @@ public class MonsterCtrl : MonoBehaviour
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
-        PlayerTr = this.transform;          // 플레이어 Transform을 설정하기 전에 임시로 몬스터(스크립트가 들어있는 게임 오브젝트)의 Transform을 담아놓음.
         StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
+    }
+    
+    public virtual void Start()
+    {
+        PlayerTr = this.transform;
+        StartCoroutine(FindPlayer());
     }
 
     public virtual void Update()
@@ -77,7 +82,10 @@ public class MonsterCtrl : MonoBehaviour
         }
         AttackCoolTime += Time.deltaTime;
         TickCoolTime += Time.deltaTime;
-        Turn();
+        if(PlayerTr != null)
+        {
+            Turn();
+        }
     }
 
     #region 몬스터 HP 설정하는 부분

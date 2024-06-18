@@ -26,14 +26,7 @@ public class Inventory : MonoBehaviour
             slots[i] = TraitBoxes[i].GetComponent<Slot>();
         }
 
-        for(int i = 0; i < InvenCtrl.itemCount; i++)
-        {
-            if(InvenCtrl.collectedItems[i] != null)
-            {
-                Debug.Log(InvenCtrl.collectedItemsID[i]);
-                Instantiate(InvenCtrl.itemList[InvenCtrl.collectedItemsID[i]], this.transform.position, Quaternion.identity);
-            }
-        }
+        ItemPlus();
     }
 
     void Update()
@@ -76,6 +69,18 @@ public class Inventory : MonoBehaviour
             Status.FixedIce += itemToBeAdded.FixedIce;
             Status.PercentIce += itemToBeAdded.PercentIce;
             Status.StatUpdate();
+        }
+    }
+
+    public void ItemPlus()
+    {
+        for(int i = 0; i < InvenCtrl.itemCount; i++)
+        {
+            if(InvenCtrl.collectedItems[i] != null)
+            {
+                Debug.Log(InvenCtrl.collectedItemsID[i]);
+                Instantiate(InvenCtrl.itemList[InvenCtrl.collectedItemsID[i]], this.transform.position, Quaternion.identity);
+            }
         }
     }
     

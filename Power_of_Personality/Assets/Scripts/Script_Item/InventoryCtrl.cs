@@ -57,6 +57,11 @@ public class InventoryCtrl : MonoBehaviour
 
         PotionCount = 0;
         StatPoint = 0;
+
+        HiddenShopSlots = GameObject.Find("HiddenShop_Slots");
+       
+        //NormalShopSlots = GameObject.Find("Slot");
+        
         
     }   
 
@@ -76,6 +81,8 @@ public class InventoryCtrl : MonoBehaviour
     {
         CheckInven();
 
+        CheckPlayer();
+
         if(scene.name == "Hidden_Shop")
         {
             HiddenShopSlots = GameObject.Find("Slots");
@@ -84,21 +91,14 @@ public class InventoryCtrl : MonoBehaviour
         {
             NormalShopSlots = GameObject.Find("Slot");
         }
-        else
-        {
-
-        }
-
     }
 
     void OnSceneUnloaded(Scene scene)
     {
-        //Debug.Log("씬이 언로드되었습니다: " + scene.name);
-
         CheckInven();
     }
 
-    void CheckInven()
+    public void CheckInven()
     {
 
         for(int i = 0; i < itemCount; i++)
@@ -107,7 +107,7 @@ public class InventoryCtrl : MonoBehaviour
         }
     }
     
-    public void InsertItem()
+    public void CheckPlayer()
     {
         //플레이어 확인(인벤토리 연결)
         GameObject[] player = GameObject.FindGameObjectsWithTag("Player");
@@ -115,14 +115,6 @@ public class InventoryCtrl : MonoBehaviour
         for (int i = 0; i < player.Length; i++)
         {
             inventory[i] = player[i].GetComponent<Inventory>();
-        }
-
-        if(collectedItems != null)
-        {
-            for(int i = 0; i < collectedItems.Length; i++)
-            {
-                inventory[0].AddItem(collectedItems[i]);
-            }
         }
     }
 }
