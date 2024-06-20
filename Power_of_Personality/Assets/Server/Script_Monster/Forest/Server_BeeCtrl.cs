@@ -70,9 +70,9 @@ public class Server_BeeCtrl : Server_MonsterCtrl
     {
         return base.GetHPBarPosition(); // 원하는 위치로 수정
     }
-    public override IEnumerator DamageTextAlpha()
+    public override IEnumerator DamageTextAlpha(float CurDamage)
     {
-        yield return base.DamageTextAlpha();
+        yield return base.DamageTextAlpha(CurDamage);
     }
 
         [PunRPC]

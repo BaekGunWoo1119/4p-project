@@ -64,9 +64,9 @@ public class Server_GolemCtrl : Server_MonsterCtrl
     {
         return base.GetHPBarPosition(); // ���ϴ� ��ġ�� ����
     }
-    public override IEnumerator DamageTextAlpha()
+    public override IEnumerator DamageTextAlpha(float CurDamage)
     {
-        yield return base.DamageTextAlpha();
+        yield return base.DamageTextAlpha(CurDamage);
     }
 
     [PunRPC]
