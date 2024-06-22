@@ -72,11 +72,6 @@ public class MonsterCtrl : MonoBehaviour
         StartCoroutine(FindPlayer());
     }
 
-    public virtual void Start()
-    {
-        PlayerTr = this.transform;
-    }
-
     public virtual void Update()
     {
         rd.AddForce(Vector3.down * 4, ForceMode.VelocityChange);

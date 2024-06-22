@@ -91,7 +91,7 @@ public class CameraCtrl : MonoBehaviour
 
     #region 카메라 켜기/끄기
 
-    protected virtual void SetCamera(int cameraNumber)
+    public virtual void SetCamera(int cameraNumber)
     {
         for (int i = 0; i < virtualCameras.Length; i++)
         {

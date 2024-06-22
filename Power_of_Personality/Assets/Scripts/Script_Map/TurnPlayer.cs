@@ -1,23 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class TurnPlayer : MonoBehaviour
 {
-    //public GameObject TurnPoint;
     public GameObject CurMap;
     public GameObject NextMap;
-    //public GameObject CurMapClass;
-    //public GameObject NextMapClass;
-
+    public GameObject MainCamera;
+    public GameObject bfCamera;
+    public GameObject CurCamera;
+    public GameObject NextCamera;
     public GameObject Player;
-    //private bool IsNext = false;
-    //private float PlayerYRot;
-    //private PlayerCtrl_Rogue playerCtrl;
-    // Start is called before the first frame update
+
     void Start()
     {
         StartCoroutine(FindPlayer());
+        if(CurCamera != null && NextCamera != null)
+        {
+            CurCamera.SetActive(false);
+            NextCamera.SetActive(false);
+        }
         // PlayerCtrl_Rogue playerCtrl = Player.GetComponent<PlayerCtrl_Rogue>();
         // PlayerYRot = playerCtrl.YRot;
 
@@ -33,22 +36,33 @@ public class TurnPlayer : MonoBehaviour
     void OnTriggerExit(Collider col) 
     {
         //Debug.Log(col);
-        if(col.CompareTag("Player")){
+        if(col.CompareTag("Player"))
+        {
             Debug.Log("PlayerENTER");
             //if(IsNext == false){
-            if(Player.transform.localEulerAngles.y > 60 && Player.transform.localEulerAngles.y < 120){
-            Player.transform.SetParent(NextMap.transform);
-            //Player.transform.localRotation = Quaternion.Euler(0,90,0);
-            //Player.transform.position=NextMap.transform.position;
-            //IsNext = true;
-            //Debug.Log(Player.transform.localEulerAngles.y);
+            if(Player.transform.localEulerAngles.y > 60 && Player.transform.localEulerAngles.y < 120)
+            {
+                Player.transform.SetParent(NextMap.transform);
+                if(CurCamera != null && NextCamera != null)
+                {
+                    StartCoroutine(TurnCamera(NextCamera));
+                }
+                //Player.transform.localRotation = Quaternion.Euler(0,90,0);
+                //Player.transform.position=NextMap.transform.position;
+                //IsNext = true;
+                //Debug.Log(Player.transform.localEulerAngles.y);
             }
-            else{
-            Player.transform.SetParent(CurMap.transform);
-            //Player.transform.localRotation = Quaternion.Euler(0,-90,0);
-            //Player.transform.position=CurMap.transform.position;
-            //IsNext = false;
-            //Debug.Log(Player.transform.localEulerAngles.y);
+            else
+            {
+                if(CurCamera != null && NextCamera != null)
+                {
+                    Player.transform.SetParent(CurMap.transform);
+                    StartCoroutine(TurnCamera(CurCamera));
+                }
+                //Player.transform.localRotation = Quaternion.Euler(0,-90,0);
+                //Player.transform.position=CurMap.transform.position;
+                //IsNext = false;
+                //Debug.Log(Player.transform.localEulerAngles.y);
             }
         }
     }
@@ -57,5 +71,31 @@ public class TurnPlayer : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         Player = GameObject.FindWithTag("Player");
+    }
+
+    IEnumerator TurnCamera(GameObject Camera)
+    {
+        if(Camera == CurCamera)
+        {
+            MainCamera.GetComponent<CameraCtrl>().SetCamera(0);
+            NextCamera.SetActive(true);
+            bfCamera.SetActive(false);
+            yield return new WaitForSeconds(0.01f);
+            Camera.SetActive(true);
+            NextCamera.SetActive(false);
+            yield return new WaitForSeconds(0.6f);
+            MainCamera.GetComponent<CameraCtrl>().SetCamera(0);
+        }
+        else if(Camera == NextCamera)
+        {
+            MainCamera.GetComponent<CameraCtrl>().SetCamera(0);
+            CurCamera.SetActive(true);
+            bfCamera.SetActive(false);
+            yield return new WaitForSeconds(0.01f);
+            Camera.SetActive(true);
+            CurCamera.SetActive(false);
+            yield return new WaitForSeconds(0.6f);
+            MainCamera.GetComponent<CameraCtrl>().SetCamera(0);
+        }
     }
 }
