@@ -11,7 +11,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 {
     #region 변수 선언
     //Raycast 관련
-    protected float raycastDistance = 0.5f;
+    protected float raycastDistance = 0.75f;
     protected RaycastHit hit;
     protected GameObject BossWall1;
     protected GameObject BossWall2;
@@ -35,6 +35,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     // 애니메이션 컨트롤
     protected Vector3 initPos;
+    protected bool isFloor = false;
+    protected bool isStair = false;
     protected bool isSkill = false;
     protected bool isAttack = false;
     protected bool isJumping = false;
@@ -669,15 +671,29 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         if (Physics.Raycast(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up, out hit, raycastDistance))
         {
-            if (hit.collider.CompareTag("Floor"))
+            Debug.Log(hit.collider.tag);
+            if (hit.collider.CompareTag("Floor") && !hit.collider.CompareTag("Stair"))
             {
+                isFloor = true;
+                if (Vector3.Distance(hit.point, transform.position) <= 0.01)
+                {
+                    isJumping = false; //isJump, isFall을 다시 false로
+                    StopAnim("isJump");
+                    StopAnim("isFall");
+                }
+                return true;
+            }
+            else if (hit.collider.CompareTag("Stair"))
+            {
+                isStair = true;
                 isJumping = false; //isJump, isFall을 다시 false로
                 StopAnim("isJump");
                 StopAnim("isFall");
-                Debug.DrawRay(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up * raycastDistance, Color.green);
                 return true;
             }
         }
+        isFloor = false;
+        isStair = false;
         Debug.DrawRay(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up * raycastDistance, Color.red);
         return false;
     }
@@ -804,7 +820,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     protected virtual void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor" && !stateSkillE && !stateSkillE)    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
+        if (collision.gameObject.tag == "Floor" && !stateSkillE && !stateSkillE && !isStair && !isFloor)    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
         {
             Fall();
         }
