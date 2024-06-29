@@ -188,6 +188,10 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         base.OnTriggerEnter(col);
     }
+    protected override void OnTriggerExit(Collider col)
+    {
+        base.OnTriggerExit(col);
+    }
 
     protected override void OnTriggerStay(Collider col)
     {

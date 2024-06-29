@@ -119,6 +119,10 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         base.OnTriggerEnter(col);
     }
+    protected override void OnTriggerExit(Collider col)
+    {
+        base.OnTriggerExit(col);
+    }
 
     protected override void OnTriggerStay(Collider col)
     {

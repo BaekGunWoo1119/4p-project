@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Status : MonoBehaviour
 {
-    public static float HP = 10000f;
-    public static float MaxHP = 10000f;
+    public static float HP = 100f;
+    public static float MaxHP = 100f;
     public static float FixedAD = 50f; //공격력 고정
     public static float PercentAD = 100f; //공격력 비율
     public static float FixedArmor = 50f; //방어력 고정
@@ -37,8 +37,6 @@ public class Status : MonoBehaviour
 
     void Start()    
     {
-        HP = 10000f;
-        MaxHP = 10000f;
         StatUpdate();
     }
 
