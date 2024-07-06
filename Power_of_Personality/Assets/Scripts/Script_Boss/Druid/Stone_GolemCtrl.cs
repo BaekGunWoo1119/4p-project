@@ -9,12 +9,13 @@ public class Stone_Golem : BossCtrl
     public GameObject FallingRock_Effect;
     public GameObject GroundSmash_Effect;
     public GameObject PowerSmash_Effect;
+    public GameObject JumpSmash_Effect;
 
     void Update()
     {
         SkillYRot = transform.localEulerAngles.y;
 
-        Debug.Log(SkillYRot);
+        //Debug.Log(SkillYRot);
     }
 
     #region 공격 이펙트 스크립트
@@ -51,7 +52,15 @@ public class Stone_Golem : BossCtrl
     }
     public void GroundSmash()
     {
+        SkillEffect = Instantiate(GroundSmash_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z + 5), Quaternion.Euler(0, 0, 0));
+    }
+    public void PowerSmash()
+    {
         SkillEffect = Instantiate(PowerSmash_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z + 5), Quaternion.Euler(0, 0, 0));
+    }
+    public void JumpSmash()
+    {
+        SkillEffect = Instantiate(JumpSmash_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z + 5), Quaternion.Euler(0, 0, 0));
     }
 
     #endregion
