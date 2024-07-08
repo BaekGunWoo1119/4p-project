@@ -152,6 +152,10 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         base.OnCollisionExit(collision);
     }
+    protected override void OnTriggerExit(Collider col)
+    {
+        base.OnTriggerExit(col);
+    }
     #endregion
 
     #region 공격 관련 함수

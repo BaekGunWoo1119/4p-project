@@ -188,6 +188,10 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         base.OnTriggerEnter(col);
     }
+    protected override void OnTriggerExit(Collider col)
+    {
+        base.OnTriggerExit(col);
+    }
 
     protected override void OnTriggerStay(Collider col)
     {
@@ -303,7 +307,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         isSkillQ = false;
         yield return new WaitForSeconds(0.2f);
-        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, this.transform.rotation);
         yield return new WaitForSeconds(0.1f);
         audioSources[3].Play();
         yield return new WaitForSeconds(0.3f);
@@ -350,30 +354,36 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(LocalSkillYRot);
         yield return new WaitForSeconds(1.8f);
-        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         audioSources[3].Play();
+        yield return new WaitForSeconds(0.2f);
+        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         //스킬 나갈 시 사운드 및 콜라이더
+        yield return new WaitForSeconds(0.4f);
+        audioSources[3].Stop();
+        audioSources[3].Play();
+        yield return new WaitForSeconds(0.2f);
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         yield return new WaitForSeconds(0.6f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.2f);
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        yield return new WaitForSeconds(0.2f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
+        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        yield return new WaitForSeconds(0.2f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.4f);
-        audioSources[3].Stop();
+        yield return new WaitForSeconds(0.2f);
         SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
-        audioSources[3].Play();
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
         audioSources[3].Play();
         yield return new WaitForSeconds(0.7f);
         audioSources[3].Stop();
+        yield return new WaitForSeconds(0.2f);
         GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
         yield return new WaitForSeconds(0.1f);
         SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
