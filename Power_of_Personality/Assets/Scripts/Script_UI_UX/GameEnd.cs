@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameEnd : MonoBehaviour
 {
@@ -13,12 +14,16 @@ public class GameEnd : MonoBehaviour
     private bool isFading = false; // 페이드 여부
     private float targetAlpha = 0.0f; //알파 값 (0: 투명, 1: 불투명)
 
+    private TMP_Text endText; //정보 적을 텍스트
+
     void Start()
     {
+        endText = GameObject.Find("Text-GameOver").GetComponent<TMP_Text>(); 
         // 초기에는 UI 요소를 숨김
         ApplyFadeChild(gameOverGRP.transform);
         // 변수 초기화
         targetGRP = new Graphic[gameOverGRP.transform.childCount + 1];
+        gameOverGRP.SetActive(false);
     }
 
     void Update()
@@ -39,6 +44,8 @@ public class GameEnd : MonoBehaviour
         // 페이드 중이 아닌 경우에만 페이드를 시작
         if (fadeIn == true)
         {
+            gameOverGRP.SetActive(true);
+            endText.text = "플레이 시간 : " + Time.deltaTime.ToString() + "\n\n최종 MBTI : "+ PlayerPrefs.GetString("PlayerMBTI") +"\n\n추가 보너스 스텟 : 1";
             targetGRP[0] = gameOverGRP.GetComponent<Graphic>();
             for(int i = 1; i <= gameOverGRP.transform.childCount; i++)
             {

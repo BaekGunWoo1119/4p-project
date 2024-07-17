@@ -296,7 +296,6 @@ public class SceneLoader : MonoBehaviour
         {
             Exit_Game =  GameObject.Find("Exit").GetComponent<Button>();
             Setting_Back = GameObject.Find("OK").GetComponent<Button>();
-            GameObject.Find("Player-MBTI").GetComponent<TMP_Text>().text = PlayerPrefs.GetString("PlayerMBTI");
             GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
 
             Time.timeScale = 1.0f;
