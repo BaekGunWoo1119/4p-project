@@ -2,12 +2,14 @@ using Photon.Pun.Demo.SlotRacer;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Inventory : MonoBehaviour
 {
     public GameObject inventoryObject;
     public InventoryCtrl InvenCtrl;
 
+    public GameObject[] TraitBoxes;
     public Slot[] slots;
 
     private Vector3 originalScale;
@@ -18,9 +20,11 @@ public class Inventory : MonoBehaviour
         originalScale = new Vector3(1, 1, 1);
         hiddenScale = new Vector3(0, 0, 0);
 
-        GameObject[] TraitBoxes = GameObject.FindGameObjectsWithTag("TraitBox");
+        TraitBoxes = GameObject.FindGameObjectsWithTag("TraitBox").OrderBy(go => go.name).ToArray();
+
         InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
         //(06.03) 슬롯 추가
+        
         for(int i = 0; i < TraitBoxes.Length; i++) 
         {
             slots[i] = TraitBoxes[i].GetComponent<Slot>();
