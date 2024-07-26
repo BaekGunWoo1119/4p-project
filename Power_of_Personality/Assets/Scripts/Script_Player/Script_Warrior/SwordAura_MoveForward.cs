@@ -13,12 +13,12 @@ public class SwordAura_MoveForward : MonoBehaviour
     void Start()
     {
         SkillDuration = 0;
-        SkillDir = new Vector3(0, 0, 1);
+        SkillDir = Vector3.forward;
     }
 
     void Update()
     {
-        transform.Translate(-SkillDir * speed * Time.deltaTime);
+        transform.Translate(SkillDir * speed * Time.deltaTime);
         SkillDuration = SkillDuration + Time.deltaTime;
         if (SkillDuration > 1.5)
         {
