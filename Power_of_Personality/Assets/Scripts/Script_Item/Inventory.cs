@@ -73,6 +73,7 @@ public class Inventory : MonoBehaviour
             Status.FixedIce += itemToBeAdded.FixedIce;
             Status.PercentIce += itemToBeAdded.PercentIce;
             Status.StatUpdate();
+            Status.SetUpdate(itemToBeAdded.itemID);
         }
     }
 
