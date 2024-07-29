@@ -114,6 +114,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public GameObject DamageText; //텍스트
     public GameObject Damage_Effect;
     public GameObject Heal_Effect;
+    public GameObject Item_Weapon_Effect;
+    public GameObject Item_Weapon_Ice_Effect;
+    public GameObject Item_Weapon_Fire_Effect;
+    public GameObject Item_Aura_Effect;
+    public GameObject Item_Aura_Ice_Effect;
+    public GameObject Item_Aura_Fire_Effect;
     public GameObject PlayerCanvas;
 
     // 카메라, 사운드
@@ -487,6 +493,19 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 SkillE2_Effect = Skill_FireE2_Effect;
                 SkillE3_Effect = Skill_FireE3_Effect;
                 SkillE4_Effect = Skill_FireE4_Effect;
+                //아이템 이펙트 추가(07.29 백건우)
+                Item_Weapon_Effect = Item_Weapon_Fire_Effect;
+                if(Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                {
+                    Item_Weapon_Fire_Effect.SetActive(true);
+                    Item_Weapon_Ice_Effect.SetActive(false);
+                }
+                Item_Aura_Effect = Item_Aura_Fire_Effect;
+                if(Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
+                {
+                    Item_Aura_Fire_Effect.SetActive(true);
+                    Item_Aura_Ice_Effect.SetActive(false);
+                }
             }
             else if (PlayerPrefs.GetString("property") == "Ice")
             {
@@ -499,6 +518,19 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 SkillE2_Effect = Skill_IceE2_Effect;
                 SkillE3_Effect = Skill_IceE3_Effect;
                 SkillE4_Effect = Skill_IceE4_Effect;
+                //아이템 이펙트 추가(07.29 백건우)
+                Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                if(Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                {
+                    Item_Weapon_Fire_Effect.SetActive(false);
+                    Item_Weapon_Ice_Effect.SetActive(true);
+                }
+                Item_Aura_Effect = Item_Aura_Ice_Effect;
+                if(Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
+                {
+                    Item_Aura_Fire_Effect.SetActive(false);
+                    Item_Aura_Ice_Effect.SetActive(true);
+                }
             }
             else
             {
@@ -507,6 +539,23 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 Attack3_Effect = commonAttack_Ice3_Effect;
                 SkillQ_Effect = Skill_IceQ_Effect;
                 SkillW_Effect = Skill_IceW_Effect;
+                SkillE1_Effect = Skill_IceE1_Effect;
+                SkillE2_Effect = Skill_IceE2_Effect;
+                SkillE3_Effect = Skill_IceE3_Effect;
+                SkillE4_Effect = Skill_IceE4_Effect;
+                //아이템 이펙트 추가(07.29 백건우)
+                Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                if(Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                {
+                    Item_Weapon_Fire_Effect.SetActive(false);
+                    Item_Weapon_Ice_Effect.SetActive(true);
+                }
+                Item_Aura_Effect = Item_Aura_Ice_Effect;
+                if(Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
+                {
+                    Item_Aura_Fire_Effect.SetActive(false);
+                    Item_Aura_Ice_Effect.SetActive(true);
+                }
             }
 
             // 플레이어 피가 30보다 작으면 지속적으로 화면이 깜빡임
