@@ -15,7 +15,7 @@ G:/4p-project/Power_of_Personality
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-12290
+3734
 Successfully changed project path to: G:/4p-project/Power_of_Personality
 G:/4p-project/Power_of_Personality
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,11 +47,11 @@ G:/4p-project/Power_of_Personality
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [5736] Host "[IP] 192.168.0.26 [Port] 0 [Flags] 2 [Guid] 3075509331 [EditorId] 3075509331 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-JGTGNHB) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [26600] Host "[IP] 192.168.0.26 [Port] 0 [Flags] 2 [Guid] 3644158355 [EditorId] 3644158355 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-JGTGNHB) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [5736] Host "[IP] 192.168.0.26 [Port] 0 [Flags] 2 [Guid] 3075509331 [EditorId] 3075509331 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-JGTGNHB) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [26600] Host "[IP] 192.168.0.26 [Port] 0 [Flags] 2 [Guid] 3644158355 [EditorId] 3644158355 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-JGTGNHB) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 24.45 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 20.66 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.2.20f1 (c5d806317f84)
 [Subsystems] Discovering subsystems at path G:/Unity/2022.2.20f1/Editor/Data/Resources/UnitySubsystems
@@ -67,47 +67,161 @@ Initialize mono
 Mono path[0] = 'G:/Unity/2022.2.20f1/Editor/Data/Managed'
 Mono path[1] = 'G:/Unity/2022.2.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'G:/Unity/2022.2.20f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56648
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56528
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: G:/Unity/2022.2.20f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
 Register platform support module: G:/Unity/2022.2.20f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.011222 seconds.
-- Loaded All Assemblies, in  0.525 seconds
+Registered in 0.011731 seconds.
+- Loaded All Assemblies, in  0.518 seconds
 Native extension for WindowsStandalone target not found
 Native extension for Android target not found
-Android Extension - Scanning For ADB Devices 816 ms
+Android Extension - Scanning For ADB Devices 540 ms
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  1.284 seconds
+- Finished resetting the current domain, in  0.940 seconds
 Domain Reload Profiling:
-	ReloadAssembly (309ms)
-		BeginReloadAssembly (149ms)
+	ReloadAssembly (311ms)
+		BeginReloadAssembly (173ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (1ms)
+			CreateAndSetChildDomain (2ms)
 		LoadAllAssembliesAndSetupDomain (0ms)
-			LoadAssemblies (149ms)
+			LoadAssemblies (171ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (206ms)
-				TypeCache.Initialize (205ms)
-					TypeCache.ScanAssembly (203ms)
+			SetupTypeCache (201ms)
+				TypeCache.Initialize (199ms)
+					TypeCache.ScanAssembly (197ms)
 				ResolveRequiredComponents (1ms)
 		FinalizeReload (0ms)
 			ReleaseScriptCaches (0ms)
 			RebuildScriptCaches (0ms)
-			SetupLoadedEditorAssemblies (1203ms)
+			SetupLoadedEditorAssemblies (863ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (958ms)
-				SetLoadedEditorAssemblies (8ms)
+				InitializePlatformSupportModulesInManaged (679ms)
+				SetLoadedEditorAssemblies (7ms)
 				RefreshPlugins (0ms)
-				BeforeProcessingInitializeOnLoad (2ms)
-				ProcessInitializeOnLoadAttributes (154ms)
-				ProcessInitializeOnLoadMethodAttributes (81ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (117ms)
+				ProcessInitializeOnLoadMethodAttributes (59ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 ========================================================================
 Worker process is ready to serve import requests
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image G:\4p-project\Power_of_Personality\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+- Loaded All Assemblies, in  1.226 seconds
+Refreshing native plugins compatible for Editor in 6.60 ms, found 3 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.073 seconds
+Domain Reload Profiling:
+	ReloadAssembly (295ms)
+		BeginReloadAssembly (178ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (32ms)
+		LoadAllAssembliesAndSetupDomain (929ms)
+			LoadAssemblies (457ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (558ms)
+				TypeCache.Initialize (489ms)
+					TypeCache.ScanAssembly (482ms)
+				ResolveRequiredComponents (24ms)
+		FinalizeReload (0ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (0ms)
+			SetupLoadedEditorAssemblies (791ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (36ms)
+				SetLoadedEditorAssemblies (5ms)
+				RefreshPlugins (0ms)
+				BeforeProcessingInitializeOnLoad (102ms)
+				ProcessInitializeOnLoadAttributes (521ms)
+				ProcessInitializeOnLoadMethodAttributes (123ms)
+				AfterProcessingInitializeOnLoad (5ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (16ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.10 seconds
+Refreshing native plugins compatible for Editor in 5.68 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6224 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 86 unused Assets / (1.4 MB). Loaded Objects now: 6693.
+Memory consumption went from 254.3 MB to 252.9 MB.
+Total: 5.667900 ms (FindLiveObjects: 0.578900 ms CreateObjectMapping: 0.640600 ms MarkObjects: 4.028100 ms  DeleteObjects: 0.419300 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 2609.442934 seconds.
+  path: Assets/Prefabs/Prefab_UI_UX/Canvas Variant.prefab
+  artifactKey: Guid(5b448ea517b051d43938353445d1898c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Prefab_UI_UX/Canvas Variant.prefab using Guid(5b448ea517b051d43938353445d1898c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '16a5a8f035bbacf7baa5f464bf29e4fd') in 5.315789 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 6202
+========================================================================
+Received Import Request.
+  Time since last request: 26.101581 seconds.
+  path: Assets/Prefabs/Prefab_UI_UX/Canvas.prefab
+  artifactKey: Guid(f250cb2704889784fb0a041238f2d131) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Prefab_UI_UX/Canvas.prefab using Guid(f250cb2704889784fb0a041238f2d131) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '949c6e5c82285309b133b899791b20ff') in 3.399699 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3702
+========================================================================
+Received Import Request.
+  Time since last request: 99.062560 seconds.
+  path: Assets/Images
+  artifactKey: Guid(e8050890db14a764ba9c90b14914ddee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Images using Guid(e8050890db14a764ba9c90b14914ddee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21459ec2c0408508484d0963a9f09a7e') in 0.000954 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 259.751261 seconds.
+  path: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+  artifactKey: Guid(2e498d1c8094910479dc3e1b768306a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset using Guid(2e498d1c8094910479dc3e1b768306a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4e92905adb8a6bc698f96d00c3028421') in 0.075275 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 7
+========================================================================
+Received Import Request.
+  Time since last request: 0.002202 seconds.
+  path: Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Electronic Highway Sign SDF.asset
+  artifactKey: Guid(dc36b3fdc14f47ebb36fd484a67e268a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Electronic Highway Sign SDF.asset using Guid(dc36b3fdc14f47ebb36fd484a67e268a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5e835b937310016eeff6497f50378d07') in 0.061180 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 7
+========================================================================
+Received Import Request.
+  Time since last request: 1465.045609 seconds.
+  path: Assets/Prefabs/Prefab_UI_UX/Canvas.prefab
+  artifactKey: Guid(f250cb2704889784fb0a041238f2d131) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Prefab_UI_UX/Canvas.prefab using Guid(f250cb2704889784fb0a041238f2d131) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dcdc987225dc7af24acf89d189a2f5d6') in 3.235230 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3723
+========================================================================
+Received Import Request.
+  Time since last request: 15.353431 seconds.
+  path: Assets/Prefabs/Prefab_UI_UX/Multi_InGameCanvas.prefab
+  artifactKey: Guid(f250cb2704889784fb0a041238f2d131) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Prefab_UI_UX/Multi_InGameCanvas.prefab using Guid(f250cb2704889784fb0a041238f2d131) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f8f61d2ab8455d80dc51a1ce97cbb68') in 3.251971 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 3723
