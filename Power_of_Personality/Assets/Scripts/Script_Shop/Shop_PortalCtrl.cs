@@ -28,7 +28,7 @@ public class Shop_PortalCtrl : MonoBehaviour
             //Debug.Log("S키를 눌러 상점 진입");
             if(Input.GetKeyDown(KeyCode.S))
             {            
-                Open_Shop();
+                Open_Shop(col);
             }
         }
     }
@@ -52,7 +52,7 @@ public class Shop_PortalCtrl : MonoBehaviour
         }
     }
 
-    public void Open_Shop()
+    public void Open_Shop(Collider col)
     {
         //현재 플레이어 위치 및 현재 스테이지 저장 후 상점으로 넘기기
         playerObj = col.gameObject;
