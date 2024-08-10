@@ -59,7 +59,7 @@ public class MonsterCtrl : MonoBehaviour
         {
             AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
         }
-        SetHP(100000000000000);                         // 몬스터의 기본 HP를 설정
+        SetHP(100000000);                         // 몬스터의 기본 HP를 설정
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
@@ -190,32 +190,56 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WarriorAttack2")
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WarriorAttack3")
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
 
         if (col.tag == "WarriorSkillQ")
         {
             isHit = true;
             Damage = Status.TotalAP * 2f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WarriorSkillE")
         {
             isHit = true;
             Damage = Status.TotalAP * 4f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         #endregion
         #region 도적
@@ -223,49 +247,97 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeAttack2")
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeAttack3")
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeSkillQ_2")
         {
             isHit = true;
             Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeSkillW_2")
         {
             isHit = true;
             Damage = Status.TotalAP * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeSkillE_1")
         {
             isHit = true;
             Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeSkillE_2")
         {
             isHit = true;
             Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeSkillE_4")
         {
             isHit = true;
             Damage = Status.TotalAP * 3f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         #endregion
         #region 궁수
@@ -273,19 +345,35 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "ArcherAttack2")
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "ArcherSkillQ")
         {
             isHit = true;
             Damage = Status.TotalAP * 0.1f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         #endregion
         #region 마법사
@@ -293,31 +381,69 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            StartCoroutine(TakeDamage(Damage));
+        }
+        if (col.tag == "WizardAttack2")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WizardAttack3")
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WizardSkillW")
         {
             isHit = true;
             Damage = Status.TotalAP * 3f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WizardSkillE_1")
         {
             isHit = true;
             Damage = Status.TotalAP * 2.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WizardSkillE_2")
         {
             isHit = true;
             Damage = Status.TotalAP * 5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         #endregion
     }
@@ -329,7 +455,15 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         #endregion
         #region 도적
@@ -337,7 +471,15 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.3f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
 
@@ -345,14 +487,30 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.4f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
         if (col.tag == "RougeSkillE_3" && TickCoolTime >= 0.25f)
         {
             isHit = true;
             Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
         #endregion
@@ -361,14 +519,30 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.75f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
         if (col.tag == "ArcherSkillE" && TickCoolTime >= 0.2f)
         {
             isHit = true;
             Damage = Status.TotalAP * 3f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
         #endregion
@@ -377,13 +551,21 @@ public class MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.75f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
         #endregion
     }
 
-    public virtual IEnumerator TakeDamage()
+    public virtual IEnumerator TakeDamage(float Damage)
     {
         if (maxHP != 0 || curHP > 0)
         {
@@ -400,6 +582,23 @@ public class MonsterCtrl : MonoBehaviour
                 Damage = Damage * 1.5f;
             }
             Material[] materials = matObj.materials;
+            #region 1번 세트 3셋효과
+            int randomInt = Random.Range(1, 6);
+            Debug.Log(randomInt);
+            if (randomInt == 5 && Status.set1_3_Activated == true)
+            {
+                Debug.Log("20%!!");
+                Damage = Damage * 1.2f;
+            }
+            #endregion
+            # region 7번 세트 3셋 효과
+            if (Status.set7_3_Activated == true)
+            {
+                Debug.Log("7활성화되어잇음");
+                Damage = Damage * 1.2f;
+            }
+            #endregion
+            Debug.Log("몬스터가 입은 피해량 = " + Damage);
             curHP -= Damage * (1 / (1 + DEF * 0.01f));
             CheckHP(); // ü�� ����
             anim.SetBool("TakeDamage", true);

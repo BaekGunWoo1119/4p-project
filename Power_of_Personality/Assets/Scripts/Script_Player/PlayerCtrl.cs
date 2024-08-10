@@ -120,6 +120,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public GameObject Item_Aura_Effect;
     public GameObject Item_Aura_Ice_Effect;
     public GameObject Item_Aura_Fire_Effect;
+    public GameObject Item_Sheild_Effect;
     public GameObject PlayerCanvas;
 
     // 카메라, 사운드
@@ -485,6 +486,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             //캐릭터 스킬 이펙트
             LocalSkillYRot = transform.localEulerAngles.y;
             SkillYRot = transform.eulerAngles.y;
+            if (Status.set2_3_Effect_Activated)
+            {
+                Item_Sheild_Effect.SetActive(true);
+            }
             if (PlayerPrefs.GetString("property") == "Fire")
             {
                 Attack1_Effect = commonAttack_Fire1_Effect;
@@ -723,7 +728,6 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         if (Physics.Raycast(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up, out hit, raycastDistance))
         {
-            Debug.Log(hit.collider.tag);
             if (hit.collider.CompareTag("Floor") && !hit.collider.CompareTag("Stair"))
             {
                 isFloor = true;
@@ -781,24 +785,29 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region 충돌 관련 함수
     protected virtual void OnTriggerEnter(Collider col)
     {
-        Debug.Log(col);
-        if (col.gameObject.tag == "Monster_Melee" /*&& !isImmune */)
+        if (col.gameObject.tag == "Monster_Melee" && !isImmune)
         {
             // 특정 이름을 가진 부모 객체를 찾습니다.
             string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
             Transform parent = col.transform;
-            MonoBehaviour monsterCtrl = null;
-            Debug.Log(col);
+            MonsterCtrl monsterCtrl = null;
 
             while (parent != null)
             {
                 if (parent.name == targetParentName)
                 {
-                    monsterCtrl = parent.GetComponentInChildren<MonoBehaviour>();
+                    monsterCtrl = parent.GetComponent<MonsterCtrl>();
                     break;
                 }
                 parent = parent.parent;
             }
+
+            if(monsterCtrl != null && Status.set2_3_Activated)
+            {
+                float reflectDamage = Status.TotalArmor;
+                StartCoroutine(monsterCtrl.TakeDamage(reflectDamage));
+            }
+
             // 가져온 몬스터 스크립트가 유효한지 확인합니다.
             if (monsterCtrl != null)
             {
@@ -828,14 +837,35 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         else if (col.gameObject.tag == "Monster_Ranged" && !isImmune)
         {
+            // 특정 이름을 가진 부모 객체를 찾습니다.
+            string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
+            Transform parent = col.transform;
+            MonsterCtrl monsterCtrl = null;
+
+            while (parent != null)
+            {
+                if (parent.name == targetParentName)
+                {
+                    monsterCtrl = parent.GetComponent<MonsterCtrl>();
+                    break;
+                }
+                parent = parent.parent;
+            }
+
+            if (monsterCtrl != null && Status.set2_3_Activated)
+            {
+                float reflectDamage = Status.TotalArmor;
+                StartCoroutine(monsterCtrl.TakeDamage(reflectDamage));
+            }
+
             // 충돌한 몬스터 공격에서 해당 스크립트를 가져옵니다.
-            MonoBehaviour monsterCtrl = col.gameObject.GetComponent<MonoBehaviour>();
+            MonoBehaviour attackCtrl = col.gameObject.GetComponent<MonoBehaviour>();
 
             // 가져온 몬스터 스크립트가 유효한지 확인합니다.
-            if (monsterCtrl != null)
+            if (attackCtrl != null)
             {
                 // 몬스터 스크립트로 캐스팅된 객체에서 ATK 값을 가져옵니다.
-                float atkValue = (float)monsterCtrl.GetType().GetField("ATK").GetValue(monsterCtrl);
+                float atkValue = (float)attackCtrl.GetType().GetField("ATK").GetValue(attackCtrl);
                 Debug.Log("몬스터의 ATK 값: " + atkValue);
                 Damage = atkValue;
                 StartCoroutine(TakeDamage());

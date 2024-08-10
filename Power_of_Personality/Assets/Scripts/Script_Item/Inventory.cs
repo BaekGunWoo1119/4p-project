@@ -93,7 +93,6 @@ public class Inventory : MonoBehaviour
     {
         if (col.GetComponent<Item>())
         {
-            Debug.Log("삽입 실행실행");
             AddItem(col.GetComponent<Item>());
 
 
