@@ -348,14 +348,17 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             else if (stateJumpAttack1 == true && !coroutineMove)
             {
                 Attack(3);
+                PlayAnim("isFall");
             }
             else if (stateJumpAttack2 == true && !isSound)
             {
                 Attack(4);
+                PlayAnim("isFall");
             }
             else if (stateJumpAttack3 == true && !coroutineMove)
             {
                 Attack(5);
+                PlayAnim("isFall");
             }
 
             UpdateCoroutineMoveState();
