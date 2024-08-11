@@ -59,6 +59,7 @@ public class Status : MonoBehaviour
     public static bool set6_4_Activated = false;
     public static bool set7_3_Activated = false;
     public static bool set7_4_Activated = false;
+    public static bool IsShop = false; //현재 상점인지 확인
     static int a = 0;
     void Start()
     {

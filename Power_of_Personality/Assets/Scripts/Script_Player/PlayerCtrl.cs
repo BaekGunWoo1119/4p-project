@@ -257,7 +257,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected virtual void Update()
     {
         // 해당 bool값 실행 시 모든 행동 멈춤
-        if(!isShop)
+        if(!Status.IsShop)
         {
             if (!canTakeDamage)
             {

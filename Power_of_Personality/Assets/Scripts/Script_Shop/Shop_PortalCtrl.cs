@@ -62,13 +62,13 @@ public class Shop_PortalCtrl : MonoBehaviour
         shopWindow.transform.localScale = new Vector3(1, 1, 1);
         GameObject.Find("Exit_Shop").SetActive(false);
         orgWindow.transform.localScale = new Vector3(0, 0, 0);
-        PlayerCtrl.isShop = true;
+        Status.IsShop = true;
     }
 
     public void Exit_Shop()
     {
         playerObj.transform.position = playerPos;
-        PlayerCtrl.isShop = false;
+        Status.IsShop = false;
         shopWindow.transform.localScale = new Vector3(0, 0, 0);
         orgWindow.transform.localScale = new Vector3(1, 1, 1);
         GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().CheckInven();
