@@ -22,6 +22,11 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     private GameObject Attack_2_Collider;
     private GameObject Attack_3_Collider;
 
+    //도적은 양손 검이라 무기 이펙트 하나 더 추가해야 함
+    public GameObject Item_Weapon2_Effect;
+    public GameObject Item_Weapon2_Ice_Effect;
+    public GameObject Item_Weapon2_Fire_Effect;
+
     protected override void Start()
     {
         base.Start();   // PlayerCtrl의 Start문을 상속 받아서 실행
@@ -79,6 +84,26 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         else
         {
             moveSpd = moveSpeed;
+        }
+
+        //도적 두번째 무기 이펙트 변경
+        if (PlayerPrefs.GetString("property") == "Fire")
+        {
+            Item_Weapon2_Effect = Item_Weapon_Fire_Effect;
+            Item_Weapon2_Fire_Effect.SetActive(true);
+            Item_Weapon2_Ice_Effect.SetActive(false);
+        }
+        else if (PlayerPrefs.GetString("property") == "Ice")
+        {
+            Item_Weapon2_Effect = Item_Weapon_Ice_Effect;
+            Item_Weapon2_Fire_Effect.SetActive(false);
+            Item_Weapon2_Ice_Effect.SetActive(true);
+        }
+        else
+        {
+            Item_Weapon2_Effect = Item_Weapon_Ice_Effect;
+            Item_Weapon2_Fire_Effect.SetActive(false);
+            Item_Weapon2_Ice_Effect.SetActive(true);
         }
     }
     #region HP 설정
