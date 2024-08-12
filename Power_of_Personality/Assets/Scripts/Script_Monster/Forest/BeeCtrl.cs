@@ -61,9 +61,9 @@ public class BeeCtrl : MonsterCtrl
     {
         base.OnTriggerStay(col);
     }
-    public override IEnumerator TakeDamage()
+    public override IEnumerator TakeDamage(float Damage)
     {
-        yield return base.TakeDamage();
+        yield return base.TakeDamage(Damage);
     }
     public override Vector3 GetHPBarPosition()
     {

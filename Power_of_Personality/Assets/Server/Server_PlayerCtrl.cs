@@ -238,7 +238,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             this.gameObject.tag = "Player";
         }
         else{
-            this.gameObject.tag = "Other";
+            this.gameObject.tag = "OtherPlayer";
         }
     }
     protected virtual void FixedUpdate()

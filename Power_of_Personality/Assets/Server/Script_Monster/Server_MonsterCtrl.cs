@@ -83,6 +83,7 @@ public class Server_MonsterCtrl : MonoBehaviour
         HpBar.transform.position = hpBarPosition;
         hpBarPosition = GetHPBarPosition();
         CurProperty = PlayerPrefs.GetString("property");
+        TickCoolTime += Time.deltaTime;
         if (PhotonNetwork.IsMasterClient){
             if (!isDie)     // 죽어있는 상태가 아니면
             {
@@ -97,7 +98,6 @@ public class Server_MonsterCtrl : MonoBehaviour
             {
                 this.transform.rotation = Quaternion.Euler(0, -90, 0);
             }
-            TickCoolTime += Time.deltaTime;
         }
     }
 

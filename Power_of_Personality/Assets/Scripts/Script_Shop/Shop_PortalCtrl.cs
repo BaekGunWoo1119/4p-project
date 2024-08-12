@@ -28,15 +28,7 @@ public class Shop_PortalCtrl : MonoBehaviour
             //Debug.Log("S키를 눌러 상점 진입");
             if(Input.GetKeyDown(KeyCode.S))
             {            
-                //현재 플레이어 위치 및 현재 스테이지 저장 후 씬 넘기기
-                playerObj = col.gameObject;
-                playerPos = col.gameObject.transform.position;
-                Transform col_trs = col.gameObject.transform;
-                col_trs.position = shopPos.position;
-                shopWindow.transform.localScale = new Vector3(1, 1, 1);
-                GameObject.Find("Exit_Shop").SetActive(false);
-                orgWindow.transform.localScale = new Vector3(0, 0, 0);
-                PlayerCtrl.isShop = true;
+                Open_Shop(col);
             }
         }
     }
@@ -60,10 +52,23 @@ public class Shop_PortalCtrl : MonoBehaviour
         }
     }
 
+    public void Open_Shop(Collider col)
+    {
+        //현재 플레이어 위치 및 현재 스테이지 저장 후 상점으로 넘기기
+        playerObj = col.gameObject;
+        playerPos = col.gameObject.transform.position;
+        Transform col_trs = col.gameObject.transform;
+        col_trs.position = shopPos.position;
+        shopWindow.transform.localScale = new Vector3(1, 1, 1);
+        GameObject.Find("Exit_Shop").SetActive(false);
+        orgWindow.transform.localScale = new Vector3(0, 0, 0);
+        Status.IsShop = true;
+    }
+
     public void Exit_Shop()
     {
         playerObj.transform.position = playerPos;
-        PlayerCtrl.isShop = false;
+        Status.IsShop = false;
         shopWindow.transform.localScale = new Vector3(0, 0, 0);
         orgWindow.transform.localScale = new Vector3(1, 1, 1);
         GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().CheckInven();

@@ -11,7 +11,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 {
     #region 변수 선언
     //Raycast 관련
-    protected float raycastDistance = 0.5f;
+    protected float raycastDistance = 0.75f;
     protected RaycastHit hit;
     protected GameObject BossWall1;
     protected GameObject BossWall2;
@@ -35,6 +35,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     // 애니메이션 컨트롤
     protected Vector3 initPos;
+    protected bool isFloor = false;
+    protected bool isStair = false;
     protected bool isSkill = false;
     protected bool isAttack = false;
     protected bool isJumping = false;
@@ -112,6 +114,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public GameObject DamageText; //텍스트
     public GameObject Damage_Effect;
     public GameObject Heal_Effect;
+    public GameObject Item_Weapon_Effect;
+    public GameObject Item_Weapon_Ice_Effect;
+    public GameObject Item_Weapon_Fire_Effect;
+    public GameObject Item_Aura_Effect;
+    public GameObject Item_Aura_Ice_Effect;
+    public GameObject Item_Aura_Fire_Effect;
+    public GameObject Item_Sheild_Effect;
     public GameObject PlayerCanvas;
 
     // 카메라, 사운드
@@ -248,7 +257,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected virtual void Update()
     {
         // 해당 bool값 실행 시 모든 행동 멈춤
-        if(!isShop)
+        if(!Status.IsShop)
         {
             if (!canTakeDamage)
             {
@@ -340,14 +349,17 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             else if (stateJumpAttack1 == true && !coroutineMove)
             {
                 Attack(3);
+                PlayAnim("isFall");
             }
             else if (stateJumpAttack2 == true && !isSound)
             {
                 Attack(4);
+                PlayAnim("isFall");
             }
             else if (stateJumpAttack3 == true && !coroutineMove)
             {
                 Attack(5);
+                PlayAnim("isFall");
             }
 
             UpdateCoroutineMoveState();
@@ -474,6 +486,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             //캐릭터 스킬 이펙트
             LocalSkillYRot = transform.localEulerAngles.y;
             SkillYRot = transform.eulerAngles.y;
+            if (Status.set2_3_Effect_Activated)
+            {
+                Item_Sheild_Effect.SetActive(true);
+            }
             if (PlayerPrefs.GetString("property") == "Fire")
             {
                 Attack1_Effect = commonAttack_Fire1_Effect;
@@ -485,6 +501,19 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 SkillE2_Effect = Skill_FireE2_Effect;
                 SkillE3_Effect = Skill_FireE3_Effect;
                 SkillE4_Effect = Skill_FireE4_Effect;
+                //아이템 이펙트 추가(07.29 백건우)
+                Item_Weapon_Effect = Item_Weapon_Fire_Effect;
+                if(Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                {
+                    Item_Weapon_Fire_Effect.SetActive(true);
+                    Item_Weapon_Ice_Effect.SetActive(false);
+                }
+                Item_Aura_Effect = Item_Aura_Fire_Effect;
+                if(Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
+                {
+                    Item_Aura_Fire_Effect.SetActive(true);
+                    Item_Aura_Ice_Effect.SetActive(false);
+                }
             }
             else if (PlayerPrefs.GetString("property") == "Ice")
             {
@@ -497,6 +526,19 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 SkillE2_Effect = Skill_IceE2_Effect;
                 SkillE3_Effect = Skill_IceE3_Effect;
                 SkillE4_Effect = Skill_IceE4_Effect;
+                //아이템 이펙트 추가(07.29 백건우)
+                Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                if(Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                {
+                    Item_Weapon_Fire_Effect.SetActive(false);
+                    Item_Weapon_Ice_Effect.SetActive(true);
+                }
+                Item_Aura_Effect = Item_Aura_Ice_Effect;
+                if(Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
+                {
+                    Item_Aura_Fire_Effect.SetActive(false);
+                    Item_Aura_Ice_Effect.SetActive(true);
+                }
             }
             else
             {
@@ -505,6 +547,23 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 Attack3_Effect = commonAttack_Ice3_Effect;
                 SkillQ_Effect = Skill_IceQ_Effect;
                 SkillW_Effect = Skill_IceW_Effect;
+                SkillE1_Effect = Skill_IceE1_Effect;
+                SkillE2_Effect = Skill_IceE2_Effect;
+                SkillE3_Effect = Skill_IceE3_Effect;
+                SkillE4_Effect = Skill_IceE4_Effect;
+                //아이템 이펙트 추가(07.29 백건우)
+                Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                if(Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                {
+                    Item_Weapon_Fire_Effect.SetActive(false);
+                    Item_Weapon_Ice_Effect.SetActive(true);
+                }
+                Item_Aura_Effect = Item_Aura_Ice_Effect;
+                if(Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
+                {
+                    Item_Aura_Fire_Effect.SetActive(false);
+                    Item_Aura_Ice_Effect.SetActive(true);
+                }
             }
 
             // 플레이어 피가 30보다 작으면 지속적으로 화면이 깜빡임
@@ -669,15 +728,28 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         if (Physics.Raycast(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up, out hit, raycastDistance))
         {
-            if (hit.collider.CompareTag("Floor"))
+            if (hit.collider.CompareTag("Floor") && !hit.collider.CompareTag("Stair"))
             {
+                isFloor = true;
+                if (Vector3.Distance(hit.point, transform.position) <= 0.01)
+                {
+                    isJumping = false; //isJump, isFall을 다시 false로
+                    StopAnim("isJump");
+                    StopAnim("isFall");
+                }
+                return true;
+            }
+            else if (hit.collider.CompareTag("Stair"))
+            {
+                isStair = true;
                 isJumping = false; //isJump, isFall을 다시 false로
                 StopAnim("isJump");
                 StopAnim("isFall");
-                Debug.DrawRay(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up * raycastDistance, Color.green);
                 return true;
             }
         }
+        isFloor = false;
+        isStair = false;
         Debug.DrawRay(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up * raycastDistance, Color.red);
         return false;
     }
@@ -713,24 +785,29 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region 충돌 관련 함수
     protected virtual void OnTriggerEnter(Collider col)
     {
-        Debug.Log(col);
-        if (col.gameObject.tag == "Monster_Melee" /*&& !isImmune */)
+        if (col.gameObject.tag == "Monster_Melee" && !isImmune)
         {
             // 특정 이름을 가진 부모 객체를 찾습니다.
             string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
             Transform parent = col.transform;
-            MonoBehaviour monsterCtrl = null;
-            Debug.Log(col);
+            MonsterCtrl monsterCtrl = null;
 
             while (parent != null)
             {
                 if (parent.name == targetParentName)
                 {
-                    monsterCtrl = parent.GetComponentInChildren<MonoBehaviour>();
+                    monsterCtrl = parent.GetComponent<MonsterCtrl>();
                     break;
                 }
                 parent = parent.parent;
             }
+
+            if(monsterCtrl != null && Status.set2_3_Activated)
+            {
+                float reflectDamage = Status.TotalArmor;
+                StartCoroutine(monsterCtrl.TakeDamage(reflectDamage));
+            }
+
             // 가져온 몬스터 스크립트가 유효한지 확인합니다.
             if (monsterCtrl != null)
             {
@@ -760,14 +837,35 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         else if (col.gameObject.tag == "Monster_Ranged" && !isImmune)
         {
+            // 특정 이름을 가진 부모 객체를 찾습니다.
+            string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
+            Transform parent = col.transform;
+            MonsterCtrl monsterCtrl = null;
+
+            while (parent != null)
+            {
+                if (parent.name == targetParentName)
+                {
+                    monsterCtrl = parent.GetComponent<MonsterCtrl>();
+                    break;
+                }
+                parent = parent.parent;
+            }
+
+            if (monsterCtrl != null && Status.set2_3_Activated)
+            {
+                float reflectDamage = Status.TotalArmor;
+                StartCoroutine(monsterCtrl.TakeDamage(reflectDamage));
+            }
+
             // 충돌한 몬스터 공격에서 해당 스크립트를 가져옵니다.
-            MonoBehaviour monsterCtrl = col.gameObject.GetComponent<MonoBehaviour>();
+            MonoBehaviour attackCtrl = col.gameObject.GetComponent<MonoBehaviour>();
 
             // 가져온 몬스터 스크립트가 유효한지 확인합니다.
-            if (monsterCtrl != null)
+            if (attackCtrl != null)
             {
                 // 몬스터 스크립트로 캐스팅된 객체에서 ATK 값을 가져옵니다.
-                float atkValue = (float)monsterCtrl.GetType().GetField("ATK").GetValue(monsterCtrl);
+                float atkValue = (float)attackCtrl.GetType().GetField("ATK").GetValue(attackCtrl);
                 Debug.Log("몬스터의 ATK 값: " + atkValue);
                 Damage = atkValue;
                 StartCoroutine(TakeDamage());
@@ -804,7 +902,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     protected virtual void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor" && !stateSkillE && !stateSkillE)    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
+        if (collision.gameObject.tag == "Floor" && !stateSkillE && !stateSkillE && !isStair && !isFloor)    // Tag가 Floor인 오브젝트와 충돌이 끝났을 때
         {
             Fall();
         }

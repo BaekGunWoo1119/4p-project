@@ -222,7 +222,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         
         return strResult;
     }
+//로비 코드 복사
+    public void CopyLobbyCode(string code){
 
+        GUIUtility.systemCopyBuffer = code;
+    }
+
+    public void CopyToClipBoard(){
+        Debug.Log(LobbyCode);
+        Debug.Log(TempLobbyCode);
+        CopyLobbyCode(TempLobbyCode);
+    }
+ 
     public void GameStart(){
         /*게임 시작한다고 알림 띄울 예정*/
         PhotonNetwork.LoadLevel("Forest_Example_Multi");
