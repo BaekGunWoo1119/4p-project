@@ -27,7 +27,10 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     //이펙트
     public GameObject Skill_FireE_Effect;
     public GameObject Skill_IceE_Effect;
+    public GameObject SKill_FireQ_Rev_Effect;
+    public GameObject SKill_IceQ_Rev_Effect;
     private GameObject SkillE_Effect;
+    private GameObject SkillQ_Rev_Effect;
 
     private ParticleSystem setParticles1;
     private ParticleSystem setParticles2;
@@ -65,10 +68,12 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         if (PlayerPrefs.GetString("property") == "Fire")
         {
             SkillE_Effect = Skill_FireE_Effect;
+            SkillQ_Rev_Effect = SKill_FireQ_Rev_Effect;
         }
         else if (PlayerPrefs.GetString("property") == "Ice")
         {
             SkillE_Effect = Skill_IceE_Effect;
+            SkillQ_Rev_Effect = SKill_IceQ_Rev_Effect;
         }
 
         //점프공격 시 Y 포지션 고정
@@ -431,6 +436,18 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles5));
         SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
 
+    }
+
+    public void skill_Q_Rev_on()
+    {
+        //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
+        setParticles1 = SkillQ_Rev_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        setParticles2 = SkillQ_Rev_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles5 = SkillQ_Rev_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles1));
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles2));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles5));
+        SkillEffect = Instantiate(SkillQ_Rev_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
     }
 
     public void skill_W_on()
