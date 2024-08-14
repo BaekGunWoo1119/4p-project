@@ -720,7 +720,6 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         if (Physics.Raycast(transform.position - new Vector3(0, -0.1f, 0), -Vector3.up, out hit, raycastDistance))
         {
-            Debug.Log(hit.collider.tag);
             if (hit.collider.CompareTag("Floor") && !hit.collider.CompareTag("Stair"))
             {
                 isFloor = true;
@@ -778,14 +777,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region 충돌 관련 함수
     protected virtual void OnTriggerEnter(Collider col)
     {
-        Debug.Log(col);
         if (col.gameObject.tag == "Monster_Melee" /*&& !isImmune */)
         {
             // 특정 이름을 가진 부모 객체를 찾습니다.
             string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
             Transform parent = col.transform;
             MonoBehaviour monsterCtrl = null;
-            Debug.Log(col);
+            
 
             while (parent != null)
             {

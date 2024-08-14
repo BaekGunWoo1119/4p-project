@@ -36,6 +36,8 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     private ParticleSystem setParticles2;
     private ParticleSystem setParticles3;
     private ParticleSystem setParticles4;
+    private ParticleSystem setParticles5;
+    private ParticleSystem setParticles6;
     #endregion
 
     #region Start, FixedUpdate, Update
@@ -44,6 +46,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         base.Start();
 
         //플레이어 어택 콜라이더 인식 방식 변경 (서버에 맞게)
+        /*
         Attack_Collider_All = transform.Find("AttackColliders").gameObject;
         WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;
         WSkill_Collider.SetActive(false);
@@ -55,6 +58,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         Attack_3_Collider.SetActive(false);
 
         isSkillQ = false;
+        */
     }
 
     protected override void FixedUpdate()
@@ -428,26 +432,30 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     public void skill_Q_on()
     {
         //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
-        setParticles1 = SkillQ_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-        setParticles2 = SkillQ_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-        ParticleSystem setParticles5 = SkillQ_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        
+        //setParticles1 = SkillQ_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        //setParticles2 = SkillQ_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        //ParticleSystem setParticles5 = SkillQ_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
         StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles1));
         StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles2));
         StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles5));
         SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+    
 
     }
 
     public void skill_Q_Rev_on()
     {
+        
         //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
-        setParticles1 = SkillQ_Rev_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-        setParticles2 = SkillQ_Rev_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-        ParticleSystem setParticles5 = SkillQ_Rev_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        //setParticles1 = SkillQ_Rev_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        //setParticles2 = SkillQ_Rev_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        //ParticleSystem setParticles5 = SkillQ_Rev_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
         StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles1));
         StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles2));
         StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles5));
         SkillEffect = Instantiate(SkillQ_Rev_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        
     }
 
     public void skill_W_on()
@@ -458,12 +466,12 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
     public void skill_E_on()
     {
-        setParticles1 = SkillE_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-        setParticles2 = SkillE_Effect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-        setParticles3 = SkillE_Effect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
-        setParticles4 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
-        ParticleSystem setParticles5 = SkillE_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
-        ParticleSystem setParticles6 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        //setParticles1 = SkillE_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        //setParticles2 = SkillE_Effect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        //setParticles3 = SkillE_Effect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+        //setParticles4 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+        //ParticleSystem setParticles5 = SkillE_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        //ParticleSystem setParticles6 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
         StartCoroutine(RotateEffect(0.6f, (SkillYRot - 90f) / 60, 0f, setParticles1));
         StartCoroutine(RotateEffect(-0.6f, (SkillYRot - 90f) / 60, 0f, setParticles2));
         StartCoroutine(RotateEffect(0.8f, (SkillYRot - 90f) / 60, 0f, setParticles3));
@@ -512,7 +520,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
         if(skillName == "W")
         {
-            WSkill_Collider.SetActive(true);
+            //WSkill_Collider.SetActive(true);
             PlayAnim("Skill_W");
             StartCoroutine(MoveForwardForSeconds(1.35f));
             StartCoroutine(Immune(2f));
