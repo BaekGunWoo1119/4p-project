@@ -163,6 +163,8 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     private string RPCproperty;
     protected PhotonView photonview;
 
+    public static bool isShop = false;
+
     #endregion
 
     protected virtual void Start()

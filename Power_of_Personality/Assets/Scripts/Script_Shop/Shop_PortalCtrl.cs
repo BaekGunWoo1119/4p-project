@@ -76,4 +76,14 @@ public class Shop_PortalCtrl : MonoBehaviour
         Destroy(GameObject.Find("Shop_Info_Canvas"));
         Destroy(thisObj);
     }
+
+    public void Exit_Shop_Multi(){
+        playerObj.transform.position = playerPos;
+        Status.IsShop = false;
+        shopWindow.transform.localScale = new Vector3(0, 0, 0);
+        orgWindow.transform.localScale = new Vector3(1, 1, 1);
+        GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().CheckInven();
+        inventory[0].ItemPlus();
+        Destroy(GameObject.Find("Shop_Info_Canvas"));
+    }
 }
