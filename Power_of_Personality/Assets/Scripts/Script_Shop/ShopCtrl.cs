@@ -130,10 +130,10 @@ public class ShopCtrl : MonoBehaviour
         }
         else if(isSave == true)
         {
-            if(PlayerPrefs.GetFloat("Coin") >= 3)
+            if(PlayerPrefs.GetFloat("Coin") >= 3) //코인 소모 부분 추후 기획 논의 후 재구성
             {
                 float currentCoin = PlayerPrefs.GetFloat("Coin", 0);
-                PlayerPrefs.SetFloat("Coin", currentCoin -3);
+                PlayerPrefs.SetFloat("Coin", currentCoin - 3);
                 GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
 
                 for (int i = 0; i < C_Slots; ++i)
