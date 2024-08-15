@@ -482,7 +482,6 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     IEnumerator MoveForwardForSeconds(float seconds)
     {
         yield return new WaitForSeconds(0.3f);
-        QSkill_Collider.SetActive(true);
         float elapsedTime = 0;
 
         while (elapsedTime < seconds)
@@ -494,10 +493,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         }
         if(elapsedTime > seconds)
         {
-            QSkill_Collider.SetActive(false);
-            QSkill_Last_Collider.SetActive(true);
             yield return new WaitForSeconds(0.3f);
-            QSkill_Last_Collider.SetActive(false);
         }
         if (QSkill_Collider.activeSelf == true)
         {
