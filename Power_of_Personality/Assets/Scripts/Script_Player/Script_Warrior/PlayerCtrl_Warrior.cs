@@ -433,29 +433,25 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
         
-        //setParticles1 = SkillQ_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-        //setParticles2 = SkillQ_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-        //ParticleSystem setParticles5 = SkillQ_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
-        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles1));
-        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles2));
-        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles5));
         SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
-    
-
+        setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        setParticles2 = SkillEffect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles5 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles1));
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles2));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles5));
     }
 
     public void skill_Q_Rev_on()
     {
-        
-        //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
-        //setParticles1 = SkillQ_Rev_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-        //setParticles2 = SkillQ_Rev_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-        //ParticleSystem setParticles5 = SkillQ_Rev_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
-        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles1));
-        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles2));
-        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles5));
         SkillEffect = Instantiate(SkillQ_Rev_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
-        
+        //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
+        setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        setParticles2 = SkillEffect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles5 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles1));
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles2));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles5));       
     }
 
     public void skill_W_on()
@@ -466,26 +462,26 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
     public void skill_E_on()
     {
-        //setParticles1 = SkillE_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-        //setParticles2 = SkillE_Effect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-        //setParticles3 = SkillE_Effect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
-        //setParticles4 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
-        //ParticleSystem setParticles5 = SkillE_Effect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
-        //ParticleSystem setParticles6 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
-        StartCoroutine(RotateEffect(0.6f, (SkillYRot - 90f) / 60, 0f, setParticles1));
-        StartCoroutine(RotateEffect(-0.6f, (SkillYRot - 90f) / 60, 0f, setParticles2));
-        StartCoroutine(RotateEffect(0.8f, (SkillYRot - 90f) / 60, 0f, setParticles3));
-        StartCoroutine(RotateEffect(-0.8f, (SkillYRot - 90f) / 60, 0f, setParticles4));
-        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles5));
-        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f) / 60, setParticles6));
         SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        setParticles2 = SkillEffect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        setParticles3 = SkillEffect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+        setParticles4 = SkillEffect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles5 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles6 = SkillEffect.transform.Find("Slashes-1").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        StartCoroutine(RotateEffect(30f, (SkillYRot - 90f), 0f, setParticles1));
+        StartCoroutine(RotateEffect(-30f, (SkillYRot - 90f), 0f, setParticles2));
+        StartCoroutine(RotateEffect(30f, (SkillYRot - 90f), 0f, setParticles3));
+        StartCoroutine(RotateEffect(-30f, (SkillYRot - 90f), 0f, setParticles4));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles5));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles6));
     }
     IEnumerator RotateEffect(float xR, float yR, float zR, ParticleSystem particle)
     {
         var mainModule = particle.main;
-        mainModule.startRotationX = xR;
-        mainModule.startRotationY = yR;
-        mainModule.startRotationZ = zR;
+        mainModule.startRotationX = xR * Mathf.Deg2Rad;
+        mainModule.startRotationY = yR * Mathf.Deg2Rad;
+        mainModule.startRotationZ = zR * Mathf.Deg2Rad;
         yield return null;
     }
 
