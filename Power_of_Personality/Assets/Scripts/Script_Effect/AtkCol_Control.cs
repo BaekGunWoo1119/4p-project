@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class AtkCol_Control : MonoBehaviour
 {
-    public GameObject targetObject;
+    public GameObject MainEffect;
+    public GameObject ATKCollider;
     public float Delay;
     public float DelTime;
+
+    public float Max_ATKtime;
+    private float ATKtime;
 
     void Start()
     {
@@ -18,13 +22,30 @@ public class AtkCol_Control : MonoBehaviour
     {
         yield return new WaitForSeconds(Delay);
 
-        targetObject.GetComponent<BoxCollider>().enabled = true;
+        ATKCollider.GetComponent<BoxCollider>().enabled = true;
     }
 
     IEnumerator DeactivateObject()
     {
         yield return new WaitForSeconds(DelTime);
 
-        targetObject.GetComponent<BoxCollider>().enabled = false;
+        ATKCollider.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if(ATKtime < Max_ATKtime)
+        {
+            if(col.gameObject.layer == LayerMask.NameToLayer("Monster"))
+            {
+                ATKtime++;
+                Debug.Log(ATKtime);
+            }
+        } 
+        else if(ATKtime == Max_ATKtime)
+        {
+            Debug.Log("삭제");
+            Destroy(MainEffect);
+        }
     }
 }

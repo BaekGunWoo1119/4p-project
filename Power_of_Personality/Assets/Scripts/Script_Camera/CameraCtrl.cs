@@ -96,7 +96,7 @@ public class CameraCtrl : MonoBehaviour
         for (int i = 0; i < virtualCameras.Length; i++)
         {
             virtualCameras[i].gameObject.SetActive(i == cameraNumber);
-            Debug.Log("카메라 변경");
+            //Debug.Log("카메라 변경");
         }
     }
 

@@ -221,7 +221,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         if(AttackNumber == 0)
         {
             isSound = false;
-            StartCoroutine(Attack1_Collider());
+            //StartCoroutine(Attack1_Collider());
             StartCoroutine(Attack_Sound(AttackNumber , 0.8f));
             StartCoroutine(Delay(0.4f));
             StartCoroutine(MoveForwardForSeconds(0.3f));
@@ -231,7 +231,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
         if(AttackNumber == 1)
         {
-            StartCoroutine(Attack2_Collider());
+            //StartCoroutine(Attack2_Collider());
             StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
             StartCoroutine(Delay(0.2f));
             mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.01f, null);
@@ -241,7 +241,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         {
             StartCoroutine(Delay(0.2f));
             StartCoroutine(MoveForwardForSeconds(0.3f));
-            StartCoroutine(Attack3_Collider());
+            //StartCoroutine(Attack3_Collider());
             StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
             StartCoroutine(Delay(5.0f));
             mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.3f, 0.1f, null);
@@ -251,25 +251,26 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         {
             isSound = false;
             mainCamera.GetComponent<CameraCtrl>().JumpCamera_Warrior();
-            StartCoroutine(Attack1_Collider());
+            //StartCoroutine(Attack1_Collider());
         }
 
         if(AttackNumber == 4)
         {
             mainCamera.GetComponent<CameraCtrl>().JumpCamera_Warrior();
-            StartCoroutine(Attack1_Collider());
+            //StartCoroutine(Attack1_Collider());
             StartCoroutine(Delay(0.2f));
         }
 
         if(AttackNumber == 5)
         {
             mainCamera.GetComponent<CameraCtrl>().JumpCamera_Warrior();
-            StartCoroutine(Attack1_Collider());
+            //StartCoroutine(Attack1_Collider());
             StopAnim("CommonAttack");
         }
 
     }
 
+    /*
     IEnumerator Attack1_Collider()
     {
         yield return new WaitForSeconds(0.125f);
@@ -299,6 +300,8 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             Attack_3_Collider.SetActive(false);
         }
     }
+    */
+
     IEnumerator Attack_Sound(int AttackValue, float playsec)
     {
         if (AttackValue == 1)
@@ -316,7 +319,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         isSkillQ = false;
         yield return new WaitForSeconds(0.2f);
-        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, this.transform.rotation);
+        //GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, this.transform.rotation);
         yield return new WaitForSeconds(0.1f);
         audioSources[3].Play();
         yield return new WaitForSeconds(0.3f);
@@ -365,37 +368,37 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         yield return new WaitForSeconds(1.8f);
         audioSources[3].Play();
         yield return new WaitForSeconds(0.2f);
-        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        //GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         //스킬 나갈 시 사운드 및 콜라이더
         yield return new WaitForSeconds(0.4f);
         audioSources[3].Stop();
         audioSources[3].Play();
         yield return new WaitForSeconds(0.2f);
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         yield return new WaitForSeconds(0.6f);
         audioSources[3].Stop();
         audioSources[3].Play();
         yield return new WaitForSeconds(0.2f);
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         yield return new WaitForSeconds(0.2f);
         audioSources[3].Stop();
         audioSources[3].Play();
         yield return new WaitForSeconds(0.2f);
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         yield return new WaitForSeconds(0.2f);
         audioSources[3].Stop();
         audioSources[3].Play();
         yield return new WaitForSeconds(0.2f);
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
         audioSources[3].Play();
         yield return new WaitForSeconds(0.7f);
         audioSources[3].Stop();
         yield return new WaitForSeconds(0.2f);
-        GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
+        //GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
         yield return new WaitForSeconds(0.1f);
-        SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
+        //SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
@@ -547,7 +550,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         }
         if(elapsedTime > seconds)
         {
-            WSkill_Collider.SetActive(false);
+            //WSkill_Collider.SetActive(false);
         }
     }
 

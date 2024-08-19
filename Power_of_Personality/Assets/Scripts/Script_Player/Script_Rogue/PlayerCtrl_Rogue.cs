@@ -31,6 +31,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         JumpPower = 14;
         fallPower = 4;
 
+    /*
         //플레이어 어택 콜라이더 인식 방식 변경 (서버에 맞게)
         Attack_Collider_All = transform.Find("AttackColliders").gameObject;
         //Debug.Log(Attack_Collider_All);
@@ -58,6 +59,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         Attack_1_Collider.SetActive(false);
         Attack_2_Collider.SetActive(false);
         Attack_3_Collider.SetActive(false);
+    */
 
         // 도적의 Dash는 따로 실행
         StartCoroutine(DashListener());
@@ -189,30 +191,42 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     }
     IEnumerator Attack1_Collider()
     {
+        /*
         Attack_1_Collider.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         if (Attack_1_Collider == true)
         {
             Attack_1_Collider.SetActive(false);
         }
+        */
+
+        yield return new WaitForSeconds(0.3f);
     }
     IEnumerator Attack2_Collider()
     {
+        /*
         Attack_2_Collider.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         if (Attack_2_Collider == true)
         {
             Attack_2_Collider.SetActive(false);
         }
+        */
+
+        yield return new WaitForSeconds(0.3f);
     }
     IEnumerator Attack3_Collider()
     {
+        /*
         Attack_3_Collider.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         if (Attack_3_Collider == true)
         {
             Attack_3_Collider.SetActive(false);
         }
+        */
+
+        yield return new WaitForSeconds(0.5f);
     }
 
     protected override void Attack_anim()
@@ -226,20 +240,20 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Rogue(LocalSkillYRot);
         yield return new WaitForSeconds(1.7f);
-        ESkill_Collider1.SetActive(true);
+        //ESkill_Collider1.SetActive(true);
         yield return new WaitForSeconds(0.25f);
-        ESkill_Collider1.SetActive(false);
-        ESkill_Collider2.SetActive(true);
+        //ESkill_Collider1.SetActive(false);
+        //ESkill_Collider2.SetActive(true);
         yield return new WaitForSeconds(0.3f);
-        ESkill_Collider2.SetActive(false);
+        //ESkill_Collider2.SetActive(false);
         yield return new WaitForSeconds(0.3f);
-        ESkill_Collider3.SetActive(true);
+        //ESkill_Collider3.SetActive(true);
         yield return new WaitForSeconds(0.75f);
-        ESkill_Collider3.SetActive(false);
+        //ESkill_Collider3.SetActive(false);
         yield return new WaitForSeconds(0.3f);
-        ESkill_Collider4.SetActive(true);
+        //ESkill_Collider4.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        ESkill_Collider4.SetActive(false);
+        //ESkill_Collider4.SetActive(false);
         //스킬 나갈 시 사운드 및 콜라이더(추가 예정)
         yield return new WaitForSeconds(2.2f);
         ESkillCoolTime = 0;
@@ -495,23 +509,25 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         {
             yield return new WaitForSeconds(0.3f);
         }
+        /*
         if (QSkill_Collider.activeSelf == true)
         {
             QSkill_Collider.SetActive(false);
             QSkillCoolTime = 0;
             Qcool.fillAmount = 1;
         }
+        */
     }
     IEnumerator Skill_W()
     {
         yield return new WaitForSeconds(0.15f);
-        WSkill_Collider.SetActive(true);
+        //WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1.5f);
-        WSkill_Collider.SetActive(false);
+        //WSkill_Collider.SetActive(false);
         yield return new WaitForSeconds(0.2f);
-        WSkill_Last_Collider.SetActive(true);
+        //WSkill_Last_Collider.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        WSkill_Last_Collider.SetActive(false);
+        //WSkill_Last_Collider.SetActive(false);
     }
     protected override IEnumerator Delay(float seconds)
     {

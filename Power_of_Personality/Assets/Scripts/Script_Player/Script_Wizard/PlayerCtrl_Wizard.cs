@@ -35,11 +35,13 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     protected override void Start() 
     {
         base.Start();
+        /*
         Attack_Collider_All = transform.Find("AttackColliders").gameObject;
         QSkill_Collider = Attack_Collider_All.transform.Find("QSkill_Collider").gameObject;
         QSkill_Collider.SetActive(false);
         WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;
         WSkill_Collider.SetActive(false);
+        */
     }
     protected override void FixedUpdate()
     {
@@ -58,6 +60,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
             Skill_Aura_Effect = Skill_Ice_Aura_Effect;
             SkillE_Aura_Effect = Skill_IceE_Aura_Effect;
         }
+        /*
         if (isSkillQ == true && QSkill_Collider.transform.localScale.z <= 30.0)     //Q 스킬
         {
             Vector3 newScale = QSkill_Collider.transform.localScale;
@@ -68,6 +71,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
         {
             transform.position = Vector3.Lerp(transform.position, tgPos, 0.01f);
         }
+        */
     }
     #endregion
 
@@ -192,20 +196,20 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     {
         StartCoroutine(Immune(4f));
         yield return new WaitForSeconds(1.25f);
-        QSkill_Collider.SetActive(true);
+        //QSkill_Collider.SetActive(true);
         isSkillQ = true;
         yield return new WaitForSeconds(2f);
-        QSkill_Collider.SetActive(false);
+        //QSkill_Collider.SetActive(false);
         isSkillQ = false;
-        QSkill_Collider.transform.localScale = new Vector3(1, 5, 1);
+        //QSkill_Collider.transform.localScale = new Vector3(1, 5, 1);
     }
     public IEnumerator Skill_W()
     {
         StartCoroutine(Immune(3f));
         yield return new WaitForSeconds(1f);
-        WSkill_Collider.SetActive(true);
+        //WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1f);
-        WSkill_Collider.SetActive(false);
+        //WSkill_Collider.SetActive(false);
     }
     public IEnumerator Skill_E_Move()
     {
@@ -221,16 +225,16 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     public IEnumerator Spawn_CommonAttack1()
     {
         yield return new WaitForSeconds(0.3f);
-        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack2()
     {
         yield return new WaitForSeconds(0.1f);
-        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack3()
     {
-        GameObject CommonAttack = Instantiate(CommonAttack3_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        //GameObject CommonAttack = Instantiate(CommonAttack3_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         yield return null;
     }
     public void comboAttack_1_on()

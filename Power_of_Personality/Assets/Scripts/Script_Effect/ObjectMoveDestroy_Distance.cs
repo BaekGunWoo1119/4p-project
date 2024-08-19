@@ -23,6 +23,7 @@ public class ObjectMoveDestroy_Distance : MonoBehaviour
 
     public bool isDelay;
     public float DelayTime;
+    public float DelayDestroyTime;
 
     float time; // 시간
     
@@ -50,6 +51,13 @@ public class ObjectMoveDestroy_Distance : MonoBehaviour
         isDelay = false; // 딜레이 끝나면 false로 변경
     }
 
+    IEnumerator DelayDestroy()
+    {
+        Debug.Log(DelayDestroyTime);
+        yield return new WaitForSeconds(DelayDestroyTime);
+        Destroy(gameObject);
+    }
+
     void LateUpdate()
     {
         // 딜레이 중이면 이동하지 않음
@@ -61,8 +69,7 @@ public class ObjectMoveDestroy_Distance : MonoBehaviour
         // 이동한 거리가 maxDistance를 초과하면 객체 삭제
         if (Vector3.Distance(startPosition, transform.position) > maxDistance)
         {
-            Destroy(gameObject);
-            return;
+            StartCoroutine(DelayDestroy());
         }
 
         if (!ishit)

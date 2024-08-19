@@ -31,11 +31,13 @@ public class PlayerCtrl_Archer : PlayerCtrl
     protected override void Start()
     {
         base.Start();
+        /*
         Attack_Collider_All = transform.Find("AttackColliders").gameObject;
         WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;
         WSkill_Collider.SetActive(false);
         ESkill_Collider = Attack_Collider_All.transform.Find("ESkill_Collider").gameObject;
         ESkill_Collider.SetActive(false);
+        */
     }
     protected override void FixedUpdate()
     {
@@ -172,16 +174,16 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         yield return new WaitForSeconds(0.3f);
         
-        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack2()
     {
         yield return new WaitForSeconds(0.1f);
-        GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        //GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack3()
     {
-        GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
+        //GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         yield return null;
     }
     public void Skill_Q()
@@ -197,9 +199,9 @@ public class PlayerCtrl_Archer : PlayerCtrl
         StartCoroutine(SKill_Up_Move(10.0f, 0.5f, 1f, 0.0f));
         StartCoroutine(Immune(2.5f));
         yield return new WaitForSeconds(0.5f);
-        WSkill_Collider.SetActive(true);
+        //WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1f);
-        WSkill_Collider.SetActive(false);
+        //WSkill_Collider.SetActive(false);
     }
     IEnumerator Skill_E()
     {
@@ -209,9 +211,9 @@ public class PlayerCtrl_Archer : PlayerCtrl
         StartCoroutine(SKill_Up_Move(20.0f, 0.5f, 2.5f, 1.2f));
         StartCoroutine(Immune(5.5f));
         yield return new WaitForSeconds(3.1f);
-        ESkill_Collider.SetActive(true);
+        //ESkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1.5f);
-        ESkill_Collider.SetActive(false);
+        //ESkill_Collider.SetActive(false);
     }
     IEnumerator SKill_Up_Move(float upScale, float waitTime1, float waitTime2, float delayTime)
     {

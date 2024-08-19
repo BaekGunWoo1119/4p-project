@@ -38,8 +38,11 @@ public class ObjectMoveDestroys : MonoBehaviour
         {
             RaycastHit hit;
             // 레이캐스트를 사용하여 충돌 확인
+
             if (Physics.Raycast(transform.position, transform.forward, out hit, maxLength))
+            {                
                 HitObj(hit);
+            }
         }
 
         // 파괴 여부 확인 후 객체 파괴
