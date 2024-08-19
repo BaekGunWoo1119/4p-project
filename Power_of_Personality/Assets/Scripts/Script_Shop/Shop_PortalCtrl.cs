@@ -10,15 +10,18 @@ public class Shop_PortalCtrl : MonoBehaviour
     public Transform shopPos;
     public GameObject shopWindow;
     public GameObject orgWindow;
+    public ShopCtrl shopctrl; //상점 시작 시 리롤을 위해 불러옴
     private GameObject playerObj;
     private Vector3 playerPos;
     private GameObject thisObj;
+    private GameObject exitshop;
     private float orgSpd;
 
     void Start()
     {
         thisObj = this.gameObject;
         StartCoroutine(FindInventory());
+        exitshop = GameObject.Find("Exit_Shop");
     }
 
     void OnTriggerStay(Collider col)
@@ -60,9 +63,15 @@ public class Shop_PortalCtrl : MonoBehaviour
         Transform col_trs = col.gameObject.transform;
         col_trs.position = shopPos.position;
         shopWindow.transform.localScale = new Vector3(1, 1, 1);
-        GameObject.Find("Exit_Shop").SetActive(false);
+        exitshop.SetActive(false);
         orgWindow.transform.localScale = new Vector3(0, 0, 0);
         Status.IsShop = true;
+        if(shopctrl != null)
+        {
+            shopctrl.GetRandomItemCode();
+            float currentCoin = PlayerPrefs.GetFloat("Coin");
+            PlayerPrefs.SetFloat("Coin", currentCoin + 3);
+        }
     }
 
     public void Exit_Shop()
