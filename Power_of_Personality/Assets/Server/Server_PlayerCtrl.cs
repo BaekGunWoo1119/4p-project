@@ -163,6 +163,8 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     private string RPCproperty;
     protected PhotonView photonview;
 
+    public static bool isShop = false;
+
     #endregion
 
     protected virtual void Start()
@@ -238,7 +240,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             this.gameObject.tag = "Player";
         }
         else{
-            this.gameObject.tag = "Other";
+            this.gameObject.tag = "OtherPlayer";
         }
     }
     protected virtual void FixedUpdate()

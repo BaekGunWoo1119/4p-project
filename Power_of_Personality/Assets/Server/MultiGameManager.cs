@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using Photon.Pun; // 유니티용 포톤 컴포넌트들
 using Photon.Realtime; // 포톤 서비스 관련 라이브러리
 
 public class MultiGameManager : MonoBehaviourPunCallbacks
 {
-    public int WaveTime; // 웨이브 시간
+    public float WaveTime; // 웨이브 시간
     public float CurrentTime; // 현재 시간
     public int CurrentWave; // 현재 웨이브
     public int MonsterCount; // 현재 몬스터 수
@@ -17,8 +18,16 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     public float sec; // 타이머용 시간
     public int min; // 타이머용 시간
     public Transform[] SpawnPoints; // 몬스터 스폰 포인트들
-
+    public Transform[] StageSpawnPoints; // 스테이지별 스폰 포인트들
+    public Transform ShopTr; // 상점 위치
+    public TMP_Text timerText;
+    public GameObject Player;
+    public bool IsDie; // 죽었는지 판단
     private WaveDatas JSONWaveList; // JSON에서 받아온 웨이브 데이터
+    public bool IsWave; // 현재 웨이브 진행 중인지
+    public Collider PlayerCol; // 플레이어 콜라이더
+    public GameObject Watching; //관전 UI
+    public GameObject WaitPlayer; //상점 대기 UI
 
     #region JSON 관련 스크립트
     // JSON 데이터를 저장할 클래스 정의
@@ -45,17 +54,19 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
             Spawned = 0; // 초기화 추가
         }
     }
-
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        WaveTime = 90f;
+        CurrentTime = 0f;
         TempTime = 0f;
         CurrentWave = 1;
         sec = 0f;
         min = 0;
         Spawned = 0; // 초기화 추가
+        IsDie = false;
 
         string jsondata = Resources.Load<TextAsset>("JSON/WaveData").text;
         // JSON 데이터를 WaveDatas 클래스로 Deserialize
@@ -65,6 +76,24 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
+        Debug.Log("Status.IsShop = "+Status.IsShop);
+        if (Player == null)
+        {
+            Player = GameObject.FindWithTag("Player"); // 플레이어 오브젝트 찾기
+            if (Player != null)
+            {
+                PlayerCol = Player.GetComponent<Collider>();
+                if (PlayerCol == null)
+                {
+                    Debug.LogWarning("Player 오브젝트에 Collider가 없습니다.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Player 태그를 가진 오브젝트를 찾을 수 없습니다.");
+            }
+        }
+
         #region 인게임 타이머
         sec += Time.deltaTime;
         if (sec >= 60f)
@@ -73,49 +102,81 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
             sec = 0;
         }
 
-        // 인게임에 UI 넣어야 됨 고민해야 될 내용
-        // gameTime.text = string.Format("{0:D2}:{1:D2}", min, (int)sec);
+        timerText.text = string.Format("{0:D2}:{1:D2}", min, (int)sec);
         #endregion
 
         CurrentTime += Time.deltaTime;
         TempTime += Time.deltaTime;
         MonsterCount = GameObject.FindGameObjectsWithTag("Monster").Length; // 몬스터 수 카운트
 
-        // 웨이브 시간 종료
-        if (CurrentTime > WaveTime)
-        {
-            // 몬스터가 0명이라면
-            if (GameObject.FindGameObjectsWithTag("Monster").Length < 1)
+        //웨이브 중일때
+        if(IsWave == true){
+            // 웨이브 시간, 목표 스폰량 종료
+            if (CurrentTime > WaveTime && Spawned >= TargetSpawn)
             {
-                EndWave();
-                WaveUpdate();
+                // 몬스터가 0명이라면
+                if (MonsterCount < 1)
+                {
+                    EndWave();
+                    WaveUpdate();
+                }
+            }
+            else
+            {
+                // 일정 주기로 몬스터 생성
+                if (TempTime >= RespawnTime)
+                {
+                    SpawnMonster();
+                }
             }
         }
-        else
+
+        // 웨이브 끝났을 때 상점 나왔는지 체크
+        if (IsWave == false)
         {
-            // 목표 몬스터 채울 때까지 생성
-            if (Spawned < TargetSpawn && TempTime >= RespawnTime)
+            
+            ExitShop();
+            if (CheckExitShop() == true)
             {
-                SpawnMonster();
+                StartWave();
             }
+        }
+        //죽으면 다른 플레이어 관전(UI추가해야함)
+        if (Status.HP<=0){
+            IsDie = true;
+            Watching.SetActive(true);
+            CameraCtrl.target = GameObject.FindGameObjectWithTag("OtherPlayer").transform;
+        }
+        else {
+            Watching.SetActive(false);
+            CameraCtrl.target = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
 
     // 웨이브 종료 후 상점으로 이동
     void EndWave()
     {
-        // 체력 회복
-        Status.HP = Status.MaxHP;
-        CurrentWave += 1;
-        CurrentTime = 0f; // 초기화 추가
-        WaveUpdate(); // 다음 웨이브 설정
-        // 상점으로 이동
-        // GoShop();
+        if(IsWave == true){
+            if (IsDie == true){
+                IsDie = false;
+                MultiPlayStart.Instance.SpawnPlayer();
+            }
+            IsWave = false;
+            // 체력 회복
+            Status.HP = Status.MaxHP;
+            CurrentWave += 1;
+            CurrentTime = 0f; // 초기화 추가
+            WaveUpdate(); // 다음 웨이브 설정
+            // 상점으로 이동 (상점 스크립트 바꿔서 적용해야 할 듯)
+            GameObject.Find("EventSystem").GetComponent<Shop_PortalCtrl>().Open_Shop(PlayerCol);
+            Player.transform.position = ShopTr.position;
+        }
     }
 
     // 몬스터 스폰
     void SpawnMonster()
     {
+        // 호스트에서 몹 소환하도록
         if (PhotonNetwork.IsMasterClient)
         {
             int spawnIndex = Random.Range(0, SpawnPoints.Length);
@@ -128,5 +189,73 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
             Spawned += 1; // 생성한 몬스터 수 증가
         }
         TempTime = 0f; // 리스폰 대기시간 초기화
+    }
+
+    // 스폰포인트로 플레이어 이동 후 웨이브 시작
+    void StartWave()
+    {
+        if(IsWave ==false){
+            WaitPlayer.SetActive(false);
+            var properties = PhotonNetwork.LocalPlayer.CustomProperties;
+            properties["IsExitShop"] = false;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
+
+            IsWave = true;
+            switch (CurrentWave)
+            {
+                case 1:
+                case 2:
+                case 3:
+                    Player.transform.position = StageSpawnPoints[0].position;
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                    Player.transform.position = StageSpawnPoints[1].position;
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    Player.transform.position = StageSpawnPoints[2].position;
+                    break;
+                case 10:
+                case 11:
+                case 12:
+                    Player.transform.position = StageSpawnPoints[3].position;
+                    break;
+            }
+        }
+    }
+
+    public void ExitShop()
+    {
+        // 플레이어가 상점에서 나오면 서버로 응답 보냄
+        if (Status.IsShop == false)
+        {
+            var properties = PhotonNetwork.LocalPlayer.CustomProperties;
+            properties["IsExitShop"] = true;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
+            WaitPlayer.SetActive(true); 
+            Debug.Log("CheckExitShop()="+CheckExitShop());
+        }
+    }
+
+    public bool CheckExitShop()
+    {
+        bool IsAllReady = true;
+        // 모든 플레이어가 레디 상태인지 확인
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if ((bool)player.CustomProperties["IsExitShop"] == false)
+            {
+                IsAllReady = false;
+                break;
+            }
+        }
+        return IsAllReady;
+    }
+
+    public void GameOver(){
+        //게임오버 넣어야됨
     }
 }

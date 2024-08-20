@@ -49,6 +49,17 @@ public class Status : MonoBehaviour
     public static bool set6_Activate = false;
     public static bool set7_Activate = false;
     public static bool set8_Activate = false;
+    public static bool set1_3_Activated = false;
+    public static bool set2_3_Activated = false;
+    public static bool set2_3_Effect_Activated = false;
+    public static bool set3_3_Activated = false;
+    public static bool set4_3_Activated = false;
+    public static bool set5_3_Activated = false;
+    public static bool set6_3_Activated = false;
+    public static bool set6_4_Activated = false;
+    public static bool set7_3_Activated = false;
+    public static bool set7_4_Activated = false;
+    public static bool IsShop = false; //현재 상점인지 확인
     static int a = 0;
     void Start()
     {
@@ -85,7 +96,7 @@ public class Status : MonoBehaviour
     public static void SetUpdate(int itemID)
     {
         itemIds[itemID] = itemID;
-        #region 1번 세트효과
+        #region 1번 세트효과 ATK
         if (itemID >= 0 && itemID <= 3 && set1_Activate == false)
         {
             if (itemIds[itemID] == itemID)
@@ -94,9 +105,23 @@ public class Status : MonoBehaviour
             }
             switch (set1Count)
             {
-                case 1: Debug.Log("1번 세트 - " + set1Count + "개 활성화."); break;
-                case 2: Debug.Log("1번 세트 - " + set1Count + "개 활성화."); break;
-                case 3: Debug.Log("1번 세트 - " + set1Count + "개 활성화."); break;
+                case 1: 
+                    Debug.Log("1번 세트 - " + set1Count + "개 활성화.");
+                    Debug.Log("플레이어 공격력 20 증가. 증가 전 = " + FixedAD + "증가 후 = " + (FixedAD + 20f));
+                    FixedAD += 20f;
+                    StatUpdate();
+                    break;
+                case 2: 
+                    Debug.Log("1번 세트 - " + set1Count + "개 활성화.");
+                    Debug.Log("플레이어 공격력 20% 증가. 증가 전 = " + FixedAD + "증가 후 = " + FixedAD * 1.2f);
+                    FixedAD *= 1.2f;
+                    StatUpdate();
+                    break;
+                case 3: 
+                    Debug.Log("1번 세트 - " + set1Count + "개 활성화.");
+                    set1_3_Activated = true;
+                    Debug.Log("플레이어 공격 시 일정 확률로 추가 데미지 활성화. 현재 상태 = " + set1_3_Activated);
+                    break;
                 case 4: Debug.Log("1번 세트 - " + set1Count + "개 활성화."); break;
             }
             if (set1Count == 4)
@@ -105,7 +130,7 @@ public class Status : MonoBehaviour
             }
         }
         #endregion
-        #region 2번 세트효과
+        #region 2번 세트효과 DEF
         if (itemID >= 4 && itemID <= 7 && set1_Activate == false)
         {
             if (itemIds[itemID] == itemID)
@@ -114,10 +139,23 @@ public class Status : MonoBehaviour
             }
             switch (set2Count)
             {
-                case 1: Debug.Log("1번 세트 - " + set2Count + "개 활성화."); break;
-                case 2: Debug.Log("1번 세트 - " + set2Count + "개 활성화."); break;
-                case 3: Debug.Log("1번 세트 - " + set2Count + "개 활성화."); break;
-                case 4: Debug.Log("1번 세트 - " + set2Count + "개 활성화."); break;
+                case 1: 
+                    Debug.Log("2번 세트 - " + set2Count + "개 활성화.");
+                    Debug.Log("플레이어 방여력 20 증가. 증가 전 = " + FixedArmor + "증가 후 = " + (FixedArmor + 20f));
+                    FixedArmor += 20f;
+                    break;
+                case 2: 
+                    Debug.Log("2번 세트 - " + set2Count + "개 활성화.");
+                    Debug.Log("플레이어 방여력 20% 증가. 증가 전 = " + FixedArmor + "증가 후 = " + FixedArmor * 1.2f);
+                    FixedArmor *= 1.2f;
+                    break;
+                case 3: 
+                    Debug.Log("2번 세트 - " + set2Count + "개 활성화.");
+                    set2_3_Activated = true;
+                    set2_3_Effect_Activated = true;
+                    Debug.Log("피격 시 반격 데미지 활성화. 현재 상태 = " + set2_3_Activated);
+                    break;
+                case 4: Debug.Log("2번 세트 - " + set2Count + "개 활성화."); break;
             }
             if (set2Count == 4)
             {
@@ -125,7 +163,7 @@ public class Status : MonoBehaviour
             }
         }
         #endregion
-        #region 3번 세트효과
+        #region 3번 세트효과 FIRE
         if (itemID >= 8 && itemID <= 11 && set1_Activate == false)
         {
             if (itemIds[itemID] == itemID)
@@ -134,10 +172,24 @@ public class Status : MonoBehaviour
             }
             switch (set3Count)
             {
-                case 1: Debug.Log("1번 세트 - " + set3Count + "개 활성화."); break;
-                case 2: Debug.Log("1번 세트 - " + set3Count + "개 활성화."); break;
-                case 3: Debug.Log("1번 세트 - " + set3Count + "개 활성화."); break;
-                case 4: Debug.Log("1번 세트 - " + set3Count + "개 활성화."); break;
+                case 1: 
+                    Debug.Log("3번 세트 - " + set3Count + "개 활성화.");
+                    Debug.Log("플레이어 화속성 데미지 20 증가. 증가 전 = " + FixedFire + "증가 후 = " + (FixedFire + 20f));
+                    FixedFire += 20f;
+                    StatUpdate();
+                    break;
+                case 2: 
+                    Debug.Log("3번 세트 - " + set3Count + "개 활성화.");
+                    Debug.Log("플레이어 화속성 데미지 20% 증가. 증가 전 = " + FixedFire + "증가 후 = " + FixedFire * 1.2f);
+                    FixedFire *= 1.2f;
+                    StatUpdate();
+                    break;
+                case 3: 
+                    Debug.Log("3번 세트 - " + set3Count + "개 활성화.");
+                    set3_3_Activated = true;
+                    Debug.Log("플레이어 무기 화속성 이펙트 활성화. 현재 상태 = " + set3_3_Activated);
+                    break;
+                case 4: Debug.Log("3번 세트 - " + set3Count + "개 활성화."); break;
             }
             if (set3Count == 4)
             {
@@ -145,7 +197,7 @@ public class Status : MonoBehaviour
             }
         }
         #endregion
-        #region 4번 세트효과
+        #region 4번 세트효과 ICE
         if (itemID >= 12 && itemID <= 15 && set1_Activate == false)
         {
             if (itemIds[itemID] == itemID)
@@ -154,10 +206,24 @@ public class Status : MonoBehaviour
             }
             switch (set1Count)
             {
-                case 1: Debug.Log("1번 세트 - " + set4Count + "개 활성화."); break;
-                case 2: Debug.Log("1번 세트 - " + set4Count + "개 활성화."); break;
-                case 3: Debug.Log("1번 세트 - " + set4Count + "개 활성화."); break;
-                case 4: Debug.Log("1번 세트 - " + set4Count + "개 활성화."); break;
+                case 1: 
+                    Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
+                    Debug.Log("플레이어 빙속성 데미지 20 증가. 증가 전 = " + FixedIce + "증가 후 = " + (FixedIce + 20f));
+                    FixedIce += 20f;
+                    StatUpdate();
+                    break;
+                case 2: 
+                    Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
+                    Debug.Log("플레이어 빙속성 데미지 20% 증가. 증가 전 = " + FixedIce + "증가 후 = " + FixedIce * 1.2f);
+                    FixedIce *= 1.2f;
+                    StatUpdate();
+                    break;
+                case 3: 
+                    Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
+                    set4_3_Activated = true;
+                    Debug.Log("플레이어 무기 빙속성 이펙트 활성화. 현재 상태 = " + set4_3_Activated);
+                    break;
+                case 4: Debug.Log("4번 세트 - " + set4Count + "개 활성화."); break;
             }
             if (set4Count == 4)
             {
@@ -165,7 +231,7 @@ public class Status : MonoBehaviour
             }
         }
         #endregion
-        #region 5번 세트효과
+        #region 5번 세트효과 ADC
         if (itemID >= 16 && itemID <= 19 && set1_Activate == false)
         {
             if (itemIds[itemID] == itemID)
@@ -174,10 +240,24 @@ public class Status : MonoBehaviour
             }
             switch (set5Count)
             {
-                case 1: Debug.Log("1번 세트 - " + set5Count + "개 활성화."); break;
-                case 2: Debug.Log("1번 세트 - " + set5Count + "개 활성화."); break;
-                case 3: Debug.Log("1번 세트 - " + set5Count + "개 활성화."); break;
-                case 4: Debug.Log("1번 세트 - " + set5Count + "개 활성화."); break;
+                case 1: 
+                    Debug.Log("5번 세트 - " + set5Count + "개 활성화.");
+                    Debug.Log("플레이어 평타 데미지 20 증가. 증가 전 = " + FixedADC + "증가 후 = " + (FixedADC + 20f));
+                    FixedADC += 20f;
+                    StatUpdate();
+                    break;
+                case 2: 
+                    Debug.Log("5번 세트 - " + set5Count + "개 활성화.");
+                    Debug.Log("플레이어 평타 데미지 20% 증가. 증가 전 = " + FixedADC + "증가 후 = " + FixedADC * 1.2f);
+                    FixedADC *= 1.2f;
+                    StatUpdate();
+                    break;
+                case 3: 
+                    Debug.Log("5번 세트 - " + set5Count + "개 활성화.");
+                    set5_3_Activated = true;
+                    Debug.Log("플레이어 2타 3타 추가 데미지 활성화. 현재 상태 = " + set5_3_Activated);
+                    break;
+                case 4: Debug.Log("5번 세트 - " + set5Count + "개 활성화."); break;
             }
             if (set5Count == 4)
             {
@@ -185,7 +265,7 @@ public class Status : MonoBehaviour
             }
         }
         #endregion
-        #region 6번 세트효과
+        #region 6번 세트효과 AP
         if (itemID >= 20 && itemID <= 23 && set1_Activate == false)
         {
             if (itemIds[itemID] == itemID)
@@ -194,10 +274,28 @@ public class Status : MonoBehaviour
             }
             switch (set6Count)
             {
-                case 1: Debug.Log("1번 세트 - " + set6Count + "개 활성화."); break;
-                case 2: Debug.Log("1번 세트 - " + set6Count + "개 활성화."); break;
-                case 3: Debug.Log("1번 세트 - " + set6Count + "개 활성화."); break;
-                case 4: Debug.Log("1번 세트 - " + set6Count + "개 활성화."); break;
+                case 1: 
+                    Debug.Log("6번 세트 - " + set6Count + "개 활성화.");
+                    Debug.Log("플레이어 스킬 데미지 20 증가. 증가 전 = " + FixedAP + "증가 후 = " + (FixedAP + 20f));
+                    FixedAP += 20f;
+                    StatUpdate();
+                    break;
+                case 2: 
+                    Debug.Log("6번 세트 - " + set6Count + "개 활성화.");
+                    Debug.Log("플레이어 스킬 데미지 20% 증가. 증가 전 = " + FixedAP + "증가 후 = " + FixedAP * 1.2f);
+                    FixedAP *= 1.2f;
+                    StatUpdate();
+                    break;
+                case 3: 
+                    Debug.Log("6번 세트 - " + set6Count + "개 활성화.");
+                    set6_3_Activated = true;
+                    Debug.Log("플레이어 스킬 Q, W 추가 데미지 활성화. 현재 상태 = " + set6_3_Activated);
+                    break;
+                case 4: 
+                    Debug.Log("6번 세트 - " + set6Count + "개 활성화.");
+                    set6_4_Activated = true;
+                    Debug.Log("플레이어 스킬 E 추가 데미지 활성화. 현재 상태 = " + set6_4_Activated);
+                    break;
             }
             if (set6Count == 4)
             {
@@ -205,7 +303,7 @@ public class Status : MonoBehaviour
             }
         }
         #endregion
-        #region 7번 세트효과
+        #region 7번 세트효과 SPEED
         if (itemID >= 24 && itemID <= 27 && set1_Activate == false)
         {
             if (itemIds[itemID] == itemID)
@@ -214,10 +312,28 @@ public class Status : MonoBehaviour
             }
             switch (set7Count)
             {
-                case 1: Debug.Log("1번 세트 - " + set7Count + "개 활성화."); break;
-                case 2: Debug.Log("1번 세트 - " + set7Count + "개 활성화."); break;
-                case 3: Debug.Log("1번 세트 - " + set7Count + "개 활성화."); break;
-                case 4: Debug.Log("1번 세트 - " + set7Count + "개 활성화."); break;
+                case 1: 
+                    Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
+                    Debug.Log("플레이어 행동속도 20 증가. 증가 전 = " + FixedSpeed + "증가 후 = " + (FixedSpeed + 20f));
+                    FixedSpeed += 20;
+                    StatUpdate();
+                    break;
+                case 2: 
+                    Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
+                    Debug.Log("플레이어 행동속도 20% 증가. 증가 전 = " + FixedSpeed + "증가 후 = " + FixedSpeed * 1.2f);
+                    FixedSpeed *= 1.2f;
+                    StatUpdate();
+                    break;
+                case 3: 
+                    Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
+                    set7_3_Activated = true;
+                    Debug.Log("플레이어 공격 시 추가 데미지 활성화. 현재 상태 = " + set7_3_Activated);
+                    break;
+                case 4: 
+                    Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
+                    set7_4_Activated = true;
+                    Debug.Log("플레이어 스킬 추가 데미지 활성화. 현재 상태 = " + set7_4_Activated);
+                    break;
             }
             if (set7Count == 4)
             {
@@ -225,7 +341,7 @@ public class Status : MonoBehaviour
             }
         }
         #endregion
-        #region 8번 세트효과
+        #region 8번 세트효과 COOLTIME
         if (itemID >= 28 && itemID <= 31 && set1_Activate == false)
         {
             if (itemIds[itemID] == itemID)
@@ -234,10 +350,20 @@ public class Status : MonoBehaviour
             }
             switch (set8Count)
             {
-                case 1: Debug.Log("1번 세트 - " + set8Count + "개 활성화."); break;
-                case 2: Debug.Log("1번 세트 - " + set8Count + "개 활성화."); break;
-                case 3: Debug.Log("1번 세트 - " + set8Count + "개 활성화."); break;
-                case 4: Debug.Log("1번 세트 - " + set8Count + "개 활성화."); break;
+                case 1: 
+                    Debug.Log("8번 세트 - " + set8Count + "개 활성화.");
+                    Debug.Log("플레이어 쿨타임 감소 20 증가. 증가 전 = " + FixedCooltime + "증가 후 = " + (FixedCooltime + 20f));
+                    FixedCooltime += 20;
+                    StatUpdate();
+                    break;
+                case 2: 
+                    Debug.Log("8번 세트 - " + set8Count + "개 활성화.");
+                    Debug.Log("플레이어 쿨타임 감소 20% 증가. 증가 전 = " + FixedCooltime + "증가 후 = " + FixedCooltime * 1.2f);
+                    FixedCooltime *= 1.2f;
+                    StatUpdate();
+                    break;
+                case 3: Debug.Log("8번 세트 - " + set8Count + "개 활성화."); break;
+                case 4: Debug.Log("8번 세트 - " + set8Count + "개 활성화."); break;
             }
             if (set8Count == 4)
             {

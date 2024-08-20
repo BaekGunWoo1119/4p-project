@@ -9,7 +9,7 @@ using Cinemachine;
 
 public class CameraCtrl : MonoBehaviour
 {
-    public Transform target; //Player
+    public static Transform target; //Player
     public Vector3 offset;
 
     //오프셋에 추가할 값
