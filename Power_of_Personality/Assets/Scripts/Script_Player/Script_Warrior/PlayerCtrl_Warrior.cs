@@ -440,6 +440,12 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
         setParticles2 = SkillEffect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
         ParticleSystem setParticles5 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        Transform setParticles7 = SkillEffect.transform.Find("Slashes").transform.Find("Flash").transform;
+        Transform setParticles8 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").transform.Find("Sparks").transform;
+        Transform setParticles9 = SkillEffect.transform.Find("Slashes").transform.Find("SparksCore").transform;
+        setParticles7.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles8.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles9.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
         StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles1));
         StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles2));
         StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles5));
@@ -452,9 +458,15 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
         setParticles2 = SkillEffect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
         ParticleSystem setParticles5 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        Transform setParticles7 = SkillEffect.transform.Find("Slashes").transform.Find("Flash").transform;
+        Transform setParticles8 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").transform.Find("Sparks").transform;
+        Transform setParticles9 = SkillEffect.transform.Find("Slashes").transform.Find("SparksCore").transform;   
+        setParticles7.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles8.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles9.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
         StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles1));
         StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles2));
-        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles5));       
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles5));     
     }
 
     public void skill_W_on()
@@ -472,6 +484,18 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         setParticles4 = SkillEffect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
         ParticleSystem setParticles5 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
         ParticleSystem setParticles6 = SkillEffect.transform.Find("Slashes-1").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        Transform setParticles7 = SkillEffect.transform.Find("Slashes").transform.Find("Flash").transform;
+        Transform setParticles8 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").transform.Find("Sparks").transform;
+        Transform setParticles9 = SkillEffect.transform.Find("Slashes").transform.Find("SparksCore").transform;   
+        Transform setParticles10 = SkillEffect.transform.Find("Slashes-1").transform.Find("Flash").transform;
+        Transform setParticles11 = SkillEffect.transform.Find("Slashes-1").transform.Find("GroundCrack").transform.Find("Sparks").transform;
+        Transform setParticles12 = SkillEffect.transform.Find("Slashes-1").transform.Find("SparksCore").transform;  
+        setParticles7.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles8.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles9.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles10.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles11.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles12.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
         StartCoroutine(RotateEffect(30f, (SkillYRot - 90f), 0f, setParticles1));
         StartCoroutine(RotateEffect(-30f, (SkillYRot - 90f), 0f, setParticles2));
         StartCoroutine(RotateEffect(30f, (SkillYRot - 90f), 0f, setParticles3));
