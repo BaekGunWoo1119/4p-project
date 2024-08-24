@@ -179,11 +179,19 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         base.OnCollisionExit(collision);
     }
+    protected override void OnTriggerEnter(Collider col)
+    {
+        base.OnTriggerEnter(col);
+    }
+    protected override void OnTriggerStay(Collider col)
+    {
+        base.OnTriggerStay(col);
+    }
     protected override void OnTriggerExit(Collider col)
     {
         base.OnTriggerExit(col);
     }
-    #endregion
+    #endregion 
 
     #region 공격 관련 함수
 
@@ -593,6 +601,11 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     public override void StopAnim(string AnimationName)
     {
         base.StopAnim(AnimationName);
+    }
+
+    public override void AnimState()
+    {
+        base.AnimState();
     }
     #endregion
 }
