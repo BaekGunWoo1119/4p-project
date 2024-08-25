@@ -262,12 +262,12 @@ public class PlayerCtrl_Archer : PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
     }
     public void comboAttack_2_on()
@@ -275,12 +275,12 @@ public class PlayerCtrl_Archer : PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
     }
     public void comboAttack_off()
@@ -292,12 +292,12 @@ public class PlayerCtrl_Archer : PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
     }
 
@@ -306,12 +306,12 @@ public class PlayerCtrl_Archer : PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
-            SkillEffect.transform.parent = EffectGen.transform;
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
     }
 

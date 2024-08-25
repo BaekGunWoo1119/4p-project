@@ -53,7 +53,6 @@ public class ObjectMoveDestroy_Distance : MonoBehaviour
 
     IEnumerator DelayDestroy()
     {
-        Debug.Log(DelayDestroyTime);
         yield return new WaitForSeconds(DelayDestroyTime);
         Destroy(gameObject);
     }
