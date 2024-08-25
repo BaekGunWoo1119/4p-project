@@ -3,31 +3,53 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Wizard_Q_Collider : MonoBehaviour
-{ 
+{
     public GameObject QSkill_Collider;
     public float QSkill_zGrowthRate;
-    public float maxDistance;
+    public float maxScale;
+
+    private Vector3 startPosition;
+    private Vector3 initialScale;
 
     void Start()
     {
         bool isHasSet = GetComponentInParent<ATKEffect_Control>().HasSet;
         float ColliderDistanceAdd = GetComponentInParent<ATKEffect_Control>().EffectDistanceAdd;
+        startPosition = transform.position;
+        initialScale = transform.localScale; // 초기 스케일 저장
 
-        if(isHasSet)
+        if (isHasSet)
         {
-            maxDistance = maxDistance * ColliderDistanceAdd;
+            maxScale = maxScale * ColliderDistanceAdd;
         }
 
+        maxScale = maxScale + 2;
     }
 
-    // Update is called once per frame
     void Update()
-    {   
-        if (QSkill_Collider.transform.localScale.z < maxDistance + 2)
+    {
+        Vector3 currentScale = transform.localScale;
+        Vector3 parentScale = transform.parent ? transform.parent.lossyScale : Vector3.one;
+
+        // z축 방향으로만 스케일을 증가시키기
+        if (currentScale.z * parentScale.z < maxScale)
         {
-            Vector3 newScale = QSkill_Collider.transform.localScale;
-            newScale.z += QSkill_zGrowthRate * Time.deltaTime;
-            QSkill_Collider.transform.localScale = newScale;
+            float scaleIncrement = QSkill_zGrowthRate * Time.deltaTime;
+
+            // 부모의 영향을 고려하여 로컬 스케일 조정
+            currentScale.z += scaleIncrement / parentScale.z;
+
+            // 변경된 스케일을 오브젝트에 적용
+            transform.localScale = currentScale;
+
+            // 위치 보정 (z축으로만 커지게 하기 위해 오브젝트의 위치를 이동)
+            transform.position += new Vector3(scaleIncrement / 2, 0, 0);
+        }
+        else
+        {
+            // maxScale에 도달하면 스케일을 maxScale로 고정
+            currentScale.z = maxScale / parentScale.z;
+            transform.localScale = currentScale;
         }
     }
 }
