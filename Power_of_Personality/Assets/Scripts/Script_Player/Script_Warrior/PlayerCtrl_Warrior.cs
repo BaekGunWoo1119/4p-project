@@ -602,5 +602,10 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     {
         base.StopAnim(AnimationName);
     }
+
+    public override void AnimState()
+    {
+        base.AnimState();
+    }
     #endregion
 }
