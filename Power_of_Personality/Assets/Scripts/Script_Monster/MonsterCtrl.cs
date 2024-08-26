@@ -20,6 +20,7 @@ public class MonsterCtrl : MonoBehaviour
     public float DEF;       // 방어력
     public float MoveSpeed;  // 이동 속도
     public float Damage;   // 받은 피해량
+    public string ownWeakProperty; // 자신의 원래 약점 속성
     public string WeakProperty; // 약점 속성
 
     public float TickCoolTime;  // 틱 피해량 쿨타임
@@ -59,11 +60,12 @@ public class MonsterCtrl : MonoBehaviour
         {
             AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
         }
-        SetHP(1000000);                         // 몬스터의 기본 HP를 설정
+        SetHP(100000000);                         // 몬스터의 기본 HP를 설정
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
         StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
+        SetWeakProperty();  //약점 속성 설정
     }
     
     public virtual void Start()
@@ -86,9 +88,22 @@ public class MonsterCtrl : MonoBehaviour
         {
             Turn();
         }
+        #region 3/4세트 4세트 효과
+        if (Status.set3_4_Activated && WeakProperty != "Fire")
+        {
+            WeakProperty = "Fire";
+            Debug.Log("약점속성이 화속성이 됨.");
+        }
+
+        if (Status.set4_4_Activated && WeakProperty != "Ice")
+        {
+            WeakProperty = "Ice";
+            Debug.Log("약점속성이 빙속성이 됨.");
+        }
+        #endregion
     }
 
-    #region 몬스터 HP 설정하는 부분
+    #region 몬스터 초기 값 설정
     public virtual void SetHP(float amount) // HP 설정
     {
         maxHP = amount;
@@ -99,6 +114,24 @@ public class MonsterCtrl : MonoBehaviour
     {
         if (HpBar != null)
             HpBar.value = curHP / maxHP;
+    }
+
+    public virtual void SetWeakProperty()
+    {
+        if(Status.set3_4_Activated == true)
+        {
+            Debug.Log("화속성 약점으로 설정");
+            WeakProperty = "Fire";
+        }
+        else if(Status.set4_4_Activated == true)
+        {
+            Debug.Log("빙속성 약점으로 설정");
+            WeakProperty = "Ice";
+        }
+        else
+        {
+            WeakProperty = ownWeakProperty;
+        }
     }
     #endregion
 
@@ -579,7 +612,23 @@ public class MonsterCtrl : MonoBehaviour
             }
             if(PlayerPrefs.GetString("property") == WeakProperty)
             {
-                Damage = Damage * 1.5f;
+                #region 3/4번 세트 3셋 효과
+                if (WeakProperty == "Fire" && Status.set3_3_Activated)
+                {
+                    Damage = (Damage * 1.5f) * 1.2f;
+                    Debug.Log("20% 추가한 약점 데미지는 : " + Damage);
+                }
+                if (WeakProperty == "Ice" && Status.set4_3_Activated)
+                {
+                    Damage = (Damage * 1.5f) * 1.2f;
+                    Debug.Log("20% 추가한 약점 데미지는 : " + Damage);
+                }
+                #endregion
+                else if(Status.set3_3_Activated == false && Status.set4_3_Activated == false)
+                {
+                    Debug.Log("약공터짐!!");    
+                    Damage = Damage * 1.5f;
+                }
             }
             Material[] materials = matObj.materials;
             #region 1번 세트 3셋효과
@@ -591,7 +640,23 @@ public class MonsterCtrl : MonoBehaviour
                 Damage = Damage * 1.2f;
             }
             #endregion
-            # region 7번 세트 3셋 효과
+            #region 1번 세트 4셋 효과
+            if(Status.set1_4_Activated == true)
+            {
+                Debug.Log("힐 하기 전 HP:" + Status.HP);
+
+                if(Status.HP + (Damage * 0.2f) > Status.MaxHP)
+                {
+                    Status.HP = Status.MaxHP;
+                }
+                else
+                {
+                    Status.HP += (Damage * 0.2f);
+                }
+                Debug.Log("힐 하고 나서 HP:" + Status.HP);
+            }
+            #endregion
+            #region 7번 세트 3셋 효과
             if (Status.set7_3_Activated == true)
             {
                 Debug.Log("7활성화되어잇음");

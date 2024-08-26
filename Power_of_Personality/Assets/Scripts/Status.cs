@@ -32,6 +32,7 @@ public class Status : MonoBehaviour
     public static float TotalSpeed = 1f; //총 행동속도
     public static float EXP = 0f; // 현재 경험치
     public string CurProperty; //현재 플레이어 속성
+    public static int extraLife = 0;    // 플레이어 추가 목숨
     public static int[] itemIds = new int[32];
     public static int set1Count = 0;
     public static int set2Count = 0;
@@ -41,24 +42,48 @@ public class Status : MonoBehaviour
     public static int set6Count = 0;
     public static int set7Count = 0;
     public static int set8Count = 0;
+
+    
+    // 1번 세트
     public static bool set1_Activate = false;
-    public static bool set2_Activate = false;
-    public static bool set3_Activate = false;
-    public static bool set4_Activate = false;
-    public static bool set5_Activate = false;
-    public static bool set6_Activate = false;
-    public static bool set7_Activate = false;
-    public static bool set8_Activate = false;
     public static bool set1_3_Activated = false;
+    public static bool set1_4_Activated = false;
+
+    //2번 세트
+    public static bool set2_Activate = false;
     public static bool set2_3_Activated = false;
+    public static bool set2_4_Activated = false;
     public static bool set2_3_Effect_Activated = false;
+
+    //3번 세트
+    public static bool set3_Activate = false;
     public static bool set3_3_Activated = false;
+    public static bool set3_4_Activated = false;
+
+    //4번 세트
+    public static bool set4_Activate = false;
     public static bool set4_3_Activated = false;
+    public static bool set4_4_Activated = false;
+
+    //5번 세트
+    public static bool set5_Activate = false;
     public static bool set5_3_Activated = false;
+    public static bool set5_4_Activated = false;
+
+    //6번 세트
+    public static bool set6_Activate = false;
     public static bool set6_3_Activated = false;
     public static bool set6_4_Activated = false;
+
+    //7번 세트
+    public static bool set7_Activate = false;
     public static bool set7_3_Activated = false;
     public static bool set7_4_Activated = false;
+
+    //8번 세트
+    public static bool set8_Activate = false;
+    public static bool set8_3_Activated = false;
+
     public static bool IsShop = false; //현재 상점인지 확인
     static int a = 0;
     void Start()
@@ -117,12 +142,16 @@ public class Status : MonoBehaviour
                     FixedAD *= 1.2f;
                     StatUpdate();
                     break;
-                case 3: 
+                case 3: // 3세트 N% 확률로 N% 추가 데미지, 플레이어 몸 주변 아우라
                     Debug.Log("1번 세트 - " + set1Count + "개 활성화.");
                     set1_3_Activated = true;
                     Debug.Log("플레이어 공격 시 일정 확률로 추가 데미지 활성화. 현재 상태 = " + set1_3_Activated);
                     break;
-                case 4: Debug.Log("1번 세트 - " + set1Count + "개 활성화."); break;
+                case 4: 
+                    Debug.Log("1번 세트 - " + set1Count + "개 활성화.");
+                    set1_4_Activated = true;
+                    Debug.Log("피해량 비례 체력 회복 +N% 활성화. 현재 상태 = " + set1_4_Activated);
+                    break;
             }
             if (set1Count == 4)
             {
@@ -131,7 +160,7 @@ public class Status : MonoBehaviour
         }
         #endregion
         #region 2번 세트효과 DEF
-        if (itemID >= 4 && itemID <= 7 && set1_Activate == false)
+        if (itemID >= 4 && itemID <= 7 && set2_Activate == false)
         {
             if (itemIds[itemID] == itemID)
             {
@@ -155,7 +184,12 @@ public class Status : MonoBehaviour
                     set2_3_Effect_Activated = true;
                     Debug.Log("피격 시 반격 데미지 활성화. 현재 상태 = " + set2_3_Activated);
                     break;
-                case 4: Debug.Log("2번 세트 - " + set2Count + "개 활성화."); break;
+                case 4: 
+                    Debug.Log("2번 세트 - " + set2Count + "개 활성화.");
+                    set2_4_Activated = true;
+                    Debug.Log("플레이어 추가 목숨 활성화. 현재 상태 = " + set2_3_Activated);
+                    extraLife += 1;
+                    break;
             }
             if (set2Count == 4)
             {
@@ -164,7 +198,7 @@ public class Status : MonoBehaviour
         }
         #endregion
         #region 3번 세트효과 FIRE
-        if (itemID >= 8 && itemID <= 11 && set1_Activate == false)
+        if (itemID >= 8 && itemID <= 11 && set3_Activate == false)
         {
             if (itemIds[itemID] == itemID)
             {
@@ -187,9 +221,13 @@ public class Status : MonoBehaviour
                 case 3: 
                     Debug.Log("3번 세트 - " + set3Count + "개 활성화.");
                     set3_3_Activated = true;
-                    Debug.Log("플레이어 무기 화속성 이펙트 활성화. 현재 상태 = " + set3_3_Activated);
+                    Debug.Log("플레이어 무기 화속성 이펙트, 화속성 약점 추가데미지 + N% 활성화. 현재 상태 = " + set3_3_Activated);
                     break;
-                case 4: Debug.Log("3번 세트 - " + set3Count + "개 활성화."); break;
+                case 4: 
+                    Debug.Log("3번 세트 - " + set3Count + "개 활성화.");
+                    set3_4_Activated = true;
+                    Debug.Log("모든 몬스터 화속성 약점으로 설정 활성화. 현재 상태 =" + set3_4_Activated);
+                    break;
             }
             if (set3Count == 4)
             {
@@ -198,13 +236,14 @@ public class Status : MonoBehaviour
         }
         #endregion
         #region 4번 세트효과 ICE
-        if (itemID >= 12 && itemID <= 15 && set1_Activate == false)
+        if (itemID >= 12 && itemID <= 15 && set4_Activate == false)
         {
+            Debug.Log("얼음세트먹음");
             if (itemIds[itemID] == itemID)
             {
                 set4Count++;
             }
-            switch (set1Count)
+            switch (set4Count)
             {
                 case 1: 
                     Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
@@ -221,9 +260,14 @@ public class Status : MonoBehaviour
                 case 3: 
                     Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
                     set4_3_Activated = true;
-                    Debug.Log("플레이어 무기 빙속성 이펙트 활성화. 현재 상태 = " + set4_3_Activated);
+                    Debug.Log("플레이어 무기 빙속성 이펙트, 빙속성 약점 추가데미지 + N% 활성화. 현재 상태 = " + set4_3_Activated);
+                    // 플레이어가 빙속성일 시 무기에 빙속성 이펙트
                     break;
-                case 4: Debug.Log("4번 세트 - " + set4Count + "개 활성화."); break;
+                case 4: 
+                    Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
+                    set4_4_Activated = true;
+                    Debug.Log("모든 몬스터 빙속성 약점으로 설정 활성화. 현재 상태 =" + set4_4_Activated);
+                    break;
             }
             if (set4Count == 4)
             {
@@ -232,7 +276,7 @@ public class Status : MonoBehaviour
         }
         #endregion
         #region 5번 세트효과 ADC
-        if (itemID >= 16 && itemID <= 19 && set1_Activate == false)
+        if (itemID >= 16 && itemID <= 19 && set5_Activate == false)
         {
             if (itemIds[itemID] == itemID)
             {
@@ -257,7 +301,11 @@ public class Status : MonoBehaviour
                     set5_3_Activated = true;
                     Debug.Log("플레이어 2타 3타 추가 데미지 활성화. 현재 상태 = " + set5_3_Activated);
                     break;
-                case 4: Debug.Log("5번 세트 - " + set5Count + "개 활성화."); break;
+                case 4: 
+                    Debug.Log("5번 세트 - " + set5Count + "개 활성화.");
+                    set5_4_Activated = true;
+                    Debug.Log("평타 3타 칠때 마다 7초간 공격력 +N% (최대 3회 누적) 활성화. 현재 상태 = " + set5_4_Activated);
+                    break;
             }
             if (set5Count == 4)
             {
@@ -266,7 +314,7 @@ public class Status : MonoBehaviour
         }
         #endregion
         #region 6번 세트효과 AP
-        if (itemID >= 20 && itemID <= 23 && set1_Activate == false)
+        if (itemID >= 20 && itemID <= 23 && set6_Activate == false)
         {
             if (itemIds[itemID] == itemID)
             {
@@ -304,7 +352,7 @@ public class Status : MonoBehaviour
         }
         #endregion
         #region 7번 세트효과 SPEED
-        if (itemID >= 24 && itemID <= 27 && set1_Activate == false)
+        if (itemID >= 24 && itemID <= 27 && set7_Activate == false)
         {
             if (itemIds[itemID] == itemID)
             {
@@ -327,7 +375,7 @@ public class Status : MonoBehaviour
                 case 3: 
                     Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
                     set7_3_Activated = true;
-                    Debug.Log("플레이어 공격 시 추가 데미지 활성화. 현재 상태 = " + set7_3_Activated);
+                    Debug.Log("플레이어 공격 시 추가 데미지, 플레이어 등 뒤에 잔상 활성화. 현재 상태 = " + set7_3_Activated);
                     break;
                 case 4: 
                     Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
@@ -342,8 +390,9 @@ public class Status : MonoBehaviour
         }
         #endregion
         #region 8번 세트효과 COOLTIME
-        if (itemID >= 28 && itemID <= 31 && set1_Activate == false)
+        if (itemID >= 28 && itemID <= 31 && set8_Activate == false)
         {
+            Debug.Log("8번 세트머금");
             if (itemIds[itemID] == itemID)
             {
                 set8Count++;
@@ -362,7 +411,11 @@ public class Status : MonoBehaviour
                     FixedCooltime *= 1.2f;
                     StatUpdate();
                     break;
-                case 3: Debug.Log("8번 세트 - " + set8Count + "개 활성화."); break;
+                case 3: 
+                    Debug.Log("8번 세트 - " + set8Count + "개 활성화.");
+                    set8_3_Activated = true;
+                    Debug.Log("스킬 사용 시 플레이어 주변 시계 이펙트 활성화. 현재 상태 = " + set8_3_Activated);
+                    break;
                 case 4: Debug.Log("8번 세트 - " + set8Count + "개 활성화."); break;
             }
             if (set8Count == 4)

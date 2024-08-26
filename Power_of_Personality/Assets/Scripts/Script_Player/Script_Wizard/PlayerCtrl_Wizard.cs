@@ -67,11 +67,11 @@ public class PlayerCtrl_Wizard : PlayerCtrl
             newScale.z += QSkill_zGrowthRate * Time.deltaTime;
             QSkill_Collider.transform.localScale = newScale;
         }
+        */
         if (stateSkillE == true)    //E 스킬
         {
             transform.position = Vector3.Lerp(transform.position, tgPos, 0.01f);
         }
-        */
     }
     #endregion
 

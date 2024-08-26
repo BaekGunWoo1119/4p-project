@@ -11,7 +11,7 @@ public class BeeCtrl : MonsterCtrl
 {
     public override void Awake()
     {
-        WeakProperty = "Fire";
+        ownWeakProperty ="Fire";
         ATK = 10.0f;
         DEF = 100;
         MoveSpeed = 2.0f;

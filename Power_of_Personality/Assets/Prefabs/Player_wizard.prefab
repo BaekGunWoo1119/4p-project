@@ -19889,6 +19889,7 @@ Transform:
   - {fileID: 7812265294032567745}
   - {fileID: 8270274883578419262}
   - {fileID: 8717765037074031037}
+  - {fileID: 6386287789297879077}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -19951,6 +19952,7 @@ MonoBehaviour:
   Item_Aura_Ice_Effect: {fileID: 4924467310827462379}
   Item_Aura_Fire_Effect: {fileID: 2467072327284465945}
   Item_Sheild_Effect: {fileID: 4025735471172603307}
+  Item_Time_Effect: {fileID: 5891289022729139770}
   PlayerCanvas: {fileID: 0}
   HpText: {fileID: 0}
   InvenCtrl: {fileID: 0}
@@ -20009,8 +20011,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.001, y: 0.15154555, z: 0.001}
-  m_Center: {x: 0.0033946633, y: 0.07966606, z: 0.0030172914}
+  m_Size: {x: 0.0009999999, y: 0.21789894, z: 0.0009999999}
+  m_Center: {x: 0.0033946633, y: 0.046489373, z: 0.0030172914}
 --- !u!65 &137574799638055015
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20030,8 +20032,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.8, z: 1}
-  m_Center: {x: -0, y: 0.9131308, z: 0}
+  m_Size: {x: 1, y: 1.8073299, z: 1}
+  m_Center: {x: -0, y: 0.9094659, z: 0}
 --- !u!95 &6366259574096047278
 Animator:
   serializedVersion: 5
@@ -143290,6 +143292,93 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0000076293945, y: -59.577244, z: -7.08979}
     m_Extent: {x: 27.258345, y: 64.04122, z: 14.248615}
   m_DirtyAABB: 0
+--- !u!1001 &80747522750661712
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 894842059209348796}
+    m_Modifications:
+    - target: {fileID: 5826759989119054442, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_Name
+      value: Effect_18_TimeField
+      objectReference: {fileID: 0}
+    - target: {fileID: 5826759989119054442, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0000006351884
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0000019073484
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0000013341546
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+--- !u!1 &5891289022729139770 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5826759989119054442, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+  m_PrefabInstance: {fileID: 80747522750661712}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6386287789297879077 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
+  m_PrefabInstance: {fileID: 80747522750661712}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1601774489837263888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143383,6 +143472,10 @@ PrefabInstance:
     - target: {fileID: 5916005454362882075, guid: b307c79d5a1c3a44ca0e221ad22c0b94, type: 3}
       propertyPath: m_Name
       value: ItemEffect_IceAura
+      objectReference: {fileID: 0}
+    - target: {fileID: 5916005454362882075, guid: b307c79d5a1c3a44ca0e221ad22c0b94, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7244897895578646222, guid: b307c79d5a1c3a44ca0e221ad22c0b94, type: 3}
       propertyPath: m_RootOrder
@@ -143640,6 +143733,10 @@ PrefabInstance:
     - target: {fileID: 8415107764182269624, guid: 547eb4de38f2f41428024c68dd3406a7, type: 3}
       propertyPath: m_Name
       value: ItemEffect_FireAura
+      objectReference: {fileID: 0}
+    - target: {fileID: 8415107764182269624, guid: 547eb4de38f2f41428024c68dd3406a7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

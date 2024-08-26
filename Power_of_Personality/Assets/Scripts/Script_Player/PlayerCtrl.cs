@@ -121,6 +121,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public GameObject Item_Aura_Ice_Effect;
     public GameObject Item_Aura_Fire_Effect;
     public GameObject Item_Sheild_Effect;
+    public GameObject Item_Time_Effect;
     public GameObject PlayerCanvas;
 
     // 카메라, 사운드
@@ -151,8 +152,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public GameObject DruidGen;
 
     // 쿨타임 관련
+    protected bool QSkillReady;
+
     protected float QSkillCoolTime;
+
+    protected bool WSkillReady; 
     protected float WSkillCoolTime;
+
+    protected bool ESkillReady;
     protected float ESkillCoolTime;
     protected Image Qcool;
     protected Image Wcool;
@@ -167,10 +174,21 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     // 회전 관련
     protected GameObject CurrentFloor;
     protected Vector3 moveVec;
+
+    //아이템 세트효과 관련
+    protected int attackCount = 0;
+    protected int currentStack = 0;
+    protected float clockEffectTime = 0;
+    Stack prevADC = new Stack();
+
     #endregion
 
     protected virtual void Start()
     {
+        // 8번 세트 3번 이펙트 효과 관리
+        GetComponent<SkinnedMeshAfterImage>().enabled = false;
+        Item_Time_Effect.SetActive(false);
+
         //상점 씬 등에 거쳐왔을 시 플레이어 위치 초기화(06.13)
         if(PlayerPrefs.GetFloat("PlayerXPos") != null && PlayerPrefs.GetString("Hidden_Shop_Spawn_Scene") == SceneManager.GetActiveScene().name)
         {
@@ -256,6 +274,22 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     protected virtual void Update()
     {
+        #region 7번 세트 3셋 이펙트 효과 (등 뒤에 잔상 이펙트)
+        if (Status.set7_3_Activated && GetComponent<SkinnedMeshAfterImage>().enabled == false)
+        {
+            GetComponent<SkinnedMeshAfterImage>().enabled = true;
+        }
+        #endregion
+        #region 8번 세트 3셋 이펙트 효과 (시계)
+        if (Item_Time_Effect.activeSelf)
+        {
+            clockEffectTime -= Time.deltaTime;
+            if(clockEffectTime < 0)
+            {
+                Item_Time_Effect.SetActive(false);
+            }
+        }
+        #endregion
         // 해당 bool값 실행 시 모든 행동 멈춤
         if(!Status.IsShop)
         {
@@ -502,18 +536,29 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 SkillE3_Effect = Skill_FireE3_Effect;
                 SkillE4_Effect = Skill_FireE4_Effect;
                 //아이템 이펙트 추가(07.29 백건우)
-                Item_Weapon_Effect = Item_Weapon_Fire_Effect;
-                if(Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                //세트효과 추가(08.26 이준경) 
+                #region 3번 세트 4셋 이펙트 효과
+                if (Status.set3_4_Activated)
                 {
-                    Item_Weapon_Fire_Effect.SetActive(true);
-                    Item_Weapon_Ice_Effect.SetActive(false);
+                    Item_Weapon_Effect = Item_Weapon_Fire_Effect;
+                    if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                    {
+                        Item_Weapon_Fire_Effect.SetActive(true);
+                        Item_Weapon_Ice_Effect.SetActive(false);
+                    }
                 }
-                Item_Aura_Effect = Item_Aura_Fire_Effect;
-                if(Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
+                #endregion
+                #region 1번 세트 3셋 이펙트 효과
+                if (Status.set1_4_Activated)
                 {
-                    Item_Aura_Fire_Effect.SetActive(true);
-                    Item_Aura_Ice_Effect.SetActive(false);
+                    Item_Aura_Effect = Item_Aura_Fire_Effect;
+                    if (Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
+                    {
+                        Item_Aura_Fire_Effect.SetActive(true);
+                        Item_Aura_Ice_Effect.SetActive(false);
+                    }
                 }
+                #endregion
             }
             else if (PlayerPrefs.GetString("property") == "Ice")
             {
@@ -527,18 +572,30 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 SkillE3_Effect = Skill_IceE3_Effect;
                 SkillE4_Effect = Skill_IceE4_Effect;
                 //아이템 이펙트 추가(07.29 백건우)
-                Item_Weapon_Effect = Item_Weapon_Ice_Effect;
-                if(Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                //세트효과 추가(08.26 이준경) 
+                #region 4번 세트 4셋 이펙트 효과
+                if (Status.set4_4_Activated == true) 
                 {
-                    Item_Weapon_Fire_Effect.SetActive(false);
-                    Item_Weapon_Ice_Effect.SetActive(true);
+                    Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                    if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                    {
+                        Item_Weapon_Fire_Effect.SetActive(false);
+                        Item_Weapon_Ice_Effect.SetActive(true);
+                    }
                 }
-                Item_Aura_Effect = Item_Aura_Ice_Effect;
-                if(Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
+                #endregion
+
+                #region 1번 세트 3셋 이펙트 효과
+                if (Status.set1_3_Activated == true)
                 {
-                    Item_Aura_Fire_Effect.SetActive(false);
-                    Item_Aura_Ice_Effect.SetActive(true);
+                    Item_Aura_Effect = Item_Aura_Ice_Effect;
+                    if (Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
+                    {
+                        Item_Aura_Fire_Effect.SetActive(false);
+                        Item_Aura_Ice_Effect.SetActive(true);
+                    }
                 }
+                #endregion
             }
             else
             {
@@ -551,19 +608,6 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 SkillE2_Effect = Skill_IceE2_Effect;
                 SkillE3_Effect = Skill_IceE3_Effect;
                 SkillE4_Effect = Skill_IceE4_Effect;
-                //아이템 이펙트 추가(07.29 백건우)
-                Item_Weapon_Effect = Item_Weapon_Ice_Effect;
-                if(Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
-                {
-                    Item_Weapon_Fire_Effect.SetActive(false);
-                    Item_Weapon_Ice_Effect.SetActive(true);
-                }
-                Item_Aura_Effect = Item_Aura_Ice_Effect;
-                if(Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
-                {
-                    Item_Aura_Fire_Effect.SetActive(false);
-                    Item_Aura_Ice_Effect.SetActive(true);
-                }
             }
 
             // 플레이어 피가 30보다 작으면 지속적으로 화면이 깜빡임
@@ -935,6 +979,42 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     public virtual void Attack(int AttackNumber)
     {
+        Debug.Log("Attack 메서드 실행, AttackNumber는 = " + AttackNumber);
+        switch (AttackNumber) {
+            case 0:
+            case 1:
+            case 2:
+                {
+                    if(attackCount < 3 && Status.set5_4_Activated)
+                    {
+                        attackCount++;
+                    }
+                    if(attackCount == 3 && currentStack < 3 && Status.set5_4_Activated)
+                    {
+                        Debug.Log("평타 " + attackCount + "번 침");
+                        StartCoroutine(set5_4());
+                    }
+                    if(attackCount >= 3 && Status.set5_4_Activated)
+                    {
+                        attackCount = 0;
+                    }
+                    break;
+                }
+        }
+    }
+
+    public virtual IEnumerator set5_4()
+    {
+        currentStack++;
+        prevADC.Push(Status.TotalADC);
+        Status.TotalADC = Status.TotalADC * 1.2f;
+        Debug.Log("강화된 공격력 : " + Status.TotalADC);
+        Debug.Log("현재 " + currentStack + "스택");
+        yield return new WaitForSeconds(7);
+        currentStack--;
+        Status.TotalADC = (float)prevADC.Pop();
+        Debug.Log("돌아간 공격력 : " + Status.TotalADC);
+        Debug.Log("현재 " + currentStack + "스택");
     }
 
     protected virtual void SkillCoolTimeCharge()
@@ -942,7 +1022,21 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         QSkillCoolTime += Time.deltaTime;
         WSkillCoolTime += Time.deltaTime;
         ESkillCoolTime += Time.deltaTime;
+
+        if(QSkillCoolTime > 3)      // (도훈) 여기서 숫자 3이 스킬의 쿨타임인데 저걸 변수화해서 제어해야할 듯 함. 스킬 쿨타임이 지나면 QSkillReady가 true가 되는 형식임
+        {
+            QSkillReady = true;
+        }
+        if (WSkillCoolTime > 3) 
+        { 
+            WSkillReady = true;
+        }
+        if (ESkillCoolTime > 3)
+        {
+            ESkillReady = true;
+        }
     }
+    
     protected virtual void ResetAttackInProgressStates()
     {
         isCommonAttack1InProgress = false;
@@ -961,6 +1055,11 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     public virtual void UseSkill(string skillName)
     {
+        if (Status.set8_3_Activated)
+        {
+            clockEffectTime += 3;
+            Item_Time_Effect.SetActive(true);
+        }
     }
     #endregion
 
