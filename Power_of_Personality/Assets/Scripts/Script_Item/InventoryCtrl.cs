@@ -22,16 +22,16 @@ public class InventoryCtrl : MonoBehaviour
     
     void Awake()
     {
-        // InventoryCtrl 인스턴스가 이미 있는지 확인, 이 상태로 설정
+        // 싱글톤 인스턴스 설정
         if (instance == null)
+        {
             instance = this;
-
-        // 인스턴스가 이미 있는 경우 오브젝트 제거
-        else if (instance != this)
-            Destroy(gameObject);
-
-        // 이렇게 하면 다음 scene으로 넘어가도 오브젝트가 사라지지 않습니다.
-        DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // 씬 전환 시 파괴되지 않게 설정
+        }
+        else
+        {
+            Destroy(gameObject); // 이미 인스턴스가 존재하면 중복 생성 방지
+        }
 
     }
 

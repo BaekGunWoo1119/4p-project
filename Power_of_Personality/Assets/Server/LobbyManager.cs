@@ -51,6 +51,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
                 Player2Wait.SetActive(true);
             }
         }
+        ResetSetting();
     }
     
     public void Update(){
@@ -236,6 +237,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
  
     public void GameStart(){
         /*게임 시작한다고 알림 띄울 예정*/
+        foreach(Player Player in PhotonNetwork.PlayerList){
+            Player.CustomProperties["IsReady"] = false;
+        }
         PhotonNetwork.LoadLevel("Forest_Example_Multi");
     }
 
@@ -248,6 +252,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
             };
         }
         return IsAllReady;
+    }
+
+    public void ResetSetting(){
+        PlayerProperties["PlayerClass"] = PlayerPrefs.GetString("PlayerClass");
+        PlayerProperties["IsReady"]=false;
+        PlayerProperties["IsExitShop"]=false;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties); //클래스 프로퍼티 설정
     }
 #endregion
 

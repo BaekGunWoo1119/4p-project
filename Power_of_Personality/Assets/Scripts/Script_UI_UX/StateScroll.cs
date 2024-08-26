@@ -45,6 +45,9 @@ public class StateScroll : MonoBehaviour
 
     void Update()
     {
+        if(InvenCtrl == null){
+            InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
+        }
         if(InvenCtrl.StatPoint == 0 && isScroll == true)
         {
             for(int i = 0; i < scrollImg.Length; i++)
