@@ -154,13 +154,16 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     // 쿨타임 관련
     protected bool QSkillReady;
 
-    protected float QSkillCoolTime;
+    protected float QSkillCoolTime; //쿨 돌았는지 체크용
+    protected float TotalQSkillCoolTime = 0;  // 실제 쿨타임 도훈 2024-08-27
 
     protected bool WSkillReady; 
-    protected float WSkillCoolTime;
+    protected float WSkillCoolTime; //쿨 돌았는지 체크용
+    protected float TotalWSkillCoolTime = 0; // 실제 쿨타임  도훈 2024-08-27
 
     protected bool ESkillReady;
-    protected float ESkillCoolTime;
+    protected float ESkillCoolTime; //쿨 돌았는지 체크용
+    protected float TotalESkillCoolTime = 0; // 실제 쿨타임 도훈 2024-08-27
     protected Image Qcool;
     protected Image Wcool;
     protected Image Ecool;
@@ -427,10 +430,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !isSkill
             && !isJumping
             && !anim.GetBool("isFall")
-            && QSkillCoolTime >= 3.0f
+            && QSkillCoolTime >= TotalQSkillCoolTime //도훈 2024-08-27
             && !isAttack)
             {
                 UseSkill("Q");
+                TotalQSkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
+                // Debug.Log("TotalQSkillCoolTime :" + TotalQSkillCoolTime);
+                // Debug.Log("Status.FixedCooltime :" + Status.FixedCooltime);
+                // Debug.Log("Status.PercentCooltime :" + Status.PercentCooltime);
             }
             
             //Skill_W
@@ -438,10 +445,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !isSkill
             && !isJumping
             && !anim.GetBool("isFall")
-            && WSkillCoolTime >= 3.0f
+            && WSkillCoolTime >= TotalWSkillCoolTime //도훈 2024-08-27
             && !isAttack)
             {
                 UseSkill("W");
+                TotalWSkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
+                // Debug.Log("TotalWSkillCoolTime :" + TotalWSkillCoolTime);
+                // Debug.Log("Status.FixedCooltime :" + Status.FixedCooltime);
+                // Debug.Log("Status.PercentCooltime :" + Status.PercentCooltime);
             }
 
             //Skill_E
@@ -449,10 +460,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !isSkill
             && !isJumping
             && !anim.GetBool("isFall")
-            && ESkillCoolTime >= 3.0f
+            && ESkillCoolTime >= TotalESkillCoolTime //도훈 2024-08-27
             && !isAttack)
             {
                 UseSkill("E");
+                TotalESkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
+                // Debug.Log("TotalESkillCoolTime :" + TotalESkillCoolTime);
+                // Debug.Log("Status.FixedCooltime :" + Status.FixedCooltime);
+                // Debug.Log("Status.PercentCooltime :" + Status.PercentCooltime);
             }
 
             //Jump
@@ -1026,15 +1041,15 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         WSkillCoolTime += Time.deltaTime;
         ESkillCoolTime += Time.deltaTime;
 
-        if(QSkillCoolTime > 3)      // (도훈) 여기서 숫자 3이 스킬의 쿨타임인데 저걸 변수화해서 제어해야할 듯 함. 스킬 쿨타임이 지나면 QSkillReady가 true가 되는 형식임
+        if(QSkillCoolTime > TotalQSkillCoolTime) //도훈 2024-08-27
         {
             QSkillReady = true;
         }
-        if (WSkillCoolTime > 3) 
+        if (WSkillCoolTime > TotalWSkillCoolTime)  //도훈 2024-08-27
         { 
             WSkillReady = true;
         }
-        if (ESkillCoolTime > 3)
+        if (ESkillCoolTime > TotalESkillCoolTime) //도훈 2024-08-27
         {
             ESkillReady = true;
         }

@@ -401,14 +401,14 @@ public class Status : MonoBehaviour
             {
                 case 1: 
                     Debug.Log("8번 세트 - " + set8Count + "개 활성화.");
-                    Debug.Log("플레이어 쿨타임 감소 20 증가. 증가 전 = " + FixedCooltime + "증가 후 = " + (FixedCooltime + 20f));
-                    FixedCooltime += 20;
+                    Debug.Log("플레이어 쿨타임 감소 1 증가. 증가 전 = " + FixedCooltime + "증가 후 = " + (FixedCooltime + 1f));
+                    FixedCooltime += 1;
                     StatUpdate();
                     break;
                 case 2: 
                     Debug.Log("8번 세트 - " + set8Count + "개 활성화.");
-                    Debug.Log("플레이어 쿨타임 감소 20% 증가. 증가 전 = " + FixedCooltime + "증가 후 = " + FixedCooltime * 1.2f);
-                    FixedCooltime *= 1.2f;
+                    Debug.Log("플레이어 쿨타임 감소 20% 증가. 증가 전 = " + PercentCooltime + "증가 후 = " + PercentCooltime * 1.2f);
+                    PercentCooltime *= 1.2f;
                     StatUpdate();
                     break;
                 case 3: 
