@@ -60,7 +60,7 @@ public class MonsterCtrl : MonoBehaviour
         {
             AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
         }
-        SetHP(100000000);                         // 몬스터의 기본 HP를 설정
+        SetHP(156250);                         // 몬스터의 기본 HP를 설정
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
@@ -497,6 +497,7 @@ public class MonsterCtrl : MonoBehaviour
                 Damage *= 1.2f;
             }
             StartCoroutine(TakeDamage(Damage));
+            TickCoolTime = 0;
         }
         #endregion
         #region 도적
@@ -663,7 +664,7 @@ public class MonsterCtrl : MonoBehaviour
                 Damage = Damage * 1.2f;
             }
             #endregion
-            Debug.Log("몬스터가 입은 피해량 = " + Damage);
+            Debug.Log("몬스터가 입은 피해량 = " + Damage * (1 / (1 + DEF * 0.01f)));
             curHP -= Damage * (1 / (1 + DEF * 0.01f));
             CheckHP(); // ü�� ����
             anim.SetBool("TakeDamage", true);
