@@ -199,6 +199,7 @@ public class PlayerCtrl_Archer : PlayerCtrl
         StartCoroutine(SKill_Up_Move(10.0f, 0.5f, 1f, 0.0f));
         StartCoroutine(Immune(2.5f));
         yield return new WaitForSeconds(0.5f);
+        PlayAnim("isFall");
         //WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1f);
         //WSkill_Collider.SetActive(false);
@@ -211,6 +212,7 @@ public class PlayerCtrl_Archer : PlayerCtrl
         StartCoroutine(SKill_Up_Move(20.0f, 0.5f, 2.5f, 1.2f));
         StartCoroutine(Immune(5.5f));
         yield return new WaitForSeconds(3.1f);
+        PlayAnim("isFall");
         //ESkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         //ESkill_Collider.SetActive(false);
@@ -236,7 +238,7 @@ public class PlayerCtrl_Archer : PlayerCtrl
     }
     IEnumerator Skill_E_Deal()
     {
-        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Archer(SkillYRot);
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Archer(LocalSkillYRot);
         yield return new WaitForSeconds(1.0f);
         //GameObject ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
         yield return new WaitForSeconds(0.05f);

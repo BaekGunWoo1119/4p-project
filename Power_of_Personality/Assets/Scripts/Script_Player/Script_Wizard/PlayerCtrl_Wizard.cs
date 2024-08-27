@@ -213,7 +213,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     }
     public IEnumerator Skill_E_Move()
     {
-        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Wizard(SkillYRot);
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Wizard(LocalSkillYRot);
         StartCoroutine(Immune(6f));
         tgPos = new Vector3(transform.position.x, transform.position.y + 4.0f, transform.position.z);
         rd.useGravity = false;
