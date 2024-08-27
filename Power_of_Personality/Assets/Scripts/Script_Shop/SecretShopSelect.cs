@@ -13,7 +13,7 @@ public class SecretShopSelect : MonoBehaviour
     {
         //eventSystem의 SecretShop 받아옴
         eventSystem = GameObject.Find("EventSystem");
-        Button btn = GameObject.Find("Pick").GetComponent<Button>();
+        Button btn = GameObject.Find("Pick_Hidden").GetComponent<Button>();
         btn.onClick.AddListener(PickatRandom);
     }
 
