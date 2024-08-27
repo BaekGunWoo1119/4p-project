@@ -117,4 +117,20 @@ public class InventoryCtrl : MonoBehaviour
             inventory[i] = player[i].GetComponent<Inventory>();
         }
     }
+
+    public void ResetInven()
+    {
+        collectedItems = new Item[itemList.Length];
+        collectedItemsID = new int[itemList.Length];
+
+        PlayerPrefs.SetFloat("Coin", 0);
+
+        for(int i = 0; i < collectedItemsID.Length; i++)
+        {
+            collectedItemsID[i] = -1;
+        }
+
+        PotionCount = 0;
+        StatPoint = 0;
+    }
 }

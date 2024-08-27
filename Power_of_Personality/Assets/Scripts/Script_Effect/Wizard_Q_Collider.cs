@@ -10,6 +10,7 @@ public class Wizard_Q_Collider : MonoBehaviour
 
     private Vector3 startPosition;
     private Vector3 initialScale;
+    private bool isStop = false;
 
     void Start()
     {
@@ -23,7 +24,7 @@ public class Wizard_Q_Collider : MonoBehaviour
             maxScale = maxScale * ColliderDistanceAdd;
         }
 
-        maxScale = maxScale + 2;
+        maxScale += 2f;
     }
 
     void Update()
@@ -43,7 +44,14 @@ public class Wizard_Q_Collider : MonoBehaviour
             transform.localScale = currentScale;
 
             // 위치 보정 (z축으로만 커지게 하기 위해 오브젝트의 위치를 이동)
-            transform.position += new Vector3(scaleIncrement / 2, 0, 0);
+            if (!isStop && Vector3.Distance(startPosition, transform.position) < maxScale/2)
+            {
+                transform.localPosition += new Vector3(scaleIncrement / 2, 0, 0);
+            } else
+            {
+                isStop = true;
+            }
+            
         }
         else
         {

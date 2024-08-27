@@ -642,6 +642,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (Status.HP <= 0) // 플레이어가 죽으면 게임오버 창 띄움
         {
             PlayAnim("isDie");
+
+            InvenCtrl.ResetInven();
+
             yield return new WaitForSeconds(2.0f);
             GameObject.Find("EventSystem").GetComponent<GameEnd>().GameOver(true);
         }
