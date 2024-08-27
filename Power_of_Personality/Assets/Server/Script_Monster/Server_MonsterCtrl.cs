@@ -87,6 +87,7 @@ public class Server_MonsterCtrl : MonoBehaviour
         if (PhotonNetwork.IsMasterClient){
             if (!isDie)     // 죽어있는 상태가 아니면
             {
+                StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
                 DistanceCheck();    // 플레이어와의 거리를 계산
             }
             AttackCoolTime += Time.deltaTime;
@@ -126,6 +127,9 @@ public class Server_MonsterCtrl : MonoBehaviour
 
     public virtual void DistanceCheck()
     {
+        if(PlayerTr == null){
+            Settarget();
+        }
         Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
         if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit)
@@ -468,10 +472,12 @@ public class Server_MonsterCtrl : MonoBehaviour
             yield return new WaitForSeconds(1.5f);
             Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
             Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
+            this.gameObject.transform.parent.tag="Untagged";
             Destroy(this.gameObject); // ü���� 0 ���϶� ����
             Destroy(HpBar.gameObject);
+            Destroy(this.transform.parent.gameObject);
             //PhotonNetwork.Destroy(this.gameObject);
-            this.gameObject.transform.parent.tag="Untagged";
+            
         }
     }
     #endregion

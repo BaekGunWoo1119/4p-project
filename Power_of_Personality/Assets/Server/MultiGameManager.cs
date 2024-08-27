@@ -28,6 +28,9 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     public Collider PlayerCol; // 플레이어 콜라이더
     public GameObject Watching; //관전 UI
     public GameObject WaitPlayer; //상점 대기 UI
+    public PhotonView photonview;
+    public bool IsAllLoad; //플레이어 다 들어왔나 체크
+    //public static Hashtable PlayerProperties = new Hashtable(); //로컬플레이어 프로퍼티
 
     #region JSON 관련 스크립트
     // JSON 데이터를 저장할 클래스 정의
@@ -67,7 +70,12 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         min = 0;
         Spawned = 0; // 초기화 추가
         IsDie = false;
+        photonview = GetComponent<PhotonView>();
+        Status.HP = Status.MaxHP;
 
+        var properties = PhotonNetwork.LocalPlayer.CustomProperties;
+        properties["IsExitShop"] = true;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
         string jsondata = Resources.Load<TextAsset>("JSON/WaveData").text;
         // JSON 데이터를 WaveDatas 클래스로 Deserialize
         JSONWaveList = JsonUtility.FromJson<WaveDatas>(jsondata);
@@ -76,101 +84,107 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        Debug.Log("Status.IsShop = "+Status.IsShop);
-        if (Player == null)
-        {
-            Player = GameObject.FindWithTag("Player"); // 플레이어 오브젝트 찾기
-            if (Player != null)
+        if(PhotonNetwork.PlayerList.Length==GameObject.FindGameObjectsWithTag("Target").Length&&IsAllLoad==false){
+            IsAllLoad=true;
+            SetPlayer();
+            StartWave();
+        }
+        if(IsAllLoad==true){
+            //Debug.Log("Status.IsShop = "+Status.IsShop);
+            SetPlayer();
+
+            #region 인게임 타이머
+            sec += Time.deltaTime;
+            if (sec >= 60f)
             {
-                PlayerCol = Player.GetComponent<Collider>();
-                if (PlayerCol == null)
+                min += 1;
+                sec = 0;
+            }
+
+            timerText.text = string.Format("{0:D2}:{1:D2}", min, (int)sec);
+            #endregion
+
+            CurrentTime += Time.deltaTime;
+            TempTime += Time.deltaTime;
+            MonsterCount = GameObject.FindGameObjectsWithTag("Monster").Length; // 몬스터 수 카운트
+
+            //웨이브 중일때
+            if(IsWave == true){
+                // 웨이브 시간, 목표 스폰량 종료
+                if (CurrentTime > WaveTime && Spawned >= TargetSpawn)
                 {
-                    Debug.LogWarning("Player 오브젝트에 Collider가 없습니다.");
+                    // 몬스터가 0명이라면
+                    if (MonsterCount < 1)
+                    {
+                        if (PhotonNetwork.IsMasterClient){
+                            photonview.RPC("EndWave",RpcTarget.All);
+                        }
+                        WaveUpdate();
+                    }
+                }
+                else
+                {
+                    // 일정 주기로 몬스터 생성
+                    if (TempTime >= RespawnTime)
+                    {
+                        SpawnMonster();
+                    }
                 }
             }
-            else
+
+            // 웨이브 끝났을 때 상점 나왔는지 체크
+            if (IsWave == false)
             {
-                Debug.LogWarning("Player 태그를 가진 오브젝트를 찾을 수 없습니다.");
-            }
-        }
-
-        #region 인게임 타이머
-        sec += Time.deltaTime;
-        if (sec >= 60f)
-        {
-            min += 1;
-            sec = 0;
-        }
-
-        timerText.text = string.Format("{0:D2}:{1:D2}", min, (int)sec);
-        #endregion
-
-        CurrentTime += Time.deltaTime;
-        TempTime += Time.deltaTime;
-        MonsterCount = GameObject.FindGameObjectsWithTag("Monster").Length; // 몬스터 수 카운트
-
-        //웨이브 중일때
-        if(IsWave == true){
-            // 웨이브 시간, 목표 스폰량 종료
-            if (CurrentTime > WaveTime && Spawned >= TargetSpawn)
-            {
-                // 몬스터가 0명이라면
-                if (MonsterCount < 1)
+                // 플레이어가 상점에서 나오면 서버로 응답 보냄
+                if (Status.IsShop == false)
                 {
-                    EndWave();
-                    WaveUpdate();
+                    ExitShop();
+                    if (CheckExitShop() == true)
+                    {
+                        if (PhotonNetwork.IsMasterClient){
+                            photonview.RPC("StartWave",RpcTarget.All);
+                        }
+                    }
+                }
+                
+            }
+            //죽으면 다른 플레이어 관전(UI추가해야함)
+            if (Status.HP<=0){
+                IsDie = true;
+                //내가 죽어있을 떄 다른 플레이어도 죽어있다면
+                if(GameObject.FindGameObjectWithTag("OtherPlayer") == null){
+                    photonview.RPC("GameOver",RpcTarget.All);
+                }
+                else{
+                    Watching.SetActive(true);
+                    CameraCtrl.target = GameObject.FindGameObjectWithTag("OtherPlayer").transform;
                 }
             }
-            else
-            {
-                // 일정 주기로 몬스터 생성
-                if (TempTime >= RespawnTime)
-                {
-                    SpawnMonster();
-                }
+            else {
+                Watching.SetActive(false);
+                CameraCtrl.target = GameObject.FindGameObjectWithTag("Player").transform;
             }
-        }
-
-        // 웨이브 끝났을 때 상점 나왔는지 체크
-        if (IsWave == false)
-        {
-            
-            ExitShop();
-            if (CheckExitShop() == true)
-            {
-                StartWave();
-            }
-        }
-        //죽으면 다른 플레이어 관전(UI추가해야함)
-        if (Status.HP<=0){
-            IsDie = true;
-            Watching.SetActive(true);
-            CameraCtrl.target = GameObject.FindGameObjectWithTag("OtherPlayer").transform;
-        }
-        else {
-            Watching.SetActive(false);
-            CameraCtrl.target = GameObject.FindGameObjectWithTag("Player").transform;
         }
     }
 
+    [PunRPC]
     // 웨이브 종료 후 상점으로 이동
     void EndWave()
     {
-        if(IsWave == true){
-            if (IsDie == true){
-                IsDie = false;
-                MultiPlayStart.Instance.SpawnPlayer();
-            }
-            IsWave = false;
-            // 체력 회복
-            Status.HP = Status.MaxHP;
-            CurrentWave += 1;
-            CurrentTime = 0f; // 초기화 추가
-            WaveUpdate(); // 다음 웨이브 설정
-            // 상점으로 이동 (상점 스크립트 바꿔서 적용해야 할 듯)
-            GameObject.Find("EventSystem").GetComponent<Shop_PortalCtrl>().Open_Shop(PlayerCol);
-            Player.transform.position = ShopTr.position;
+        Status.HP = Status.MaxHP;
+        if (IsDie == true){
+            IsDie = false;
+            MultiPlayStart.Instance.SpawnPlayer();
+            SetPlayer();
         }
+        IsWave = false;
+        // 체력 회복
+        CurrentWave += 1;
+        CurrentTime = 0f; // 초기화 추가
+        WaveUpdate(); // 다음 웨이브 설정
+        // 상점으로 이동
+        GameObject.Find("EventSystem").GetComponent<Shop_PortalCtrl>().Open_Shop(PlayerCol);
+        Player.transform.position = ShopTr.position;
     }
 
     // 몬스터 스폰
@@ -191,6 +205,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         TempTime = 0f; // 리스폰 대기시간 초기화
     }
 
+    [PunRPC]
     // 스폰포인트로 플레이어 이동 후 웨이브 시작
     void StartWave()
     {
@@ -229,33 +244,56 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
 
     public void ExitShop()
     {
-        // 플레이어가 상점에서 나오면 서버로 응답 보냄
-        if (Status.IsShop == false)
-        {
+        
             var properties = PhotonNetwork.LocalPlayer.CustomProperties;
             properties["IsExitShop"] = true;
             PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
             WaitPlayer.SetActive(true); 
-            Debug.Log("CheckExitShop()="+CheckExitShop());
-        }
+            //Debug.Log("CheckExitShop()="+CheckExitShop());
+    
     }
 
+    public void SetPlayer(){
+        if (Player == null)
+            {
+                Player = GameObject.FindWithTag("Player"); // 플레이어 오브젝트 찾기
+                if (Player != null)
+                {
+                    PlayerCol = Player.GetComponent<Collider>();
+                    if (PlayerCol == null)
+                    {
+                        //Debug.LogWarning("Player 오브젝트에 Collider가 없습니다.");
+                    }
+                }
+                else
+                {
+                    //Debug.LogWarning("Player 태그를 가진 오브젝트를 찾을 수 없습니다.");
+                }
+            }
+    }
     public bool CheckExitShop()
     {
-        bool IsAllReady = true;
-        // 모든 플레이어가 레디 상태인지 확인
         foreach (Player player in PhotonNetwork.PlayerList)
         {
-            if ((bool)player.CustomProperties["IsExitShop"] == false)
+            if (player.CustomProperties.TryGetValue("IsExitShop", out var isExitShop) && isExitShop is bool exitShopFlag)
             {
-                IsAllReady = false;
-                break;
+                if (!exitShopFlag)
+                {
+                    return false; // 한 명이라도 나가지 않았으면 바로 false 반환
+                }
+            }
+            else
+            {
+                return false; // IsExitShop이 없거나 잘못된 경우도 false 반환
             }
         }
-        return IsAllReady;
+        return true; // 모든 플레이어가 나갔으면 true 반환
     }
 
+    [PunRPC]
     public void GameOver(){
         //게임오버 넣어야됨
+        PhotonNetwork.LoadLevel("1-2 (Multi Lobby)");
+        IsDie=false;
     }
 }

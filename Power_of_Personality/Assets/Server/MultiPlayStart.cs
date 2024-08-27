@@ -6,7 +6,7 @@ using Photon.Realtime; // 포톤 서비스 관련 라이브러리
 
 public class MultiPlayStart : MonoBehaviourPunCallbacks
 {
-    public static MultiPlayStart Instance; // 싱글톤 인스턴스
+    public static MultiPlayStart Instance = null; // 싱글톤 인스턴스
 
     public Transform SpawnPoint1;
     public Transform SpawnPoint2;
@@ -14,8 +14,11 @@ public class MultiPlayStart : MonoBehaviourPunCallbacks
     private GameObject Player_Character;
     public string PlayerClass;
 
+    private PhotonView photonview; //포톤뷰 (멀티)
+
     void Awake()
     {
+        photonview = GetComponent<PhotonView>();
         // 싱글톤 인스턴스 설정
         if (Instance == null)
         {
@@ -77,6 +80,24 @@ public class MultiPlayStart : MonoBehaviourPunCallbacks
             Player_Character = PhotonNetwork.Instantiate("Server/Rogue/Server_Player_rogue", SpawnPoint1.position, SpawnPoint1.rotation, 0);
             Debug.Log("Rogue");
         }
-        Player_Character.transform.SetParent(this.transform);
+        if (Player_Character != null)
+        {
+            int playerViewID = Player_Character.GetComponent<PhotonView>().ViewID;
+            photonview.RPC("PlayerSetParent", RpcTarget.All, playerViewID);
+        }
+    }
+
+    [PunRPC]
+    public void PlayerSetParent(int playerViewID)
+    {
+        GameObject playerCharacter = PhotonView.Find(playerViewID).gameObject;
+        if (playerCharacter != null)
+        {
+            playerCharacter.transform.SetParent(this.transform);
+        }
+        else
+        {
+            Debug.LogError("PlayerSetParent: Could not find GameObject with PhotonViewID " + playerViewID);
+        }
     }
 }

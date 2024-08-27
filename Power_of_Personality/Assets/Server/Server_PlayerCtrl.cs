@@ -522,7 +522,8 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         {
             PlayAnim("isDie");
             yield return new WaitForSeconds(2.0f);
-            GameObject.Find("EventSystem").GetComponent<GameEnd>().GameOver(true);
+            photonview.RPC("DestroyPlayer",RpcTarget.All);//플레이어 삭제
+            //GameObject.Find("EventSystem").GetComponent<GameEnd>().GameOver(true);
         }
     }
     public virtual void SetHp(float amount) // Hp 세팅
@@ -1048,6 +1049,12 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             SkillQ_Effect = Skill_IceQ_Effect;
             SkillW_Effect = Skill_IceW_Effect;
         }
+    }
+
+    [PunRPC]
+    public virtual void DestroyPlayer(){
+        // 자기가 스스로를 삭제 
+        PhotonNetwork.Destroy(this.gameObject);
     }
     #endregion
 }
