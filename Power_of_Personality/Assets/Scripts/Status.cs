@@ -24,6 +24,8 @@ public class Status : MonoBehaviour
     public static float TotalAD = 1f; // 총 공격력
     public static float TotalDamage = 1f; // 총 데미지 (속성뎀 포함)
     public static float TotalAP = 1f; // 총 스킬뎀
+    public static float DisplayAP = 1f; // 보여주기용 AP
+    public static float DisplayADC = 1f; // 보여주기용 ADC
     public static float TotalADC = 1f; //총 평타뎀
     public static float TotalArmor = 1f; //총 방어력
     public static float TotalFire = 1f; //총 화속성 데미지
@@ -103,20 +105,26 @@ public class Status : MonoBehaviour
         CurProperty = PlayerPrefs.GetString("property");
         if (CurProperty == "Ice")
         {
-            TotalDamage = TotalAD * (FixedIce * (PercentIce * 0.01f));
+            TotalDamage = TotalAD * (FixedIce * (PercentIce * 0.01f)*0.0001f);
         }
         else if (CurProperty == "Fire")
         {
-            TotalDamage = TotalAD * (FixedFire * (PercentFire * 0.01f));
+            TotalDamage = TotalAD * (FixedFire * (PercentFire * 0.01f)*0.0001f);
         }
     }
     //데미지 업데이트(아이템,레벨업 후에 사용)
     public static void StatUpdate()
     {
         TotalAD = (FixedAD * (PercentAD * 0.01f));
-        TotalDamage = TotalAD * (FixedIce * (PercentIce * 0.01f));
+        TotalFire = FixedFire * (PercentFire * 0.01f);
+        TotalIce = FixedIce * (PercentIce * 0.01f);
+        TotalDamage = TotalAD * TotalIce * 0.0001f;
         TotalAP = TotalDamage * (FixedAP * (PercentAP * 0.01f));
         TotalADC = TotalDamage * (FixedADC * (PercentADC * 0.01f));
+        TotalArmor = FixedArmor * (PercentArmor * 0.01f);
+        TotalSpeed = FixedSpeed * (PercentSpeed * 0.01f);
+        DisplayAP = FixedAP * (PercentAP * 0.01f);
+        DisplayADC = FixedADC * (PercentADC * 0.01f);
     }
     public static void SetUpdate(int itemID)
     {
@@ -139,7 +147,7 @@ public class Status : MonoBehaviour
                     break;
                 case 2: 
                     Debug.Log("1번 세트 - " + set1Count + "개 활성화.");
-                    Debug.Log("플레이어 공격력 20% 증가. 증가 전 = " + FixedAD + "증가 후 = " + FixedAD * 1.2f);
+                    Debug.Log("플레이어 공격력 20% 증가. 증가 전 = " + PercentAD + "증가 후 = " + PercentAD * 1.2f);
                     FixedAD *= 1.2f;
                     StatUpdate();
                     break;
@@ -176,7 +184,7 @@ public class Status : MonoBehaviour
                     break;
                 case 2: 
                     Debug.Log("2번 세트 - " + set2Count + "개 활성화.");
-                    Debug.Log("플레이어 방여력 20% 증가. 증가 전 = " + FixedArmor + "증가 후 = " + FixedArmor * 1.2f);
+                    Debug.Log("플레이어 방여력 20% 증가. 증가 전 = " + PercentArmor + "증가 후 = " + PercentArmor * 1.2f);
                     FixedArmor *= 1.2f;
                     break;
                 case 3: 
@@ -215,7 +223,7 @@ public class Status : MonoBehaviour
                     break;
                 case 2: 
                     Debug.Log("3번 세트 - " + set3Count + "개 활성화.");
-                    Debug.Log("플레이어 화속성 데미지 20% 증가. 증가 전 = " + FixedFire + "증가 후 = " + FixedFire * 1.2f);
+                    Debug.Log("플레이어 화속성 데미지 20% 증가. 증가 전 = " + PercentFire + "증가 후 = " + PercentFire * 1.2f);
                     FixedFire *= 1.2f;
                     StatUpdate();
                     break;
@@ -254,7 +262,7 @@ public class Status : MonoBehaviour
                     break;
                 case 2: 
                     Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
-                    Debug.Log("플레이어 빙속성 데미지 20% 증가. 증가 전 = " + FixedIce + "증가 후 = " + FixedIce * 1.2f);
+                    Debug.Log("플레이어 빙속성 데미지 20% 증가. 증가 전 = " + PercentIce + "증가 후 = " + PercentIce * 1.2f);
                     FixedIce *= 1.2f;
                     StatUpdate();
                     break;
@@ -293,7 +301,7 @@ public class Status : MonoBehaviour
                     break;
                 case 2: 
                     Debug.Log("5번 세트 - " + set5Count + "개 활성화.");
-                    Debug.Log("플레이어 평타 데미지 20% 증가. 증가 전 = " + FixedADC + "증가 후 = " + FixedADC * 1.2f);
+                    Debug.Log("플레이어 평타 데미지 20% 증가. 증가 전 = " + PercentADC + "증가 후 = " + PercentADC * 1.2f);
                     FixedADC *= 1.2f;
                     StatUpdate();
                     break;
@@ -331,7 +339,7 @@ public class Status : MonoBehaviour
                     break;
                 case 2: 
                     Debug.Log("6번 세트 - " + set6Count + "개 활성화.");
-                    Debug.Log("플레이어 스킬 데미지 20% 증가. 증가 전 = " + FixedAP + "증가 후 = " + FixedAP * 1.2f);
+                    Debug.Log("플레이어 스킬 데미지 20% 증가. 증가 전 = " + PercentAP + "증가 후 = " + PercentAP * 1.2f);
                     FixedAP *= 1.2f;
                     StatUpdate();
                     break;
@@ -369,7 +377,7 @@ public class Status : MonoBehaviour
                     break;
                 case 2: 
                     Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
-                    Debug.Log("플레이어 행동속도 20% 증가. 증가 전 = " + FixedSpeed + "증가 후 = " + FixedSpeed * 1.2f);
+                    Debug.Log("플레이어 행동속도 20% 증가. 증가 전 = " + PercentSpeed + "증가 후 = " + PercentSpeed * 1.2f);
                     FixedSpeed *= 1.2f;
                     StatUpdate();
                     break;

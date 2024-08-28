@@ -234,12 +234,12 @@ public class ShopCtrl : MonoBehaviour
                     InvenCtrl.itemCount--;
                 }else if(newItem[index].GetComponent<Item>().itemID == 52)
                 {
-                    InvenCtrl.StatPoint ++;
+                    InvenCtrl.ADPotionCount ++;
                     Debug.Log("공격력 포션 :" + InvenCtrl.ADPotionCount + "개 보유중");
                     InvenCtrl.itemCount--;
                 }else if(newItem[index].GetComponent<Item>().itemID == 53)
                 {
-                    InvenCtrl.StatPoint ++;
+                    InvenCtrl.ArmorPotionCount ++;
                     Debug.Log("방어력 포션 :" + InvenCtrl.ArmorPotionCount + "개 보유중");
                     InvenCtrl.itemCount--;
                 }else

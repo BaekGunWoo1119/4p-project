@@ -144,6 +144,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //포션
     public InventoryCtrl InvenCtrl;
     public TMP_Text hpPotionValue;
+    public TMP_Text ADPotionValue;
+    public TMP_Text ArmorPotionValue;
+    protected float buffTime;
+    protected float buffPer;
+    protected string buffType;
+    protected float buffStat;
+    protected bool ADBuff_On;
+    protected bool ArmorBuff_On;
 
     //스탯 UI 관련
     protected TMP_Text[] StateText; 
@@ -218,7 +226,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         //포션 설정(06.15)
         InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
-        hpPotionValue = GameObject.Find("Potion - Text").GetComponent<TMP_Text>();
+        hpPotionValue = GameObject.Find("HP_Potion - Text").GetComponent<TMP_Text>();
+        ADPotionValue = GameObject.Find("AD_Potion - Text").GetComponent<TMP_Text>();
+        ArmorPotionValue = GameObject.Find("Armor_Potion - Text").GetComponent<TMP_Text>();
 
         //스텟 UI 변동 설정(06.14)
         StateText = new TMP_Text[8];
@@ -304,7 +314,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
         #endregion
         // 해당 bool값 실행 시 모든 행동 멈춤
-        if(!Status.IsShop)
+        if(!Status.IsShop && !anim.GetBool("isDie"))
         {
             if (!canTakeDamage)
             {
@@ -354,7 +364,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             transform.GetChild(0).localPosition = Vector3.zero;
 
             //데미지 캔버스 Y값 고정
-            PlayerCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
+            PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot - 180f, 0);
 
             // Attack 함수 실행
             if (Input.GetKeyDown(KeyCode.A))
@@ -515,13 +525,6 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 PlayAnim("isFall");
             }
 
-            // 힐 Potion 먹는 함수
-            hpPotionValue.text = InvenCtrl.PotionCount.ToString();
-            if(Input.GetKeyDown(KeyCode.Alpha1) && !anim.GetBool("isDie"))
-            {
-                HealHp();
-            }
-
             //Idle일때 스킬 및 공격 false 판정
             if (stateIdle == true && isDodge == false)
             {
@@ -650,6 +653,59 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             {
                 cameraEffect.GetComponent<CameraEffectCtrl>().DangerousCamera();
             }
+
+            //포션 버프
+            if(buffType == "AD")
+            {
+                if(ADBuff_On == false)
+                {
+                    ADBuff_On = true;
+                    StartCoroutine(PowerUp_On());
+                }
+                buffTime -= Time.deltaTime;
+                if(buffTime < 0)
+                {
+                    buffTime = 0;
+                    Status.TotalAD = buffStat;
+                    buffStat = 0;
+                    buffType = "None";
+                }
+            }
+            else if(buffType == "Armor")
+            {
+                if(ArmorBuff_On == false)
+                {
+                    ArmorBuff_On = true;
+                    StartCoroutine(ArmorUp_On());
+                }
+                buffTime -= Time.deltaTime;
+                if(buffTime < 0)
+                {
+                    buffTime = 0;
+                    Status.TotalArmor = buffStat;
+                    buffType = "None";
+                }
+            }
+            //포션 눌렀을 때
+            // 힐 Potion
+            hpPotionValue.text = InvenCtrl.PotionCount.ToString();
+            if(Input.GetKeyDown(KeyCode.Alpha1) && !anim.GetBool("isDie"))
+            {
+                HealHp();
+            }
+            // 공격 Potion
+            ADPotionValue.text = InvenCtrl.ADPotionCount.ToString();
+            if(Input.GetKeyDown(KeyCode.Alpha2) && !anim.GetBool("isDie"))
+            {
+                PowerUp();
+            }
+            // 방어 Potion
+            ArmorPotionValue.text = InvenCtrl.ArmorPotionCount.ToString();
+            if(Input.GetKeyDown(KeyCode.Alpha3) && !anim.GetBool("isDie"))
+            {
+                ArmorUp();
+            }
+
         }
         else
         {
@@ -657,6 +713,41 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
     }
 
+    #region 포션 효과 설정
+    //(08.29 백건우)
+    public virtual void PowerUp()
+    {
+        InvenCtrl.ADPotionCount -= 1; 
+        buffType = "AD";
+    }
+
+    public virtual void ArmorUp()
+    {
+        InvenCtrl.ArmorPotionCount -= 1; 
+        buffType = "Armor";
+    }
+
+    public virtual IEnumerator PowerUp_On()
+    {
+        buffTime = 60f;
+        buffPer = 0.2f;
+        buffStat = Status.TotalAD;
+        Status.TotalAD += (Status.TotalAD * buffPer);
+        Debug.Log("힘 버프");
+        yield break;
+    }
+
+    public virtual IEnumerator ArmorUp_On()
+    {
+        buffTime = 60f;
+        buffPer = 0.2f;
+        buffStat = Status.TotalArmor;
+        Status.TotalArmor += (Status.TotalArmor * buffPer);
+        Debug.Log("방패 버프");
+        yield break;
+    }
+
+    #endregion
 
     #region HP 설정
     protected virtual IEnumerator TakeDamage()
@@ -747,12 +838,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         StateText[0].text = Status.TotalAD.ToString();
         StateText[1].text = Status.TotalArmor.ToString();
-        StateText[2].text = Status.TotalADC.ToString();
-        StateText[3].text = Status.TotalAP.ToString();
+        StateText[2].text = Status.DisplayADC.ToString();
+        StateText[3].text = Status.DisplayAP.ToString();
         StateText[4].text = Status.TotalFire.ToString();
         StateText[5].text = Status.TotalIce.ToString();
         StateText[6].text = Status.TotalSpeed.ToString();
-        StateText[7].text = Status.TotalCooltime.ToString();
+        StateText[7].text = (Status.FixedCooltime*-1).ToString();
     }
 
     #endregion

@@ -69,6 +69,7 @@ public class DruidCtrl : BossCtrl
     {
         base.Update();
         SkillYRot = transform.localEulerAngles.y;
+        MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot + 90f, 0);
         DistanceCheck();
         if (isVine == true && Vine_Collider.transform.localScale.x <= 12.0)
         {

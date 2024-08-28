@@ -65,6 +65,8 @@ public class InventoryCtrl : MonoBehaviour
         }
 
         PotionCount = 0;
+        ADPotionCount = 0;
+        ArmorPotionCount = 0;
         StatPoint = 0;
 
         HiddenShopSlots = GameObject.Find("HiddenShop_Slots");
@@ -140,6 +142,8 @@ public class InventoryCtrl : MonoBehaviour
         }
 
         PotionCount = 0;
+        ADPotionCount = 0;
+        ArmorPotionCount = 0;
         StatPoint = 0;
     }
 
