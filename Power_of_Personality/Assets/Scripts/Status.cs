@@ -120,6 +120,7 @@ public class Status : MonoBehaviour
     }
     public static void SetUpdate(int itemID)
     {
+        //Debug.Log("Debug.Log(itemToBeAdded.itemID);"+itemID);
         itemIds[itemID] = itemID;
         #region 1번 세트효과 ATK
         if (itemID >= 0 && itemID <= 3 && set1_Activate == false)
