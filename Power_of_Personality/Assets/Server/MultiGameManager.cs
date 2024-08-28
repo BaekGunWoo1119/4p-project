@@ -62,7 +62,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        WaveTime = 90f;
+        WaveTime = 10f;
         CurrentTime = 0f;
         TempTime = 0f;
         CurrentWave = 1;
@@ -76,7 +76,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         var properties = PhotonNetwork.LocalPlayer.CustomProperties;
         properties["IsExitShop"] = true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
-        string jsondata = Resources.Load<TextAsset>("JSON/WaveData").text;
+        string jsondata = Resources.Load<TextAsset>("JSON/WaveData_test").text;
         // JSON 데이터를 WaveDatas 클래스로 Deserialize
         JSONWaveList = JsonUtility.FromJson<WaveDatas>(jsondata);
         WaveUpdate(); // 초기 웨이브 설정

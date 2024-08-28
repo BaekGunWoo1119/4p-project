@@ -11,6 +11,7 @@ public class InventoryCtrl : MonoBehaviour
     public GameObject[] itemList;
     public Item[] collectedItems;
     public int[] collectedItemsID;
+    public int[] HadItemsID;
 
     public GameObject HiddenShopSlots;
     public GameObject NormalShopSlots;
@@ -47,12 +48,18 @@ public class InventoryCtrl : MonoBehaviour
 
         collectedItems = new Item[itemList.Length];
         collectedItemsID = new int[itemList.Length];
+        HadItemsID = new int[itemList.Length];
 
         PlayerPrefs.SetFloat("Coin", 0);
 
         for(int i = 0; i < collectedItemsID.Length; i++)
         {
             collectedItemsID[i] = -1;
+        }
+
+        for(int i = 0; i < HadItemsID.Length; i++)
+        {
+            HadItemsID[i] = -1;
         }
 
         PotionCount = 0;
@@ -133,4 +140,15 @@ public class InventoryCtrl : MonoBehaviour
         PotionCount = 0;
         StatPoint = 0;
     }
-}
+
+    public void RemoveHadItem()
+    {
+
+        Debug.Log("시발");
+
+        for(int i = 0; i < collectedItemsID.Length; i++)
+        {
+            HadItemsID[i] = collectedItemsID[i];
+        }
+    }
+}   
