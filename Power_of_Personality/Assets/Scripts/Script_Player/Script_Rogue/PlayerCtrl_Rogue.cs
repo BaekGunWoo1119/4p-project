@@ -502,6 +502,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
 
     public override void UseSkill(string skillName)
     {
+        base.UseSkill(skillName);
         isSkill = true;
         if(skillName == "Q")
         {

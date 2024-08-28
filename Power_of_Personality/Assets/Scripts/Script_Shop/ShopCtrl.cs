@@ -225,12 +225,22 @@ public class ShopCtrl : MonoBehaviour
                 if(newItem[index].GetComponent<Item>().itemID == 50)
                 {
                     InvenCtrl.PotionCount ++;
-                    Debug.Log("포션 :" + InvenCtrl.PotionCount + "개 보유중");
+                    Debug.Log("체력 포션 :" + InvenCtrl.PotionCount + "개 보유중");
                     InvenCtrl.itemCount--;
                 }else if(newItem[index].GetComponent<Item>().itemID == 51)
                 {
                     InvenCtrl.StatPoint ++;
                     Debug.Log("스탯포인트 :" + InvenCtrl.StatPoint + "개 보유중");
+                    InvenCtrl.itemCount--;
+                }else if(newItem[index].GetComponent<Item>().itemID == 52)
+                {
+                    InvenCtrl.StatPoint ++;
+                    Debug.Log("공격력 포션 :" + InvenCtrl.ADPotionCount + "개 보유중");
+                    InvenCtrl.itemCount--;
+                }else if(newItem[index].GetComponent<Item>().itemID == 53)
+                {
+                    InvenCtrl.StatPoint ++;
+                    Debug.Log("방어력 포션 :" + InvenCtrl.ArmorPotionCount + "개 보유중");
                     InvenCtrl.itemCount--;
                 }else
                 {                

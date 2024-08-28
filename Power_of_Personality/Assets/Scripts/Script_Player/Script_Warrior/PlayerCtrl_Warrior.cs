@@ -318,7 +318,6 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     IEnumerator Spawn_SwordAura()
     {
         isSkillQ = false;
-        Qcool.fillAmount = 1;
         yield return new WaitForSeconds(0.2f);
         //GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, this.transform.rotation);
         yield return new WaitForSeconds(0.1f);
@@ -326,6 +325,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         yield return new WaitForSeconds(0.3f);
         //쿨타임
         QSkillCoolTime = 0;
+        Qcool.fillAmount = 1;
         yield return new WaitForSeconds(0.2f);
         audioSources[3].Stop();
     }
@@ -364,7 +364,6 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     }
     IEnumerator WarriorSkill_E()
     {
-        Ecool.fillAmount = 1;
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(LocalSkillYRot);
         yield return new WaitForSeconds(1.8f);
         audioSources[3].Play();
@@ -404,6 +403,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
         ESkillCoolTime = 0;
+        Ecool.fillAmount = 1;
     }
 
     #endregion
@@ -532,6 +532,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
     public override void UseSkill(string skillName)
     {
+        base.UseSkill(skillName);
         isSkill = true;
         if(skillName == "Q")
         {
@@ -545,8 +546,8 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         {
             //WSkill_Collider.SetActive(true);
             PlayAnim("Skill_W");
-            Wcool.fillAmount = 1;
             WSkillCoolTime = 0;
+            Wcool.fillAmount = 1;
             StartCoroutine(Immune(2f));
             StartCoroutine(MoveForwardForSeconds(1.35f));
         }

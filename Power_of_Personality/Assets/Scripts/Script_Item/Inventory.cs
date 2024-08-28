@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour
         if(InvenCtrl == null){
             InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
             //(06.03) 슬롯 추가
-            
+
             for(int i = 0; i < TraitBoxes.Length; i++) 
             {
                 slots[i] = TraitBoxes[i].GetComponent<Slot>();
@@ -39,16 +39,17 @@ public class Inventory : MonoBehaviour
             ItemPlus();
 
         }
-
-
-        if (Input.GetKeyDown(KeyCode.I))
+        if(inventoryObject == null){
+            inventoryObject = GameObject.Find("StatWindow");
+        }
+        else if(Input.GetKeyDown(KeyCode.I))
         {
             if(inventoryObject.transform.localScale != hiddenScale)
                 inventoryObject.transform.localScale = hiddenScale;
             else
                 inventoryObject.transform.localScale = originalScale;
         }
-    }
+    } 
 
     public void AddItem(Item itemToBeAdded, Item startingItem = null)
     {
@@ -79,6 +80,9 @@ public class Inventory : MonoBehaviour
             Status.FixedIce += itemToBeAdded.FixedIce;
             Status.PercentIce += itemToBeAdded.PercentIce;
             Status.StatUpdate();
+
+            Debug.Log(itemToBeAdded.itemID);
+
             Status.SetUpdate(itemToBeAdded.itemID);
         }
     }
@@ -89,8 +93,11 @@ public class Inventory : MonoBehaviour
         {
             if(InvenCtrl.collectedItems[i] != null)
             {
-                Debug.Log(InvenCtrl.collectedItemsID[i]);
-                Instantiate(InvenCtrl.itemList[InvenCtrl.collectedItemsID[i]], this.transform.position, Quaternion.identity);
+                if(InvenCtrl.collectedItemsID[i] != InvenCtrl.HadItemsID[i])
+                {
+                    Debug.Log(InvenCtrl.collectedItemsID[i]);
+                    Instantiate(InvenCtrl.itemList[InvenCtrl.collectedItemsID[i]], this.transform.position, Quaternion.identity);
+                }
             }
         }
     }

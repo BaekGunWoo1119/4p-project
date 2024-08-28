@@ -387,6 +387,7 @@ public class PlayerCtrl_Archer : PlayerCtrl
     #region 스킬이나 공격 움직임, Delay 등 세부 조정 함수
     public override void UseSkill(string skillName)
     {
+        base.UseSkill(skillName);
         isSkill = true;
         if (skillName == "Q")
         {
