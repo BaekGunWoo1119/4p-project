@@ -17,7 +17,11 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     public float TempTime; // 몬스터 저장용 시간
     public float sec; // 타이머용 시간
     public int min; // 타이머용 시간
-    public Transform[] SpawnPoints; // 몬스터 스폰 포인트들
+    public Transform[] SpawnPoints; // 현재 스테이지 몬스터 스폰 포인트들
+    public Transform[] SpawnPoints1; // 1스테이지 몬스터 스폰 포인트들
+    public Transform[] SpawnPoints2; // 2스테이지 몬스터 스폰 포인트들
+    public Transform[] SpawnPoints3; // 3스테이지 몬스터 스폰 포인트들
+    public Transform[] SpawnPoints4; // 4스테이지 몬스터 스폰 포인트들
     public Transform[] StageSpawnPoints; // 스테이지별 스폰 포인트들
     public Transform ShopTr; // 상점 위치
     public TMP_Text timerText;
@@ -62,7 +66,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        WaveTime = 90f;
+        WaveTime = 10f;
         CurrentTime = 0f;
         TempTime = 0f;
         CurrentWave = 1;
@@ -72,11 +76,12 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         IsDie = false;
         photonview = GetComponent<PhotonView>();
         Status.HP = Status.MaxHP;
+        SpawnPoints = SpawnPoints1;
 
         var properties = PhotonNetwork.LocalPlayer.CustomProperties;
         properties["IsExitShop"] = true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
-        string jsondata = Resources.Load<TextAsset>("JSON/WaveData").text;
+        string jsondata = Resources.Load<TextAsset>("JSON/WaveData_test").text;
         // JSON 데이터를 WaveDatas 클래스로 Deserialize
         JSONWaveList = JsonUtility.FromJson<WaveDatas>(jsondata);
         WaveUpdate(); // 초기 웨이브 설정
@@ -174,7 +179,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         Status.HP = Status.MaxHP;
         if (IsDie == true){
             IsDie = false;
-            MultiPlayStart.Instance.SpawnPlayer();
+            MultiPlayStart.Instance.SpawnPlayer(SpawnPoints[1]);
             SetPlayer();
         }
         IsWave = false;
@@ -193,12 +198,34 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         // 호스트에서 몹 소환하도록
         if (PhotonNetwork.IsMasterClient)
         {
+
+            switch (CurrentWave)
+            {
+                case 1:
+                case 2:
+                case 3:
+                    SpawnPoints = SpawnPoints1;
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                    SpawnPoints = SpawnPoints2;
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    SpawnPoints = SpawnPoints3;
+                    break;
+                case 10:
+                case 11:
+                case 12:
+                    SpawnPoints = SpawnPoints4;
+                    break;
+            }
             int spawnIndex = Random.Range(0, SpawnPoints.Length);
             Transform spawnPoint = SpawnPoints[spawnIndex];
-
             var currentWaveData = JSONWaveList.WaveData[CurrentWave - 1];
             string monsterPrefab = (Spawned % 2 == 0) ? currentWaveData.Monster1 : currentWaveData.Monster2;
-
             PhotonNetwork.Instantiate(monsterPrefab, spawnPoint.position, spawnPoint.rotation, 0);
             Spawned += 1; // 생성한 몬스터 수 증가
         }
@@ -210,6 +237,10 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     void StartWave()
     {
         if(IsWave ==false){
+            int playerViewID = Player.GetComponent<PhotonView>().ViewID;
+            int SpawnPointViewID;
+            min = 0;
+            sec = 0f;
             WaitPlayer.SetActive(false);
             var properties = PhotonNetwork.LocalPlayer.CustomProperties;
             properties["IsExitShop"] = false;
@@ -221,21 +252,29 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                 case 1:
                 case 2:
                 case 3:
+                    SpawnPointViewID = StageSpawnPoints[0].gameObject.GetComponent<PhotonView>().ViewID;
+                    MultiPlayStart.Instance.PlayerSetParent(playerViewID,SpawnPointViewID);
                     Player.transform.position = StageSpawnPoints[0].position;
                     break;
                 case 4:
                 case 5:
                 case 6:
+                    SpawnPointViewID = StageSpawnPoints[1].gameObject.GetComponent<PhotonView>().ViewID;
+                    MultiPlayStart.Instance.PlayerSetParent(playerViewID,SpawnPointViewID);
                     Player.transform.position = StageSpawnPoints[1].position;
                     break;
                 case 7:
                 case 8:
                 case 9:
+                    SpawnPointViewID = StageSpawnPoints[2].gameObject.GetComponent<PhotonView>().ViewID;
+                    MultiPlayStart.Instance.PlayerSetParent(playerViewID,SpawnPointViewID);
                     Player.transform.position = StageSpawnPoints[2].position;
                     break;
                 case 10:
                 case 11:
                 case 12:
+                    SpawnPointViewID = StageSpawnPoints[3].gameObject.GetComponent<PhotonView>().ViewID;
+                    MultiPlayStart.Instance.PlayerSetParent(playerViewID,SpawnPointViewID);
                     Player.transform.position = StageSpawnPoints[3].position;
                     break;
             }

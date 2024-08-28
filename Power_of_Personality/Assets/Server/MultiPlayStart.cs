@@ -35,7 +35,7 @@ public class MultiPlayStart : MonoBehaviourPunCallbacks
     void Start()
     {
         PlayerClass = PlayerPrefs.GetString("PlayerClass");
-        SpawnPlayer();
+        SpawnPlayer(SpawnPoint1);
     }
  
     void Update()
@@ -57,47 +57,52 @@ public class MultiPlayStart : MonoBehaviourPunCallbacks
         }
     }
 
-    public void SpawnPlayer()
+    public void SpawnPlayer(Transform SpawnPoint)
     {
         Debug.Log("SpawnPlayer");
         if (PlayerClass == "Wizard")
         {
-            Player_Character = PhotonNetwork.Instantiate("Server/Wizard/Server_Player_wizard", SpawnPoint1.position, SpawnPoint1.rotation, 0);
+            Player_Character = PhotonNetwork.Instantiate("Server/Wizard/Server_Player_wizard", SpawnPoint.position, SpawnPoint.rotation, 0);
             Debug.Log("Wizard");
         }
         else if (PlayerClass == "Archer")
         {
-            Player_Character = PhotonNetwork.Instantiate("Server/Archer/Server_Player_archer", SpawnPoint1.position, SpawnPoint1.rotation, 0);
+            Player_Character = PhotonNetwork.Instantiate("Server/Archer/Server_Player_archer", SpawnPoint.position, SpawnPoint.rotation, 0);
             Debug.Log("Archer");
         }
         else if (PlayerClass == "Warrior")
         {
-            Player_Character = PhotonNetwork.Instantiate("Server/Warrior/Server_Player_warrior", SpawnPoint1.position, SpawnPoint1.rotation, 0);
+            Player_Character = PhotonNetwork.Instantiate("Server/Warrior/Server_Player_warrior", SpawnPoint.position, SpawnPoint.rotation, 0);
             Debug.Log("Warrior");
         }
         else if (PlayerClass == "Rogue")
         {
-            Player_Character = PhotonNetwork.Instantiate("Server/Rogue/Server_Player_rogue", SpawnPoint1.position, SpawnPoint1.rotation, 0);
+            Player_Character = PhotonNetwork.Instantiate("Server/Rogue/Server_Player_rogue", SpawnPoint.position, SpawnPoint.rotation, 0);
             Debug.Log("Rogue");
         }
         if (Player_Character != null)
         {
             int playerViewID = Player_Character.GetComponent<PhotonView>().ViewID;
-            photonview.RPC("PlayerSetParent", RpcTarget.All, playerViewID);
+            int SpawnPointViewID = SpawnPoint.GetComponent<PhotonView>().ViewID;
+            PlayerSetParent(playerViewID,SpawnPointViewID);
         }
     }
 
     [PunRPC]
-    public void PlayerSetParent(int playerViewID)
+    public void PlayerSetParentRPC(int playerViewID,int SpawnPointViewID)
     {
         GameObject playerCharacter = PhotonView.Find(playerViewID).gameObject;
+        GameObject SpawnPoint = PhotonView.Find(SpawnPointViewID).gameObject;
         if (playerCharacter != null)
         {
-            playerCharacter.transform.SetParent(this.transform);
+            playerCharacter.transform.SetParent(SpawnPoint.transform);
         }
         else
         {
             Debug.LogError("PlayerSetParent: Could not find GameObject with PhotonViewID " + playerViewID);
         }
+    }
+    public void PlayerSetParent(int playerViewID,int SpawnPointViewID){
+        photonview.RPC("PlayerSetParentRPC", RpcTarget.All, playerViewID, SpawnPointViewID);
     }
 }

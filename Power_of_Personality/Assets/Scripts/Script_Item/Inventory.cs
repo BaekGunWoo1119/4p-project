@@ -39,9 +39,10 @@ public class Inventory : MonoBehaviour
             ItemPlus();
 
         }
-
-
-        if (Input.GetKeyDown(KeyCode.I))
+        if(inventoryObject == null){
+            inventoryObject = GameObject.Find("StatWindow");
+        }
+        else if(Input.GetKeyDown(KeyCode.I))
         {
             if(inventoryObject.transform.localScale != hiddenScale)
                 inventoryObject.transform.localScale = hiddenScale;
@@ -79,7 +80,6 @@ public class Inventory : MonoBehaviour
             Status.FixedIce += itemToBeAdded.FixedIce;
             Status.PercentIce += itemToBeAdded.PercentIce;
             Status.StatUpdate();
-            Status.SetUpdate(itemToBeAdded.itemID);
         }
     }
 
