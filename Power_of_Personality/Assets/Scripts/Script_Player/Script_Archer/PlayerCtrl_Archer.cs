@@ -191,6 +191,8 @@ public class PlayerCtrl_Archer : PlayerCtrl
         isSkill = true;
         anim.SetTrigger("Skill_Q");
         StartCoroutine(Immune(2f));
+        QSkillCoolTime = 0;
+        Qcool.fillAmount = 1;
     }
     IEnumerator Skill_W()
     {
@@ -203,6 +205,8 @@ public class PlayerCtrl_Archer : PlayerCtrl
         //WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1f);
         //WSkill_Collider.SetActive(false);
+        WSkillCoolTime = 0;
+        Wcool.fillAmount = 1;
     }
     IEnumerator Skill_E()
     {
@@ -216,6 +220,8 @@ public class PlayerCtrl_Archer : PlayerCtrl
         //ESkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         //ESkill_Collider.SetActive(false);
+        ESkillCoolTime = 0;
+        Ecool.fillAmount = 1;
     }
     IEnumerator SKill_Up_Move(float upScale, float waitTime1, float waitTime2, float delayTime)
     {

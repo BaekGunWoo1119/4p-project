@@ -48,6 +48,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool isCommonAttack1InProgress = false;
     protected bool isCommonAttack2InProgress = false;
     protected bool isCommonAttack3InProgress = false;
+    
+    //점프 관련(08.28)
+    protected float JumpCoolTime;
 
     //애니메이션 상태 컨트롤 (GetCurrentAnimatorStateInfo(0).IsName 을 체크)
     protected bool stateIdle = false;
@@ -260,6 +263,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     protected virtual void FixedUpdate()
     {
+        //처음 시작 시에만 피 초기화
+        if(PlayerPrefs.GetInt("GameSet") == 1)
+        {
+            SetHp(100);
+            PlayerPrefs.SetInt("GameSet", 0);
+        }
+
         CheckState();
         // Move 함수 실행
         if (!isSkill && !isAttack && !stateAttack3)
@@ -307,18 +317,18 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             }
 
             //스킬 쿨타임 UI(03.18)
-            /*if (Qcool.fillAmount != 0)
+            if (Qcool.fillAmount != 0)
             {
-                Qcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
+                Qcool.fillAmount -= 1 * Time.smoothDeltaTime / TotalQSkillCoolTime;
             }
             if (Wcool.fillAmount != 0)
             {
-                Wcool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
+                Wcool.fillAmount -= 1 * Time.smoothDeltaTime / TotalWSkillCoolTime;
             }
             if (Ecool.fillAmount != 0)
             {
-                Ecool.fillAmount -= 1 * Time.smoothDeltaTime / 3;
-            }*/
+                Ecool.fillAmount -= 1 * Time.smoothDeltaTime / TotalESkillCoolTime;
+            }
             // 땅에 닿아있는지 체크
             isGrounded();
 
@@ -431,7 +441,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !isJumping
             && !anim.GetBool("isFall")
             && QSkillCoolTime >= TotalQSkillCoolTime //도훈 2024-08-27
-            && !isAttack)
+            && !isAttack
+            && !isDodge)
             {
                 UseSkill("Q");
                 TotalQSkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
@@ -446,7 +457,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !isJumping
             && !anim.GetBool("isFall")
             && WSkillCoolTime >= TotalWSkillCoolTime //도훈 2024-08-27
-            && !isAttack)
+            && !isAttack
+            && !isDodge)
             {
                 UseSkill("W");
                 TotalWSkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
@@ -461,7 +473,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !isJumping
             && !anim.GetBool("isFall")
             && ESkillCoolTime >= TotalESkillCoolTime //도훈 2024-08-27
-            && !isAttack)
+            && !isAttack
+            && !isDodge)
             {
                 UseSkill("E");
                 TotalESkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
@@ -472,18 +485,20 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && !isSkill && !isAttack && !isJumping
-                && !stateJump && !stateFall && !anim.GetBool("isFall"))
+                && !stateJump && !stateFall && !anim.GetBool("isFall") && !isDodge && JumpCoolTime == 0)
             {
                 isJumping = true;
+                JumpCoolTime += Time.deltaTime;
             }
             else
             {
-                isJumping = false;
+                //isJumping = false;
             }
             //점프 모션이 실행되야만 점프가 실행되게(애니메이션 딜레이 및 더블점프 강제 제거)
             if (isJumping == true)
             {
                 Jump();
+                isJumping = false;
             }
             // Dodge 함수 실행
             if (Input.GetKeyDown(KeyCode.R))
@@ -494,10 +509,15 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             {
                 StopAnim("isJump");
             }
+            //다중 점프 방지 코드
+            if(stateFall == true && isFloor == false && isStair == false)
+            {
+                PlayAnim("isFall");
+            }
 
             // 힐 Potion 먹는 함수
             hpPotionValue.text = InvenCtrl.PotionCount.ToString();
-            if(Input.GetKeyDown(KeyCode.Alpha1))
+            if(Input.GetKeyDown(KeyCode.Alpha1) && !anim.GetBool("isDie"))
             {
                 HealHp();
             }
@@ -750,13 +770,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     public virtual void Move()
     {
-        PlayAnim("isRun");
         if (hAxis != 0)
         {
+            PlayAnim("isRun");
             moveVec = AdjustDirectionToSlope(transform.forward);
         }
         else
         {
+            StopAnim("isRun");
             moveVec = Vector3.zero;
         }
         if (!WallCollision)
@@ -798,6 +819,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                     isJumping = false; //isJump, isFall을 다시 false로
                     StopAnim("isJump");
                     StopAnim("isFall");
+                    JumpCoolTime = 0; //착지 후 점프 되게 쿨타임 걸어 둠
                 }
                 return true;
             }
@@ -807,8 +829,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 isJumping = false; //isJump, isFall을 다시 false로
                 StopAnim("isJump");
                 StopAnim("isFall");
+                JumpCoolTime = 0; //착지 후 점프 되게 쿨타임 걸어 둠
                 return true;
             }
+        }
+        else
+        {
+            PlayAnim("isFall");
         }
         isFloor = false;
         isStair = false;

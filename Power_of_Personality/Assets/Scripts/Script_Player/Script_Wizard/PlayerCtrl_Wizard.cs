@@ -201,6 +201,8 @@ public class PlayerCtrl_Wizard : PlayerCtrl
         yield return new WaitForSeconds(2f);
         //QSkill_Collider.SetActive(false);
         isSkillQ = false;
+        QSkillCoolTime = 0;
+        Qcool.fillAmount = 1;
         //QSkill_Collider.transform.localScale = new Vector3(1, 5, 1);
     }
     public IEnumerator Skill_W()
@@ -210,6 +212,8 @@ public class PlayerCtrl_Wizard : PlayerCtrl
         //WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1f);
         //WSkill_Collider.SetActive(false);
+        WSkillCoolTime = 0;
+        Wcool.fillAmount = 1;
     }
     public IEnumerator Skill_E_Move()
     {
@@ -221,6 +225,8 @@ public class PlayerCtrl_Wizard : PlayerCtrl
         isSkill = false;
         rd.useGravity = true;
         Fall();
+        ESkillCoolTime = 0;
+        Ecool.fillAmount = 1;
     }
     public IEnumerator Spawn_CommonAttack1()
     {

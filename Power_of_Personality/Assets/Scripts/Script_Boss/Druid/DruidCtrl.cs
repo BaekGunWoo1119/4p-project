@@ -35,7 +35,6 @@ public class DruidCtrl : BossCtrl
     private Vector3 PrevPosition;
     private GameObject LeftTPpoint;
     private GameObject RightTPpoint;
-    private GameObject shopPortal;
     #endregion
 
     #region Awake, Start, Update문
@@ -50,7 +49,6 @@ public class DruidCtrl : BossCtrl
         ToxicPortal_Collider = GameObject.Find("ToxicPortal");
         LeftTPpoint = GameObject.Find("LeftTPpoint");
         RightTPpoint = GameObject.Find("RightTPpoint");
-        shopPortal = GameObject.Find("Normal_Shop_Portal");
     }
 
     protected override void Start()
@@ -101,10 +99,9 @@ public class DruidCtrl : BossCtrl
         curHP = maxHP;
     }
 
-    protected override void CheckHP() // HP ����
+    public override void CheckHP() // HP ����
     {
-        if (HpBar != null)
-            HpBar.value = curHP / maxHP;
+        base.CheckHP();
     }
 
     #endregion
@@ -112,259 +109,16 @@ public class DruidCtrl : BossCtrl
     #region 보스 피격, 피해량 공식
     public override void OnTriggerEnter(Collider col)
     {
-        #region 전사
-        if (col.tag == "WarriorAttack1")
-        {
-            isHit = true;
-            Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "WarriorAttack2")
-        {
-            isHit = true;
-            Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "WarriorAttack3")
-        {
-            isHit = true;
-            Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
-        }
-
-        if (col.tag == "WarriorSkillQ")
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 2f;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "WarriorSkillE")
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 4f;
-            StartCoroutine(TakeDamage());
-        }
-        #endregion
-        #region 도적
-        if (col.tag == "RougeAttack1")
-        {
-            isHit = true;
-            Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "RougeAttack2")
-        {
-            isHit = true;
-            Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "RougeAttack3")
-        {
-            isHit = true;
-            Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "RougeSkillQ_2")
-        {
-            isHit = true;
-            Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "RougeSkillW_2")
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 1.5f;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "RougeSkillE_1")
-        {
-            isHit = true;
-            Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "RougeSkillE_2")
-        {
-            isHit = true;
-            Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "RougeSkillE_4")
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 3f;
-            StartCoroutine(TakeDamage());
-        }
-        #endregion
-        #region 궁수
-        if (col.tag == "ArcherAttack1")
-        {
-            isHit = true;
-            Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "ArcherAttack2")
-        {
-            isHit = true;
-            Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "ArcherSkillQ")
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 0.1f;
-            StartCoroutine(TakeDamage());
-        }
-        #endregion
-        #region 마법사
-        if (col.tag == "WizardAttack1")
-        {
-            isHit = true;
-            Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "WizardAttack3")
-        {
-            isHit = true;
-            Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "WizardSkillW")
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 3f;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "WizardSkillE_1")
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 2.5f;
-            StartCoroutine(TakeDamage());
-        }
-        if (col.tag == "WizardSkillE_2")
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 5f;
-            StartCoroutine(TakeDamage());
-        }
-        #endregion
+        base.OnTriggerEnter(col);
     }
 
     public override void OnTriggerStay(Collider col)
     {
-        #region 전사
-        if (col.tag == "WarriorSkillW" && TickCoolTime >= 0.75f)
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 1.5f;
-            StartCoroutine(TakeDamage());
-        }
-        #endregion
-        #region 도적
-        if (col.tag == "RougeSkillQ_1" && TickCoolTime >= 0.25f)
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 0.3f;
-            StartCoroutine(TakeDamage());
-            TickCoolTime = 0;
-        }
-
-        if (col.tag == "RougeSkillW_1" && TickCoolTime >= 0.3f)
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 0.4f;
-            StartCoroutine(TakeDamage());
-            TickCoolTime = 0;
-        }
-        if (col.tag == "RougeSkillE_3" && TickCoolTime >= 0.25f)
-        {
-            isHit = true;
-            Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
-            TickCoolTime = 0;
-        }
-        #endregion
-        #region 궁수
-        if (col.tag == "ArcherSkillW" && TickCoolTime >= 0.25f)
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 0.75f;
-            StartCoroutine(TakeDamage());
-            TickCoolTime = 0;
-        }
-        if (col.tag == "ArcherSkillE" && TickCoolTime >= 0.2f)
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 3f;
-            StartCoroutine(TakeDamage());
-            TickCoolTime = 0;
-        }
-        #endregion
-        #region 마법사
-        if (col.tag == "WizardSkillQ" && TickCoolTime >= 0.25f)
-        {
-            isHit = true;
-            Damage = Status.TotalAP * 0.75f;
-            StartCoroutine(TakeDamage());
-            TickCoolTime = 0;
-        }
-        #endregion
+        base.OnTriggerStay(col);
     }
-    protected override IEnumerator TakeDamage()
+    public override IEnumerator TakeDamage(float Damage)
     {
-        if (maxHP != 0 || curHP > 0)
-        {
-            if (PlayerPrefs.GetString("property") == "Ice")
-            {
-                Instantiate(IceHit, this.transform.position, Quaternion.Euler(0, 0, 0));
-            }
-            if (PlayerPrefs.GetString("property") == "Fire")
-            {
-                Instantiate(FireHit, this.transform.position, Quaternion.Euler(0, 0, 0));
-            }
-            if (PlayerPrefs.GetString("property") == WeakProperty)
-            {
-                Damage = Damage * 1.5f;
-            }
-            Material[] materials = matObj.materials;
-            curHP -= Damage * (1 / (1 + DEF * 0.01f));
-            CheckHP(); // ü�� ����
-            anim.SetBool("TakeDamage", true);
-            foreach (Material material in materials)
-            {
-                material.color = Color.red;
-            }
-
-            StartCoroutine(DamageTextAlpha());
-
-            yield return new WaitForSeconds(0.1f);
-            anim.SetBool("TakeDamage", false);
-            yield return new WaitForSeconds(0.2f);
-            if (anim.GetBool("TakeDamage") == false)
-            {
-                isHit = false;
-            }
-            foreach (Material material in materials)
-            {
-                material.color = Color.white;
-            }
-        }
-
-        if (curHP <= 0) // ü���� 0�϶�
-        {
-            isDie = true;
-            anim.SetBool("Die", true);
-            yield return new WaitForSeconds(1.5f);
-            Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
-            Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
-            Destroy(BossWall1);
-            Destroy(BossWall2);
-            //상점 생성
-            shopPortal.SetActive(true);
-            shopPortal.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 2, this.transform.position.z);
-            //오브젝트 및 체력 바 파괴
-            Destroy(this.gameObject); // ü���� 0 ���϶� ����
-            Destroy(HpBar.gameObject);
-        }
+        yield return base.TakeDamage(Damage);
     }
     #endregion
 

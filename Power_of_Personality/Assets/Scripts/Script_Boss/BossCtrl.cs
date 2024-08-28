@@ -36,7 +36,7 @@ public class BossCtrl : MonoBehaviour
     // 보스 피격 관련
     public GameObject IceHit; //몬스터 피격 이펙트(얼음)
     public GameObject FireHit; //몬스터 피격 이펙트(불)
-    protected GameObject DamageText; //맞았을 때 나오는 데미지 텍스트
+    public GameObject DamageText; //맞았을 때 나오는 데미지 텍스트
     protected GameObject MonsterCanvas;
     public GameObject Coin;     //몬스터를 죽이면 드랍되는 코인
 
@@ -53,6 +53,9 @@ public class BossCtrl : MonoBehaviour
     protected float TickCoolTime;  // 틱 피해량 쿨타임
     protected bool canTeleport;
 
+    //상점 포탈
+    protected GameObject shopPortal;
+
     #endregion
     protected virtual void Awake()
     {
@@ -61,6 +64,8 @@ public class BossCtrl : MonoBehaviour
         EffectGen = transform.Find("EffectGen-Boss").gameObject;
         SkillYRot = transform.eulerAngles.y;
         HpBar = GameObject.Find("HPBar-Boss").GetComponent<UnityEngine.UI.Slider>();//보스 체력바 코드(06.29)
+        MonsterCanvas = GameObject.Find("Canvas_Boss");
+        shopPortal = GameObject.Find("Normal_Shop_Portal");
         StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행 <<< Awake에 있으니까 맵 나갔다 들어올 때 계속 오류뜸
     }
 
@@ -74,11 +79,12 @@ public class BossCtrl : MonoBehaviour
         BossWall2Collider = BossWall2.GetComponent<BoxCollider>();
         SetHP(100);
         CheckHP();
-        GameObject.Find("HPBar-Boss").transform.localScale = new Vector3(1, 1, 1);
+        GameObject.Find("Boss_HP_Bar").transform.localScale = new Vector3(1, 1, 1);
     }
 
     protected virtual void Update()
     {
+        TickCoolTime += Time.deltaTime;
         TeleportCheck();
         if (!isAttacking)
         {
@@ -127,14 +133,14 @@ public class BossCtrl : MonoBehaviour
         curHP = maxHP;
     }
 
-    protected virtual void CheckHP() // HP 바 갱신
+    public virtual void CheckHP() // HP 바 갱신
     {
         if (HpBar != null)
             HpBar.value = curHP / maxHP;
     }
     #endregion
 
-    #region 보스 피격, 피해량 공식
+    #region 몬스터 피격, 피해량 공식
     public virtual void OnTriggerEnter(Collider col)
     {
         #region 전사
@@ -142,32 +148,56 @@ public class BossCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WarriorAttack2")
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WarriorAttack3")
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
 
         if (col.tag == "WarriorSkillQ")
         {
             isHit = true;
             Damage = Status.TotalAP * 2f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WarriorSkillE")
         {
             isHit = true;
             Damage = Status.TotalAP * 4f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         #endregion
         #region 도적
@@ -175,49 +205,97 @@ public class BossCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeAttack2")
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeAttack3")
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeSkillQ_2")
         {
             isHit = true;
             Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeSkillW_2")
         {
             isHit = true;
             Damage = Status.TotalAP * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeSkillE_1")
         {
             isHit = true;
             Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeSkillE_2")
         {
             isHit = true;
             Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "RougeSkillE_4")
         {
             isHit = true;
             Damage = Status.TotalAP * 3f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         #endregion
         #region 궁수
@@ -225,19 +303,35 @@ public class BossCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "ArcherAttack2")
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "ArcherSkillQ")
         {
             isHit = true;
             Damage = Status.TotalAP * 0.1f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         #endregion
         #region 마법사
@@ -245,31 +339,69 @@ public class BossCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalADC;
-            StartCoroutine(TakeDamage());
+            StartCoroutine(TakeDamage(Damage));
+        }
+        if (col.tag == "WizardAttack2")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WizardAttack3")
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WizardSkillW")
         {
             isHit = true;
             Damage = Status.TotalAP * 3f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WizardSkillE_1")
         {
             isHit = true;
             Damage = Status.TotalAP * 2.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         if (col.tag == "WizardSkillE_2")
         {
             isHit = true;
             Damage = Status.TotalAP * 5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
         }
         #endregion
     }
@@ -281,7 +413,16 @@ public class BossCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 1.5f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
+            TickCoolTime = 0;
         }
         #endregion
         #region 도적
@@ -289,7 +430,15 @@ public class BossCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.3f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
 
@@ -297,14 +446,30 @@ public class BossCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.4f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
         if (col.tag == "RougeSkillE_3" && TickCoolTime >= 0.25f)
         {
             isHit = true;
             Damage = Status.TotalAP;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
         #endregion
@@ -313,14 +478,30 @@ public class BossCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.75f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
         if (col.tag == "ArcherSkillE" && TickCoolTime >= 0.2f)
         {
             isHit = true;
             Damage = Status.TotalAP * 3f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
         #endregion
@@ -329,12 +510,21 @@ public class BossCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.75f;
-            StartCoroutine(TakeDamage());
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            StartCoroutine(TakeDamage(Damage));
             TickCoolTime = 0;
         }
         #endregion
     }
-    protected virtual IEnumerator TakeDamage()
+
+    public virtual IEnumerator TakeDamage(float Damage)
     {
         if (maxHP != 0 || curHP > 0)
         {
@@ -346,14 +536,62 @@ public class BossCtrl : MonoBehaviour
             {
                 Instantiate(FireHit, this.transform.position, Quaternion.Euler(0, 0, 0));
             }
-            if (PlayerPrefs.GetString("property") == WeakProperty)
+            if(PlayerPrefs.GetString("property") == WeakProperty)
             {
-                Damage = Damage * 1.5f;
+                #region 3/4번 세트 3셋 효과
+                if (WeakProperty == "Fire" && Status.set3_3_Activated)
+                {
+                    Damage = (Damage * 1.5f) * 1.2f;
+                    Debug.Log("20% 추가한 약점 데미지는 : " + Damage);
+                }
+                if (WeakProperty == "Ice" && Status.set4_3_Activated)
+                {
+                    Damage = (Damage * 1.5f) * 1.2f;
+                    Debug.Log("20% 추가한 약점 데미지는 : " + Damage);
+                }
+                #endregion
+                else if(Status.set3_3_Activated == false && Status.set4_3_Activated == false)
+                {
+                    Debug.Log("약공터짐!!");    
+                    Damage = Damage * 1.5f;
+                }
             }
             Material[] materials = matObj.materials;
+            #region 1번 세트 3셋효과
+            int randomInt = Random.Range(1, 6);
+            Debug.Log(randomInt);
+            if (randomInt == 5 && Status.set1_3_Activated == true)
+            {
+                Debug.Log("20%!!");
+                Damage = Damage * 1.2f;
+            }
+            #endregion
+            #region 1번 세트 4셋 효과
+            if(Status.set1_4_Activated == true)
+            {
+                Debug.Log("힐 하기 전 HP:" + Status.HP);
+
+                if(Status.HP + (Damage * 0.2f) > Status.MaxHP)
+                {
+                    Status.HP = Status.MaxHP;
+                }
+                else
+                {
+                    Status.HP += (Damage * 0.2f);
+                }
+                Debug.Log("힐 하고 나서 HP:" + Status.HP);
+            }
+            #endregion
+            #region 7번 세트 3셋 효과
+            if (Status.set7_3_Activated == true)
+            {
+                Debug.Log("7활성화되어잇음");
+                Damage = Damage * 1.2f;
+            }
+            #endregion
+            Debug.Log("몬스터가 입은 피해량 = " + Damage * (1 / (1 + DEF * 0.01f)));
             curHP -= Damage * (1 / (1 + DEF * 0.01f));
-            CheckHP();
-            anim.SetBool("TakeDamage", true);
+            CheckHP(); // HP 체크
             foreach (Material material in materials)
             {
                 material.color = Color.red;
@@ -362,29 +600,27 @@ public class BossCtrl : MonoBehaviour
             StartCoroutine(DamageTextAlpha());
 
             yield return new WaitForSeconds(0.1f);
-            anim.SetBool("TakeDamage", false);
             yield return new WaitForSeconds(0.2f);
-            if (anim.GetBool("TakeDamage") == false)
-            {
-                isHit = false;
-            }
             foreach (Material material in materials)
             {
                 material.color = Color.white;
             }
         }
 
-        if (curHP <= 0) // ü���� 0�϶�
+        if (curHP <= 0) // 개체의 피가 0이 되었을 때 사망처리
         {
             isDie = true;
             anim.SetBool("Die", true);
-            BossWall1.SetActive(false);
-            BossWall2.SetActive(false);
             yield return new WaitForSeconds(1.5f);
             Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
             Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
-            Destroy(this.gameObject);
-            Destroy(HpBar.gameObject);
+            Destroy(BossWall1);
+            Destroy(BossWall2);
+            //상점 생성
+            shopPortal.SetActive(true);
+            shopPortal.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 2, this.transform.position.z);
+            Destroy(HpBar.transform.parent.gameObject);
+            Destroy(this.gameObject); // 개체 파괴
         }
     }
     #endregion
@@ -469,7 +705,7 @@ public class BossCtrl : MonoBehaviour
             //데미지 텍스트 출력 부분(05.31)
             GameObject instText = Instantiate(DamageText);
             instText.transform.SetParent(MonsterCanvas.transform, false);
-            instText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + 0.5f, HpBar.transform.position.z);
+            instText.transform.position = new Vector3(MonsterCanvas.transform.position.x, MonsterCanvas.transform.position.y + 0.5f, MonsterCanvas.transform.position.z);
             instText.GetComponent<TMP_Text>().text = (Damage * (1 / (1 + DEF * 0.01f))).ToString("F0"); //소수점 날리고 데미지 표현
             float time = 0f;
             instText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
@@ -480,7 +716,7 @@ public class BossCtrl : MonoBehaviour
                 time += Time.deltaTime;
                 fadecolor.a = Mathf.Lerp(1, 0, time);
                 instText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
-                instText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + time + 0.1f, HpBar.transform.position.z); // 서서히 올라감
+                instText.transform.position = new Vector3(MonsterCanvas.transform.position.x, MonsterCanvas.transform.position.y + time + 0.1f, MonsterCanvas.transform.position.z); // 서서히 올라감
                 yield return null;
             }
         }

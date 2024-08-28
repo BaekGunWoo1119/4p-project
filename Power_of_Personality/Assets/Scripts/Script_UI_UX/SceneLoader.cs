@@ -613,6 +613,7 @@ public class SceneLoader : MonoBehaviour
     void BonusStat_Start_Pressed()
     {
         SceneManager.LoadScene("Forest_Example");
+        PlayerPrefs.SetInt("GameSet", 1); //피 초기화 코드(08.28)
     }
 
     void Shop_Exit_Pressed()

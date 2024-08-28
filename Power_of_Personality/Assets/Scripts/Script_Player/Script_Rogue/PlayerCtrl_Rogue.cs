@@ -290,6 +290,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         //스킬 나갈 시 사운드 및 콜라이더(추가 예정)
         yield return new WaitForSeconds(2.2f);
         ESkillCoolTime = 0;
+        Ecool.fillAmount = 1;
     }
     public void comboAttack_1_on()
     {
@@ -508,6 +509,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
             StartCoroutine(MoveForwardForSeconds(1.0f));
             StartCoroutine(Immune(2.5f));
             QSkillCoolTime = 0;
+            Qcool.fillAmount = 1;
         }
 
         if(skillName == "W")
@@ -515,7 +517,6 @@ public class PlayerCtrl_Rogue : PlayerCtrl
             PlayAnim("Skill_W");
             StartCoroutine(Skill_W());
             StartCoroutine(Immune(3f));
-            WSkillCoolTime = 0;
         }
 
         if(skillName == "E")
@@ -560,6 +561,8 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         yield return new WaitForSeconds(0.2f);
         //WSkill_Last_Collider.SetActive(true);
         yield return new WaitForSeconds(0.5f);
+        WSkillCoolTime = 0;
+        Wcool.fillAmount = 1;
         //WSkill_Last_Collider.SetActive(false);
     }
     protected override IEnumerator Delay(float seconds)

@@ -666,7 +666,7 @@ public class MonsterCtrl : MonoBehaviour
             #endregion
             Debug.Log("몬스터가 입은 피해량 = " + Damage * (1 / (1 + DEF * 0.01f)));
             curHP -= Damage * (1 / (1 + DEF * 0.01f));
-            CheckHP(); // ü�� ����
+            CheckHP(); // HP 체크
             anim.SetBool("TakeDamage", true);
             foreach (Material material in materials)
             {
@@ -688,15 +688,15 @@ public class MonsterCtrl : MonoBehaviour
             }
         }
 
-        if (curHP <= 0) // ü���� 0�϶�
+        if (curHP <= 0) // 개체의 피가 0이 되었을 때 사망처리
         {
             isDie = true;
             anim.SetBool("Die", true);
             yield return new WaitForSeconds(1.5f);
             Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
             Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
-            Destroy(this.gameObject); // ü���� 0 ���϶� ����
             Destroy(HpBar.gameObject);
+            Destroy(this.gameObject); // 개체 파괴
         }
     }
     #endregion
