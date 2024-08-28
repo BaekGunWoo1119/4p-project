@@ -532,6 +532,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
     public override void UseSkill(string skillName)
     {
+        base.UseSkill(skillName);
         isSkill = true;
         if(skillName == "Q")
         {

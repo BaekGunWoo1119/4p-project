@@ -92,13 +92,13 @@ public class MonsterCtrl : MonoBehaviour
         if (Status.set3_4_Activated && WeakProperty != "Fire")
         {
             WeakProperty = "Fire";
-            Debug.Log("약점속성이 화속성이 됨.");
+            //Debug.Log("약점속성이 화속성이 됨.");
         }
 
         if (Status.set4_4_Activated && WeakProperty != "Ice")
         {
             WeakProperty = "Ice";
-            Debug.Log("약점속성이 빙속성이 됨.");
+            //Debug.Log("약점속성이 빙속성이 됨.");
         }
         #endregion
     }

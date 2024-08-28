@@ -79,6 +79,9 @@ public class Inventory : MonoBehaviour
             Status.FixedIce += itemToBeAdded.FixedIce;
             Status.PercentIce += itemToBeAdded.PercentIce;
             Status.StatUpdate();
+
+            Debug.Log(itemToBeAdded.itemID);
+
             Status.SetUpdate(itemToBeAdded.itemID);
         }
     }
@@ -97,6 +100,9 @@ public class Inventory : MonoBehaviour
     
     private void OnTriggerEnter(Collider col)
     {
+
+
+
         if (col.GetComponent<Item>())
         {
             AddItem(col.GetComponent<Item>());

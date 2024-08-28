@@ -14,12 +14,11 @@ public class Wizard_Q_Collider : MonoBehaviour
 
     void Start()
     {
-        bool isHasSet = GetComponentInParent<ATKEffect_Control>().HasSet;
         float ColliderDistanceAdd = GetComponentInParent<ATKEffect_Control>().EffectDistanceAdd;
         startPosition = transform.position;
         initialScale = transform.localScale; // 초기 스케일 저장
 
-        if (isHasSet)
+        if (Status.set6_3_Activated)
         {
             maxScale = maxScale * ColliderDistanceAdd;
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ATKEffect_Control : MonoBehaviour
 {
-    public bool HasSet = true;
+    public bool isCommon;
     public GameObject MainEffect;
     public bool isProjectile;
     public GameObject Projectile;
@@ -15,14 +15,31 @@ public class ATKEffect_Control : MonoBehaviour
 
     void Start()
     {
-        if(HasSet)
+        if(Status.set5_3_Activated)
         {
-            MainEffect.transform.localScale = new Vector3(EffectSizeAdd, EffectSizeAdd, EffectSizeAdd);
-
-            if(isProjectile)
+            if(isCommon)
             {
-                EffectDistance = Projectile.GetComponent<ObjectMoveDestroy_Distance>().maxDistance;
-                Projectile.GetComponent<ObjectMoveDestroy_Distance>().maxDistance = EffectDistance * EffectDistanceAdd;
+                MainEffect.transform.localScale = new Vector3(EffectSizeAdd, EffectSizeAdd, EffectSizeAdd);
+
+                if(isProjectile)
+                {
+                    EffectDistance = Projectile.GetComponent<ObjectMoveDestroy_Distance>().maxDistance;
+                    Projectile.GetComponent<ObjectMoveDestroy_Distance>().maxDistance = EffectDistance * EffectDistanceAdd;
+                }
+            }
+        }
+
+        if(Status.set6_3_Activated)
+        {
+            if(!isCommon)
+            {
+                MainEffect.transform.localScale = new Vector3(EffectSizeAdd, EffectSizeAdd, EffectSizeAdd);
+
+                if(isProjectile)
+                {
+                    EffectDistance = Projectile.GetComponent<ObjectMoveDestroy_Distance>().maxDistance;
+                    Projectile.GetComponent<ObjectMoveDestroy_Distance>().maxDistance = EffectDistance * EffectDistanceAdd;
+                }
             }
         }
     }

@@ -33,7 +33,7 @@ public class Status : MonoBehaviour
     public static float EXP = 0f; // 현재 경험치
     public string CurProperty; //현재 플레이어 속성
     public static int extraLife = 0;    // 플레이어 추가 목숨
-    public static int[] itemIds = new int[32];
+    public static int[] itemIds = new int[60];
     public static int set1Count = 0;
     public static int set2Count = 0;
     public static int set3Count = 0;
