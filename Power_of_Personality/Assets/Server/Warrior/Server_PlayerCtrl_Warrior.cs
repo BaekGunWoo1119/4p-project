@@ -4,8 +4,9 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
-public class PlayerCtrl_Warrior : Server_PlayerCtrl
+public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
 {
     #region 변수 선언
     //애니메이션 컨트롤

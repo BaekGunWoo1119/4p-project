@@ -27,6 +27,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     public GameObject Item_Weapon2_Effect;
     public GameObject Item_Weapon2_Ice_Effect;
     public GameObject Item_Weapon2_Fire_Effect;
+    private string CurProperty;
 
     protected override void Start()
     {
