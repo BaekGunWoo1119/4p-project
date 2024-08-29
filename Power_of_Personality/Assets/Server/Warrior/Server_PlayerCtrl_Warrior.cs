@@ -4,9 +4,8 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Photon.Pun;
 
-public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
+public class PlayerCtrl_Warrior : Server_PlayerCtrl
 {
     #region 변수 선언
     //애니메이션 컨트롤
@@ -28,12 +27,17 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     //이펙트
     public GameObject Skill_FireE_Effect;
     public GameObject Skill_IceE_Effect;
+    public GameObject SKill_FireQ_Rev_Effect;
+    public GameObject SKill_IceQ_Rev_Effect;
     private GameObject SkillE_Effect;
+    private GameObject SkillQ_Rev_Effect;
 
     private ParticleSystem setParticles1;
     private ParticleSystem setParticles2;
     private ParticleSystem setParticles3;
     private ParticleSystem setParticles4;
+    private ParticleSystem setParticles5;
+    private ParticleSystem setParticles6;
 
     private string CurProperty;
     #endregion
@@ -44,24 +48,19 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         base.Start();
 
         //플레이어 어택 콜라이더 인식 방식 변경 (서버에 맞게)
+        /*
         Attack_Collider_All = transform.Find("AttackColliders").gameObject;
         WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;
+        WSkill_Collider.SetActive(false);
         Attack_1_Collider = Attack_Collider_All.transform.Find("Attack_1_Collider").gameObject;
         Attack_2_Collider = Attack_Collider_All.transform.Find("Attack_2_Collider").gameObject;
         Attack_3_Collider = Attack_Collider_All.transform.Find("Attack_3_Collider").gameObject;
-        if(!photonview.IsMine){
-            Attack_Collider_All.tag = "Other";
-            WSkill_Collider.tag = "Other";
-            Attack_1_Collider.tag = "Other";
-            Attack_2_Collider.tag = "Other";
-            Attack_3_Collider.tag = "Other";
-        }
-        WSkill_Collider.SetActive(false);
         Attack_1_Collider.SetActive(false);
         Attack_2_Collider.SetActive(false);
         Attack_3_Collider.SetActive(false);
 
         isSkillQ = false;
+        */
     }
 
     protected override void FixedUpdate()
@@ -76,7 +75,6 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
             CurProperty = PlayerPrefs.GetString("property");
             photonview.RPC("SetProperty",RpcTarget.All, CurProperty);
         }
-        
 
         //점프공격 시 Y 포지션 고정
         if (stateJumpAttack1 == true && !isJumpAttack)
@@ -110,7 +108,8 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
             if(transform.position.y != YOrgPos)
                 transform.position = new Vector3(transform.position.x, YOrgPos, transform.position.z);
             Debug.Log(YOrgPos);
-            isAttack = false;
+            //isAttack = false;
+            rd.velocity = Vector3.zero;
         }
         else if(stateJumpAttack1 == false && stateJumpAttack2 == false && stateJumpAttack3 == false)
         {
@@ -194,6 +193,10 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     {
         base.OnTriggerEnter(col);
     }
+    protected override void OnTriggerExit(Collider col)
+    {
+        base.OnTriggerExit(col);
+    }
 
     protected override void OnTriggerStay(Collider col)
     {
@@ -209,62 +212,75 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         isAttack = true;
     }
     
-    //Attack 함수 통합/분리 (번호 할당 => 기본공격 1,2,3 = 0,1,2 / 점프공격 1,2,3 = 3,4,5)
     [PunRPC]
+    //Attack 함수 통합/분리 (번호 할당 => 기본공격 1,2,3 = 0,1,2 / 점프공격 1,2,3 = 3,4,5)
     public override void Attack(int AttackNumber)
     {
         if(AttackNumber == 0)
         {
             isSound = false;
-            StartCoroutine(Attack1_Collider());
+            //StartCoroutine(Attack1_Collider());
             StartCoroutine(Attack_Sound(AttackNumber , 0.8f));
             StartCoroutine(Delay(0.4f));
             StartCoroutine(MoveForwardForSeconds(0.3f));
             StartCoroutine(Delay(0.2f));
+            if(photonview.IsMine){
             mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.03f, null);
+            }
         }
 
         if(AttackNumber == 1)
         {
-            StartCoroutine(Attack2_Collider());
+            //StartCoroutine(Attack2_Collider());
             StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
             StartCoroutine(Delay(0.2f));
+            if(photonview.IsMine){
             mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.1f, 0.01f, null);
+            }
         }
 
         if(AttackNumber == 2)
         {
             StartCoroutine(Delay(0.2f));
             StartCoroutine(MoveForwardForSeconds(0.3f));
-            StartCoroutine(Attack3_Collider());
+            //StartCoroutine(Attack3_Collider());
             StartCoroutine(Attack_Sound(AttackNumber, 0.8f));
             StartCoroutine(Delay(5.0f));
+            if(photonview.IsMine){
             mainCamera.GetComponent<CameraCtrl>().ShakeCamera(0.3f, 0.1f, null);
+            }
         }
 
         if(AttackNumber == 3)
         {
             isSound = false;
+            if(photonview.IsMine){
             mainCamera.GetComponent<CameraCtrl>().JumpCamera_Warrior();
-            StartCoroutine(Attack1_Collider());
+            }
+            //StartCoroutine(Attack1_Collider());
         }
 
         if(AttackNumber == 4)
         {
+            if(photonview.IsMine){
             mainCamera.GetComponent<CameraCtrl>().JumpCamera_Warrior();
-            StartCoroutine(Attack1_Collider());
+            }
+            //StartCoroutine(Attack1_Collider());
             StartCoroutine(Delay(0.2f));
         }
 
         if(AttackNumber == 5)
         {
+            if(photonview.IsMine){
             mainCamera.GetComponent<CameraCtrl>().JumpCamera_Warrior();
-            StartCoroutine(Attack1_Collider());
+            }
+            //StartCoroutine(Attack1_Collider());
             StopAnim("CommonAttack");
         }
 
     }
 
+    /*
     IEnumerator Attack1_Collider()
     {
         yield return new WaitForSeconds(0.125f);
@@ -294,6 +310,8 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
             Attack_3_Collider.SetActive(false);
         }
     }
+    */
+
     IEnumerator Attack_Sound(int AttackValue, float playsec)
     {
         if (AttackValue == 1)
@@ -311,10 +329,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     {
         isSkillQ = false;
         yield return new WaitForSeconds(0.2f);
-        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            SwordAuraInstance.tag = "Other";
-        }
+        //GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, this.transform.rotation);
         yield return new WaitForSeconds(0.1f);
         audioSources[3].Play();
         yield return new WaitForSeconds(0.3f);
@@ -359,58 +374,41 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     }
     IEnumerator WarriorSkill_E()
     {
-        if(photonview.IsMine){
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(LocalSkillYRot);
-        }
         yield return new WaitForSeconds(1.8f);
-        GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            SwordAuraInstance.tag = "Other";
-        }
         audioSources[3].Play();
+        yield return new WaitForSeconds(0.2f);
+        //GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         //스킬 나갈 시 사운드 및 콜라이더
+        yield return new WaitForSeconds(0.4f);
+        audioSources[3].Stop();
+        audioSources[3].Play();
+        yield return new WaitForSeconds(0.2f);
+        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         yield return new WaitForSeconds(0.6f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            SwordAuraInstance.tag = "Other";
-        }
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.2f);
+        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        yield return new WaitForSeconds(0.2f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            SwordAuraInstance.tag = "Other";
-        }
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.2f);
+        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        yield return new WaitForSeconds(0.2f);
         audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            SwordAuraInstance.tag = "Other";
-        }
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.4f);
-        audioSources[3].Stop();
-        SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            SwordAuraInstance.tag = "Other";
-        }
-        audioSources[3].Play();
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(0.2f);
+        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
         audioSources[3].Play();
         yield return new WaitForSeconds(0.7f);
         audioSources[3].Stop();
-        GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            SwordAuraInstance2.tag = "Other";
-        }
+        yield return new WaitForSeconds(0.2f);
+        //GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
         yield return new WaitForSeconds(0.1f);
-        SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            SwordAuraInstance2.tag = "Other";
-        }
+        //SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
         audioSources[3].Play();
         yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
@@ -425,19 +423,19 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     public void comboAttack_1_on()
     {
         SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
             SkillEffect.tag = "Other";
         }
-        SkillEffect.transform.parent = EffectGen.transform;
         audioSources[0].Play();
     }
     public void comboAttack_2_on()
     {
         SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
             SkillEffect.tag = "Other";
         }
-        SkillEffect.transform.parent = EffectGen.transform;
     }
     public void comboAttack_off()
     {
@@ -446,57 +444,102 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     public void jumpAttack_1_on()
     {
         SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
             SkillEffect.tag = "Other";
         }
-        SkillEffect.transform.parent = EffectGen.transform;
         audioSources[1].Play();
     }
 
     public void skill_Q_on()
     {
         //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
-        setParticles1 = SkillQ_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-        setParticles2 = SkillQ_Effect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles1));
-        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f) / 60, 0f, setParticles2));
+        
         SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         if(!photonview.IsMine){
             SkillEffect.tag = "Other";
         }
+        setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        setParticles2 = SkillEffect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles5 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        Transform setParticles7 = SkillEffect.transform.Find("Slashes").transform.Find("Flash").transform;
+        Transform setParticles8 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").transform.Find("Sparks").transform;
+        Transform setParticles9 = SkillEffect.transform.Find("Slashes").transform.Find("SparksCore").transform;
+        setParticles7.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles8.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles9.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles1));
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles2));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles5));
+    }
 
+    public void skill_Q_Rev_on()
+    {
+        SkillEffect = Instantiate(SkillQ_Rev_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
+        if(!photonview.IsMine){
+            SkillEffect.tag = "Other";
+        }
+        //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
+        setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        setParticles2 = SkillEffect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles5 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        Transform setParticles7 = SkillEffect.transform.Find("Slashes").transform.Find("Flash").transform;
+        Transform setParticles8 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").transform.Find("Sparks").transform;
+        Transform setParticles9 = SkillEffect.transform.Find("Slashes").transform.Find("SparksCore").transform;   
+        setParticles7.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles8.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles9.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles1));
+        StartCoroutine(RotateEffect(0f, (SkillYRot - 90f), 0f, setParticles2));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles5));     
     }
 
     public void skill_W_on()
     {
         SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(SkillW_Effect.transform.eulerAngles));
+        SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
             SkillEffect.tag = "Other";
         }
-        SkillEffect.transform.parent = EffectGen.transform;
     }
 
     public void skill_E_on()
     {
-        setParticles1 = SkillE_Effect.transform.Find("Slashes").GetComponent<ParticleSystem>();
-        setParticles2 = SkillE_Effect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
-        setParticles3 = SkillE_Effect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
-        setParticles4 = SkillE_Effect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
-        StartCoroutine(RotateEffect(0.6f, (SkillYRot - 90f) / 60, 0f, setParticles1));
-        StartCoroutine(RotateEffect(-0.6f, (SkillYRot - 90f) / 60, 0f, setParticles2));
-        StartCoroutine(RotateEffect(0.8f, (SkillYRot - 90f) / 60, 0f, setParticles3));
-        StartCoroutine(RotateEffect(-0.8f, (SkillYRot - 90f) / 60, 0f, setParticles4));
         SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         if(!photonview.IsMine){
             SkillEffect.tag = "Other";
         }
+        setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
+        setParticles2 = SkillEffect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
+        setParticles3 = SkillEffect.transform.Find("Slashes").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+        setParticles4 = SkillEffect.transform.Find("Slashes-1").transform.Find("Slashes (1)").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles5 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        ParticleSystem setParticles6 = SkillEffect.transform.Find("Slashes-1").transform.Find("GroundCrack").GetComponent<ParticleSystem>();
+        Transform setParticles7 = SkillEffect.transform.Find("Slashes").transform.Find("Flash").transform;
+        Transform setParticles8 = SkillEffect.transform.Find("Slashes").transform.Find("GroundCrack").transform.Find("Sparks").transform;
+        Transform setParticles9 = SkillEffect.transform.Find("Slashes").transform.Find("SparksCore").transform;   
+        Transform setParticles10 = SkillEffect.transform.Find("Slashes-1").transform.Find("Flash").transform;
+        Transform setParticles11 = SkillEffect.transform.Find("Slashes-1").transform.Find("GroundCrack").transform.Find("Sparks").transform;
+        Transform setParticles12 = SkillEffect.transform.Find("Slashes-1").transform.Find("SparksCore").transform;  
+        setParticles7.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles8.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles9.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles10.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles11.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        setParticles12.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+        StartCoroutine(RotateEffect(30f, (SkillYRot - 90f), 0f, setParticles1));
+        StartCoroutine(RotateEffect(-30f, (SkillYRot - 90f), 0f, setParticles2));
+        StartCoroutine(RotateEffect(30f, (SkillYRot - 90f), 0f, setParticles3));
+        StartCoroutine(RotateEffect(-30f, (SkillYRot - 90f), 0f, setParticles4));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles5));
+        StartCoroutine(RotateEffect(0f, 0f, (SkillYRot - 90f), setParticles6));
     }
     IEnumerator RotateEffect(float xR, float yR, float zR, ParticleSystem particle)
     {
         var mainModule = particle.main;
-        mainModule.startRotationX = xR;
-        mainModule.startRotationY = yR;
-        mainModule.startRotationZ = zR;
+        mainModule.startRotationX = xR * Mathf.Deg2Rad;
+        mainModule.startRotationY = yR * Mathf.Deg2Rad;
+        mainModule.startRotationZ = zR * Mathf.Deg2Rad;
         yield return null;
     }
 
@@ -517,9 +560,11 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     #endregion
 
     #region 스킬이나 공격 움직임, Delay 등 세부 조정 함수
+
     [PunRPC]
     public override void UseSkill(string skillName)
     {
+        base.UseSkill(skillName);
         isSkill = true;
         if(skillName == "Q")
         {
@@ -531,10 +576,12 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
 
         if(skillName == "W")
         {
-            WSkill_Collider.SetActive(true);
+            //WSkill_Collider.SetActive(true);
             PlayAnim("Skill_W");
-            StartCoroutine(MoveForwardForSeconds(1.35f));
+            WSkillCoolTime = 0;
+            Wcool.fillAmount = 1;
             StartCoroutine(Immune(2f));
+            StartCoroutine(MoveForwardForSeconds(1.35f));
         }
 
         if(skillName == "E")
@@ -562,7 +609,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         }
         if(elapsedTime > seconds)
         {
-            WSkill_Collider.SetActive(false);
+            //WSkill_Collider.SetActive(false);
         }
     }
 
@@ -590,8 +637,26 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     {
         base.StopAnim(AnimationName);
     }
+
+    public override void AnimState()
+    {
+        base.AnimState();
+    }
     #endregion
 
+    [PunRPC]
+    public void SetProperty(string CurProperty){
+        if (CurProperty == "Fire")
+        {
+            SkillE_Effect = Skill_FireE_Effect;
+            SkillQ_Rev_Effect = SKill_FireQ_Rev_Effect;
+        }
+        else if (CurProperty == "Ice")
+        {
+            SkillE_Effect = Skill_IceE_Effect;
+            SkillQ_Rev_Effect = SKill_IceQ_Rev_Effect;
+        }
+    }
     [PunRPC]
     public override void RPCDodge()
     {
@@ -602,17 +667,5 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     public override void ApplyProperty(string RPCproperty)
     {
         base.ApplyProperty(RPCproperty);
-    }
-
-    [PunRPC]
-    public void SetProperty(string CurProperty){
-        if (CurProperty == "Fire")
-        {
-            SkillE_Effect = Skill_FireE_Effect;
-        }
-        else if (CurProperty == "Ice")
-        {
-            SkillE_Effect = Skill_IceE_Effect;
-        }
     }
 }

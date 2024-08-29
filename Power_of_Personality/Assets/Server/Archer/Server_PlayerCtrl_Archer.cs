@@ -6,7 +6,6 @@ using UnityEngine.UI;
 //using static UnityEditor.PlayerSettings;
 using Unity.VisualScripting;
 using Photon.Pun;
-
 //궁수 애니메이션
 public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
 {
@@ -32,17 +31,13 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     protected override void Start()
     {
         base.Start();
+        /*
         Attack_Collider_All = transform.Find("AttackColliders").gameObject;
         WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;
-        ESkill_Collider = Attack_Collider_All.transform.Find("ESkill_Collider").gameObject;
-
-        if(!photonview.IsMine){
-            Attack_Collider_All.tag = "Other";
-            WSkill_Collider.tag = "Other";
-            ESkill_Collider.tag = "Other";
-        }
         WSkill_Collider.SetActive(false);
+        ESkill_Collider = Attack_Collider_All.transform.Find("ESkill_Collider").gameObject;
         ESkill_Collider.SetActive(false);
+        */
     }
     protected override void FixedUpdate()
     {
@@ -126,6 +121,10 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     {
         base.OnTriggerEnter(col);
     }
+    protected override void OnTriggerExit(Collider col)
+    {
+        base.OnTriggerExit(col);
+    }
 
     protected override void OnTriggerStay(Collider col)
     {
@@ -176,25 +175,17 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     public IEnumerator Spawn_CommonAttack1()
     {
         yield return new WaitForSeconds(0.3f);
-        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            CommonAttack.tag = "Other";
-        }
+        
+        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack2()
     {
         yield return new WaitForSeconds(0.1f);
-        GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-                if(!photonview.IsMine){
-            CommonAttack.tag = "Other";
-        }
+        //GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack3()
     {
-        GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-                if(!photonview.IsMine){
-            CommonAttack.tag = "Other";
-        }
+        //GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         yield return null;
     }
     public void Skill_Q()
@@ -202,6 +193,8 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         isSkill = true;
         anim.SetTrigger("Skill_Q");
         StartCoroutine(Immune(2f));
+        QSkillCoolTime = 0;
+        Qcool.fillAmount = 1;
     }
     IEnumerator Skill_W()
     {
@@ -210,9 +203,12 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         StartCoroutine(SKill_Up_Move(10.0f, 0.5f, 1f, 0.0f));
         StartCoroutine(Immune(2.5f));
         yield return new WaitForSeconds(0.5f);
-        WSkill_Collider.SetActive(true);
+        PlayAnim("isFall");
+        //WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1f);
-        WSkill_Collider.SetActive(false);
+        //WSkill_Collider.SetActive(false);
+        WSkillCoolTime = 0;
+        Wcool.fillAmount = 1;
     }
     IEnumerator Skill_E()
     {
@@ -222,9 +218,12 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         StartCoroutine(SKill_Up_Move(20.0f, 0.5f, 2.5f, 1.2f));
         StartCoroutine(Immune(5.5f));
         yield return new WaitForSeconds(3.1f);
-        ESkill_Collider.SetActive(true);
+        PlayAnim("isFall");
+        //ESkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1.5f);
-        ESkill_Collider.SetActive(false);
+        //ESkill_Collider.SetActive(false);
+        ESkillCoolTime = 0;
+        Ecool.fillAmount = 1;
     }
     IEnumerator SKill_Up_Move(float upScale, float waitTime1, float waitTime2, float delayTime)
     {
@@ -248,7 +247,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     IEnumerator Skill_E_Deal()
     {
         if(photonview.IsMine){
-        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Archer(SkillYRot);
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Archer(LocalSkillYRot);
         }
         yield return new WaitForSeconds(1.0f);
         //GameObject ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
@@ -275,18 +274,18 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
+            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
-            SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
+            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
-            SkillEffect.transform.parent = EffectGen.transform;
         }
     }
     public void comboAttack_2_on()
@@ -294,18 +293,18 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
+            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
-            SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
+            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
-            SkillEffect.transform.parent = EffectGen.transform;
         }
     }
     public void comboAttack_off()
@@ -317,18 +316,18 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
+            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
-            SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
+            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
-            SkillEffect.transform.parent = EffectGen.transform;
         }
     }
 
@@ -337,18 +336,18 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
+            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
-            SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
+            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
-            SkillEffect.transform.parent = EffectGen.transform;
         }
     }
 
@@ -373,10 +372,10 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     public void skill_W_on()
     {
         SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(SkillW_Effect.transform.eulerAngles));
+        SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
-        SkillEffect.transform.parent = EffectGen.transform;
     }
     public void skill_E1_on()
     {
@@ -395,15 +394,17 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
             }
         }
         SkillEffect.transform.parent = EffectGen.transform;
+
+
     }
 
     public void skill_E2_on()
     {
         SkillEffect = Instantiate(SkillE2_Effect, EffectGen.transform.position, Quaternion.Euler(EffectGen.transform.eulerAngles));
+        SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
             SkillEffect.tag = "Other";
             }
-        SkillEffect.transform.parent = EffectGen.transform;
     }
 
     public void skill_Jump_on()
@@ -436,6 +437,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     [PunRPC]
     public override void UseSkill(string skillName)
     {
+        base.UseSkill(skillName);
         isSkill = true;
         if (skillName == "Q")
         {
@@ -484,8 +486,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         base.StopAnim(AnimationName);
     }
     #endregion
-
-    [PunRPC]
+        [PunRPC]
     public override void RPCDodge()
     {
         base.RPCDodge();

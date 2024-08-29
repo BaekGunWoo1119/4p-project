@@ -669,6 +669,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                     Status.TotalAD = buffStat;
                     buffStat = 0;
                     buffType = "None";
+                    ADBuff_On = false;
                 }
             }
             else if(buffType == "Armor")
@@ -684,6 +685,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                     buffTime = 0;
                     Status.TotalArmor = buffStat;
                     buffType = "None";
+                    ArmorBuff_On = false;
                 }
             }
             //포션 눌렀을 때
