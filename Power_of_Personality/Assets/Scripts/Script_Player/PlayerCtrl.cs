@@ -217,6 +217,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         BossWall1Collider = BossWall1.GetComponent<BoxCollider>();
         BossWall2 = GameObject.Find("BossWall2").gameObject;
         BossWall2Collider = BossWall2.GetComponent<BoxCollider>();
+        //보스 소환 방식 변경(08.29)
+        DruidGen = GameObject.Find("DruidGen");
 
         // HP Bar 설정
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
@@ -286,6 +288,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             Move();
             Turn();
+        }
+        if (hAxis == 0)
+        {
+            StopAnim("isRun");
         }
 
         // Turn 함수 실행
@@ -363,8 +369,11 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             // char 오브젝트 위치 고정
             transform.GetChild(0).localPosition = Vector3.zero;
 
-            //데미지 캔버스 Y값 고정
-            PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot - 180f, 0);
+            //데미지 캔버스 Y값 고정(08.29)
+            if(mainCamera.transform.eulerAngles.y > 0 && mainCamera.transform.eulerAngles.y < 180)
+                PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot - 180f, 0);
+            else
+                PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot + 180f, 0);
 
             // Attack 함수 실행
             if (Input.GetKeyDown(KeyCode.A))
@@ -689,21 +698,22 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 }
             }
             //포션 눌렀을 때
+            //포션 음수되는 오류 수정(08.29)
             // 힐 Potion
             hpPotionValue.text = InvenCtrl.PotionCount.ToString();
-            if(Input.GetKeyDown(KeyCode.Alpha1) && !anim.GetBool("isDie"))
+            if(Input.GetKeyDown(KeyCode.Alpha1) && !anim.GetBool("isDie") && InvenCtrl.PotionCount > 0)
             {
                 HealHp();
             }
             // 공격 Potion
             ADPotionValue.text = InvenCtrl.ADPotionCount.ToString();
-            if(Input.GetKeyDown(KeyCode.Alpha2) && !anim.GetBool("isDie"))
+            if(Input.GetKeyDown(KeyCode.Alpha2) && !anim.GetBool("isDie") && InvenCtrl.ADPotionCount > 0)
             {
                 PowerUp();
             }
             // 방어 Potion
             ArmorPotionValue.text = InvenCtrl.ArmorPotionCount.ToString();
-            if(Input.GetKeyDown(KeyCode.Alpha3) && !anim.GetBool("isDie"))
+            if(Input.GetKeyDown(KeyCode.Alpha3) && !anim.GetBool("isDie") && InvenCtrl.ArmorPotionCount > 0)
             {
                 ArmorUp();
             }
@@ -967,7 +977,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region 충돌 관련 함수
     protected virtual void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Monster_Melee" /*&& !isImmune */)
+        if (col.gameObject.tag == "Monster_Melee" && !isImmune)
         {
             // 특정 이름을 가진 부모 객체를 찾습니다.
             string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
@@ -1062,7 +1072,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     protected virtual void OnTriggerStay(Collider col)
     {
-        if (canTakeDamage == true && col.gameObject.tag == "Druid_Poison")
+        if (canTakeDamage == true && col.gameObject.tag == "Druid_Poison" && !isImmune)
         {
             // 충돌한 몬스터 공격에서 해당 스크립트를 가져옵니다.
             MonoBehaviour monsterCtrl = col.gameObject.GetComponent<MonoBehaviour>();

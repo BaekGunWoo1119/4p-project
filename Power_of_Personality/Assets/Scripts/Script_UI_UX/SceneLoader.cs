@@ -292,7 +292,8 @@ public class SceneLoader : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Sewer_Example" ||
         SceneManager.GetActiveScene().name == "Forest_Example" ||
         SceneManager.GetActiveScene().name == "Cave_Example" ||
-        SceneManager.GetActiveScene().name == "Castle_Example")
+        SceneManager.GetActiveScene().name == "Castle_Example" ||
+        SceneManager.GetActiveScene().name == "Forest_Example_Multi")
         {
             Exit_Game =  GameObject.Find("Exit").GetComponent<Button>();
             //Setting_Back = GameObject.Find("OK").GetComponent<Button>();
