@@ -282,14 +282,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         CheckState();
         // Move 함수 실행
-        if (!isSkill && !isAttack && !stateAttack3)
+        if (!isSkill && !isAttack && !stateAttack3 && !anim.GetBool("isDie"))
         {
             Move();
             Turn();
         }
 
         // Turn 함수 실행
-        if (!isSkill && !isAttack && !stateIdle)
+        if (!isSkill && !isAttack && !stateIdle && !anim.GetBool("isDie"))
         {
             Turn();
         }

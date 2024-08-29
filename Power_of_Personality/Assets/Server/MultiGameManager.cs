@@ -176,6 +176,10 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     // 웨이브 종료 후 상점으로 이동
     void EndWave()
     {
+        CurrentWave += 1;
+        if(CurrentWave>12){
+            GameClear();
+        }
         Status.HP = Status.MaxHP;
         if (IsDie == true){
             IsDie = false;
@@ -184,7 +188,6 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         }
         IsWave = false;
         // 체력 회복
-        CurrentWave += 1;
         CurrentTime = 0f; // 초기화 추가
         WaveUpdate(); // 다음 웨이브 설정
         // 상점으로 이동
@@ -332,6 +335,13 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void GameOver(){
         //게임오버 넣어야됨
+        PhotonNetwork.LoadLevel("1-2 (Multi Lobby)");
+        IsDie=false;
+    }
+
+    public void GameClear(){
+        //GameClear.SetActive(true);
+        //delay
         PhotonNetwork.LoadLevel("1-2 (Multi Lobby)");
         IsDie=false;
     }

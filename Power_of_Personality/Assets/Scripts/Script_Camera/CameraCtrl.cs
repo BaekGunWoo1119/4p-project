@@ -51,6 +51,10 @@ public class CameraCtrl : MonoBehaviour
     private CinemachineBasicMultiChannelPerlin shakeNoise;
     private int focusingCamera = 0;
 
+    //가리는 오브젝트 처리
+    private List<GameObject> previousHits = new List<GameObject>();
+    public float maxDistance = 5f;
+
     protected virtual void Start()
     {
         StartCoroutine(SetTarget());
@@ -70,6 +74,43 @@ public class CameraCtrl : MonoBehaviour
 
         FocusCamera_Update();
     }
+
+    /*
+    void Update()
+    {
+        //가리는 오브젝트 레이어 제어
+        ResetLayers(); // 변경된 오브젝트의 레이어를 복원
+
+        RaycastHit[] hits;
+        Debug.DrawRay(this.transform.position, Vector3.forward * maxDistance, Color.red);
+        Vector3 direction = target.position - transform.position;
+        // 지정된 maxDistance 내에 있는 물체들만 Raycast로 감지
+        hits = Physics.RaycastAll(transform.position, direction, maxDistance, ~ignoreLayer);
+
+        foreach (RaycastHit hit in hits)
+        {
+            GameObject hitObject = hit.collider.gameObject;
+            if (!previousHits.Contains(hitObject) )
+            {
+                previousHits.Add(hitObject);
+                Renderer renderer = hit.collider.GetComponent<Renderer>();
+
+                if (renderer != null)
+                {
+                    // 모든 Material에 대해 Enable Outline 값을 false로 설정 (0으로 설정)
+                    foreach (Material mat in renderer.materials)
+                    {
+                        mat.SetFloat("_EnableOutline", 0f);
+                    }
+                }
+                Debug.Log(hitObject + "투명화");
+            }
+        }
+
+        // 카메라가 "IgnoreCamera" 레이어를 무시하도록 설정
+        Camera.main.cullingMask = ~(1 << LayerMask.NameToLayer("IgnoreCamera"));
+    }
+    */
 
     protected virtual IEnumerator SetTarget()
     {
@@ -561,6 +602,17 @@ public class CameraCtrl : MonoBehaviour
     public virtual void JumpCamera_Warrior()
     {
         FocusCamera(target.transform.position.x, target.transform.position.y + 2, target.transform.position.z - 9, 0, 0.2f, "null");
+    }
+    #endregion
+
+    #region 가리는 오브젝트 레이어 제어 코드'
+    public virtual void ResetLayers()
+    {
+        foreach (GameObject obj in previousHits)
+        {
+            //mat.SetFloat("_EnableOutline", 1f);
+        }
+        previousHits.Clear();
     }
     #endregion
 }
