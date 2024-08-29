@@ -169,7 +169,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     {
         base.Turn();
     }
-
+    [PunRPC]
     protected override void Jump()
     {
         base.Jump();
@@ -375,7 +375,9 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     }
     IEnumerator WarriorSkill_E()
     {
+        if(!photonview.IsMine){
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(LocalSkillYRot);
+        }
         yield return new WaitForSeconds(1.8f);
         audioSources[3].Play();
         yield return new WaitForSeconds(0.2f);
@@ -629,16 +631,18 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     #endregion
 
     #region 애니메이션 
+    [PunRPC]
     public override void PlayAnim(string AnimationName)
     {
         base.PlayAnim(AnimationName);
     }
-
+    [PunRPC]
     public override void StopAnim(string AnimationName)
     {
         base.StopAnim(AnimationName);
     }
 
+    [PunRPC]
     public override void AnimState()
     {
         base.AnimState();
@@ -669,4 +673,5 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     {
         base.ApplyProperty(RPCproperty);
     }
+
 }

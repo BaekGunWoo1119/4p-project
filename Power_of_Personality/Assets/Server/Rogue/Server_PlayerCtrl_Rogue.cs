@@ -146,6 +146,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         base.Turn();
     }
 
+    [PunRPC]
     protected override void Jump()
     {
         base.Jump();
@@ -496,13 +497,12 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
                 //Dash 종료
                 if (anim.GetBool("isDash") && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
                 {
-                    isDash = false;
-                    anim.SetBool("isDash", false);
+                    photonview.RPC("RPCDashListener",RpcTarget.All);
                 }
                 else if (anim.GetBool("isDash"))
                 {
-                    isDash = true;
-                    isAttack = false;
+                    photonview.RPC("RPCDashListener2",RpcTarget.All);
+                    
                 }
 
                 yield return null;
@@ -522,8 +522,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
                 Input.GetKeyDown(KeyCode.RightArrow) &&      //방향키 버튼 눌렀을 때
                 !isDash)                                    //isDash가 false라면
             {
-                isDash = true;
-                anim.SetBool("isDash", true);
+                photonview.RPC("RPCDash",RpcTarget.All);
 
                 yield break;
             }
@@ -531,8 +530,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
                 Input.GetKeyDown(KeyCode.LeftArrow) &&      //방향키 버튼 눌렀을 때
                 !isDash)                                    //isDash가 false라면
             {
-                isDash = true;
-                anim.SetBool("isDash", true);
+                photonview.RPC("RPCDash",RpcTarget.All);
 
                 yield break;
             }
@@ -642,16 +640,18 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     #endregion
 
     #region 애니메이션
+    [PunRPC]
     public override void PlayAnim(string AnimationName)
     {
         base.PlayAnim(AnimationName);
     }
-
+    [PunRPC]
     public override void StopAnim(string AnimationName)
     {
         base.StopAnim(AnimationName);
     }
 
+    [PunRPC]
     public override void AnimState()
     {
         base.AnimState();
@@ -690,4 +690,25 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     {
         base.ApplyProperty(RPCproperty);
     }
+    [PunRPC]
+    public void RPCDash()
+    {
+        isDash = true;
+        anim.SetBool("isDash", true);
+    }
+    [PunRPC]
+    public void RPCDashListener()
+    {
+        isDash = false;
+        anim.SetBool("isDash", false);
+    }
+
+    [PunRPC]
+    public void RPCDashListener2()
+    {
+        isDash = true;
+        isAttack = false;
+    }
+
+
 }

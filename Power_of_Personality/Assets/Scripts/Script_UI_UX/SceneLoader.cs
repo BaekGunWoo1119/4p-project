@@ -292,8 +292,7 @@ public class SceneLoader : MonoBehaviour
         if(SceneManager.GetActiveScene().name == "Sewer_Example" ||
         SceneManager.GetActiveScene().name == "Forest_Example" ||
         SceneManager.GetActiveScene().name == "Cave_Example" ||
-        SceneManager.GetActiveScene().name == "Castle_Example" ||
-        SceneManager.GetActiveScene().name == "Forest_Example_Multi")
+        SceneManager.GetActiveScene().name == "Castle_Example")
         {
             Exit_Game =  GameObject.Find("Exit").GetComponent<Button>();
             //Setting_Back = GameObject.Find("OK").GetComponent<Button>();
@@ -303,7 +302,7 @@ public class SceneLoader : MonoBehaviour
             Exit_Game.onClick.AddListener(Setting_Back_Pressed);
             //Setting_Back.onClick.AddListener(Setting_Back_Pressed);
             //캐릭터 선택 코드
-            if(LobbyManager.PlayerProperties["PlayerClass"] == "Warrior")
+            if(PlayerPrefs.GetString("PlayerClass") == "Warrior")
             {
                 if(prf_Warrior != null)
                 {
@@ -324,7 +323,7 @@ public class SceneLoader : MonoBehaviour
                     }
                 }
             }
-            else if(LobbyManager.PlayerProperties["PlayerClass"] == "Rogue")
+            else if(PlayerPrefs.GetString("PlayerClass") == "Rogue")
             {
                 if(prf_Rogue != null)
                 {
@@ -342,7 +341,7 @@ public class SceneLoader : MonoBehaviour
                     }
                 }
             }
-            else if(LobbyManager.PlayerProperties["PlayerClass"] == "Archer")
+            else if(PlayerPrefs.GetString("PlayerClass") == "Archer")
             {
                 if(prf_Archer != null)
                 {   
@@ -360,7 +359,7 @@ public class SceneLoader : MonoBehaviour
                     }
                 }
             }
-            else if(LobbyManager.PlayerProperties["PlayerClass"] == "Wizard")
+            else if(PlayerPrefs.GetString("PlayerClass") == "Wizard")
             {
                 if(prf_Wizard != null)
                 {
@@ -378,6 +377,80 @@ public class SceneLoader : MonoBehaviour
                     }
                 }
             }   
+        }
+        else if (SceneManager.GetActiveScene().name == "Forest_Example_Multi")
+        {
+            Exit_Game =  GameObject.Find("Exit").GetComponent<Button>();
+            //Setting_Back = GameObject.Find("OK").GetComponent<Button>();
+            GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
+
+            Time.timeScale = 1.0f;
+            Exit_Game.onClick.AddListener(Setting_Back_Pressed);
+            //Setting_Back.onClick.AddListener(Setting_Back_Pressed);
+            //캐릭터 선택 코드
+            if(PlayerPrefs.GetString("PlayerClass") == "Warrior")
+            {
+                if(prf_Warrior != null)
+                {
+                    //캐릭터 초상화 변경 코드
+                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Warrior[0];
+                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Warrior[0];
+                    //캐릭터 스킬 이미지 변경 코드
+                    GameObject.Find("SkillImg-Q").GetComponent<Image>().sprite = img_Warrior[4];
+                    GameObject.Find("SkillImg-W").GetComponent<Image>().sprite = img_Warrior[5];
+                    GameObject.Find("SkillImg-E").GetComponent<Image>().sprite = img_Warrior[6];
+                    // 0~2는 각각 Fire Q,W,E/3~5는 Ice Q,W,E에 해당
+                    for(int i = 1; i <= 6; i++)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TabBtn>().skillImage[i-1] = img_Warrior[i];
+                    }
+                }
+            }
+            else if(PlayerPrefs.GetString("PlayerClass") == "Rogue")
+            {
+                if(prf_Rogue != null)
+                {
+                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Rogue[0];
+                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Rogue[0];
+                    GameObject.Find("SkillImg-Q").GetComponent<Image>().sprite = img_Rogue[4];
+                    GameObject.Find("SkillImg-W").GetComponent<Image>().sprite = img_Rogue[5];
+                    GameObject.Find("SkillImg-E").GetComponent<Image>().sprite = img_Rogue[6];
+                    for(int i = 1; i <= 6; i++)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TabBtn>().skillImage[i-1] = img_Rogue[i];
+                    }
+                }
+            }
+            else if(PlayerPrefs.GetString("PlayerClass") == "Archer")
+            {
+                if(prf_Archer != null)
+                {   
+                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Archer[0];
+                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Archer[0];
+                    GameObject.Find("SkillImg-Q").GetComponent<Image>().sprite = img_Archer[4];
+                    GameObject.Find("SkillImg-W").GetComponent<Image>().sprite = img_Archer[5];
+                    GameObject.Find("SkillImg-E").GetComponent<Image>().sprite = img_Archer[6];
+                    for(int i = 1; i <= 6; i++)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TabBtn>().skillImage[i-1] = img_Archer[i];
+                    }
+                }
+            }
+            else if(PlayerPrefs.GetString("PlayerClass") == "Wizard")
+            {
+                if(prf_Wizard != null)
+                {
+                    GameObject.Find("CharImg").GetComponent<Image>().sprite = img_Wizard[0];
+                    GameObject.Find("CharImg2").GetComponent<Image>().sprite = img_Wizard[0];
+                    GameObject.Find("SkillImg-Q").GetComponent<Image>().sprite = img_Wizard[4];
+                    GameObject.Find("SkillImg-W").GetComponent<Image>().sprite = img_Wizard[5];
+                    GameObject.Find("SkillImg-E").GetComponent<Image>().sprite = img_Wizard[6];
+                    for(int i = 1; i <= 6; i++)
+                    {
+                        GameObject.Find("EventSystem").GetComponent<TabBtn>().skillImage[i-1] = img_Wizard[i];
+                    }
+                }
+            }
         }
 
         if(SceneManager.GetActiveScene().name == "Hidden_Shop")

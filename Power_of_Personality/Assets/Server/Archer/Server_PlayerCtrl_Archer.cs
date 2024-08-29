@@ -98,6 +98,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     {
         base.Turn();
     }
+    [PunRPC]
     protected override void Jump()
     {
         base.Jump();
@@ -476,11 +477,13 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     #endregion
 
     #region 애니메이션 
+    [PunRPC]
     public override void PlayAnim(string AnimationName)
     {
         base.PlayAnim(AnimationName);
     }
 
+    [PunRPC]
     public override void StopAnim(string AnimationName)
     {
         base.StopAnim(AnimationName);
@@ -496,5 +499,10 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     public override void ApplyProperty(string RPCproperty)
     {
         base.ApplyProperty(RPCproperty);
+    }
+    [PunRPC]
+    public override void AnimState()
+    {
+        base.AnimState();
     }
 }
