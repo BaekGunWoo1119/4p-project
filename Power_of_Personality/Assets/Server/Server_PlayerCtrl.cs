@@ -288,6 +288,10 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     }
     protected virtual void FixedUpdate()
     {
+        if(!photonview.IsMine){
+                moveVec = Vector3.forward;
+            }
+            
         if(photonview.IsMine){
             CheckState();
             // Move 함수 실행
@@ -334,7 +338,9 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             // 땅에 닿아있는지 체크
             isGrounded();
             //애니메이션 상태 확인
-            AnimState();
+            if(photonview.IsMine){
+            photonview.RPC("AnimState",RpcTarget.All);
+            }
 
             ////////////////////////////////////내꺼 일때만 호출
             if (!canTakeDamage)
@@ -547,7 +553,9 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             //점프 모션이 실행되야만 점프가 실행되게(애니메이션 딜레이 및 더블점프 강제 제거)
             if (isJumping == true)
             {
-                Jump();
+                if(photonview.IsMine){
+                    photonview.RPC("Jump",RpcTarget.All);
+                }
                 isJumping = false;
             }
             // Dodge 함수 실행
@@ -600,9 +608,10 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             //캐릭터 스킬 이펙트
             LocalSkillYRot = transform.localEulerAngles.y;
             SkillYRot = transform.eulerAngles.y;
-            RPCproperty = PlayerPrefs.GetString("property");
-            photonview.RPC("ApplyProperty",RpcTarget.All, RPCproperty);
+
             if(photonview.IsMine){
+                RPCproperty = PlayerPrefs.GetString("property");
+                photonview.RPC("ApplyProperty",RpcTarget.All, RPCproperty);
                 //2번 세트 3세트 효과 
                 if (Status.set2_3_Effect_Activated)
                 {
@@ -833,19 +842,28 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
 
     public virtual void Move()
     {
+        
         if (hAxis != 0)
         {
-            PlayAnim("isRun");
+            if(photonview.IsMine){
+            photonview.RPC("PlayAnim",RpcTarget.All,"isRun");
             moveVec = AdjustDirectionToSlope(transform.forward);
+            }
+            
         }
         else
         {
-            StopAnim("isRun");
+            if(photonview.IsMine){
+            photonview.RPC("StopAnim",RpcTarget.All,"isRun");
             moveVec = Vector3.zero;
+            }
+            
         }
         if (!WallCollision)
         {
+            if(photonview.IsMine){
             transform.position += moveVec * moveSpd * Time.fixedDeltaTime;
+            }
         }
         StartCoroutine(Delay(0.2f));
     }
@@ -916,6 +934,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             transform.localRotation = Quaternion.Euler(0, -90, 0);
         }
     }
+    [PunRPC]
     protected virtual void Jump()
     {
         PlayAnim("isJump");
@@ -1222,6 +1241,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     #endregion
 
     #region 애니메이션 
+    [PunRPC]
     public virtual void PlayAnim(string AnimationName)
     {
         //Debug.Log(AnimationName + " 실행");
@@ -1239,6 +1259,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         }
     }
 
+    [PunRPC]
     public virtual void StopAnim(string AnimationName)
     {
         if (AnimationName == "CommonAttack" || AnimationName == "Skill_Q" || AnimationName == "Skill_W" || AnimationName == "Skill_E" || AnimationName == "isDodge")
@@ -1251,6 +1272,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         }
     }
 
+    [PunRPC]
     public virtual void AnimState()
     {
         if(anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
