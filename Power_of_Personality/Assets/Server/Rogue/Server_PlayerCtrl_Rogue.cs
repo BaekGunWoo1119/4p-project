@@ -4,7 +4,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-
 public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
 {
     private bool isDash = false;
@@ -24,6 +23,11 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     private GameObject Attack_2_Collider;
     private GameObject Attack_3_Collider;
 
+    //도적은 양손 검이라 무기 이펙트 하나 더 추가해야 함
+    public GameObject Item_Weapon2_Effect;
+    public GameObject Item_Weapon2_Ice_Effect;
+    public GameObject Item_Weapon2_Fire_Effect;
+
     protected override void Start()
     {
         base.Start();   // PlayerCtrl의 Start문을 상속 받아서 실행
@@ -33,6 +37,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         JumpPower = 14;
         fallPower = 4;
 
+    /*
         //플레이어 어택 콜라이더 인식 방식 변경 (서버에 맞게)
         Attack_Collider_All = transform.Find("AttackColliders").gameObject;
         //Debug.Log(Attack_Collider_All);
@@ -44,25 +49,11 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         ESkill_Collider2 = Attack_Collider_All.transform.Find("ESkill_Collider2").gameObject;
         ESkill_Collider3 = Attack_Collider_All.transform.Find("ESkill_Collider3").gameObject;
         ESkill_Collider4 = Attack_Collider_All.transform.Find("ESkill_Collider4").gameObject;
+
+
         Attack_1_Collider = Attack_Collider_All.transform.Find("Attack_1_Collider").gameObject;
         Attack_2_Collider = Attack_Collider_All.transform.Find("Attack_2_Collider").gameObject;
         Attack_3_Collider = Attack_Collider_All.transform.Find("Attack_3_Collider").gameObject;
-        if(!photonview.IsMine){
-            Attack_Collider_All.tag = "Other";
-            QSkill_Collider.tag = "Other";
-            QSkill_Last_Collider.tag = "Other";
-            WSkill_Collider.tag = "Other";
-            WSkill_Last_Collider.tag = "Other";
-            ESkill_Collider1.tag = "Other";
-            ESkill_Collider2.tag = "Other";
-            ESkill_Collider3.tag = "Other";
-            ESkill_Collider4.tag = "Other";
-            Attack_1_Collider.tag = "Other";
-            Attack_2_Collider.tag = "Other";
-            Attack_3_Collider.tag = "Other";
-
-        }
-
         QSkill_Collider.SetActive(false);
         QSkill_Last_Collider.SetActive(false);
         WSkill_Collider.SetActive(false);
@@ -74,6 +65,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         Attack_1_Collider.SetActive(false);
         Attack_2_Collider.SetActive(false);
         Attack_3_Collider.SetActive(false);
+    */
 
         // 도적의 Dash는 따로 실행
         StartCoroutine(DashListener());
@@ -96,6 +88,11 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         {
             moveSpd = moveSpeed;
         }
+        if(photonview.IsMine){
+            CurProperty = PlayerPrefs.GetString("property");
+            photonview.RPC("SetProperty",RpcTarget.All, CurProperty);
+        }
+        
     }
     #region HP 설정
     public override void SetHp(float amount)
@@ -168,10 +165,21 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     {
         base.OnCollisionExit(collision);
     }
-    #endregion
+    protected override void OnTriggerEnter(Collider col)
+    {
+        base.OnTriggerEnter(col);
+    }
+    protected override void OnTriggerStay(Collider col)
+    {
+        base.OnTriggerStay(col);
+    }
+    protected override void OnTriggerExit(Collider col)
+    {
+        base.OnTriggerExit(col);
+    }
+    #endregion 
 
     #region 공격 관련 함수
-
     [PunRPC]
     public override void Attack(int AttackNumber)
     {
@@ -202,32 +210,43 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     }
     IEnumerator Attack1_Collider()
     {
+        /*
         Attack_1_Collider.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         if (Attack_1_Collider == true)
         {
             Attack_1_Collider.SetActive(false);
         }
+        */
+
+        yield return new WaitForSeconds(0.3f);
     }
     IEnumerator Attack2_Collider()
     {
+        /*
         Attack_2_Collider.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         if (Attack_2_Collider == true)
         {
             Attack_2_Collider.SetActive(false);
         }
+        */
+
+        yield return new WaitForSeconds(0.3f);
     }
     IEnumerator Attack3_Collider()
     {
+        /*
         Attack_3_Collider.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         if (Attack_3_Collider == true)
         {
             Attack_3_Collider.SetActive(false);
         }
-    }
+        */
 
+        yield return new WaitForSeconds(0.5f);
+    }
     [PunRPC]
     protected override void Attack_anim()
     {
@@ -242,41 +261,42 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Rogue(LocalSkillYRot);
         }
         yield return new WaitForSeconds(1.7f);
-        ESkill_Collider1.SetActive(true);
+        //ESkill_Collider1.SetActive(true);
         yield return new WaitForSeconds(0.25f);
-        ESkill_Collider1.SetActive(false);
-        ESkill_Collider2.SetActive(true);
+        //ESkill_Collider1.SetActive(false);
+        //ESkill_Collider2.SetActive(true);
         yield return new WaitForSeconds(0.3f);
-        ESkill_Collider2.SetActive(false);
+        //ESkill_Collider2.SetActive(false);
         yield return new WaitForSeconds(0.3f);
-        ESkill_Collider3.SetActive(true);
+        //ESkill_Collider3.SetActive(true);
         yield return new WaitForSeconds(0.75f);
-        ESkill_Collider3.SetActive(false);
+        //ESkill_Collider3.SetActive(false);
         yield return new WaitForSeconds(0.3f);
-        ESkill_Collider4.SetActive(true);
+        //ESkill_Collider4.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        ESkill_Collider4.SetActive(false);
+        //ESkill_Collider4.SetActive(false);
         //스킬 나갈 시 사운드 및 콜라이더(추가 예정)
         yield return new WaitForSeconds(2.2f);
         ESkillCoolTime = 0;
+        Ecool.fillAmount = 1;
     }
     public void comboAttack_1_on()
     {
         if (LocalSkillYRot == 90 || (LocalSkillYRot < 92 && LocalSkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 120));
+            SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
-            SkillEffect.transform.parent = EffectGen.transform;
+            }
         }
         else
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 120));
+            SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
-            SkillEffect.transform.parent = EffectGen.transform;
+            }
         }
     }
 
@@ -285,18 +305,18 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         if (LocalSkillYRot == 90 || (LocalSkillYRot < 92 && LocalSkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 120));
+            SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
-            SkillEffect.transform.parent = EffectGen.transform;
+            }
         }
         else
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 120));
+            SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
-            SkillEffect.transform.parent = EffectGen.transform;
+            }
         }
     }
 
@@ -305,18 +325,18 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         if (LocalSkillYRot == 90 || (LocalSkillYRot < 92 && LocalSkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
+            SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
-            SkillEffect.transform.parent = EffectGen.transform;
+            }
         }
         else
         {
             SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
+            SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
-            SkillEffect.transform.parent = EffectGen.transform;
+            }
         }
     }
 
@@ -330,18 +350,18 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         if (LocalSkillYRot == 90 || (LocalSkillYRot < 92 && LocalSkillYRot > 88))
         {
             SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
+            SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
-            SkillEffect.transform.parent = EffectGen.transform;
+            }
         }
         else
         {
             SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
+            SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
-            SkillEffect.transform.parent = EffectGen.transform;
+            }
         }
     }
 
@@ -350,18 +370,18 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         if (LocalSkillYRot == 90 || (LocalSkillYRot < 92 && LocalSkillYRot > 88))
         {
             SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
+            SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
-            SkillEffect.transform.parent = EffectGen.transform;
+            }
         }
         else
         {
             SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
+            SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
-            SkillEffect.transform.parent = EffectGen.transform;
+            }
         }
     }
 
@@ -372,14 +392,14 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 1f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot - 90, 90f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
+            }
         }
         else
         {
             SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 1f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot - 90, 90f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
+            }
         }
     }
 
@@ -390,14 +410,14 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(SkillE2_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot - 90, 90f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
+            }
         }
         else
         {
             SkillEffect = Instantiate(SkillE2_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot - 90, 90f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
+            }
         }
     }
 
@@ -408,14 +428,14 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(SkillE3_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 1f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot, 90f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
+            }
         }
         else
         {
             SkillEffect = Instantiate(SkillE3_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 1f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot, 90f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
+            }
         }
     }
 
@@ -426,14 +446,14 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(SkillE4_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
+            }
         }
         else
         {
             SkillEffect = Instantiate(SkillE4_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-        }
+            }
         }
     }
     protected override void SkillCoolTimeCharge()
@@ -460,30 +480,32 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     #region 도적 Dash 함수
     IEnumerator DashListener()
     {
+        if(photonview.IsMine){
         while (true)
-        {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                yield return Dash("Right");
-            }
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                yield return Dash("Left");
-            }
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    yield return Dash("Right");
+                }
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    yield return Dash("Left");
+                }
 
-            //Dash 종료
-            if (anim.GetBool("isDash") && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-            {
-                isDash = false;
-                anim.SetBool("isDash", false);
-            }
-            else if (anim.GetBool("isDash"))
-            {
-                isDash = true;
-                isAttack = false;
-            }
+                //Dash 종료
+                if (anim.GetBool("isDash") && !Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+                {
+                    isDash = false;
+                    anim.SetBool("isDash", false);
+                }
+                else if (anim.GetBool("isDash"))
+                {
+                    isDash = true;
+                    isAttack = false;
+                }
 
-            yield return null;
+                yield return null;
+            }
         }
     }
 
@@ -524,6 +546,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     [PunRPC]
     public override void UseSkill(string skillName)
     {
+        base.UseSkill(skillName);
         isSkill = true;
         if(skillName == "Q")
         {
@@ -531,6 +554,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             StartCoroutine(MoveForwardForSeconds(1.0f));
             StartCoroutine(Immune(2.5f));
             QSkillCoolTime = 0;
+            Qcool.fillAmount = 1;
         }
 
         if(skillName == "W")
@@ -538,7 +562,6 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             PlayAnim("Skill_W");
             StartCoroutine(Skill_W());
             StartCoroutine(Immune(3f));
-            WSkillCoolTime = 0;
         }
 
         if(skillName == "E")
@@ -552,7 +575,6 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     IEnumerator MoveForwardForSeconds(float seconds)
     {
         yield return new WaitForSeconds(0.3f);
-        QSkill_Collider.SetActive(true);
         float elapsedTime = 0;
 
         while (elapsedTime < seconds)
@@ -564,28 +586,29 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         }
         if(elapsedTime > seconds)
         {
-            QSkill_Collider.SetActive(false);
-            QSkill_Last_Collider.SetActive(true);
             yield return new WaitForSeconds(0.3f);
-            QSkill_Last_Collider.SetActive(false);
         }
+        /*
         if (QSkill_Collider.activeSelf == true)
         {
             QSkill_Collider.SetActive(false);
             QSkillCoolTime = 0;
             Qcool.fillAmount = 1;
         }
+        */
     }
     IEnumerator Skill_W()
     {
         yield return new WaitForSeconds(0.15f);
-        WSkill_Collider.SetActive(true);
+        //WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1.5f);
-        WSkill_Collider.SetActive(false);
+        //WSkill_Collider.SetActive(false);
         yield return new WaitForSeconds(0.2f);
-        WSkill_Last_Collider.SetActive(true);
+        //WSkill_Last_Collider.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        WSkill_Last_Collider.SetActive(false);
+        WSkillCoolTime = 0;
+        Wcool.fillAmount = 1;
+        //WSkill_Last_Collider.SetActive(false);
     }
     protected override IEnumerator Delay(float seconds)
     {
@@ -627,8 +650,34 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     {
         base.StopAnim(AnimationName);
     }
-    #endregion
 
+    public override void AnimState()
+    {
+        base.AnimState();
+    }
+    #endregion
+    [PunRPC]
+    public void SetProperty(string CurProperty){
+        //도적 두번째 무기 이펙트 변경
+        if (CurProperty == "Fire")
+        {
+            Item_Weapon2_Effect = Item_Weapon_Fire_Effect;
+            Item_Weapon2_Fire_Effect.SetActive(true);
+            Item_Weapon2_Ice_Effect.SetActive(false);
+        }
+        else if (CurProperty == "Ice")
+        {
+            Item_Weapon2_Effect = Item_Weapon_Ice_Effect;
+            Item_Weapon2_Fire_Effect.SetActive(false);
+            Item_Weapon2_Ice_Effect.SetActive(true);
+        }
+        else
+        {
+            Item_Weapon2_Effect = Item_Weapon_Ice_Effect;
+            Item_Weapon2_Fire_Effect.SetActive(false);
+            Item_Weapon2_Ice_Effect.SetActive(true);
+        }
+    }
     [PunRPC]
     public override void RPCDodge()
     {

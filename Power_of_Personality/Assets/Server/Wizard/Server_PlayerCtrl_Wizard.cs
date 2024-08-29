@@ -37,15 +37,13 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     protected override void Start() 
     {
         base.Start();
+        /*
         Attack_Collider_All = transform.Find("AttackColliders").gameObject;
         QSkill_Collider = Attack_Collider_All.transform.Find("QSkill_Collider").gameObject;
-        WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;
-        if(!photonview.IsMine){
-            WSkill_Collider.tag = "Other";
-            QSkill_Collider.tag = "Other";
-        }
         QSkill_Collider.SetActive(false);
+        WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;
         WSkill_Collider.SetActive(false);
+        */
     }
     protected override void FixedUpdate()
     {
@@ -57,17 +55,20 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         if(photonview.IsMine){
             CurProperty = PlayerPrefs.GetString("property");
             photonview.RPC("SetProperty",RpcTarget.All, CurProperty);
+            if (stateSkillE == true)    //E 스킬
+            {
+                transform.position = Vector3.Lerp(transform.position, tgPos, 0.01f);
+            }
         }
+        /*
         if (isSkillQ == true && QSkill_Collider.transform.localScale.z <= 30.0)     //Q 스킬
         {
             Vector3 newScale = QSkill_Collider.transform.localScale;
             newScale.z += QSkill_zGrowthRate * Time.deltaTime;
             QSkill_Collider.transform.localScale = newScale;
         }
-        if (stateSkillE == true)    //E 스킬
-        {
-            transform.position = Vector3.Lerp(transform.position, tgPos, 0.01f);
-        }
+        */
+        
     }
     #endregion
 
@@ -139,6 +140,10 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     {
         base.OnTriggerEnter(col);
     }
+    protected override void OnTriggerExit(Collider col)
+    {
+        base.OnTriggerExit(col);
+    }
 
     protected override void OnTriggerStay(Collider col)
     {
@@ -190,26 +195,28 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     {
         StartCoroutine(Immune(4f));
         yield return new WaitForSeconds(1.25f);
-        QSkill_Collider.SetActive(true);
+        //QSkill_Collider.SetActive(true);
         isSkillQ = true;
         yield return new WaitForSeconds(2f);
-        QSkill_Collider.SetActive(false);
+        //QSkill_Collider.SetActive(false);
         isSkillQ = false;
-        QSkill_Collider.transform.localScale = new Vector3(1, 5, 1);
+        QSkillCoolTime = 0;
+        Qcool.fillAmount = 1;
+        //QSkill_Collider.transform.localScale = new Vector3(1, 5, 1);
     }
     public IEnumerator Skill_W()
     {
         StartCoroutine(Immune(3f));
         yield return new WaitForSeconds(1f);
-        WSkill_Collider.SetActive(true);
+        //WSkill_Collider.SetActive(true);
         yield return new WaitForSeconds(1f);
-        WSkill_Collider.SetActive(false);
+        //WSkill_Collider.SetActive(false);
+        WSkillCoolTime = 0;
+        Wcool.fillAmount = 1;
     }
     public IEnumerator Skill_E_Move()
     {
-        if(photonview.IsMine){
-        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Wizard(SkillYRot);
-        }
+        mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Wizard(LocalSkillYRot);
         StartCoroutine(Immune(6f));
         tgPos = new Vector3(transform.position.x, transform.position.y + 4.0f, transform.position.z);
         rd.useGravity = false;
@@ -217,29 +224,22 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         isSkill = false;
         rd.useGravity = true;
         Fall();
+        ESkillCoolTime = 0;
+        Ecool.fillAmount = 1;
     }
     public IEnumerator Spawn_CommonAttack1()
     {
         yield return new WaitForSeconds(0.3f);
-        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            CommonAttack.tag = "Other";
-        }
+        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack2()
     {
         yield return new WaitForSeconds(0.1f);
-        GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            CommonAttack.tag = "Other";
-        }
+        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
     }
     public IEnumerator Spawn_CommonAttack3()
     {
-        GameObject CommonAttack = Instantiate(CommonAttack3_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        if(!photonview.IsMine){
-            CommonAttack.tag = "Other";
-        }
+        //GameObject CommonAttack = Instantiate(CommonAttack3_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
         yield return null;
     }
     public void comboAttack_1_on()
@@ -258,7 +258,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect.transform.position = EffectGen.transform.position;
             if(!photonview.IsMine){
             SkillEffect.tag = "Other";
-            }
+            }           
         }
     }
     public void comboAttack_2_on()
@@ -435,6 +435,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     [PunRPC]
     public override void UseSkill(string skillName)
     {
+        base.UseSkill(skillName);
         isSkill = true;
         if (skillName == "Q")
         {
@@ -495,19 +496,6 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         base.StopAnim(AnimationName);
     }
     #endregion
-
-    [PunRPC]
-    public override void RPCDodge()
-    {
-        base.RPCDodge();
-    }
-
-    [PunRPC]
-    public override void ApplyProperty(string RPCproperty)
-    {
-        base.ApplyProperty(RPCproperty);
-    }
-
     [PunRPC]
     public void SetProperty(string CurProperty){
             if (CurProperty == "Fire")
@@ -520,5 +508,16 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
                 Skill_Aura_Effect = Skill_Ice_Aura_Effect;
                 SkillE_Aura_Effect = Skill_IceE_Aura_Effect;
             }
+    }
+    [PunRPC]
+    public override void RPCDodge()
+    {
+        base.RPCDodge();
+    }
+
+    [PunRPC]
+    public override void ApplyProperty(string RPCproperty)
+    {
+        base.ApplyProperty(RPCproperty);
     }
 }

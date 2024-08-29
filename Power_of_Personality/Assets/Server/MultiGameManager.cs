@@ -36,6 +36,8 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     public bool IsAllLoad; //플레이어 다 들어왔나 체크
     //public static Hashtable PlayerProperties = new Hashtable(); //로컬플레이어 프로퍼티
 
+    public InventoryCtrl InvenCtrl;
+
     #region JSON 관련 스크립트
     // JSON 데이터를 저장할 클래스 정의
     [System.Serializable]
@@ -77,6 +79,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         photonview = GetComponent<PhotonView>();
         Status.HP = Status.MaxHP;
         SpawnPoints = SpawnPoints1;
+        InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
 
         var properties = PhotonNetwork.LocalPlayer.CustomProperties;
         properties["IsExitShop"] = true;
@@ -85,6 +88,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         // JSON 데이터를 WaveDatas 클래스로 Deserialize
         JSONWaveList = JsonUtility.FromJson<WaveDatas>(jsondata);
         WaveUpdate(); // 초기 웨이브 설정
+        InvenCtrl.ResetInven();
     }
 
     void Update()
