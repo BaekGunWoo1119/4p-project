@@ -27,6 +27,7 @@ public class MonsterCtrl : MonoBehaviour
 
     public GameObject DamageText; //맞았을 때 나오는 데미지 텍스트
     public GameObject MonsterCanvas;
+    public float CanvasYRot = 0f;
     public Vector3 hpBarPosition;
 
     public SkinnedMeshRenderer matObj;
@@ -101,6 +102,12 @@ public class MonsterCtrl : MonoBehaviour
             //Debug.Log("약점속성이 빙속성이 됨.");
         }
         #endregion
+
+        //캔버스 뒤집어지는 오류 해결(08.29)
+        if(GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y > 0 && GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y < 180)
+            MonsterCanvas.transform.localRotation = Quaternion.Euler(0, CanvasYRot, 0);
+        else
+            MonsterCanvas.transform.localRotation = Quaternion.Euler(0, CanvasYRot + 180f, 0);
     }
 
     #region 몬스터 초기 값 설정

@@ -50,6 +50,13 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     protected override void Update()
     {
         base.Update();
+
+        //1 점프 1 점공 코드(08.29)
+        if(stateJumpAttack2 == true)
+        {
+            isJumpAttack = true;
+        }
+
         if (PlayerPrefs.GetString("property") == "Fire")
         {
             Skill_Aura_Effect = Skill_Fire_Aura_Effect;
@@ -184,7 +191,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
 
         if (AttackNumber == 4)
         {
-
+            StopAnim("CommonAttack"); //점공 후 트리거 초기화(08.28)
         }
 
         if (AttackNumber == 5)

@@ -69,7 +69,11 @@ public class DruidCtrl : BossCtrl
     {
         base.Update();
         SkillYRot = transform.localEulerAngles.y;
-        MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot + 90f, 0);
+        //캔버스 뒤집어지는 오류 해결(08.29)
+        if(GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y > 0 && GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y < 180)
+            MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot + 90f, 0);
+        else
+            MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
         DistanceCheck();
         if (isVine == true && Vine_Collider.transform.localScale.x <= 12.0)
         {

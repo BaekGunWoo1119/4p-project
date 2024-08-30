@@ -389,7 +389,10 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             transform.GetChild(0).localPosition = Vector3.zero;
 
             //데미지 캔버스 Y값 고정
-            PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot - 180f, 0);
+            if(mainCamera.transform.eulerAngles.y > 0 && mainCamera.transform.eulerAngles.y < 180)
+                PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot - 180f, 0);
+            else
+                PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot + 180f, 0);
 
             // Attack 함수 실행
             if (Input.GetKeyDown(KeyCode.A))
@@ -663,7 +666,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             //포션 눌렀을 때
             // 힐 Potion
             hpPotionValue.text = InvenCtrl.PotionCount.ToString();
-            if(Input.GetKeyDown(KeyCode.Alpha1) && !anim.GetBool("isDie"))
+            if(Input.GetKeyDown(KeyCode.Alpha1) && !anim.GetBool("isDie") && InvenCtrl.PotionCount > 0)
             {
                 if(photonview.IsMine){
                     HealHp();   
@@ -671,7 +674,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             }
             // 공격 Potion
             ADPotionValue.text = InvenCtrl.ADPotionCount.ToString();
-            if(Input.GetKeyDown(KeyCode.Alpha2) && !anim.GetBool("isDie"))
+            if(Input.GetKeyDown(KeyCode.Alpha2) && !anim.GetBool("isDie") && InvenCtrl.ADPotionCount > 0)
             {
                 if(photonview.IsMine){
                    PowerUp();
@@ -679,7 +682,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             }
             // 방어 Potion
             ArmorPotionValue.text = InvenCtrl.ArmorPotionCount.ToString();
-            if(Input.GetKeyDown(KeyCode.Alpha3) && !anim.GetBool("isDie"))
+            if(Input.GetKeyDown(KeyCode.Alpha3) && !anim.GetBool("isDie") && InvenCtrl.ArmorPotionCount > 0)
             {
                 if(photonview.IsMine){
                     ArmorUp();
