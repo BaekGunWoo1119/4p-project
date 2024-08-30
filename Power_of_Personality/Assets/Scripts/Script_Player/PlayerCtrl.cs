@@ -585,7 +585,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 //아이템 이펙트 추가(07.29 백건우)
                 //세트효과 추가(08.26 이준경) 
                 #region 3번 세트 4셋 이펙트 효과
-                if (Status.set3_4_Activated)
+                if (Status.set3_3_Activated)
                 {
                     Item_Weapon_Effect = Item_Weapon_Fire_Effect;
                     if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
@@ -593,10 +593,18 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                         Item_Weapon_Fire_Effect.SetActive(true);
                         Item_Weapon_Ice_Effect.SetActive(false);
                     }
+                } else if(!Status.set3_3_Activated)
+                {
+                    Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                    if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                    {
+                        Item_Weapon_Fire_Effect.SetActive(false);
+                        Item_Weapon_Ice_Effect.SetActive(false);
+                    }
                 }
                 #endregion
                 #region 1번 세트 3셋 이펙트 효과
-                if (Status.set1_4_Activated)
+                if (Status.set1_3_Activated)
                 {
                     Item_Aura_Effect = Item_Aura_Fire_Effect;
                     if (Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
@@ -621,13 +629,21 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 //아이템 이펙트 추가(07.29 백건우)
                 //세트효과 추가(08.26 이준경) 
                 #region 4번 세트 4셋 이펙트 효과
-                if (Status.set4_4_Activated == true) 
+                if (Status.set4_3_Activated == true) 
                 {
                     Item_Weapon_Effect = Item_Weapon_Ice_Effect;
                     if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
                     {
                         Item_Weapon_Fire_Effect.SetActive(false);
                         Item_Weapon_Ice_Effect.SetActive(true);
+                    }
+                } else if(!Status.set4_3_Activated)
+                {
+                    Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                    if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                    {
+                        Item_Weapon_Fire_Effect.SetActive(false);
+                        Item_Weapon_Ice_Effect.SetActive(false);
                     }
                 }
                 #endregion
