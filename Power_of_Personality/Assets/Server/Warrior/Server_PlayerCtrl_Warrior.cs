@@ -375,7 +375,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     }
     IEnumerator WarriorSkill_E()
     {
-        if(!photonview.IsMine){
+        if(photonview.IsMine){
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(LocalSkillYRot);
         }
         yield return new WaitForSeconds(1.8f);

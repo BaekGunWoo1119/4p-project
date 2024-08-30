@@ -30,7 +30,7 @@ public class Shop_PortalCtrl : MonoBehaviour
         {
             //Debug.Log("S키를 눌러 상점 진입");
             if(Input.GetKeyDown(KeyCode.S))
-            {            
+            {
                 Open_Shop(col);
             }
         }
@@ -91,7 +91,8 @@ public class Shop_PortalCtrl : MonoBehaviour
     }
 
     public void Exit_Shop_Multi(){
-        playerObj.transform.position = playerPos;
+        playerObj.transform.position = GameObject.FindGameObjectWithTag("CurrentSpawnPotint").transform.position;
+        //playerObj.transform.position = GameObject.FindGameObjectsWithTag("CurrentSpawnPotint").transform.position;
         Status.IsShop = false;
         shopWindow.transform.localScale = new Vector3(0, 0, 0);
         orgWindow.transform.localScale = new Vector3(1, 1, 1);
