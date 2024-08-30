@@ -376,7 +376,7 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
 
     public void skill_W_on()
     {
-        SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(SkillW_Effect.transform.eulerAngles));
+        SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0)); //W 박스콜라이더 생성 방식 변경(08.30)
         SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);

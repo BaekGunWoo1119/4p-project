@@ -960,7 +960,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     #region 충돌 관련 함수
     protected virtual void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Monster_Melee" /*&& !isImmune */)
+        if (col.gameObject.tag == "Monster_Melee" &&!isImmune )
         {
             // 특정 이름을 가진 부모 객체를 찾습니다.
             string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
@@ -1061,7 +1061,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
 
     protected virtual void OnTriggerStay(Collider col)
     {
-        if (canTakeDamage == true && col.gameObject.tag == "Druid_Poison")
+        if (canTakeDamage == true && col.gameObject.tag == "Druid_Poison" && !isImmune)
         {
             // 충돌한 몬스터 공격에서 해당 스크립트를 가져옵니다.
             MonoBehaviour monsterCtrl = col.gameObject.GetComponent<MonoBehaviour>();
@@ -1201,7 +1201,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         if(photonview.IsMine){
             if (Status.set8_3_Activated)
             {
-                photonview.RPC("SetEffect",RpcTarget.All, 3);
+                photonview.RPC("SetEffect",RpcTarget.All, 5);
             }
         }
     }
@@ -1381,14 +1381,17 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             //아이템 이펙트 추가(07.29 백건우)
             //세트효과 추가(08.26 이준경) 
             if(photonview.IsMine){
-            #region 3번 세트 4셋 이펙트 효과
-                if (Status.set3_4_Activated)
+            #region 3번 세트 3셋 이펙트 효과
+                if (Status.set3_3_Activated)
                 {   
                     photonview.RPC("SetEffect",RpcTarget.All, 0);
                 }
+                else{
+                    photonview.RPC("SetEffect",RpcTarget.All, 8);
+                }
                 #endregion
                 #region 1번 세트 3셋 이펙트 효과
-                if (Status.set1_4_Activated)
+                if (Status.set1_3_Activated)
                 {
                     photonview.RPC("SetEffect",RpcTarget.All, 1);
                 }
@@ -1409,10 +1412,13 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 //아이템 이펙트 추가(07.29 백건우)
                 if(photonview.IsMine){
                     //세트효과 추가(08.26 이준경) 
-                    #region 4번 세트 4셋 이펙트 효과
-                    if (Status.set4_4_Activated == true) 
+                    #region 4번 세트 3셋 이펙트 효과
+                    if (Status.set4_3_Activated == true) 
                     {
                         photonview.RPC("SetEffect",RpcTarget.All, 2);
+                    }
+                    else{
+                        photonview.RPC("SetEffect",RpcTarget.All, 9);
                     }
                     #endregion
                     #region 1번 세트 3셋 이펙트 효과
@@ -1440,7 +1446,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     public virtual void SetEffect(int SetNumber){
         switch(SetNumber)
         {
-            //3번 세트 4셋 이펙트 효과
+            //3번 세트 3셋 이펙트 효과
             case 0:
                 Item_Weapon_Effect = Item_Weapon_Fire_Effect;
                 if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
@@ -1493,6 +1499,23 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             case 7:
                 Item_Time_Effect.SetActive(false);
                 break;
+            case 8:
+                Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                {
+                    Item_Weapon_Fire_Effect.SetActive(false);
+                    Item_Weapon_Ice_Effect.SetActive(false);
+                }
+                break;
+            case 9:
+                Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                {
+                    Item_Weapon_Fire_Effect.SetActive(false);
+                    Item_Weapon_Ice_Effect.SetActive(false);
+                }
+                break;
+
         
         }
     }
