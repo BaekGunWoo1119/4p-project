@@ -184,7 +184,7 @@ public class MonsterCtrl : MonoBehaviour
         // 플레이어를 향해 이동하는 로직
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
         Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
-        transform.Translate(movement, Space.World);
+        transform.parent.Translate(movement);
 
         hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
         HpBar.transform.position = hpBarPosition;
@@ -728,6 +728,12 @@ public class MonsterCtrl : MonoBehaviour
                 fadecolor.a = Mathf.Lerp(1, 0, time);
                 instText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
                 instText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + time + 0.1f, HpBar.transform.position.z); // 서서히 올라감
+                //데미지 텍스트 사라지게 해둠(08.30)
+                if(fadecolor.a == 0)
+                {
+                    Destroy(instText);
+                    yield break;
+                }
                 yield return null;
             }
         }

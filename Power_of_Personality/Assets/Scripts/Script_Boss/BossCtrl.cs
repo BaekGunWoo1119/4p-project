@@ -717,6 +717,12 @@ public class BossCtrl : MonoBehaviour
                 fadecolor.a = Mathf.Lerp(1, 0, time);
                 instText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
                 instText.transform.position = new Vector3(MonsterCanvas.transform.position.x, MonsterCanvas.transform.position.y + time + 0.1f, MonsterCanvas.transform.position.z); // 서서히 올라감
+                //데미지 텍스트 사라지게 해둠(08.30)
+                if(fadecolor.a == 0)
+                {
+                    Destroy(instText);
+                    yield break;
+                }
                 yield return null;
             }
         }

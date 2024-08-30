@@ -16,8 +16,6 @@ public class FairyCtrl : MonsterCtrl
         Damage = 10.0f;
         TraceRadius = 10.0f;
         attackRadius = 5.0f;
-        //페어리만 캔버스 각도가 다름
-        CanvasYRot = -90f;
         base.Awake();
     }
     public override void Update()

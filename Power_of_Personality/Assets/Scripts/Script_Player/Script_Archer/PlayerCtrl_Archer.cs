@@ -344,7 +344,7 @@ public class PlayerCtrl_Archer : PlayerCtrl
 
     public void skill_W_on()
     {
-        SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(SkillW_Effect.transform.eulerAngles));
+        SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(SkillW_Effect.transform.eulerAngles.x, SkillYRot - 90f, SkillW_Effect.transform.eulerAngles.z)); //W 박스콜라이더 생성 방식 변경(08.30)
         SkillEffect.transform.parent = EffectGen.transform;
     }
     public void skill_E1_on()

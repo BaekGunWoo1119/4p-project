@@ -322,6 +322,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         // 해당 bool값 실행 시 모든 행동 멈춤
         if(!Status.IsShop && !anim.GetBool("isDie"))
         {
+
+            CheckHp(); //Hp 체크(08.30)
+
             if (!canTakeDamage)
             {
                 damageCooldown -= Time.deltaTime;
@@ -770,6 +773,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             CheckHp();
             PlayAnim("TakeDamage");
             StartCoroutine(DamageTextAlpha());
+            Damaged_on(); //맞았을 때 이펙트 애니메이션에서 코드로 옮김(08.30)
             cameraEffect.GetComponent<CameraEffectCtrl>().DamageCamera();
             StartCoroutine(Immune(0.5f));   //무적 함수 실행
             yield return new WaitForSeconds(0.2f);
@@ -827,6 +831,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 fadecolor.a = Mathf.Lerp(1, 0, time * 2f);
                 instText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
                 instText.transform.position = new Vector3(transform.position.x, transform.position.y + time * 3f + 0.5f, transform.position.z); // 서서히 올라감
+                //데미지 텍스트 사라지게 해둠(08.30)
+                if(fadecolor.a == 0)
+                {
+                    Destroy(instText);
+                    yield break;
+                }
                 yield return null;
             }
         }
