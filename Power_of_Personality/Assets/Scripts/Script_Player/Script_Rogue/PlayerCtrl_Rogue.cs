@@ -73,10 +73,18 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        //isImmune = true; //실험용 무적 코드
+        Debug.Log(isImmune);
     }
     protected override void Update()
     {
         base.Update(); // PlayerCtrl의 Update문을 상속 받아서 실행
+
+        //1 점프 1 점공 코드(08.29)
+        if(stateJumpAttack2 == true)
+        {
+            isJumpAttack = true;
+        }
 
         //대쉬일 때
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
@@ -219,7 +227,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
 
         if (AttackNumber == 4)
         {
-
+            StopAnim("CommonAttack"); //점공 후 트리거 초기화(08.29)
         }
     }
     IEnumerator Attack1_Collider()
@@ -287,8 +295,8 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         //ESkill_Collider4.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         //ESkill_Collider4.SetActive(false);
-        //스킬 나갈 시 사운드 및 콜라이더(추가 예정)
-        yield return new WaitForSeconds(2.2f);
+        //UI 쿨타임 시간 변경(08.29)
+        yield return new WaitForSeconds(0.7f);
         ESkillCoolTime = 0;
         Ecool.fillAmount = 1;
     }
