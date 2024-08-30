@@ -40,18 +40,39 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
 
     public void Start(){
         CurrentLobbyCode.text = TempLobbyCode;
-            if(PhotonNetwork.InRoom == true){
-            Player1Class.text = (string)PhotonNetwork.PlayerList[0].CustomProperties["PlayerClass"];
-            Player1Ready.SetActive(false);
-            Player1Wait.SetActive(true);
-            Debug.Log((string)PhotonNetwork.PlayerList[0].CustomProperties["PlayerClass"]);
-            if(PhotonNetwork.PlayerList.Length>1){
-                Player2Class.text = (string)PhotonNetwork.PlayerList[1].CustomProperties["PlayerClass"];
-                Player2Ready.SetActive(false);
-                Player2Wait.SetActive(true);
-            }
+
+            if(PhotonNetwork.InRoom == true)
+            {
+                ResetSetting();
+                Debug.Log((string)PhotonNetwork.PlayerList[0].CustomProperties["PlayerClass"]);
+                Player1Class.text = (string)PhotonNetwork.PlayerList[0].CustomProperties["PlayerClass"];
+                if(PhotonNetwork.PlayerList.Length>1)
+                {
+                    Player2Class.text = (string)PhotonNetwork.PlayerList[1].CustomProperties["PlayerClass"];
+                    if((bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] == false)
+                    {
+                        Player2Ready.SetActive(false);
+                        Player2Wait.SetActive(true);
+                    }
+                    else{
+                        Player2Ready.SetActive(true);
+                        Player2Wait.SetActive(false);
+                    }
+                    if((bool)PhotonNetwork.PlayerList[0].CustomProperties["IsReady"] == false){
+                        Player1Ready.SetActive(false);
+                        Player1Wait.SetActive(true);
+                    }
+                    else{
+                        Player1Ready.SetActive(true);
+                        Player1Wait.SetActive(false);
+                    }
+                }
+                else{
+                    Player1Ready.SetActive(false);
+                    Player1Wait.SetActive(true);
+                }
         }
-        ResetSetting();
+        
     }
     
     public void Update(){
