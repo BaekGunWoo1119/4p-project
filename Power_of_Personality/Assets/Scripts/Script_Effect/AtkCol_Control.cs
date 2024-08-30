@@ -45,7 +45,7 @@ public class AtkCol_Control : MonoBehaviour
         else if(ATKtime == Max_ATKtime)
         {
             Debug.Log("삭제");
-            Destroy(MainEffect);
+            Destroy(ATKCollider);
         }
     }
 }

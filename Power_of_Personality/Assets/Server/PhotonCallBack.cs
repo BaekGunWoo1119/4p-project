@@ -66,7 +66,7 @@ public class PhotonCallBack : MonoBehaviourPunCallbacks
         //현재 접속한 플레이어 리스트
         PlayersList = PhotonNetwork.PlayerList;
         SceneManager.LoadScene("1-2 (Multi Lobby)");
-        //Debug.Log(PlayersList[0]);
+        Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
 
     }
 

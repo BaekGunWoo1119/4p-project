@@ -52,6 +52,10 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     protected override void Update()
     {
         base.Update();
+        if(stateJumpAttack2 == true)
+        {
+            isJumpAttack = true;
+        }
         if(photonview.IsMine){
             CurProperty = PlayerPrefs.GetString("property");
             photonview.RPC("SetProperty",RpcTarget.All, CurProperty);
@@ -189,7 +193,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
 
         if (AttackNumber == 5)
         {
-
+            photonview.RPC("StopAnim",RpcTarget.All,"CommonAttack");
         }
     }
     public IEnumerator Skill_Q()
@@ -250,7 +254,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-90, 0));
             SkillEffect.transform.position = EffectGen.transform.position;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
@@ -258,7 +262,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-90, 0));
             SkillEffect.transform.position = EffectGen.transform.position;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }           
         }
     }
@@ -269,7 +273,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-90, 0));
             SkillEffect.transform.position = EffectGen.transform.position;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
@@ -277,7 +281,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-90, 0));
             SkillEffect.transform.position = EffectGen.transform.position;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -292,7 +296,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
             SkillEffect.transform.position = EffectGen.transform.position;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
@@ -300,7 +304,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
             SkillEffect.transform.position = EffectGen.transform.position;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -312,7 +316,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
             SkillEffect.transform.position = EffectGen.transform.position;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
@@ -320,7 +324,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
             SkillEffect.transform.position = EffectGen.transform.position;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -329,7 +333,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     {
         SkillEffect = Instantiate(Skill_Aura_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y - 1, EffectGen.transform.position.z), Quaternion.Euler(0f, 90, 0f));
         if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
     }
 
@@ -339,14 +343,14 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         {
             SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot-90, 0f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
         {
             SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot-90, 0f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -358,7 +362,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
@@ -366,7 +370,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
 
@@ -376,7 +380,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     {
         SkillEffect = Instantiate(SkillE_Aura_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y - 1, EffectGen.transform.position.z), Quaternion.Euler(0f, 90, 0f));
         if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
     }
 
@@ -386,14 +390,14 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         {
             SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30f, SkillYRot, 0f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
         {
             SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30f, SkillYRot, 0f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -404,14 +408,14 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         {
             SkillEffect = Instantiate(SkillE2_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30f, SkillYRot, 0f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
         {
             SkillEffect = Instantiate(SkillE2_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30f, SkillYRot, 0f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -527,6 +531,10 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     public override void AnimState()
     {
         base.AnimState();
+    }
+    public override void ToggleGameObjects(GameObject go)
+    {
+        base.ToggleGameObjects(go);
     }
 
 }

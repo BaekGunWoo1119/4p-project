@@ -307,6 +307,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 Turn();
             }
         }
+        CheckHp();
     }
 
     protected virtual void Update()
@@ -1510,4 +1511,16 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         // 자기가 스스로를 삭제 
         PhotonNetwork.Destroy(this.gameObject);
     }
+
+    public virtual void ToggleGameObjects(GameObject go)
+        {
+            if (go == null) return;
+            var children = go.GetComponentsInChildren<Transform>();
+            foreach (var child in children)
+            {
+                child.gameObject.tag = "Other";
+                Debug.Log(child.gameObject.name + "의 태그 :" + child.gameObject.tag);
+            }
+        }
+
 }

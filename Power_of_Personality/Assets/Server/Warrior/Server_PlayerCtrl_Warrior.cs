@@ -428,7 +428,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
         SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
         }
         audioSources[0].Play();
     }
@@ -437,7 +437,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
         SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
         }
     }
     public void comboAttack_off()
@@ -449,7 +449,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot - 90f, 0));
         SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
         }
         audioSources[1].Play();
     }
@@ -460,7 +460,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         
         SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
         }
         setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
         setParticles2 = SkillEffect.transform.Find("Slashes").transform.Find("Slashes-1").GetComponent<ParticleSystem>();
@@ -480,7 +480,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     {
         SkillEffect = Instantiate(SkillQ_Rev_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
         }
         //Find로 Slash 찾아서 파티클시스템의 3d start 직접 제어
         setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
@@ -502,7 +502,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(SkillW_Effect.transform.eulerAngles));
         SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
         }
     }
 
@@ -510,7 +510,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     {
         SkillEffect = Instantiate(SkillE_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
         }
         setParticles1 = SkillEffect.transform.Find("Slashes").GetComponent<ParticleSystem>();
         setParticles2 = SkillEffect.transform.Find("Slashes-1").GetComponent<ParticleSystem>();
@@ -672,6 +672,10 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     public override void ApplyProperty(string RPCproperty)
     {
         base.ApplyProperty(RPCproperty);
+    }
+    public override void ToggleGameObjects(GameObject go)
+    {
+        base.ToggleGameObjects(go);
     }
 
 }

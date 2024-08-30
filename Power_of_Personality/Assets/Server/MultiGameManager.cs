@@ -170,8 +170,11 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                 }
             }
             else {
-                Watching.SetActive(false);
-                CameraCtrl.target = GameObject.FindGameObjectWithTag("Player").transform;
+                if(GameObject.FindGameObjectWithTag("Player") != null)
+                {
+                    Watching.SetActive(false);
+                    CameraCtrl.target = GameObject.FindGameObjectWithTag("Player").transform;
+                }
             }
         }
     }

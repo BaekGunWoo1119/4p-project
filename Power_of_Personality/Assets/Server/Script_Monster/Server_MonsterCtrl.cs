@@ -127,23 +127,25 @@ public class Server_MonsterCtrl : MonoBehaviour
 
     public virtual void DistanceCheck()
     {
-        if(PlayerTr == null){
-            Settarget();
-        }
-        Distance = Vector3.Distance(transform.position, PlayerTr.position);
+        if(PlayerTr != null){
+            Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
-        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit)
-        {
-            StartCoroutine(Trace());
-        }
-        else if (Distance > TraceRadius){ 
-            Settarget();
-        }
+            if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit)
+            {
+                StartCoroutine(Trace());
+            }
+            else if (Distance > TraceRadius){ 
+                Settarget();
+            }
 
-        if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && !isHit)
-        {
-            photonview.RPC("Server_Attack", RpcTarget.All);
-            //StartCoroutine(Attack());
+            if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && !isHit)
+            {
+                photonview.RPC("Server_Attack", RpcTarget.All);
+                //StartCoroutine(Attack());
+            }
+        }
+        else {
+            Settarget();
         }
     }
     public virtual void Settarget()

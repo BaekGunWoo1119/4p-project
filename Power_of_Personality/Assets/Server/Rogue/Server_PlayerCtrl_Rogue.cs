@@ -79,6 +79,10 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     protected override void Update()
     {
         base.Update(); // PlayerCtrl의 Update문을 상속 받아서 실행
+        if(stateJumpAttack2 == true)
+        {
+            isJumpAttack = true;
+        }
 
         //대쉬일 때
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
@@ -207,7 +211,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
 
         if (AttackNumber == 4)
         {
-
+            photonview.RPC("StopAnim",RpcTarget.All,"CommonAttack");
         }
     }
     IEnumerator Attack1_Collider()
@@ -278,7 +282,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         yield return new WaitForSeconds(0.5f);
         //ESkill_Collider4.SetActive(false);
         //스킬 나갈 시 사운드 및 콜라이더(추가 예정)
-        yield return new WaitForSeconds(2.2f);
+        yield return new WaitForSeconds(0.7f);
         ESkillCoolTime = 0;
         Ecool.fillAmount = 1;
     }
@@ -289,7 +293,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 120));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
@@ -297,7 +301,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 120));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -309,7 +313,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 120));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
@@ -317,7 +321,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 120));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -329,7 +333,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
@@ -337,7 +341,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -354,7 +358,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
@@ -362,7 +366,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(SkillQ_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -374,7 +378,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
@@ -382,7 +386,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             SkillEffect = Instantiate(SkillW_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
             SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -393,14 +397,14 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         {
             SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 1f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot - 90, 90f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
         {
             SkillEffect = Instantiate(SkillE1_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 1f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot - 90, 90f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -411,14 +415,14 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         {
             SkillEffect = Instantiate(SkillE2_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot - 90, 90f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
         {
             SkillEffect = Instantiate(SkillE2_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot - 90, 90f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -429,14 +433,14 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         {
             SkillEffect = Instantiate(SkillE3_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 1f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot, 90f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
         {
             SkillEffect = Instantiate(SkillE3_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 1f, EffectGen.transform.position.z), Quaternion.Euler(0f, SkillYRot, 90f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -447,14 +451,14 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         {
             SkillEffect = Instantiate(SkillE4_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
         else
         {
             SkillEffect = Instantiate(SkillE4_Effect, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot - 90, 0f));
             if(!photonview.IsMine){
-            SkillEffect.tag = "Other";
+            ToggleGameObjects(SkillEffect);
             }
         }
     }
@@ -709,6 +713,9 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         isDash = true;
         isAttack = false;
     }
-
+    public override void ToggleGameObjects(GameObject go)
+    {
+        base.ToggleGameObjects(go);
+    }
 
 }

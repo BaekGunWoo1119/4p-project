@@ -49,7 +49,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
                 if(PhotonNetwork.PlayerList.Length>1)
                 {
                     Player2Class.text = (string)PhotonNetwork.PlayerList[1].CustomProperties["PlayerClass"];
-                    if((bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] == false)
+                    if((bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] == false || (bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] ==null)
                     {
                         Player2Ready.SetActive(false);
                         Player2Wait.SetActive(true);
@@ -72,7 +72,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
                     Player1Wait.SetActive(true);
                 }
         }
-        
     }
     
     public void Update(){
@@ -88,6 +87,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
             }
             else{
                 Player2.SetActive(false);
+                
             }
         }
     }
@@ -137,35 +137,66 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
     {
         Player target = targetPlayer;
         Hashtable PP = target.CustomProperties;
-        if(target.ActorNumber==1){
-            Player1Class.text=(string)PP["PlayerClass"];
-            if((bool)PP["IsReady"]==true){
-                Player1Ready.SetActive(true);
-                Player1Wait.SetActive(false);
+        //만약 내가 1번 플레이어라면
+        if(PhotonNetwork.PlayerList[0].ActorNumber==PhotonNetwork.LocalPlayer.ActorNumber){
+            if(target.ActorNumber==PhotonNetwork.LocalPlayer.ActorNumber){
+                Player1Class.text=(string)PP["PlayerClass"];
+                if((bool)PP["IsReady"]==true){
+                    Player1Ready.SetActive(true);
+                    Player1Wait.SetActive(false);
+                }
+                else{
+                    Player1Ready.SetActive(false);
+                    Player1Wait.SetActive(true);
+                }
             }
             else{
-                Player1Ready.SetActive(false);
-                Player1Wait.SetActive(true);
+                Player2Class.text=(string)PP["PlayerClass"];
+                if((bool)PP["IsReady"]==true){
+                    Player2Ready.SetActive(true);
+                    Player2Wait.SetActive(false);
+                }
+                else{
+                    Player2Ready.SetActive(false);
+                    Player2Wait.SetActive(true);
+                }
             }
         }
-        else if(target.ActorNumber==2){
-            Player2Class.text=(string)PP["PlayerClass"];
-            if((bool)PP["IsReady"]==true){
-                Player2Ready.SetActive(true);
-                Player2Wait.SetActive(false);
+        else{
+            if(target.ActorNumber==PhotonNetwork.LocalPlayer.ActorNumber){
+                Player2Class.text=(string)PP["PlayerClass"];
+                if((bool)PP["IsReady"]==true){
+                    Player2Ready.SetActive(true);
+                    Player2Wait.SetActive(false);
+                }
+                else{
+                    Player2Ready.SetActive(false);
+                    Player2Wait.SetActive(true);
+                }
             }
             else{
-                Player2Ready.SetActive(false);
-                Player2Wait.SetActive(true);
+                Player1Class.text=(string)PP["PlayerClass"];
+                if((bool)PP["IsReady"]==true){
+                    Player1Ready.SetActive(true);
+                    Player1Wait.SetActive(false);
+                }
+                else{
+                    Player1Ready.SetActive(false);
+                    Player1Wait.SetActive(true);
+                }
+                
             }
-            
         }
-        
+
         if(AllPlayerReady()){
             
             GameStart();
         }
         
+    }
+    public override void OnPlayerLeftRoom (Player otherPlayer){
+        Ready();
+        Debug.Log("OnPlayerLeftRoom"+(bool)PhotonNetwork.PlayerList[0].CustomProperties["IsReady"]);
     }
 #endregion
 

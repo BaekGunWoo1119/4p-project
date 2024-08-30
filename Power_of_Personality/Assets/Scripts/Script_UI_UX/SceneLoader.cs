@@ -385,7 +385,7 @@ public class SceneLoader : MonoBehaviour
             GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
 
             Time.timeScale = 1.0f;
-            Exit_Game.onClick.AddListener(Setting_Back_Pressed);
+            //Exit_Game.onClick.AddListener(Setting_Back_Pressed);
             //Setting_Back.onClick.AddListener(Setting_Back_Pressed);
             //캐릭터 선택 코드
             if(PlayerPrefs.GetString("PlayerClass") == "Warrior")
