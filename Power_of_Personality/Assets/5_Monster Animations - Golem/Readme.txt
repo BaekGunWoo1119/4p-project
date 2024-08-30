@@ -1,0 +1,98 @@
+5_Monster Animations - Golem
+
+This package includes the following animation files
+(75Animations):
+
+Attack Animations:
+Golem_ATK_01_05
+Golem_ATK_01_06
+Golem_ATK_01_07
+Golem_ATK_02_08
+Golem_ATK_02_09
+Golem_ATK_02_10
+Golem_ATK_02_11
+Golem_ATK_02_12
+
+Death Animations:
+Golem_DeadBody_13
+Golem_DeadBody_14
+Golem_DeadBody_15
+Golem_Die_16
+Golem_Die_17
+Golem_Die_18
+
+Damage Animations:
+Golem_DMG_B_19
+Golem_DMG_B_20
+Golem_DMG_F_21
+Golem_DMG_F_22
+
+Miscellaneous State Transition Animations:
+Golem_Down_23
+Golem_Down_24
+Golem_down_deadbody_25
+Golem_down_deadbody_26
+Golem_Down_Loop_27
+Golem_Down_Loop_28
+Golem_Get_Up_29
+Golem_Get_Up_30
+
+Idle Animations:
+Golem_Idle_C_39
+Golem_Idle_C_40
+Golem_Idle_P_01_41
+Golem_Idle_P_01_42
+Golem_Idle_P_01_43
+Golem_Idle_P_02_44
+Golem_Idle_P_02_45
+Golem_Idle_P_02_46
+Golem_Idle_P_02_47
+Golem_Idle_P_02_48
+
+Other State Animations:
+Golem_Passout_49
+Golem_Passout_50
+
+Movement Animations:
+Golem_Run_F_51
+Golem_Run_F_52
+Golem_Walk_F_86
+Golem_Walk_F_87
+
+Skill Animations:
+Golem_Skill_01_53
+Golem_Skill_01_54
+Golem_Skill_01_55
+Golem_Skill_01_56
+Golem_Skill_01_57
+Golem_Skill_01_58
+Golem_Skill_01_59
+Golem_Skill_01_60
+Golem_Skill_02_61
+Golem_Skill_02_62
+Golem_Skill_02_63
+Golem_Skill_02_64
+Golem_Skill_02_elite_65
+Golem_Skill_02_elite_66
+Golem_Skill_03_67
+Golem_Skill_03_68
+Golem_Skill_03_69
+Golem_Skill_03_70
+Golem_Skill_03_elite_71
+Golem_Skill_03_elite_72
+Golem_Skill_04_73
+Golem_Skill_04_74
+Golem_Skill_04_75
+Golem_Skill_04_76
+Golem_Skill_077
+Golem_Skill_078
+Golem_Skill_079
+Golem_Skill_06_80
+Golem_Skill_06_81
+Golem_Skill_06_82
+Golem_Skill_07_83
+Golem_Skill_08_84
+Golem_Skill_09_85
+
+
+The mesh has approximately 800 to 1200 triangles.

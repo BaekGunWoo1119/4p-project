@@ -322,6 +322,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         // 해당 bool값 실행 시 모든 행동 멈춤
         if(!Status.IsShop && !anim.GetBool("isDie"))
         {
+
+            CheckHp(); //Hp 체크(08.30)
+
             if (!canTakeDamage)
             {
                 damageCooldown -= Time.deltaTime;
@@ -585,7 +588,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 //아이템 이펙트 추가(07.29 백건우)
                 //세트효과 추가(08.26 이준경) 
                 #region 3번 세트 4셋 이펙트 효과
-                if (Status.set3_4_Activated)
+                if (Status.set3_3_Activated)
                 {
                     Item_Weapon_Effect = Item_Weapon_Fire_Effect;
                     if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
@@ -593,10 +596,18 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                         Item_Weapon_Fire_Effect.SetActive(true);
                         Item_Weapon_Ice_Effect.SetActive(false);
                     }
+                } else if(!Status.set3_3_Activated)
+                {
+                    Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                    if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                    {
+                        Item_Weapon_Fire_Effect.SetActive(false);
+                        Item_Weapon_Ice_Effect.SetActive(false);
+                    }
                 }
                 #endregion
                 #region 1번 세트 3셋 이펙트 효과
-                if (Status.set1_4_Activated)
+                if (Status.set1_3_Activated)
                 {
                     Item_Aura_Effect = Item_Aura_Fire_Effect;
                     if (Item_Aura_Fire_Effect != null && Item_Aura_Ice_Effect != null)
@@ -621,13 +632,21 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 //아이템 이펙트 추가(07.29 백건우)
                 //세트효과 추가(08.26 이준경) 
                 #region 4번 세트 4셋 이펙트 효과
-                if (Status.set4_4_Activated == true) 
+                if (Status.set4_3_Activated == true) 
                 {
                     Item_Weapon_Effect = Item_Weapon_Ice_Effect;
                     if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
                     {
                         Item_Weapon_Fire_Effect.SetActive(false);
                         Item_Weapon_Ice_Effect.SetActive(true);
+                    }
+                } else if(!Status.set4_3_Activated)
+                {
+                    Item_Weapon_Effect = Item_Weapon_Ice_Effect;
+                    if (Item_Weapon_Fire_Effect != null && Item_Weapon_Ice_Effect != null)
+                    {
+                        Item_Weapon_Fire_Effect.SetActive(false);
+                        Item_Weapon_Ice_Effect.SetActive(false);
                     }
                 }
                 #endregion
@@ -770,6 +789,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             CheckHp();
             PlayAnim("TakeDamage");
             StartCoroutine(DamageTextAlpha());
+            Damaged_on(); //맞았을 때 이펙트 애니메이션에서 코드로 옮김(08.30)
             cameraEffect.GetComponent<CameraEffectCtrl>().DamageCamera();
             StartCoroutine(Immune(0.5f));   //무적 함수 실행
             yield return new WaitForSeconds(0.2f);
@@ -827,6 +847,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 fadecolor.a = Mathf.Lerp(1, 0, time * 2f);
                 instText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
                 instText.transform.position = new Vector3(transform.position.x, transform.position.y + time * 3f + 0.5f, transform.position.z); // 서서히 올라감
+                //데미지 텍스트 사라지게 해둠(08.30)
+                if(fadecolor.a == 0)
+                {
+                    Destroy(instText);
+                    yield break;
+                }
                 yield return null;
             }
         }
