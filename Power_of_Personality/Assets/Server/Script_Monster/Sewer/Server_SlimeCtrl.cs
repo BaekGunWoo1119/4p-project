@@ -11,6 +11,7 @@ public class Server_SlimeCtrl : Server_MonsterCtrl
 {
     public override void Awake()
     {
+        ownWeakProperty ="Ice";
         ATK = 10.0f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
@@ -79,5 +80,9 @@ public class Server_SlimeCtrl : Server_MonsterCtrl
     public override void RPCTakeDamage(float CurDamage, string Property)
     {
         base.RPCTakeDamage(CurDamage, Property);
+    }
+    [PunRPC]
+    public override void RPCDamage(float CurDamage){
+        base.RPCDamage(CurDamage);
     }
 }

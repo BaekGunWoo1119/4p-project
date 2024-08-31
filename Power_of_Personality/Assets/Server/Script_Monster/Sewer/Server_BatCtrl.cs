@@ -12,6 +12,7 @@ public class Server_BatCtrl : Server_MonsterCtrl
     public Transform FirePos;
     public override void Awake()
     {
+        ownWeakProperty ="Fire";
         ATK = 5;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
@@ -85,5 +86,9 @@ public class Server_BatCtrl : Server_MonsterCtrl
     public override void RPCTakeDamage(float CurDamage, string Property)
     {
         base.RPCTakeDamage(CurDamage, Property);
+    }
+    [PunRPC]
+    public override void RPCDamage(float CurDamage){
+        base.RPCDamage(CurDamage);
     }
 }

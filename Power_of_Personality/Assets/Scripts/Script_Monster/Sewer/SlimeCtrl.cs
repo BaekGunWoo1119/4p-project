@@ -10,6 +10,7 @@ public class SlimeCtrl : MonsterCtrl
 {
     public override void Awake()
     {
+        ownWeakProperty ="Ice";
         ATK = 10.0f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
@@ -64,8 +65,8 @@ public class SlimeCtrl : MonsterCtrl
     {
         return base.GetHPBarPosition(); // ���ϴ� ��ġ�� ����
     }
-    public override IEnumerator DamageTextAlpha()
+    public override IEnumerator DamageTextAlpha(float Damage)
     {
-        yield return base.DamageTextAlpha();
+        yield return base.DamageTextAlpha(Damage);
     }
 }
