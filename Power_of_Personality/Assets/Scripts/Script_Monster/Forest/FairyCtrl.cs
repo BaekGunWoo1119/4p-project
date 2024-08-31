@@ -11,6 +11,7 @@ public class FairyCtrl : MonsterCtrl
     public Transform FirePos;
     public override void Awake()
     {
+        ownWeakProperty ="Fire";
         ATK = 5;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
@@ -72,8 +73,8 @@ public class FairyCtrl : MonsterCtrl
     {
         return base.GetHPBarPosition(); // ���ϴ� ��ġ�� ����
     }
-    public override IEnumerator DamageTextAlpha()
+    public override IEnumerator DamageTextAlpha(float Damage)
     {
-        yield return base.DamageTextAlpha();
+        yield return base.DamageTextAlpha(Damage);
     }
 }

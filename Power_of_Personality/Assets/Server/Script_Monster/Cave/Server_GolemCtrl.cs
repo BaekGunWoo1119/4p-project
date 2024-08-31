@@ -11,6 +11,7 @@ public class Server_GolemCtrl : Server_MonsterCtrl
 {
     public override void Awake()
     {
+        ownWeakProperty ="Ice";
         ATK = 10.0f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
@@ -79,5 +80,9 @@ public class Server_GolemCtrl : Server_MonsterCtrl
     public override void Server_Attack()
     {
         base.Server_Attack();
+    }
+    [PunRPC]
+    public override void RPCDamage(float CurDamage){
+        base.RPCDamage(CurDamage);
     }
 }

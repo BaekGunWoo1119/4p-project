@@ -77,6 +77,8 @@ public class MonsterCtrl : MonoBehaviour
 
     public virtual void Update()
     {
+        hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
+        HpBar.transform.position = hpBarPosition;
         rd.AddForce(Vector3.down * 4, ForceMode.VelocityChange);
 
         if (!isDie)     // 죽어있는 상태가 아니면
@@ -181,13 +183,20 @@ public class MonsterCtrl : MonoBehaviour
 
     public virtual IEnumerator Trace()
     {
+        desiredParent = this.transform.parent.parent;
+        Vector3 localPosition = desiredParent.InverseTransformPoint(transform.position);
+        Vector3 playerLocalPosition = desiredParent.InverseTransformPoint(transform.position);
+
         // 플레이어를 향해 이동하는 로직
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
-        Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
-        transform.parent.Translate(movement);
-
-        hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
-        HpBar.transform.position = hpBarPosition;
+        Vector3 movement;
+        if(localPosition < Mathf.Abs(directionToPlayer.z)){
+            movement = new Vector3(directionToPlayer.x, 0, directionToPlayer.z) * MoveSpeed * Time.deltaTime;
+        }
+        else{
+            movement = new Vector3(directionToPlayer.x, 0, directionToPlayer.z) * MoveSpeed * Time.deltaTime;
+        }
+        transform.parent.Translate(movement, Space.World);
 
         yield return null;
     }
@@ -671,8 +680,9 @@ public class MonsterCtrl : MonoBehaviour
                 Damage = Damage * 1.2f;
             }
             #endregion
-            Debug.Log("몬스터가 입은 피해량 = " + Damage * (1 / (1 + DEF * 0.01f)));
-            curHP -= Damage * (1 / (1 + DEF * 0.01f));
+            Damage = Damage * (1 / (1 + DEF * 0.01f));
+            Debug.Log("몬스터가 입은 피해량 = " + Damage);
+            curHP -= Damage;
             CheckHP(); // HP 체크
             anim.SetBool("TakeDamage", true);
             foreach (Material material in materials)
@@ -680,7 +690,7 @@ public class MonsterCtrl : MonoBehaviour
                 material.color = Color.red;
             }
 
-            StartCoroutine(DamageTextAlpha());
+            StartCoroutine(DamageTextAlpha(Damage));
 
             yield return new WaitForSeconds(0.1f);
             anim.SetBool("TakeDamage", false);
@@ -709,7 +719,7 @@ public class MonsterCtrl : MonoBehaviour
     #endregion
 
     #region 몬스터 피격 텍스트
-    public virtual IEnumerator DamageTextAlpha()
+    public virtual IEnumerator DamageTextAlpha(float Damage)
     {
         if(anim.GetBool("Die") == false)
         {   
@@ -717,7 +727,7 @@ public class MonsterCtrl : MonoBehaviour
             GameObject instText = Instantiate(DamageText);
             instText.transform.SetParent(MonsterCanvas.transform, false);
             instText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + 0.5f, HpBar.transform.position.z); 
-            instText.GetComponent<TMP_Text>().text = (Damage * (1 / (1 + DEF * 0.01f))).ToString("F0"); //소수점 날리고 데미지 표현
+            instText.GetComponent<TMP_Text>().text = Damage.ToString("F0"); //소수점 날리고 데미지 표현
             float time = 0f;
             instText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
             Color fadecolor = instText.GetComponent<TMP_Text>().color;
