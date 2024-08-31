@@ -11,7 +11,7 @@ public class BeeCtrl : MonsterCtrl
 {
     public override void Awake()
     {
-        ownWeakProperty ="Fire";
+        ownWeakProperty ="Ice";
         ATK = 10.0f;
         DEF = 100;
         MoveSpeed = 2.0f;
@@ -69,8 +69,8 @@ public class BeeCtrl : MonsterCtrl
     {
         return base.GetHPBarPosition(); // 원하는 위치로 수정
     }
-    public override IEnumerator DamageTextAlpha()
+    public override IEnumerator DamageTextAlpha(float Damage)
     {
-        yield return base.DamageTextAlpha();
+        yield return base.DamageTextAlpha(Damage);
     }
 }

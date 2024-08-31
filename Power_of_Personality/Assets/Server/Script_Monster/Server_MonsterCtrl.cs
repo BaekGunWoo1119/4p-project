@@ -20,17 +20,15 @@ public class Server_MonsterCtrl : MonoBehaviour
     public float ATK;  // 공격력
     public float DEF;       // 방어력
     public float MoveSpeed;  // 이동 속도
-    public float FireATTDEF;     // 화 속성 방어력
-    public float IceATTDEF;      // 빙 속성 방어력
     public float Damage;   // 받은 피해량
+    public string ownWeakProperty; // 자신의 원래 약점 속성
+    public string WeakProperty; // 약점 속성
 
-
-    public string WeakProperty;
-
-    public float TickCoolTime;
+    public float TickCoolTime;  // 틱 피해량 쿨타임
 
     public GameObject DamageText; //맞았을 때 나오는 데미지 텍스트
     public GameObject MonsterCanvas;
+    public float CanvasYRot = 0f;
     public Vector3 hpBarPosition;
 
     public SkinnedMeshRenderer matObj;
@@ -52,57 +50,88 @@ public class Server_MonsterCtrl : MonoBehaviour
     public GameObject FireHit; //몬스터 피격 이펙트(불)
     public GameObject AttackEffect; //몬스터 공격 이펙트
     public GameObject EffectGen; //몬스터 공격 이펙트 소환 장소
-    private PhotonView photonview; //포톤뷰 (멀티)
-    private string CurProperty;     
 
+    public Transform desiredParent;
+    protected PhotonView photonview;
+    protected string CurProperty;
+
+    protected Rigidbody rd; // 리지드바디
     #endregion
 
     public virtual void Awake()
     {
-
         photonview = GetComponent<PhotonView>();
+        rd = GetComponent<Rigidbody>();
         // 몬스터 기본 설정
         if (this.tag == "Monster_Melee")     // 이 몬스터가 근접 몬스터일때
         {
             AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
         }
-        SetHP(100);                         // 몬스터의 기본 HP를 설정
+        SetHP(50);                         // 몬스터의 기본 HP를 설정
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
+        SetWeakProperty();  //약점 속성 설정
         PlayerTr = this.transform;          // 플레이어 Transform을 설정하기 전에 임시로 몬스터(스크립트가 들어있는 게임 오브젝트)의 Transform을 담아놓음.
         TempDistance = -4f;                 // 플레이어 거리 측정 전 임시 수치
         if (PhotonNetwork.IsMasterClient){
             StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
         }
-        
+    }
+    
+    public virtual void Start()
+    {
+        PlayerTr = this.transform;
+        StartCoroutine(FindPlayer());
     }
 
     public virtual void Update()
     {
-        HpBar.transform.position = hpBarPosition;
-        hpBarPosition = GetHPBarPosition();
         CurProperty = PlayerPrefs.GetString("property");
-        TickCoolTime += Time.deltaTime;
+        hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
+        HpBar.transform.position = hpBarPosition;
+        rd.AddForce(Vector3.down * 4, ForceMode.VelocityChange);
+
         if (PhotonNetwork.IsMasterClient){
+            
             if (!isDie)     // 죽어있는 상태가 아니면
             {
-                StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
+                if(PlayerTr != null)
+                {
+                    Turn();
+                }
+                else
+                {
+                    StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
+                }
                 DistanceCheck();    // 플레이어와의 거리를 계산
             }
             AttackCoolTime += Time.deltaTime;
-            if (this.transform.position.x - PlayerTr.transform.position.x < 0)
-            {
-                this.transform.rotation = Quaternion.Euler(0, 90, 0);
-            }
-            else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
-            {
-                this.transform.rotation = Quaternion.Euler(0, -90, 0);
-            }
+            TickCoolTime += Time.deltaTime;
         }
+            
+        #region 3/4세트 4세트 효과
+        if (Status.set3_4_Activated && WeakProperty != "Fire")
+        {
+            WeakProperty = "Fire";
+            //Debug.Log("약점속성이 화속성이 됨.");
+        }
+
+        if (Status.set4_4_Activated && WeakProperty != "Ice")
+        {
+            WeakProperty = "Ice";
+            //Debug.Log("약점속성이 빙속성이 됨.");
+        }
+        #endregion
+
+        //캔버스 뒤집어지는 오류 해결(08.29)
+        if(GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y > 0 && GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y < 180)
+            MonsterCanvas.transform.localRotation = Quaternion.Euler(0, CanvasYRot, 0);
+        else
+            MonsterCanvas.transform.localRotation = Quaternion.Euler(0, CanvasYRot + 180f, 0);
     }
 
-    #region 몬스터 HP 설정하는 부분
+    #region 몬스터 초기 값 설정
     public virtual void SetHP(float amount) // HP 설정
     {
         maxHP = amount;
@@ -114,6 +143,24 @@ public class Server_MonsterCtrl : MonoBehaviour
         if (HpBar != null)
             HpBar.value = curHP / maxHP;
     }
+
+    public virtual void SetWeakProperty()
+    {
+        if(Status.set3_4_Activated == true)
+        {
+            Debug.Log("화속성 약점으로 설정");
+            WeakProperty = "Fire";
+        }
+        else if(Status.set4_4_Activated == true)
+        {
+            Debug.Log("빙속성 약점으로 설정");
+            WeakProperty = "Ice";
+        }
+        else
+        {
+            WeakProperty = ownWeakProperty;
+        }
+    }
     #endregion
 
     #region 플레이어 찾기, 플레이어와 거리 체크, 추적, 공격 함수, HP바 위치 설정
@@ -122,7 +169,6 @@ public class Server_MonsterCtrl : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         Targets = GameObject.FindGameObjectsWithTag("Target");
         Settarget();
-        //PlayerTr = GameObject.FindWithTag("Player").transform;
     }
 
     public virtual void DistanceCheck()
@@ -161,16 +207,30 @@ public class Server_MonsterCtrl : MonoBehaviour
             }   
         }
     }
+    public virtual void Turn()
+    {
+        desiredParent = this.transform.parent.parent;
+        Vector3 localPosition = desiredParent.InverseTransformPoint(transform.position);
+        Vector3 playerLocalPosition = desiredParent.InverseTransformPoint(PlayerTr.position);
+
+        if (localPosition.x < playerLocalPosition.x)
+        {
+            this.transform.localRotation = Quaternion.Euler(0, 90, 0);
+        }
+        else if (localPosition.x > playerLocalPosition.x)
+        {
+            this.transform.localRotation = Quaternion.Euler(0, -90, 0);
+        }
+    }
 
     public virtual IEnumerator Trace()
     {
         // 플레이어를 향해 이동하는 로직
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
         Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
-        transform.Translate(movement, Space.World);
+        transform.parent.Translate(movement);
 
-        hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
-        HpBar.transform.position = hpBarPosition;
+        
 
         yield return null;
     }
@@ -182,11 +242,11 @@ public class Server_MonsterCtrl : MonoBehaviour
     #endregion
 
     #region 몬스터의 공격
-    //photonview.RPC("Attack", RpcTarget.All);
     [PunRPC]
     public virtual void Server_Attack(){
         StartCoroutine(Attack());
     }
+
     public virtual IEnumerator Attack()
     {
         AttackCoolTime = 0;
@@ -218,36 +278,55 @@ public class Server_MonsterCtrl : MonoBehaviour
             isHit = true;
             Damage = Status.TotalADC;
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         if (col.tag == "WarriorAttack2")
         {
             isHit = true;
             Damage = Status.TotalADC;
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         if (col.tag == "WarriorAttack3")
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
 
         if (col.tag == "WarriorSkillQ")
         {
             isHit = true;
             Damage = Status.TotalAP * 2f;
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         if (col.tag == "WarriorSkillE")
         {
             isHit = true;
             Damage = Status.TotalAP * 4f;
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         #endregion
         #region 도적
@@ -256,56 +335,96 @@ public class Server_MonsterCtrl : MonoBehaviour
             isHit = true;
             Damage = Status.TotalADC;
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeAttack2")
         {
             isHit = true;
             Damage = Status.TotalADC;
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeAttack3")
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeSkillQ_2")
         {
             isHit = true;
             Damage = Status.TotalAP;
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeSkillW_2")
         {
             isHit = true;
             Damage = Status.TotalAP * 1.5f;
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeSkillE_1")
         {
             isHit = true;
             Damage = Status.TotalAP;
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeSkillE_2")
         {
             isHit = true;
             Damage = Status.TotalAP;
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         if (col.tag == "RougeSkillE_4")
         {
             isHit = true;
             Damage = Status.TotalAP * 3f;
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
         }
         #endregion
         #region 궁수
@@ -313,18 +432,34 @@ public class Server_MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
         }
         if (col.tag == "ArcherAttack2")
         {
             isHit = true;
             Damage = Status.TotalADC;
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
         }
         if (col.tag == "ArcherSkillQ")
         {
             isHit = true;
             Damage = Status.TotalAP * 0.1f;
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
         }
         #endregion
@@ -335,28 +470,66 @@ public class Server_MonsterCtrl : MonoBehaviour
             Damage = Status.TotalADC;
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
         }
+        if (col.tag == "WizardAttack2")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
+        }
         if (col.tag == "WizardAttack3")
         {
             isHit = true;
             Damage = Status.TotalADC * 1.5f;
+            if (Status.set5_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
         }
         if (col.tag == "WizardSkillW")
         {
             isHit = true;
             Damage = Status.TotalAP * 3f;
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
         }
         if (col.tag == "WizardSkillE_1")
         {
             isHit = true;
             Damage = Status.TotalAP * 2.5f;
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
         }
         if (col.tag == "WizardSkillE_2")
         {
             isHit = true;
             Damage = Status.TotalAP * 5f;
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
         }
         #endregion
@@ -369,8 +542,16 @@ public class Server_MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 1.5f;
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
+            TickCoolTime = 0;
         }
         #endregion
         #region 도적
@@ -378,8 +559,15 @@ public class Server_MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.3f;
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
             TickCoolTime = 0;
         }
 
@@ -387,16 +575,30 @@ public class Server_MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.4f;
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
             TickCoolTime = 0;
         }
         if (col.tag == "RougeSkillE_3" && TickCoolTime >= 0.25f)
         {
             isHit = true;
             Damage = Status.TotalAP;
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
-            //StartCoroutine(TakeDamage());
             TickCoolTime = 0;
         }
         #endregion
@@ -405,6 +607,14 @@ public class Server_MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.75f;
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
             TickCoolTime = 0;
         }
@@ -412,6 +622,14 @@ public class Server_MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 3f;
+            if (Status.set6_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
             TickCoolTime = 0;
         }
@@ -421,13 +639,21 @@ public class Server_MonsterCtrl : MonoBehaviour
         {
             isHit = true;
             Damage = Status.TotalAP * 0.75f;
+            if (Status.set6_3_Activated)
+            {
+                Damage *= 1.2f;
+            }
+            if (Status.set7_4_Activated)
+            {
+                Damage *= 1.2f;
+            }
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
             TickCoolTime = 0;
         }
         #endregion
     }
 
-    public virtual IEnumerator TakeDamage(float CurDamage, string Property)
+    public virtual IEnumerator TakeDamage(float Damage, string Property)
     {
         if (maxHP != 0 || curHP > 0)
         {
@@ -441,19 +667,69 @@ public class Server_MonsterCtrl : MonoBehaviour
             }
             if(Property == WeakProperty)
             {
-                CurDamage = CurDamage * 1.5f;
+                #region 3/4번 세트 3셋 효과
+                if (WeakProperty == "Fire" && Status.set3_3_Activated)
+                {
+                    Damage = (Damage * 1.5f) * 1.2f;
+                    Debug.Log("20% 추가한 약점 데미지는 : " + Damage);
+                }
+                if (WeakProperty == "Ice" && Status.set4_3_Activated)
+                {
+                    Damage = (Damage * 1.5f) * 1.2f;
+                    Debug.Log("20% 추가한 약점 데미지는 : " + Damage);
+                }
+                #endregion
+                else if(Status.set3_3_Activated == false && Status.set4_3_Activated == false)
+                {
+                    Debug.Log("약공터짐!!");    
+                    Damage = Damage * 1.5f;
+                }
             }
             Material[] materials = matObj.materials;
-            curHP -= CurDamage * (1 / (1 + DEF * 0.01f));
-            CheckHP(); // ü�� ����
+            #region 1번 세트 3셋효과
+            int randomInt = Random.Range(1, 6);
+            Debug.Log(randomInt);
+            if (randomInt == 5 && Status.set1_3_Activated == true)
+            {
+                Debug.Log("20%!!");
+                Damage = Damage * 1.2f;
+            }
+            #endregion
+            #region 1번 세트 4셋 효과
+            if(Status.set1_4_Activated == true)
+            {
+                Debug.Log("힐 하기 전 HP:" + Status.HP);
+
+                if(Status.HP + (Damage * 0.2f) > Status.MaxHP)
+                {
+                    Status.HP = Status.MaxHP;
+                }
+                else
+                {
+                    Status.HP += (Damage * 0.2f);
+                }
+                Debug.Log("힐 하고 나서 HP:" + Status.HP);
+            }
+            #endregion
+            #region 7번 세트 3셋 효과
+            if (Status.set7_3_Activated == true)
+            {
+                Debug.Log("7활성화되어잇음");
+                Damage = Damage * 1.2f;
+            }
+            #endregion
+            Damage = Damage * (1 / (1 + DEF * 0.01f));
+            Debug.Log("몬스터가 입은 피해량 = " + Damage);
+            
+            CheckHP(); // HP 체크
             anim.SetBool("TakeDamage", true);
             foreach (Material material in materials)
             {
                 material.color = Color.red;
             }
-
-            StartCoroutine(DamageTextAlpha(CurDamage));
-
+            if(photonview.IsMine){
+            photonview.RPC("RPCDamage", RpcTarget.All, Damage);
+            }
             yield return new WaitForSeconds(0.1f);
             anim.SetBool("TakeDamage", false);
             yield return new WaitForSeconds(0.2f);
@@ -467,7 +743,7 @@ public class Server_MonsterCtrl : MonoBehaviour
             }
         }
 
-        if (curHP <= 0) // ü���� 0�϶�
+        if (curHP <= 0) // 개체의 피가 0이 되었을 때 사망처리
         {
             isDie = true;
             anim.SetBool("Die", true);
@@ -475,17 +751,15 @@ public class Server_MonsterCtrl : MonoBehaviour
             Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
             Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
             this.gameObject.transform.parent.tag="Untagged";
-            Destroy(this.gameObject); // ü���� 0 ���϶� ����
             Destroy(HpBar.gameObject);
+            Destroy(this.gameObject); // 개체 파괴
             Destroy(this.transform.parent.gameObject);
-            //PhotonNetwork.Destroy(this.gameObject);
-            
         }
     }
     #endregion
 
     #region 몬스터 피격 텍스트
-    public virtual IEnumerator DamageTextAlpha(float CurDamage)
+    public virtual IEnumerator DamageTextAlpha(float Damage)
     {
         if(anim.GetBool("Die") == false)
         {   
@@ -493,7 +767,7 @@ public class Server_MonsterCtrl : MonoBehaviour
             GameObject instText = Instantiate(DamageText);
             instText.transform.SetParent(MonsterCanvas.transform, false);
             instText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + 0.5f, HpBar.transform.position.z); 
-            instText.GetComponent<TMP_Text>().text = (CurDamage * (1 / (1 + DEF * 0.01f))).ToString("F0"); //소수점 날리고 데미지 표현
+            instText.GetComponent<TMP_Text>().text = Damage.ToString("F0"); //소수점 날리고 데미지 표현
             float time = 0f;
             instText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
             Color fadecolor = instText.GetComponent<TMP_Text>().color;
@@ -504,14 +778,25 @@ public class Server_MonsterCtrl : MonoBehaviour
                 fadecolor.a = Mathf.Lerp(1, 0, time);
                 instText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
                 instText.transform.position = new Vector3(HpBar.transform.position.x, HpBar.transform.position.y + time + 0.1f, HpBar.transform.position.z); // 서서히 올라감
+                //데미지 텍스트 사라지게 해둠(08.30)
+                if(fadecolor.a == 0)
+                {
+                    Destroy(instText);
+                    yield break;
+                }
                 yield return null;
             }
         }
     }
     #endregion
-
     [PunRPC]
     public virtual void RPCTakeDamage(float CurDamage, string Property){
         StartCoroutine(TakeDamage(CurDamage,Property));
+    }
+
+    [PunRPC]
+    public virtual void RPCDamage(float CurDamage){
+        curHP -= CurDamage;
+        StartCoroutine(DamageTextAlpha(CurDamage));
     }
 }
