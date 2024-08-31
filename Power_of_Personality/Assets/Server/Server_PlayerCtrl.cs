@@ -965,14 +965,14 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             // 특정 이름을 가진 부모 객체를 찾습니다.
             string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
             Transform parent = col.transform;
-            MonsterCtrl monsterCtrl = null;
+            Server_MonsterCtrl monsterCtrl = null;
             
 
             while (parent != null)
             {
                 if (parent.name == targetParentName)
                 {
-                    monsterCtrl = parent.GetComponent<MonsterCtrl>();
+                    monsterCtrl = parent.GetComponent<Server_MonsterCtrl>();
                     break;
                 }
                 parent = parent.parent;
@@ -981,7 +981,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             if(monsterCtrl != null && Status.set2_3_Activated)
             {
                 float reflectDamage = Status.TotalArmor;
-                StartCoroutine(monsterCtrl.TakeDamage(reflectDamage));
+                StartCoroutine(monsterCtrl.TakeDamage(reflectDamage,RPCproperty));
             }
 
             // 가져온 몬스터 스크립트가 유효한지 확인합니다.
