@@ -149,54 +149,36 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         if (AttackNumber == 0)
         {
-            StartCoroutine(Spawn_CommonAttack1());
+            StartCoroutine(Attack_Sound(0, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 1)
         {
-            StartCoroutine(Spawn_CommonAttack2());
+            StartCoroutine(Attack_Sound(1, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 2)
         {
-            StartCoroutine(Spawn_CommonAttack3());
+            StartCoroutine(Attack_Sound(2, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 3)
         {
-
+            StartCoroutine(Attack_Sound(1, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 4)
         {
+            StartCoroutine(Attack_Sound(2, 0.7f)); //소리 추가(08.31)
             StopAnim("CommonAttack"); //점공 후 트리거 초기화(08.28)
         }
+    }
 
-        if (AttackNumber == 5)
-        {
-
-        }
-    }
-    public IEnumerator Spawn_CommonAttack1()
-    {
-        yield return new WaitForSeconds(0.3f);
-        
-        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-    }
-    public IEnumerator Spawn_CommonAttack2()
-    {
-        yield return new WaitForSeconds(0.1f);
-        //GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-    }
-    public IEnumerator Spawn_CommonAttack3()
-    {
-        //GameObject CommonAttack = Instantiate(CommonAttack2_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        yield return null;
-    }
     public void Skill_Q()
     {
         isSkill = true;
         anim.SetTrigger("Skill_Q");
+        StartCoroutine(Attack_Sound(3, 2.5f)); //소리 추가(08.31)
         StartCoroutine(Immune(2f));
         QSkillCoolTime = 0;
         Qcool.fillAmount = 1;
@@ -206,6 +188,7 @@ public class PlayerCtrl_Archer : PlayerCtrl
         anim.SetTrigger("Skill_W");
         isSkill = true;
         StartCoroutine(SKill_Up_Move(10.0f, 0.5f, 1f, 0.0f));
+        StartCoroutine(Attack_Sound(4, 1.5f)); //소리 추가(08.31)
         StartCoroutine(Immune(2.5f));
         yield return new WaitForSeconds(0.5f);
         PlayAnim("isFall");
@@ -253,24 +236,7 @@ public class PlayerCtrl_Archer : PlayerCtrl
     {
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Archer(LocalSkillYRot);
         yield return new WaitForSeconds(1.0f);
-        //GameObject ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        yield return new WaitForSeconds(0.05f);
-        //ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        yield return new WaitForSeconds(0.05f);
-        //ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        yield return new WaitForSeconds(0.05f);
-        //ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        yield return new WaitForSeconds(0.05f);
-        //ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        yield return new WaitForSeconds(0.05f);
-        //ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        yield return new WaitForSeconds(0.05f);
-        //ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        yield return new WaitForSeconds(0.05f);
-        //ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        yield return new WaitForSeconds(0.05f);
-        //ArrowInstant = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, 90, 0f));
-        yield return new WaitForSeconds(0.05f);
+        StartCoroutine(Attack_Sound(5, 8.0f)); //소리 추가(08.31)
     }
     public void comboAttack_1_on()
     {

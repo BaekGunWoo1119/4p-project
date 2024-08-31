@@ -63,6 +63,7 @@ public class DruidCtrl : BossCtrl
         ToxicPortal_Collider.SetActive(false);
         shopPortal.SetActive(false);
         StartCoroutine(Think());
+        SoundsManager.Change_Sounds("Forest_Boss"); //소리 추가(08.31)
     }
 
     protected override void Update()
@@ -93,6 +94,10 @@ public class DruidCtrl : BossCtrl
         if(BackDashOn == true)
         {
             StartCoroutine(BackDash());
+        }
+        if(isDie == true)
+        {
+            SoundsManager.Change_Sounds("Forest"); //소리 추가(08.31)
         }
     }
     #endregion

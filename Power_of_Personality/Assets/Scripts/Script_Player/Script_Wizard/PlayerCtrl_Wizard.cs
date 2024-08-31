@@ -171,32 +171,28 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     {
         if (AttackNumber == 0)
         {
-            StartCoroutine(Spawn_CommonAttack1());
+            StartCoroutine(Attack_Sound(0, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 1)
         {   
-            StartCoroutine(Spawn_CommonAttack2());
+            StartCoroutine(Attack_Sound(1, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 2)
         {
-            StartCoroutine(Spawn_CommonAttack3());
+            StartCoroutine(Attack_Sound(2, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 3)
         {
-
+            StartCoroutine(Attack_Sound(1, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 4)
         {
+            StartCoroutine(Attack_Sound(2, 0.7f)); //소리 추가(08.31)
             StopAnim("CommonAttack"); //점공 후 트리거 초기화(08.28)
-        }
-
-        if (AttackNumber == 5)
-        {
-
         }
     }
     public IEnumerator Skill_Q()
@@ -226,7 +222,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
     {
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Wizard(LocalSkillYRot);
         StartCoroutine(Immune(6f));
-        tgPos = new Vector3(transform.position.x, transform.position.y + 4.0f, transform.position.z);
+        tgPos = new Vector3(transform.position.x, transform.position.y + 7.0f, transform.position.z); //높이 조금 더 높게 조정(08.31)
         rd.useGravity = false;
         yield return new WaitForSeconds(6.0f);
         isSkill = false;
@@ -235,21 +231,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
         ESkillCoolTime = 0;
         Ecool.fillAmount = 1;
     }
-    public IEnumerator Spawn_CommonAttack1()
-    {
-        yield return new WaitForSeconds(0.3f);
-        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-    }
-    public IEnumerator Spawn_CommonAttack2()
-    {
-        yield return new WaitForSeconds(0.1f);
-        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-    }
-    public IEnumerator Spawn_CommonAttack3()
-    {
-        //GameObject CommonAttack = Instantiate(CommonAttack3_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        yield return null;
-    }
+
     public void comboAttack_1_on()
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
@@ -394,6 +376,12 @@ public class PlayerCtrl_Wizard : PlayerCtrl
         {
             isSkill = true;
             PlayAnim("Skill_Q");
+
+            if(PlayerPrefs.GetString("property") == "Fire")
+                StartCoroutine(Attack_Sound(3, 4f)); //소리 추가(08.31)
+            else
+                StartCoroutine(Attack_Sound(4, 4f)); //소리 추가(08.31)
+
             StartCoroutine(Skill_Q());
         }
 
@@ -401,6 +389,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
         {
             isSkill = true;
             PlayAnim("Skill_W");
+            StartCoroutine(Attack_Sound(5, 4f)); //소리 추가(08.31)
             StartCoroutine(Skill_W());
         }
 
@@ -408,6 +397,7 @@ public class PlayerCtrl_Wizard : PlayerCtrl
         {
             isSkill = true;
             PlayAnim("Skill_E");
+            StartCoroutine(Attack_Sound(6, 7.5f)); //소리 추가(08.31)
             StartCoroutine(Skill_E_Move());
         }
     }
