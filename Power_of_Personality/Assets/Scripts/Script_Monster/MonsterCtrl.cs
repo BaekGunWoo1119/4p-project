@@ -190,12 +190,15 @@ public class MonsterCtrl : MonoBehaviour
         // 플레이어를 향해 이동하는 로직
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
         Vector3 movement;
-        if(localPosition < Mathf.Abs(directionToPlayer.z)){
+        if(localPosition.z < Mathf.Abs(directionToPlayer.z)){
             movement = new Vector3(directionToPlayer.x, 0, directionToPlayer.z) * MoveSpeed * Time.deltaTime;
         }
         else{
             movement = new Vector3(directionToPlayer.x, 0, directionToPlayer.z) * MoveSpeed * Time.deltaTime;
         }
+        //위 if else문에서 error CS0019: Operator '<' cannot be applied to operands of type 'Vector3' and 'float'
+        //이라는 오류 뜨고 Safe Mode로 실행되서 일단 localPosition을 localPosition.z로 바꿔둠 (08.31)
+
         transform.parent.Translate(movement, Space.World);
 
         yield return null;

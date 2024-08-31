@@ -237,9 +237,7 @@ public class Server_MonsterCtrl : MonoBehaviour
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
         Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
         transform.parent.Translate(movement);
-
         
-
         yield return null;
     }
 
