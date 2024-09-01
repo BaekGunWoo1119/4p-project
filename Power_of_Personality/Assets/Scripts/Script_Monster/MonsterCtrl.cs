@@ -185,19 +185,16 @@ public class MonsterCtrl : MonoBehaviour
     {
         desiredParent = this.transform.parent.parent;
         Vector3 localPosition = desiredParent.InverseTransformPoint(transform.position);
-        Vector3 playerLocalPosition = desiredParent.InverseTransformPoint(transform.position);
+        Vector3 playerLocalPosition = desiredParent.InverseTransformPoint(PlayerTr.position);
+        //Debug.Log(localPosition.z - playerLocalPosition.z);
 
         // 플레이어를 향해 이동하는 로직
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
         Vector3 movement;
-        if(localPosition < Mathf.Abs(directionToPlayer.z)){
+        if(localPosition.z - playerLocalPosition.z > -1 && localPosition.z - playerLocalPosition.z < 1){
             movement = new Vector3(directionToPlayer.x, 0, directionToPlayer.z) * MoveSpeed * Time.deltaTime;
+            transform.parent.Translate(movement, Space.World);
         }
-        else{
-            movement = new Vector3(directionToPlayer.x, 0, directionToPlayer.z) * MoveSpeed * Time.deltaTime;
-        }
-        transform.parent.Translate(movement, Space.World);
-
         yield return null;
     }
 
