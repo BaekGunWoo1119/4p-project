@@ -168,31 +168,27 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     {
         if (AttackNumber == 0)
         {
-            StartCoroutine(Spawn_CommonAttack1());
+            StartCoroutine(Attack_Sound(0, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 1)
         {   
-            StartCoroutine(Spawn_CommonAttack2());
+            StartCoroutine(Attack_Sound(1, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 2)
         {
-            StartCoroutine(Spawn_CommonAttack3());
+            StartCoroutine(Attack_Sound(2, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 3)
         {
-
+            StartCoroutine(Attack_Sound(1, 0.7f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 4)
         {
-
-        }
-
-        if (AttackNumber == 5)
-        {
+            StartCoroutine(Attack_Sound(2, 0.7f)); //소리 추가(08.31)
             photonview.RPC("StopAnim",RpcTarget.All,"CommonAttack");
         }
     }
@@ -223,7 +219,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     {
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Wizard(LocalSkillYRot);
         StartCoroutine(Immune(6f));
-        tgPos = new Vector3(transform.position.x, transform.position.y + 4.0f, transform.position.z);
+        tgPos = new Vector3(transform.position.x, transform.position.y + 7.0f, transform.position.z); //높이 조금 더 높게 조정(08.31)
         rd.useGravity = false;
         yield return new WaitForSeconds(6.0f);
         isSkill = false;
@@ -231,21 +227,6 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         Fall();
         ESkillCoolTime = 0;
         Ecool.fillAmount = 1;
-    }
-    public IEnumerator Spawn_CommonAttack1()
-    {
-        yield return new WaitForSeconds(0.3f);
-        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-    }
-    public IEnumerator Spawn_CommonAttack2()
-    {
-        yield return new WaitForSeconds(0.1f);
-        //GameObject CommonAttack = Instantiate(CommonAttack1_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-    }
-    public IEnumerator Spawn_CommonAttack3()
-    {
-        //GameObject CommonAttack = Instantiate(CommonAttack3_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot + 180f, 0f));
-        yield return null;
     }
     public void comboAttack_1_on()
     {
@@ -446,6 +427,14 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         {
             isSkill = true;
             PlayAnim("Skill_Q");
+            if(photonview.IsMine){
+                if(PlayerPrefs.GetString("property") == "Fire"){
+                    photonview.RPC("RPCAttackSound",RpcTarget.All, 3, 4f);//소리 추가(08.31)
+                }
+                else{
+                    photonview.RPC("RPCAttackSound",RpcTarget.All, 4, 4f);//소리 추가(08.31)
+                }
+            }
             StartCoroutine(Skill_Q());
         }
 
@@ -453,6 +442,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         {
             isSkill = true;
             PlayAnim("Skill_W");
+            StartCoroutine(Attack_Sound(5, 4f)); //소리 추가(08.31)
             StartCoroutine(Skill_W());
         }
 
@@ -460,6 +450,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         {
             isSkill = true;
             PlayAnim("Skill_E");
+            StartCoroutine(Attack_Sound(6, 7.5f)); //소리 추가(08.31)
             StartCoroutine(Skill_E_Move());
         }
     }
@@ -535,6 +526,11 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     public override void ToggleGameObjects(GameObject go)
     {
         base.ToggleGameObjects(go);
+    }
+
+    [PunRPC]
+    public void RPCAttackSound(int number, float time){
+        StartCoroutine(Attack_Sound(number, time)); //소리 추가(08.31)
     }
 
 }

@@ -74,6 +74,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     protected bool stateSkillE_Wait = false;
     protected bool stateDamage = false;
     protected bool stateDash = false;
+    protected bool stateDashAttack = false; // 대쉬공격 사운드땜에 추가 (08.31)
     protected bool stateDie = false;
 
     // 코루틴 컨트롤
@@ -733,6 +734,11 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
 
     #endregion
 
+    //도적용 무기 세트효과(08.31)
+    protected virtual void Rogue_Sec_Weapon(string weaponType)
+    {
+    }
+
     #region HP 설정
     protected virtual IEnumerator TakeDamage()
     {
@@ -1244,6 +1250,18 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
 
     #endregion
 
+    #region 사운드 함수
+    //사운드 함수 추가 (08.31)
+    public virtual IEnumerator Attack_Sound(int AttackValue, float playsec)
+    {
+        audioSources[AttackValue].Play();
+        yield return new WaitForSeconds(playsec);
+        audioSources[AttackValue].Stop();
+        yield return null;
+    }
+
+    #endregion
+
     #region 애니메이션 
     [PunRPC]
     public virtual void PlayAnim(string AnimationName)
@@ -1471,6 +1489,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 {
                     Item_Weapon_Fire_Effect.SetActive(false);
                     Item_Weapon_Ice_Effect.SetActive(true);
+                    Rogue_Sec_Weapon("Fire");
                 }
                 break;
             //1번 세트 3셋 이펙트 효과
@@ -1480,6 +1499,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 {
                     Item_Aura_Fire_Effect.SetActive(false);
                     Item_Aura_Ice_Effect.SetActive(true);
+                    Rogue_Sec_Weapon("Ice");
                 }
                 break;
             //2번 세트 3셋 이펙트 효과
@@ -1505,6 +1525,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 {
                     Item_Weapon_Fire_Effect.SetActive(false);
                     Item_Weapon_Ice_Effect.SetActive(false);
+                    Rogue_Sec_Weapon("None");
                 }
                 break;
             case 9:
@@ -1513,6 +1534,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 {
                     Item_Weapon_Fire_Effect.SetActive(false);
                     Item_Weapon_Ice_Effect.SetActive(false);
+                    Rogue_Sec_Weapon("None");
                 }
                 break;
 
