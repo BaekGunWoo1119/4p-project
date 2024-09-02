@@ -36,36 +36,6 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         JumpPower = 14;
         fallPower = 4;
 
-    /*
-        //플레이어 어택 콜라이더 인식 방식 변경 (서버에 맞게)
-        Attack_Collider_All = transform.Find("AttackColliders").gameObject;
-        //Debug.Log(Attack_Collider_All);
-        QSkill_Collider = Attack_Collider_All.transform.Find("QSkill_Collider").gameObject;
-        QSkill_Last_Collider = Attack_Collider_All.transform.Find("QSkill_Last_Collider").gameObject;
-        WSkill_Collider = Attack_Collider_All.transform.Find("WSkill_Collider").gameObject;
-        WSkill_Last_Collider = Attack_Collider_All.transform.Find("WSkill_Last_Collider").gameObject;
-        ESkill_Collider1 = Attack_Collider_All.transform.Find("ESkill_Collider1").gameObject;
-        ESkill_Collider2 = Attack_Collider_All.transform.Find("ESkill_Collider2").gameObject;
-        ESkill_Collider3 = Attack_Collider_All.transform.Find("ESkill_Collider3").gameObject;
-        ESkill_Collider4 = Attack_Collider_All.transform.Find("ESkill_Collider4").gameObject;
-
-
-        Attack_1_Collider = Attack_Collider_All.transform.Find("Attack_1_Collider").gameObject;
-        Attack_2_Collider = Attack_Collider_All.transform.Find("Attack_2_Collider").gameObject;
-        Attack_3_Collider = Attack_Collider_All.transform.Find("Attack_3_Collider").gameObject;
-        QSkill_Collider.SetActive(false);
-        QSkill_Last_Collider.SetActive(false);
-        WSkill_Collider.SetActive(false);
-        WSkill_Last_Collider.SetActive(false);
-        ESkill_Collider1.SetActive(false);
-        ESkill_Collider2.SetActive(false);
-        ESkill_Collider3.SetActive(false);
-        ESkill_Collider4.SetActive(false);
-        Attack_1_Collider.SetActive(false);
-        Attack_2_Collider.SetActive(false);
-        Attack_3_Collider.SetActive(false);
-    */
-
         // 도적의 Dash는 따로 실행
         StartCoroutine(DashListener());
         isDashAttack = false;
@@ -86,8 +56,8 @@ public class PlayerCtrl_Rogue : PlayerCtrl
             isJumpAttack = true;
         }
 
-        //대쉬일 때
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Dash"))
+        //대쉬일 때(08.31) 코드 간소화
+        if (stateDash == true)
         {
             moveSpd = moveSpeed * 1.25f;
         }
@@ -100,21 +70,16 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         if (PlayerPrefs.GetString("property") == "Fire")
         {
             Item_Weapon2_Effect = Item_Weapon_Fire_Effect;
-            Item_Weapon2_Fire_Effect.SetActive(true);
-            Item_Weapon2_Ice_Effect.SetActive(false);
         }
         else if (PlayerPrefs.GetString("property") == "Ice")
         {
             Item_Weapon2_Effect = Item_Weapon_Ice_Effect;
-            Item_Weapon2_Fire_Effect.SetActive(false);
-            Item_Weapon2_Ice_Effect.SetActive(true);
         }
         else
         {
             Item_Weapon2_Effect = Item_Weapon_Ice_Effect;
-            Item_Weapon2_Fire_Effect.SetActive(false);
-            Item_Weapon2_Ice_Effect.SetActive(true);
         }
+        
     }
     #region HP 설정
     public override void SetHp(float amount)
@@ -207,67 +172,28 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         if (AttackNumber == 0)
         {
-            StartCoroutine(Attack1_Collider());
+            StartCoroutine(Attack_Sound(0, 0.5f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 1)
         {
-            StartCoroutine(Attack2_Collider());
+            StartCoroutine(Attack_Sound(1, 0.5f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 2)
         {
-            StartCoroutine(Attack3_Collider());
         }
 
         if (AttackNumber == 3)
         {
-
+            StartCoroutine(Attack_Sound(1, 0.5f)); //소리 추가(08.31)
         }
 
         if (AttackNumber == 4)
         {
+            StartCoroutine(Attack_Sound(2, 0.5f)); //소리 추가(08.31)
             StopAnim("CommonAttack"); //점공 후 트리거 초기화(08.29)
         }
-    }
-    IEnumerator Attack1_Collider()
-    {
-        /*
-        Attack_1_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
-        if (Attack_1_Collider == true)
-        {
-            Attack_1_Collider.SetActive(false);
-        }
-        */
-
-        yield return new WaitForSeconds(0.3f);
-    }
-    IEnumerator Attack2_Collider()
-    {
-        /*
-        Attack_2_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
-        if (Attack_2_Collider == true)
-        {
-            Attack_2_Collider.SetActive(false);
-        }
-        */
-
-        yield return new WaitForSeconds(0.3f);
-    }
-    IEnumerator Attack3_Collider()
-    {
-        /*
-        Attack_3_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        if (Attack_3_Collider == true)
-        {
-            Attack_3_Collider.SetActive(false);
-        }
-        */
-
-        yield return new WaitForSeconds(0.5f);
     }
 
     protected override void Attack_anim()
@@ -279,8 +205,10 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     //도적 스킬 E 카메라 무브 및 스킬 공격
     IEnumerator Skill_E_Move()
     {
+        //소리 추가를 위해 타이밍 전체적으로 변경(08.31)
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Rogue(LocalSkillYRot);
-        yield return new WaitForSeconds(1.7f);
+        yield return new WaitForSeconds(1.2f);
+        StartCoroutine(Attack_Sound(5, 5.0f));
         //ESkill_Collider1.SetActive(true);
         yield return new WaitForSeconds(0.25f);
         //ESkill_Collider1.SetActive(false);
@@ -296,7 +224,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         yield return new WaitForSeconds(0.5f);
         //ESkill_Collider4.SetActive(false);
         //UI 쿨타임 시간 변경(08.29)
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(1.2f);
         ESkillCoolTime = 0;
         Ecool.fillAmount = 1;
     }
@@ -334,11 +262,13 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         {
             SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
+            StartCoroutine(Attack_Sound(2, 0.5f)); //대쉬공격 때문에 여기에 소리 추가(08.31)
         }
         else
         {
             SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
+            StartCoroutine(Attack_Sound(2, 0.5f)); //대쉬공격 때문에 여기에 소리 추가(08.31)
         }
     }
 
@@ -443,7 +373,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     }
     #endregion
 
-    #region 도적 Dash 함수
+    #region 도적 Dash, 무기 세트효과 함수
     IEnumerator DashListener()
     {
         while (true)
@@ -475,7 +405,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
 
     IEnumerator Dash(string direct)
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForFixedUpdate(); // 이준경 : 대쉬 빌드시 문제 해결(08.31)
 
         float count = 0f;
 
@@ -504,6 +434,31 @@ public class PlayerCtrl_Rogue : PlayerCtrl
             yield return null;
         }
     }
+
+    protected override void Rogue_Sec_Weapon(string weaponType)
+    {
+        if(weaponType == "Fire")
+        {
+            Item_Weapon2_Fire_Effect.SetActive(true);
+            Item_Weapon2_Ice_Effect.SetActive(false);
+        }
+        else if(weaponType == "Ice")
+        {
+            Item_Weapon2_Fire_Effect.SetActive(false);
+            Item_Weapon2_Ice_Effect.SetActive(true);
+        }
+        else if(weaponType == "None")
+        {
+            Item_Weapon2_Fire_Effect.SetActive(false);
+            Item_Weapon2_Ice_Effect.SetActive(false);
+        }
+        else
+        {
+            Item_Weapon2_Fire_Effect.SetActive(false);
+            Item_Weapon2_Ice_Effect.SetActive(false);
+        }
+
+    }
     #endregion
 
     #region 스킬이나 공격 움직임, Delay 등 세부 조정 함수
@@ -515,6 +470,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         if(skillName == "Q")
         {
             PlayAnim("Skill_Q");
+            StartCoroutine(Attack_Sound(3, 3.0f)); //소리 추가(08.31)
             StartCoroutine(MoveForwardForSeconds(1.0f));
             StartCoroutine(Immune(2.5f));
             QSkillCoolTime = 0;
@@ -524,6 +480,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         if(skillName == "W")
         {
             PlayAnim("Skill_W");
+            StartCoroutine(Attack_Sound(4, 3.0f)); //소리 추가(08.31)
             StartCoroutine(Skill_W());
             StartCoroutine(Immune(3f));
         }
@@ -552,14 +509,6 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         {
             yield return new WaitForSeconds(0.3f);
         }
-        /*
-        if (QSkill_Collider.activeSelf == true)
-        {
-            QSkill_Collider.SetActive(false);
-            QSkillCoolTime = 0;
-            Qcool.fillAmount = 1;
-        }
-        */
     }
     IEnumerator Skill_W()
     {

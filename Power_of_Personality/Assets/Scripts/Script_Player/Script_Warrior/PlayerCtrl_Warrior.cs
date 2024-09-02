@@ -302,32 +302,25 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     }
     */
 
-    IEnumerator Attack_Sound(int AttackValue, float playsec)
+    public override IEnumerator Attack_Sound(int AttackValue, float playsec)
     {
         if (AttackValue == 1)
         {
             isSound = true;
         }
-        audioSources[AttackValue].Play();
-        yield return new WaitForSeconds(playsec);
-        audioSources[AttackValue].Stop();
-        yield return null;
+        yield return base.Attack_Sound(AttackValue, playsec);
     }
 
 
     IEnumerator Spawn_SwordAura()
     {
+        //코루틴 내역 전면 수정(08.31)
         isSkillQ = false;
-        yield return new WaitForSeconds(0.2f);
-        //GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, this.transform.rotation);
-        yield return new WaitForSeconds(0.1f);
-        audioSources[3].Play();
         yield return new WaitForSeconds(0.3f);
+        StartCoroutine(Attack_Sound(3, 0.5f));
         //쿨타임
         QSkillCoolTime = 0;
         Qcool.fillAmount = 1;
-        yield return new WaitForSeconds(0.2f);
-        audioSources[3].Stop();
     }
 
     IEnumerator SKill_E_Move()
@@ -365,40 +358,27 @@ public class PlayerCtrl_Warrior : PlayerCtrl
     IEnumerator WarriorSkill_E()
     {
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Warrior(LocalSkillYRot);
+        //스킬 나갈 시 사운드(08.31)
         yield return new WaitForSeconds(1.8f);
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.2f);
-        //GameObject SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
-        //스킬 나갈 시 사운드 및 콜라이더
-        yield return new WaitForSeconds(0.4f);
-        audioSources[3].Stop();
-        audioSources[3].Play();
-        yield return new WaitForSeconds(0.2f);
-        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
         yield return new WaitForSeconds(0.6f);
         audioSources[3].Stop();
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.2f);
-        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.8f);
         audioSources[3].Stop();
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.2f);
-        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.4f);
         audioSources[3].Stop();
         audioSources[3].Play();
-        yield return new WaitForSeconds(0.2f);
-        //SwordAuraInstance = Instantiate(QSkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, SkillYRot, 0f));
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.4f);
+        audioSources[3].Stop();
+        audioSources[3].Play();
+        yield return new WaitForSeconds(1.2f);
         audioSources[3].Stop();
         audioSources[3].Play();
         yield return new WaitForSeconds(0.7f);
         audioSources[3].Stop();
-        yield return new WaitForSeconds(0.2f);
-        //GameObject SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
-        yield return new WaitForSeconds(0.1f);
-        //SwordAuraInstance2 = Instantiate(ESkill_Collider, EffectGen.transform.position, Quaternion.Euler(0f, LocalSkillYRot, 0f));
+        yield return new WaitForSeconds(0.3f);
         audioSources[3].Play();
         yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
@@ -548,6 +528,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
             PlayAnim("Skill_W");
             WSkillCoolTime = 0;
             Wcool.fillAmount = 1;
+            StartCoroutine(Attack_Sound(4, 3.4f));
             StartCoroutine(Immune(2f));
             StartCoroutine(MoveForwardForSeconds(1.35f));
         }

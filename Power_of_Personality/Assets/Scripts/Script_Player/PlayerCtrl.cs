@@ -73,6 +73,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool stateSkillE_Wait = false;
     protected bool stateDamage = false;
     protected bool stateDash = false;
+    protected bool stateDashAttack = false; // 대쉬공격 사운드땜에 추가 (08.31)
     protected bool stateDie = false;
 
     // 코루틴 컨트롤
@@ -595,6 +596,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                     {
                         Item_Weapon_Fire_Effect.SetActive(true);
                         Item_Weapon_Ice_Effect.SetActive(false);
+                        Rogue_Sec_Weapon("Fire"); //도적 두번째 단검 코드, 도적한테만 override 예정(08.31)
                     }
                 } else if(!Status.set3_3_Activated)
                 {
@@ -603,6 +605,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                     {
                         Item_Weapon_Fire_Effect.SetActive(false);
                         Item_Weapon_Ice_Effect.SetActive(false);
+                        Rogue_Sec_Weapon("None"); //도적 두번째 단검 코드, 도적한테만 override 예정(08.31)
                     }
                 }
                 #endregion
@@ -639,6 +642,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                     {
                         Item_Weapon_Fire_Effect.SetActive(false);
                         Item_Weapon_Ice_Effect.SetActive(true);
+                        Rogue_Sec_Weapon("Ice"); //도적 두번째 단검 코드, 도적한테만 override 예정(08.31)
                     }
                 } else if(!Status.set4_3_Activated)
                 {
@@ -647,6 +651,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                     {
                         Item_Weapon_Fire_Effect.SetActive(false);
                         Item_Weapon_Ice_Effect.SetActive(false);
+                        Rogue_Sec_Weapon("None"); //도적 두번째 단검 코드, 도적한테만 override 예정(08.31)
                     }
                 }
                 #endregion
@@ -777,8 +782,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Debug.Log("방패 버프");
         yield break;
     }
-
     #endregion
+
+    //도적용 무기 세트효과(08.31)
+    protected virtual void Rogue_Sec_Weapon(string weaponType)
+    {
+    }
 
     #region HP 설정
     protected virtual IEnumerator TakeDamage()
@@ -1270,6 +1279,18 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public virtual void Destroyed_Effect()
     {
         Destroy(SkillEffect);
+    }
+
+    #endregion
+
+    #region 사운드 함수
+    //사운드 함수 추가 (08.31)
+    public virtual IEnumerator Attack_Sound(int AttackValue, float playsec)
+    {
+        audioSources[AttackValue].Play();
+        yield return new WaitForSeconds(playsec);
+        audioSources[AttackValue].Stop();
+        yield return null;
     }
 
     #endregion
