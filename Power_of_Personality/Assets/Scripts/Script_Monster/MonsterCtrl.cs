@@ -61,7 +61,8 @@ public class MonsterCtrl : MonoBehaviour
         {
             AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
         }
-        SetHP(200);                         // 몬스터의 기본 HP를 설정
+        
+        SetHP(100);                         // 몬스터의 기본 HP를 설정
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();

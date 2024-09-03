@@ -111,10 +111,12 @@ public class InventoryCtrl : MonoBehaviour
 
     public void CheckInven()
     {
-
-        for(int i = 0; i < itemCount; i++)
+        if(Status.HP > 0)
         {
-            collectedItems[i] = itemList[collectedItemsID[i]].GetComponent<Item>();
+            for(int i = 0; i < itemCount; i++)
+            {
+                collectedItems[i] = itemList[collectedItemsID[i]].GetComponent<Item>();
+            }
         }
     }
     
@@ -141,6 +143,7 @@ public class InventoryCtrl : MonoBehaviour
             collectedItemsID[i] = -1;
         }
 
+        itemCount = 0;
         PotionCount = 0;
         ADPotionCount = 0;
         ArmorPotionCount = 0;

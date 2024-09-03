@@ -445,4 +445,69 @@ public class Status : MonoBehaviour
     {
         EXP += 1f;
     }
+
+    public static void isDie()
+    {
+        set1_Activate = false;
+        set1_3_Activated = false;
+        set1_4_Activated = false;
+
+        set2_Activate = false;
+        set2_3_Activated = false;
+        set2_4_Activated = false;
+        set2_3_Effect_Activated = false;
+
+        set3_Activate = false;
+        set3_3_Activated = false;
+        set3_4_Activated = false;
+
+        set4_Activate = false;
+        set4_3_Activated = false;
+        set4_4_Activated = false;
+
+        set5_Activate = false;
+        set5_3_Activated = false;
+        set5_4_Activated = false;
+
+        set6_Activate = false;
+        set6_3_Activated = false;
+        set6_4_Activated = false;
+
+        set7_Activate = false;
+        set7_3_Activated = false;
+        set7_4_Activated = false;
+
+        set8_Activate = false;
+        set8_3_Activated = false;
+
+        MaxHP = 100f;
+        FixedAD = 50f; //공격력 고정
+        PercentAD = 100f; //공격력 비율
+        FixedArmor = 50f; //방어력 고정
+        PercentArmor = 100f; //방어력 비율
+        FixedSpeed = 50f; //행동속도   고정
+        PercentSpeed = 100f; //행동속도 비율
+        FixedADC = 50f; //평타 데미지 고정
+        PercentADC = 100f; // 평타 데미지 비율
+        FixedAP = 50f; // 스킬 데미지 고정
+        PercentAP = 100f; // 스킬 데미지 비율
+        FixedCooltime = 0f; // 스킬 고정 쿨감
+        PercentCooltime = 100f; // 스킬 퍼센트 쿨감
+        FixedFire = 50f; // 화속성 데미지 고정
+        PercentFire = 100f; // 화속성 데미지 비율
+        FixedIce = 50f; // 빙속성 데미지 고정
+        PercentIce = 100f; // 빙속성 데미지 비율
+        TotalAD = 1f; // 총 공격력
+        TotalDamage = 1f; // 총 데미지 (속성뎀 포함)
+        TotalAP = 1f; // 총 스킬뎀
+        DisplayAP = 1f; // 보여주기용 AP
+        DisplayADC = 1f; // 보여주기용 ADC
+        TotalADC = 1f; //총 평타뎀
+        TotalArmor = 1f; //총 방어력
+        TotalFire = 1f; //총 화속성 데미지
+        TotalIce = 1f; //총 빙속성 데미지
+        TotalCooltime = 1f; //총 쿨타임
+        TotalSpeed = 1f; //총 행동속도
+        EXP = 0f; // 현재 경험치
+    }
 }

@@ -811,6 +811,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             PlayAnim("isDie");
 
             InvenCtrl.ResetInven();
+            Status.isDie();
 
             yield return new WaitForSeconds(2.0f);
             GameObject.Find("EventSystem").GetComponent<GameEnd>().GameOver(true);
