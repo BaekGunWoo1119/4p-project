@@ -16,6 +16,7 @@ public class Shop_PortalCtrl : MonoBehaviour
     private GameObject thisObj;
     private GameObject exitshop;
     private float orgSpd;
+    public static bool isShopOpen = false;
 
     void Start()
     {
@@ -57,7 +58,7 @@ public class Shop_PortalCtrl : MonoBehaviour
 
     public void Open_Shop(Collider col)
     {
-
+        isShopOpen = true;
         //현재 플레이어 위치 및 현재 스테이지 저장 후 상점으로 넘기기
         playerObj = col.gameObject;
         playerPos = col.gameObject.transform.position;
@@ -90,7 +91,8 @@ public class Shop_PortalCtrl : MonoBehaviour
         Destroy(thisObj);
     }
 
-    public void Exit_Shop_Multi(){
+    public void Exit_Shop_Multi()
+    {
         playerObj.transform.position = GameObject.FindGameObjectWithTag("CurrentSpawnPotint").transform.position;
         //playerObj.transform.position = GameObject.FindGameObjectsWithTag("CurrentSpawnPotint").transform.position;
         Status.IsShop = false;

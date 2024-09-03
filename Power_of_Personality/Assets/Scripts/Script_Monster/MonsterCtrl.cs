@@ -61,7 +61,7 @@ public class MonsterCtrl : MonoBehaviour
         {
             AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
         }
-        SetHP(156250);                         // 몬스터의 기본 HP를 설정
+        SetHP(200);                         // 몬스터의 기본 HP를 설정
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
@@ -707,7 +707,7 @@ public class MonsterCtrl : MonoBehaviour
             isDie = true;
             anim.SetBool("Die", true);
             yield return new WaitForSeconds(1.5f);
-            Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.1f, gameObject.transform.position.z);
+            Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.4f, gameObject.transform.position.z);
             Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
             Destroy(HpBar.gameObject);
             Destroy(this.gameObject); // 개체 파괴
