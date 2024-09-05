@@ -80,6 +80,14 @@ public class PlayerCtrl_Rogue : PlayerCtrl
             Item_Weapon2_Effect = Item_Weapon_Ice_Effect;
         }
         
+
+        //상점에서 대쉬 안 되게(09.04)
+        if(Status.IsShop == true)
+        {
+            isDash = false;
+            StopAnim("isDash");
+        }
+
     }
     #region HP 설정
     public override void SetHp(float amount)
@@ -97,6 +105,12 @@ public class PlayerCtrl_Rogue : PlayerCtrl
 
     protected override IEnumerator TakeDamage()
     {
+        //애니메이션 초기화(09.04)
+        if (Status.MaxHP != 0 || Status.HP > 0)
+        {
+            isDash = false;
+            StopAnim("isDash");
+        }
         yield return base.TakeDamage();
     }
 

@@ -253,7 +253,7 @@ Transform:
   - {fileID: 5685540294221872179}
   - {fileID: 1705528854061380351}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3462988163943559206
 GameObject:
@@ -644,8 +644,8 @@ GameObject:
   - component: {fileID: 5685540294221872179}
   - component: {fileID: 1731409836819506761}
   - component: {fileID: 7166771024902340780}
-  - component: {fileID: 3395994194289041344}
   - component: {fileID: 380370163911305077}
+  - component: {fileID: 7045565652226137553}
   m_Layer: 6
   m_Name: Monster(Script)
   m_TagString: Untagged
@@ -718,6 +718,7 @@ MonoBehaviour:
   TickCoolTime: 0
   DamageText: {fileID: 1880031391497513284, guid: 3f08f33154c6df6418d46b2e12f8cf2a, type: 3}
   MonsterCanvas: {fileID: 4222038662391974854}
+  CanvasYRot: 0
   hpBarPosition: {x: 0, y: 0, z: 0}
   matObj: {fileID: 0}
   targetObj: {fileID: 7487042011854067480}
@@ -735,29 +736,6 @@ MonoBehaviour:
   AttackEffect: {fileID: 1893033738566276, guid: 21b42dc3fcd1b4b43bc2b1d6dbff49a7, type: 3}
   EffectGen: {fileID: 3626740544139670766}
   desiredParent: {fileID: 0}
---- !u!136 &3395994194289041344
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5020608044954019465}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.3
-  m_Height: 2.2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.4, z: -0.1}
 --- !u!54 &380370163911305077
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -785,6 +763,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &7045565652226137553
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5020608044954019465}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3, z: 2}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &5031760696621390564
 GameObject:
   m_ObjectHideFlags: 0

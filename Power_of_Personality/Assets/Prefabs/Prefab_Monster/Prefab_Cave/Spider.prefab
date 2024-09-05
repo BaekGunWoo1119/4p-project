@@ -872,8 +872,8 @@ GameObject:
   - component: {fileID: 3579135713429388362}
   - component: {fileID: 7443192494753490480}
   - component: {fileID: 8721386368634381209}
-  - component: {fileID: 2258451123859792832}
   - component: {fileID: 139307666169226754}
+  - component: {fileID: 4675362462171266833}
   m_Layer: 6
   m_Name: Spider
   m_TagString: Untagged
@@ -949,10 +949,12 @@ MonoBehaviour:
   DEF: 0
   MoveSpeed: 2
   Damage: 10
+  ownWeakProperty: 
   WeakProperty: 
   TickCoolTime: 0
   DamageText: {fileID: 1880031391497513284, guid: 3f08f33154c6df6418d46b2e12f8cf2a, type: 3}
   MonsterCanvas: {fileID: 4424831484081911349}
+  CanvasYRot: 0
   hpBarPosition: {x: 0, y: 0, z: 0}
   matObj: {fileID: 0}
   targetObj: {fileID: 8154702182100186667}
@@ -971,27 +973,6 @@ MonoBehaviour:
   EffectGen: {fileID: 0}
   desiredParent: {fileID: 0}
   FirePos: {fileID: 5309998053197145008}
---- !u!65 &2258451123859792832
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4242518785244735216}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &139307666169226754
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1019,6 +1000,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!65 &4675362462171266833
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4242518785244735216}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3, z: 2}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1 &4424831484081911349
 GameObject:
   m_ObjectHideFlags: 0

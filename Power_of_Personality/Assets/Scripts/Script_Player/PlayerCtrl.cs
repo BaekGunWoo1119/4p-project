@@ -367,6 +367,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             //로테이션 고정 코드(04.10 백건우 수정, 굴절구간 문제 생길 시 아래 코드 대신 사용)
             YRot = transform.eulerAngles.y;
 
+            //넘어지는거 고정(09.04)
+            transform.rotation = Quaternion.Euler(0, YRot, 0);
+
             //Z 포지션 고정
             transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, 0);
 
@@ -803,6 +806,20 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             StartCoroutine(Immune(0.5f));   //무적 함수 실행
             yield return new WaitForSeconds(0.2f);
             StopAnim("TakeDamage");
+
+            //애니메이션 초기화(09.04)
+            isSkill = false;
+            isAttack = false;
+            isJumping = false;
+            isRun = false;
+            isDodge = false;
+            StopAnim("Skill_Q");
+            StopAnim("Skill_W");
+            StopAnim("Skill_E");
+            StopAnim("CommonAttack");
+            StopAnim("isRun");
+            StopAnim("isDodge");
+
             cameraEffect.GetComponent<CameraEffectCtrl>().ResetCameraEffect();
         }
 
@@ -932,6 +949,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         isDodge = true;
         yield return new WaitForSeconds(0.5f);
         StopAnim("isDodge");
+        //구르기 연타하고 안 움직이는 버그 해결(09.04)
+        StopAnim("CommonAttack");
+        StopAnim("isRun");
         isDodge = false;
     }
 
