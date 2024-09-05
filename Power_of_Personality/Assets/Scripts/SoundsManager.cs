@@ -47,8 +47,14 @@ public class SoundsManager : MonoBehaviour
 
         if(musicName == "Cave_Boss")
         {
-            loopStartTime = 1;
+            loopStartTime = 1f;
             loopEndTime = 95f;
+        }
+
+        if(musicName == "Sewer")
+        {
+            loopStartTime = 0;
+            loopEndTime = 63f;
         }
         // 처음부터 특정 구간만 반복 재생 및 페이드 아웃
         StartCoroutine(PlayLoopAudio());
@@ -73,7 +79,7 @@ public class SoundsManager : MonoBehaviour
                 Destroy(gameObject); // 이미 다른 SoundsManager 인스턴스가 존재하면, 자신을 파괴
             }
         }
-        else if(musicName == "Forest" || musicName == "Cave")
+        else if(musicName == "Forest" || musicName == "Cave" || musicName == "Sewer")
         {
             instance = this;
         }
@@ -86,7 +92,7 @@ public class SoundsManager : MonoBehaviour
 
     IEnumerator PlayLoopAudio()
     {
-        if(musicName == "Forest" || musicName == "Cave")
+        if(musicName == "Forest" || musicName == "Cave" || musicName == "Sewer")
         {
             audioSource.Play();
         }

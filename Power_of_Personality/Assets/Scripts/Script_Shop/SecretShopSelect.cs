@@ -7,10 +7,12 @@ using UnityEngine.EventSystems;
 public class SecretShopSelect : MonoBehaviour
 {
     public GameObject eventSystem;
+    public static bool hidden_pick;
     // Start is called before the first frame update
 
     void Start()
     {
+        hidden_pick = false;
         //eventSystem의 SecretShop 받아옴
         eventSystem = GameObject.Find("EventSystem");
         Button btn = GameObject.Find("Pick_Hidden").GetComponent<Button>();
@@ -20,7 +22,7 @@ public class SecretShopSelect : MonoBehaviour
     public void PickatRandom()
     {
         eventSystem.GetComponent<SecretShop>().StartAtRandom();
-        Debug.Log("픽");
+        hidden_pick = true;
         StartCoroutine(PickItem());
     }
 

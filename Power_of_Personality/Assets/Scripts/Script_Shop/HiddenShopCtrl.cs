@@ -146,7 +146,7 @@ public class HiddenShopCtrl : MonoBehaviour
     //픽이 아닌 리롤에 돈 소모되게(09.04)
     public void Reroll()
     {
-        if(PlayerPrefs.GetFloat("Coin") >= 5)
+        if(PlayerPrefs.GetFloat("Coin") >= 5 && SecretShopSelect.hidden_pick == false)
         {
             float currentCoin = PlayerPrefs.GetFloat("Coin", 0);
             PlayerPrefs.SetFloat("Coin", currentCoin -5);
