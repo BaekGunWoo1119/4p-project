@@ -19,14 +19,9 @@ public class SecretShopSelect : MonoBehaviour
 
     public void PickatRandom()
     {
-        if(PlayerPrefs.GetFloat("Coin") >= 5)
-        {
-            float currentCoin = PlayerPrefs.GetFloat("Coin", 0);
-            PlayerPrefs.SetFloat("Coin", currentCoin -5);
-            eventSystem.GetComponent<SecretShop>().StartAtRandom();
-            Debug.Log("픽");
-            StartCoroutine(PickItem());
-        }
+        eventSystem.GetComponent<SecretShop>().StartAtRandom();
+        Debug.Log("픽");
+        StartCoroutine(PickItem());
     }
 
     public IEnumerator PickItem()

@@ -75,6 +75,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool stateDash = false;
     protected bool stateDashAttack = false; // 대쉬공격 사운드땜에 추가 (08.31)
     protected bool stateDie = false;
+    protected bool stateShop = false; //상점 문제땜에 추가 (09.05)
 
     // 코루틴 컨트롤
     protected bool coroutineMove = false;
@@ -141,6 +142,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     // HP Bar
     protected Slider HpBar;
     public TMP_Text HpText;
+
+    //코인
+    protected TextMeshProUGUI CoinText;
 
     //포션
     public InventoryCtrl InvenCtrl;
@@ -227,6 +231,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         HpText.text = "HP" + Status.HP + "/" + Status.MaxHP;
         CheckHp();
 
+        //코인 설정(09.05)
+        CoinText = GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>();
+
         //포션 설정(06.15)
         InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
         hpPotionValue = GameObject.Find("HP_Potion - Text").GetComponent<TMP_Text>();
@@ -300,6 +307,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             Turn();
         }
+
+        //코인 업데이트(09.05)
+        if(PlayerPrefs.GetFloat("Coin").ToString() != CoinText.text)
+            CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
     }
 
     protected virtual void Update()
@@ -323,6 +334,11 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         // 해당 bool값 실행 시 모든 행동 멈춤
         if(!Status.IsShop && !anim.GetBool("isDie"))
         {
+            if(stateShop == true)
+            {
+                stateShop = false;
+                AnimReset();
+            }
 
             CheckHp(); //Hp 체크(08.30)
 
@@ -746,6 +762,11 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             }
 
         }
+        else if(Status.IsShop == true) //(09.05)
+        {
+            moveSpd = 0;
+            stateShop = true;
+        }
         else
         {
             moveSpd = 0;
@@ -806,20 +827,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             StartCoroutine(Immune(0.5f));   //무적 함수 실행
             yield return new WaitForSeconds(0.2f);
             StopAnim("TakeDamage");
-
-            //애니메이션 초기화(09.04)
-            isSkill = false;
-            isAttack = false;
-            isJumping = false;
-            isRun = false;
-            isDodge = false;
-            StopAnim("Skill_Q");
-            StopAnim("Skill_W");
-            StopAnim("Skill_E");
-            StopAnim("CommonAttack");
-            StopAnim("isRun");
-            StopAnim("isDodge");
-
+            AnimReset(); //애니메이션 리셋(09.05)
             cameraEffect.GetComponent<CameraEffectCtrl>().ResetCameraEffect();
         }
 
@@ -1432,6 +1440,21 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             stateDie = true;
         else
             stateDie = false;
+    }
+
+    public void AnimReset()
+    {
+        //애니메이션 초기화(09.05)
+        isSkill = false;
+        isAttack = false;
+        isJumping = false;
+        isRun = false;
+        isDodge = false;
+        StopAnim("Skill_Q");
+        StopAnim("Skill_W");
+        StopAnim("Skill_E");
+        StopAnim("isRun");
+        StopAnim("isDodge");
     }
     #endregion
 }

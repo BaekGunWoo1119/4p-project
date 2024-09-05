@@ -21,7 +21,7 @@ public class CoinCtrl : MonoBehaviour
             float currentCoin = PlayerPrefs.GetFloat("Coin", 0);
             PlayerPrefs.SetFloat("Coin", currentCoin + 100);
             //Debug.Log("���� = " + PlayerPrefs.GetFloat("Coin"));
-            CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
+            //CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
         }
     }
 }

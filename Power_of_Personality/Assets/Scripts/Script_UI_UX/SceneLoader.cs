@@ -82,7 +82,7 @@ public class SceneLoader : MonoBehaviour
             Main_Multi = GameObject.Find("MultiPlay").GetComponent<Button>();
             Main_Setting = GameObject.Find("Settings").GetComponent<Button>();
             Main_Exit = GameObject.Find("Exit").GetComponent<Button>();
-
+            PlayerPrefs.SetFloat("Coin", 0);
             if (Main_Single != null)
             {
                 Main_Single.onClick.AddListener(Main_Single_Pressed);
@@ -142,7 +142,7 @@ public class SceneLoader : MonoBehaviour
             MultiLobby_Ready = GameObject.Find("Ready").GetComponent<Button>();
             MultiLobby_ClassSelect = GameObject.Find("ClassSelect").GetComponent<Button>();
             MultiLobby_Back = GameObject.Find("Back").GetComponent<Button>();
-
+            PlayerPrefs.SetFloat("Coin", 0);
             if(MultiLobby_Ready != null)
             {
                 MultiLobby_Ready.onClick.AddListener(MultiLobby_Ready_Pressed);
