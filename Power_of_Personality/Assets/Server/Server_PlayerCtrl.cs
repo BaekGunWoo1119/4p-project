@@ -752,6 +752,19 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             StartCoroutine(Immune(0.5f));   //무적 함수 실행
             yield return new WaitForSeconds(0.2f);
             StopAnim("TakeDamage");
+
+            //애니메이션 초기화(09.04)
+            isSkill = false;
+            isAttack = false;
+            isJumping = false;
+            isRun = false;
+            isDodge = false;
+            StopAnim("Skill_Q");
+            StopAnim("Skill_W");
+            StopAnim("Skill_E");
+            StopAnim("CommonAttack");
+            StopAnim("isRun");
+            StopAnim("isDodge");
             cameraEffect.GetComponent<CameraEffectCtrl>().ResetCameraEffect();
         }
 

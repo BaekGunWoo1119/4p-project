@@ -126,7 +126,12 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                     if (MonsterCount < 1)
                     {
                         if (PhotonNetwork.IsMasterClient){
+                            if(CurrentWave>12){
+                                photonview.RPC("GameClear",RpcTarget.All);
+                            }
+                            else{
                             photonview.RPC("EndWave",RpcTarget.All);
+                            }
                         }
                         WaveUpdate();
                     }
@@ -184,9 +189,6 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     void EndWave()
     {
         CurrentWave += 1;
-        if(CurrentWave>12){
-            GameClear();
-        }
         Status.HP = Status.MaxHP;
         if (IsDie == true){
             IsDie = false;
@@ -351,8 +353,10 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         //게임오버 넣어야됨
         PhotonNetwork.LoadLevel("1-2 (Multi Lobby)");
         IsDie=false;
+        Status.isDie();
     }
 
+    [PunRPC]
     public void GameClear(){
         //GameClear.SetActive(true);
         //delay

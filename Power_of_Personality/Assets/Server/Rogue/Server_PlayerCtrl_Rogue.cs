@@ -67,6 +67,12 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             CurProperty = PlayerPrefs.GetString("property");
             photonview.RPC("SetProperty",RpcTarget.All, CurProperty);
         }
+        //상점에서 대쉬 안 되게(09.04)
+        if(Status.IsShop == true)
+        {
+            isDash = false;
+            StopAnim("isDash");
+        }
         
     }
     #region HP 설정
@@ -85,6 +91,12 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
 
     protected override IEnumerator TakeDamage()
     {
+        //애니메이션 초기화(09.04)
+        if (Status.MaxHP != 0 || Status.HP > 0)
+        {
+            isDash = false;
+            StopAnim("isDash");
+        }
         yield return base.TakeDamage();
     }
 
