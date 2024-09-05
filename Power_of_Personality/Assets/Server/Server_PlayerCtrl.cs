@@ -76,6 +76,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     protected bool stateDash = false;
     protected bool stateDashAttack = false; // 대쉬공격 사운드땜에 추가 (08.31)
     protected bool stateDie = false;
+    protected bool stateShop = false; //상점 문제땜에 추가 (09.05)
 
     // 코루틴 컨트롤
     protected bool coroutineMove = false;
@@ -196,6 +197,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     protected int currentStack = 0;
     protected float clockEffectTime = 0;
     Stack prevADC = new Stack();
+    protected TextMeshProUGUI CoinText;
 
     #endregion
 
@@ -231,6 +233,9 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         HpText = GameObject.Find("StatPoint - Hp").GetComponent<TMP_Text>();
         HpText.text = "HP" + Status.HP + "/" + Status.MaxHP;
         CheckHp();
+
+        //코인 설정(09.05)
+        CoinText = GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>();
 
         //포션 설정(06.15)
         InvenCtrl = GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>();
@@ -308,6 +313,9 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 Turn();
             }
         }
+        //코인 업데이트(09.05)
+        if(PlayerPrefs.GetFloat("Coin").ToString() != CoinText.text)
+            CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
         CheckHp();
     }
 
@@ -692,6 +700,11 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             }
 
         }
+        else if(Status.IsShop == true) //(09.05)
+        {
+            moveSpd = 0;
+            stateShop = true;
+        }
         else
         {
             moveSpd = 0;
@@ -753,18 +766,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             yield return new WaitForSeconds(0.2f);
             StopAnim("TakeDamage");
 
-            //애니메이션 초기화(09.04)
-            isSkill = false;
-            isAttack = false;
-            isJumping = false;
-            isRun = false;
-            isDodge = false;
-            StopAnim("Skill_Q");
-            StopAnim("Skill_W");
-            StopAnim("Skill_E");
-            StopAnim("CommonAttack");
-            StopAnim("isRun");
-            StopAnim("isDodge");
+            AnimReset(); //애니메이션 리셋(09.05)
             cameraEffect.GetComponent<CameraEffectCtrl>().ResetCameraEffect();
         }
 
@@ -1394,6 +1396,20 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             stateDie = true;
         else
             stateDie = false;
+    }
+    public virtual void AnimReset()
+    {
+        //애니메이션 초기화(09.05)
+        isSkill = false;
+        isAttack = false;
+        isJumping = false;
+        isRun = false;
+        isDodge = false;
+        StopAnim("Skill_Q");
+        StopAnim("Skill_W");
+        StopAnim("Skill_E");
+        StopAnim("isRun");
+        StopAnim("isDodge");
     }
     #endregion
     [PunRPC]

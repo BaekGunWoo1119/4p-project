@@ -483,4 +483,8 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     {
         base.ToggleGameObjects(go);
     }
+    public override void AnimReset()
+    {
+        base.AnimReset();
+    }
 }

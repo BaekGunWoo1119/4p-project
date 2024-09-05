@@ -533,4 +533,9 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         StartCoroutine(Attack_Sound(number, time)); //소리 추가(08.31)
     }
 
+     public override void AnimReset()
+    {
+        base.AnimReset();
+    }
+
 }

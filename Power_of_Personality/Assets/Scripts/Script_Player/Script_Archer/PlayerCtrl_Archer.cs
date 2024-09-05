@@ -409,4 +409,8 @@ public class PlayerCtrl_Archer : PlayerCtrl
         base.StopAnim(AnimationName);
     }
     #endregion
+    public override void AnimReset()
+    {
+        base.AnimReset();
+    }
 }

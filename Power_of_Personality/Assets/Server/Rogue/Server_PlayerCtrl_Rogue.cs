@@ -679,5 +679,9 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     {
         base.ToggleGameObjects(go);
     }
+    public override void AnimReset()
+    {
+        base.AnimReset();
+    }
 
 }

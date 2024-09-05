@@ -583,4 +583,8 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         base.AnimState();
     }
     #endregion
+    public override void AnimReset()
+    {
+        base.AnimReset();
+    }
 }
