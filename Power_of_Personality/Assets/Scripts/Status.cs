@@ -92,6 +92,7 @@ public class Status : MonoBehaviour
     {
         StatUpdate();
         Array.Fill(itemIds, -1);
+        IsShop = false;
     }
 
     void Update()

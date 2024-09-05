@@ -439,4 +439,9 @@ public class PlayerCtrl_Wizard : PlayerCtrl
         base.StopAnim(AnimationName);
     }
     #endregion
+
+    public override void AnimReset()
+    {
+        base.AnimReset();
+    }
 }

@@ -658,5 +658,9 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     {
         base.ToggleGameObjects(go);
     }
+    public override void AnimReset()
+    {
+        base.AnimReset();
+    }
 
 }

@@ -1439,7 +1439,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             stateDie = false;
     }
 
-    public void AnimReset()
+    public virtual void AnimReset()
     {
         //애니메이션 초기화(09.05)
         isSkill = false;

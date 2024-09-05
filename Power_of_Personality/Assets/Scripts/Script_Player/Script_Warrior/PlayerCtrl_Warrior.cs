@@ -592,4 +592,8 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         base.AnimState();
     }
     #endregion
+    public override void AnimReset()
+    {
+        base.AnimReset();
+    }
 }
