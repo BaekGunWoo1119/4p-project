@@ -270,37 +270,6 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
     }
 
-    /*
-    IEnumerator Attack1_Collider()
-    {
-        yield return new WaitForSeconds(0.125f);
-        Attack_1_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
-        if (Attack_1_Collider == true)
-        {
-            Attack_1_Collider.SetActive(false);
-        }
-    }
-    IEnumerator Attack2_Collider()
-    {
-        Attack_2_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
-        if (Attack_2_Collider == true)
-        {
-            Attack_2_Collider.SetActive(false);
-        }
-    }
-    IEnumerator Attack3_Collider()
-    {
-        yield return new WaitForSeconds(0.125f);
-        Attack_3_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        if (Attack_3_Collider == true)
-        {
-            Attack_3_Collider.SetActive(false);
-        }
-    }
-    */
 
     public override IEnumerator Attack_Sound(int AttackValue, float playsec)
     {

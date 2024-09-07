@@ -1454,4 +1454,4 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         StopAnim("isDodge");
     }
     #endregion
-}
+}   

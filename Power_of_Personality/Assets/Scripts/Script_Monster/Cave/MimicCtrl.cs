@@ -8,19 +8,17 @@ using UnityEngine.UI;
 
 public class MimicCtrl : MonsterCtrl
 {
+
     public override void Awake()
     {
-        ownWeakProperty ="Ice";
+        ownWeakProperty = "Ice";
         ATK = 10.0f;
+        DEF = 100;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
         TraceRadius = 10.0f;
         attackRadius = 3.0f;
         base.Awake();
-    }
-    public override void Start()
-    {
-        base.Start();
     }
     public override void Update()
     {
@@ -59,21 +57,20 @@ public class MimicCtrl : MonsterCtrl
     {
         base.OnTriggerEnter(col);
     }
-
+    public override void OnTriggerStay(Collider col)
+    {
+        base.OnTriggerStay(col);
+    }
     public override IEnumerator TakeDamage(float Damage)
     {
         yield return base.TakeDamage(Damage);
     }
     public override Vector3 GetHPBarPosition()
     {
-        return base.GetHPBarPosition(); // ���ϴ� ��ġ�� ����
+        return base.GetHPBarPosition(); // 원하는 위치로 수정
     }
     public override IEnumerator DamageTextAlpha(float Damage)
     {
         yield return base.DamageTextAlpha(Damage);
-    }
-    public override void Attack_On()
-    {
-        base.Attack_On();
     }
 }

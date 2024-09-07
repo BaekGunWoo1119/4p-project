@@ -21,7 +21,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     private GameObject Attack_1_Collider;
     private GameObject Attack_2_Collider;
     private GameObject Attack_3_Collider;
-
+    public GameObject DashAttackColler;
     //도적은 양손 검이라 무기 이펙트 하나 더 추가해야 함
     public GameObject Item_Weapon2_Effect;
     public GameObject Item_Weapon2_Ice_Effect;
@@ -44,8 +44,8 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         base.FixedUpdate();
         //isImmune = true; //실험용 무적 코드
-        Debug.Log(isImmune);
     }
+
     protected override void Update()
     {
         base.Update(); // PlayerCtrl의 Update문을 상속 받아서 실행
@@ -126,6 +126,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     #endregion
 
     #region 이동 관련 함수
+
     protected override void WallCheck()
     {
         base.WallCheck();
@@ -138,7 +139,10 @@ public class PlayerCtrl_Rogue : PlayerCtrl
 
     public override void Move()
     {
-        base.Move();
+        if (!isDashing)
+        {
+            base.Move();
+        }
     }
 
     protected override void Turn()
@@ -284,6 +288,11 @@ public class PlayerCtrl_Rogue : PlayerCtrl
             SkillEffect.transform.parent = EffectGen.transform;
             StartCoroutine(Attack_Sound(2, 0.5f)); //대쉬공격 때문에 여기에 소리 추가(08.31)
         }
+    }
+
+    public void dashFront()
+    {
+
     }
 
     public void comboAttack_off()

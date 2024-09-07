@@ -42,6 +42,7 @@ public class MonsterCtrl : MonoBehaviour
     public GameObject Coin;     //몬스터를 죽이면 드랍되는 코인
     public bool isDie;     //몬스터 사망체크
     public bool isHit;     //몬스터 피격체크
+    public float hitCount;  //몬스터가 맞았을 때, 시간을 늘려서 몬스터가 피격 상태인지 체크하기 위한 변수
 
     public GameObject IceHit; //몬스터 피격 이펙트(얼음)
     public GameObject FireHit; //몬스터 피격 이펙트(불)
@@ -161,7 +162,7 @@ public class MonsterCtrl : MonoBehaviour
             StartCoroutine(Trace());
         }
 
-        if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && !isHit)
+        if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && hitCount <= 0)
         {
             StartCoroutine(Attack());
         }
@@ -290,6 +291,12 @@ public class MonsterCtrl : MonoBehaviour
         }
         #endregion
         #region 도적
+        if (col.tag == "RougeDashAttack")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage(Damage));
+        }
         if (col.tag == "RougeAttack1")
         {
             isHit = true;
@@ -617,6 +624,7 @@ public class MonsterCtrl : MonoBehaviour
     {
         if (maxHP != 0 || curHP > 0)
         {
+            hitCondition();
             if (PlayerPrefs.GetString("property") == "Ice")
             {
                 Instantiate(IceHit, this.transform.position, Quaternion.Euler(0, 0, 0));
@@ -687,12 +695,11 @@ public class MonsterCtrl : MonoBehaviour
             {
                 material.color = Color.red;
             }
-
             StartCoroutine(DamageTextAlpha(Damage));
-
+           
             yield return new WaitForSeconds(0.1f);
             anim.SetBool("TakeDamage", false);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
             if (anim.GetBool("TakeDamage") == false)
             {
                 isHit = false;
@@ -713,6 +720,11 @@ public class MonsterCtrl : MonoBehaviour
             Destroy(HpBar.gameObject);
             Destroy(this.gameObject); // 개체 파괴
         }
+    }
+
+    public virtual void hitCondition()
+    {
+        hitCount = 1f;
     }
     #endregion
 
