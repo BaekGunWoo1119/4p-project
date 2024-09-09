@@ -237,6 +237,7 @@ public class SceneLoader : MonoBehaviour
             ClassChoice_Archer = GameObject.Find("Archer").GetComponent<Button>();
             ClassChoice_Wizard = GameObject.Find("Wizard").GetComponent<Button>();
             ClassChoice_Back = GameObject.Find("Back").GetComponent<Button>();
+            Button ClassChoice_Select = GameObject.Find("SelectClass").GetComponent<Button>(); //셀렉 버튼 추가로 추가 (09.09)
             if (ClassChoice_Warrior != null)
             {
                 ClassChoice_Warrior.onClick.AddListener(ClassChoice_Class_Warrior_Pressed);
@@ -256,6 +257,11 @@ public class SceneLoader : MonoBehaviour
             if (ClassChoice_Back != null)
             {
                 ClassChoice_Back.onClick.AddListener(ClassChoice_Back_Pressed);
+            }
+            //셀렉 버튼 추가로 추가 (09.09)
+            if(ClassChoice_Select != null)
+            {
+                ClassChoice_Select.onClick.AddListener(ClassChoice_Class_Select_Pressed);
             }
         }
 
@@ -646,21 +652,29 @@ public class SceneLoader : MonoBehaviour
     void ClassChoice_Class_Wizard_Pressed()
     {
         LobbyManager.ClassSelectWizard();
-        SceneManager.LoadScene("2-3 (Spell Choice)");
+        //셀렉 버튼 추가로 삭제 (09.09)
+        //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
     void ClassChoice_Class_Warrior_Pressed()
     {
         LobbyManager.ClassSelectWarrior();
-        SceneManager.LoadScene("2-3 (Spell Choice)");
+        //셀렉 버튼 추가로 삭제 (09.09)
+        //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
     void ClassChoice_Class_Rogue_Pressed()
     {
         LobbyManager.ClassSelectRogue();
-        SceneManager.LoadScene("2-3 (Spell Choice)");
+        //셀렉 버튼 추가로 삭제 (09.09)
+        //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
     void ClassChoice_Class_Archer_Pressed()
     {
         LobbyManager.ClassSelectArcher();
+        //셀렉 버튼 추가로 삭제 (09.09)
+        //SceneManager.LoadScene("2-3 (Spell Choice)");
+    }
+    void ClassChoice_Class_Select_Pressed()
+    {
         SceneManager.LoadScene("2-3 (Spell Choice)");
     }
     void SpellChoice_Back_Pressed()
