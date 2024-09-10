@@ -395,6 +395,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             else
                 PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot + 180f, 0);
 
+            //애니메이션 속도 조절 (평타, 대쉬, 걷기)(09.10 정도훈)
+            anim.SetFloat("AnimSpeed", Status.TotalSpeed);
+
             // Attack 함수 실행
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -577,11 +580,11 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             //대쉬일 때
             else if (stateDash == true)
             {
-                moveSpd = moveSpeed * 1.25f;
+                moveSpd = moveSpeed * 1.25f *Status.TotalSpeed; // 행동속도 조절 추가(09.10 정도훈)
             }
             else
             {
-                moveSpd = moveSpeed;
+                moveSpd = moveSpeed * Status.TotalSpeed; // 행동속도 조절 추가(09.10 정도훈)
             }
 
             //캐릭터 스킬 이펙트

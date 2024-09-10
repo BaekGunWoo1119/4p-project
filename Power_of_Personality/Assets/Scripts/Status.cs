@@ -9,7 +9,7 @@ public class Status : MonoBehaviour
     public static float PercentAD = 100f; //공격력 비율
     public static float FixedArmor = 50f; //방어력 고정
     public static float PercentArmor = 100f; //방어력 비율
-    public static float FixedSpeed = 50f; //행동속도   고정
+    public static float FixedSpeed = 100f; //행동속도   고정
     public static float PercentSpeed = 100f; //행동속도 비율
     public static float FixedADC = 50f; //평타 데미지 고정
     public static float PercentADC = 100f; // 평타 데미지 비율
@@ -123,7 +123,7 @@ public class Status : MonoBehaviour
         TotalAP = TotalDamage * (FixedAP * (PercentAP * 0.01f));
         TotalADC = TotalDamage * (FixedADC * (PercentADC * 0.01f));
         TotalArmor = FixedArmor * (PercentArmor * 0.01f);
-        TotalSpeed = FixedSpeed * (PercentSpeed * 0.01f);
+        TotalSpeed = FixedSpeed * (PercentSpeed * 0.01f) *0.01f;
         DisplayAP = FixedAP * (PercentAP * 0.01f);
         DisplayADC = FixedADC * (PercentADC * 0.01f);
     }
@@ -149,7 +149,7 @@ public class Status : MonoBehaviour
                 case 2: 
                     Debug.Log("1번 세트 - " + set1Count + "개 활성화.");
                     Debug.Log("플레이어 공격력 20% 증가. 증가 전 = " + PercentAD + "증가 후 = " + PercentAD * 1.2f);
-                    FixedAD *= 1.2f;
+                    PercentAD *= 1.2f;
                     StatUpdate();
                     break;
                 case 3: // 3세트 N% 확률로 N% 추가 데미지, 플레이어 몸 주변 아우라
@@ -186,7 +186,7 @@ public class Status : MonoBehaviour
                 case 2: 
                     Debug.Log("2번 세트 - " + set2Count + "개 활성화.");
                     Debug.Log("플레이어 방여력 20% 증가. 증가 전 = " + PercentArmor + "증가 후 = " + PercentArmor * 1.2f);
-                    FixedArmor *= 1.2f;
+                    PercentArmor *= 1.2f;
                     break;
                 case 3: 
                     Debug.Log("2번 세트 - " + set2Count + "개 활성화.");
@@ -225,7 +225,7 @@ public class Status : MonoBehaviour
                 case 2: 
                     Debug.Log("3번 세트 - " + set3Count + "개 활성화.");
                     Debug.Log("플레이어 화속성 데미지 20% 증가. 증가 전 = " + PercentFire + "증가 후 = " + PercentFire * 1.2f);
-                    FixedFire *= 1.2f;
+                    PercentFire *= 1.2f;
                     StatUpdate();
                     break;
                 case 3: 
@@ -264,7 +264,7 @@ public class Status : MonoBehaviour
                 case 2: 
                     Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
                     Debug.Log("플레이어 빙속성 데미지 20% 증가. 증가 전 = " + PercentIce + "증가 후 = " + PercentIce * 1.2f);
-                    FixedIce *= 1.2f;
+                    PercentIce *= 1.2f;
                     StatUpdate();
                     break;
                 case 3: 
@@ -303,7 +303,7 @@ public class Status : MonoBehaviour
                 case 2: 
                     Debug.Log("5번 세트 - " + set5Count + "개 활성화.");
                     Debug.Log("플레이어 평타 데미지 20% 증가. 증가 전 = " + PercentADC + "증가 후 = " + PercentADC * 1.2f);
-                    FixedADC *= 1.2f;
+                    PercentADC *= 1.2f;
                     StatUpdate();
                     break;
                 case 3: 
@@ -341,7 +341,7 @@ public class Status : MonoBehaviour
                 case 2: 
                     Debug.Log("6번 세트 - " + set6Count + "개 활성화.");
                     Debug.Log("플레이어 스킬 데미지 20% 증가. 증가 전 = " + PercentAP + "증가 후 = " + PercentAP * 1.2f);
-                    FixedAP *= 1.2f;
+                    PercentAP *= 1.2f;
                     StatUpdate();
                     break;
                 case 3: 
@@ -379,7 +379,7 @@ public class Status : MonoBehaviour
                 case 2: 
                     Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
                     Debug.Log("플레이어 행동속도 20% 증가. 증가 전 = " + PercentSpeed + "증가 후 = " + PercentSpeed * 1.2f);
-                    FixedSpeed *= 1.2f;
+                    PercentSpeed *= 1.2f;
                     StatUpdate();
                     break;
                 case 3: 
@@ -486,7 +486,7 @@ public class Status : MonoBehaviour
         PercentAD = 100f; //공격력 비율
         FixedArmor = 50f; //방어력 고정
         PercentArmor = 100f; //방어력 비율
-        FixedSpeed = 50f; //행동속도   고정
+        FixedSpeed = 100f; //행동속도   고정
         PercentSpeed = 100f; //행동속도 비율
         FixedADC = 50f; //평타 데미지 고정
         PercentADC = 100f; // 평타 데미지 비율

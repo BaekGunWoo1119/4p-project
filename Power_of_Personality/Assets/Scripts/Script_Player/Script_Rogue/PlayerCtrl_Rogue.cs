@@ -59,11 +59,11 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         //대쉬일 때(08.31) 코드 간소화
         if (stateDash == true)
         {
-            moveSpd = moveSpeed * 1.25f;
+            moveSpd = moveSpeed * 1.25f * Status.TotalSpeed; // 행동속도 조절 추가(09.10 정도훈)
         }
         else
         {
-            moveSpd = moveSpeed;
+            moveSpd = moveSpeed * Status.TotalSpeed; // 행동속도 조절 추가(09.10 정도훈)
         }
 
         //도적 두번째 무기 이펙트 변경
@@ -139,10 +139,9 @@ public class PlayerCtrl_Rogue : PlayerCtrl
 
     public override void Move()
     {
-        if (!isDashing)
-        {
-            base.Move();
-        }
+        
+        base.Move();
+        
     }
 
     protected override void Turn()
