@@ -532,6 +532,10 @@ public class SceneLoader : MonoBehaviour
     void Setting_Back_Pressed()
     {
         SceneManager.LoadScene("1 (Main)");
+        //게임 나갈 때 인벤 초기화 시키는 코드(09.12)
+        GameObject Inven = GameObject.Find("InventoryCtrl");
+        if(Inven != null)
+            Destroy(Inven);
     }
     void MBTIChoice_Back_Pressed()
     {
