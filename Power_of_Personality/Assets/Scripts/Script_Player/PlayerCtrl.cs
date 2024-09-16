@@ -158,6 +158,18 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool ADBuff_On;
     protected bool ArmorBuff_On;
 
+    //보조스킬 관련
+    protected bool Swiftness_Buff_ON; //신속
+    protected bool Unstoppable_Buff_ON; //저지불가
+    protected bool RoarOfAnger_Buff_ON; //분노의 포효
+    protected float Swiftness_buffTime;
+    protected float Unstoppable_buffTime;
+    protected float RoarOfAnger_buffTime;
+    protected float Swiftness_Stat;
+    protected float RoarOfAnger_Stat;
+
+
+
     //스탯 UI 관련
     protected TMP_Text[] StateText; 
 
@@ -761,6 +773,34 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 ArmorUp();
             }
 
+            //보조스킬 (09.14)
+            if(Swiftness_Buff_ON){
+                Swiftness_buffTime -= Time.deltaTime;
+                if(Swiftness_buffTime < 0)
+                {
+                    Swiftness_buffTime = 0;
+                    Status.TotalSpeed = Swiftness_Stat;
+                    Swiftness_Buff_ON = false;
+                }
+            }
+            if(RoarOfAnger_Buff_ON){
+                RoarOfAnger_buffTime -= Time.deltaTime;
+                if(RoarOfAnger_buffTime < 0)
+                {
+                    RoarOfAnger_buffTime = 0;
+                    Status.TotalAD = RoarOfAnger_Stat;
+                    RoarOfAnger_Buff_ON = false;
+                }
+            }
+            if(Unstoppable_Buff_ON){
+                Unstoppable_buffTime -= Time.deltaTime;
+                if(Unstoppable_buffTime < 0)
+                {
+                    Unstoppable_buffTime = 0;
+                    Unstoppable_Buff_ON = false;
+                }
+            }
+
         }
         else if(Status.IsShop == true) //(09.05)
         {
@@ -820,7 +860,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             Status.HP -= Damage;
             CheckHp();
-            PlayAnim("TakeDamage");
+            //저지불가 (09.14 정도훈)
+            if(Unstoppable_Buff_ON==false){
+                PlayAnim("TakeDamage"); 
+            }
             StartCoroutine(DamageTextAlpha());
             Damaged_on(); //맞았을 때 이펙트 애니메이션에서 코드로 옮김(08.30)
             cameraEffect.GetComponent<CameraEffectCtrl>().DamageCamera();
@@ -1457,4 +1500,69 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         StopAnim("isDodge");
     }
     #endregion
+
+    #region 보조스킬
+    //신속(유체화)
+    public virtual void Spell_Swiftness(){
+        StartCoroutine(Spell_Swiftness_On());
+        Swiftness_Buff_ON = true;
+    }
+
+    public virtual IEnumerator Spell_Swiftness_On()
+    {
+        Swiftness_buffTime = 60f;
+        buffPer = 0.2f;
+        Swiftness_Stat = Status.TotalSpeed;
+        Status.TotalSpeed += (Status.TotalSpeed * buffPer);
+        Debug.Log("신속 ON");
+        yield break;
+    }
+
+    //저지불가
+
+    public virtual void Spell_Unstoppable(){
+        Unstoppable_Buff_ON = true;
+    }
+
+    public virtual IEnumerator Spell_Unstoppable_On()
+    {
+        Unstoppable_buffTime = 60f;
+        Debug.Log("저지불가 ON");
+        yield break;
+    }
+
+    //회복
+    public virtual void Spell_Heal(){
+        Status.HP = Status.MaxHP;
+        CheckHp();
+        StartCoroutine(Heal_on());
+    }
+    //기절
+
+    //무적
+    public virtual void Spell_Immune(){
+        StartCoroutine(Immune(2.0f));
+    }
+
+    //시간 감속
+
+    //부활
+
+    //분노의 포효
+    public virtual void Spell_RoarOfAnger(){
+        StartCoroutine(Spell_RoarOfAnger_On());
+        RoarOfAnger_Buff_ON = true;
+    }
+
+    public virtual IEnumerator Spell_RoarOfAnger_On()
+    {
+        RoarOfAnger_buffTime = 60f;
+        buffPer = 0.2f;
+        RoarOfAnger_Stat = Status.TotalAD;
+        Status.TotalAD += (Status.TotalAD * buffPer);
+        Debug.Log("신속 ON");
+        yield break;
+    }
+    #endregion
+    
 }   

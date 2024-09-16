@@ -361,7 +361,7 @@ public class PlayerCtrl_Warrior : PlayerCtrl
 
     public void comboAttack_1_on()
     {
-        SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0) );
         SkillEffect.transform.parent = EffectGen.transform;
         audioSources[0].Play();
     }
