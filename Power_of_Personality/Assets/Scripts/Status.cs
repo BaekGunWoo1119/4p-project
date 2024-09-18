@@ -87,6 +87,7 @@ public class Status : MonoBehaviour
     public static bool set8_3_Activated = false;
 
     public static bool IsShop = false; //현재 상점인지 확인
+    public static bool Spell_TimeSlowdown_ON = false; //보조스킬 시간 감속 (09.18 정도훈)
     static int a = 0;
     void Start()
     {
@@ -124,6 +125,7 @@ public class Status : MonoBehaviour
         TotalADC = TotalDamage * (FixedADC * (PercentADC * 0.01f));
         TotalArmor = FixedArmor * (PercentArmor * 0.01f);
         TotalSpeed = FixedSpeed * (PercentSpeed * 0.01f) *0.01f;
+        TotalSpeed = (float)Math.Round(TotalSpeed, 2); //소수 둘째자리까지만 반올림 (09.18 정도훈)
         DisplayAP = FixedAP * (PercentAP * 0.01f);
         DisplayADC = FixedADC * (PercentADC * 0.01f);
     }
