@@ -201,6 +201,12 @@ public class BossCtrl : MonoBehaviour
         }
         #endregion
         #region 도적
+        if (col.tag == "RougeDashAttack")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            StartCoroutine(TakeDamage(Damage));
+        }
         if (col.tag == "RougeAttack1")
         {
             isHit = true;

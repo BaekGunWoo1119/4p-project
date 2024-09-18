@@ -158,6 +158,26 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool ADBuff_On;
     protected bool ArmorBuff_On;
 
+    //보조스킬 관련
+    protected bool Swiftness_Buff_ON; //신속
+    protected bool Unstoppable_Buff_ON; //저지불가
+    protected bool RoarOfAnger_Buff_ON; //분노의 포효
+    protected float Swiftness_buffTime;
+    protected float Unstoppable_buffTime;
+    protected float RoarOfAnger_buffTime;
+    protected float Swiftness_Stat;
+    protected float RoarOfAnger_Stat;
+    protected float TimeSlowdown_buffTime; //시간 감속
+    public GameObject Spell_Swiftness_Effect;
+    public GameObject Spell_Unstoppable_Effect;
+    public GameObject Spell_RoarOfAnger_Effect;
+    public GameObject Spell_TimeSlowdown_Effect;
+    public GameObject Spell_Immune_Effect;
+    public GameObject Spell_Shouting_Effect;
+    public GameObject Spell_Heal_Effect;
+
+
+
     //스탯 UI 관련
     protected TMP_Text[] StateText; 
 
@@ -395,6 +415,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             else
                 PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot + 180f, 0);
 
+            //애니메이션 속도 조절 (평타, 대쉬, 걷기)(09.10 정도훈)
+            anim.SetFloat("AnimSpeed", Status.TotalSpeed);
+
             // Attack 함수 실행
             if (Input.GetKeyDown(KeyCode.A))
             {
@@ -522,6 +545,35 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 // Debug.Log("Status.PercentCooltime :" + Status.PercentCooltime);
             }
 
+            //Skill_D (09.18 정도훈)
+            if (Input.GetKeyDown(KeyCode.D)
+            && !isSkill
+            && !isJumping
+            && !anim.GetBool("isFall")
+            //&& DSkillCoolTime >= TotalDSkillCoolTime
+            && !isAttack
+            && !isDodge)
+            {
+                //Spell_Swiftness(); //(이펙트 추가해야됨)
+                //Spell_Immune(); //완료
+                Spell_TimeSlowdown();
+            }
+
+            //Skill_F (09.18 정도훈)
+            if (Input.GetKeyDown(KeyCode.F)
+            && !isSkill
+            && !isJumping
+            && !anim.GetBool("isFall")
+            //&& DSkillCoolTime >= TotalDSkillCoolTime
+            && !isAttack
+            && !isDodge)
+            {
+                //Spell_RoarOfAnger(); //완료
+                //Spell_Unstoppable(); //(이펙트 추가해야됨)
+                //Spell_Heal(); //완료
+            }
+
+
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && !isSkill && !isAttack && !isJumping
                 && !stateJump && !stateFall && !anim.GetBool("isFall") && !isDodge && JumpCoolTime == 0)
@@ -577,11 +629,11 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             //대쉬일 때
             else if (stateDash == true)
             {
-                moveSpd = moveSpeed * 1.25f;
+                moveSpd = moveSpeed * 1.25f *Status.TotalSpeed; // 행동속도 조절 추가(09.10 정도훈)
             }
             else
             {
-                moveSpd = moveSpeed;
+                moveSpd = moveSpeed * Status.TotalSpeed; // 행동속도 조절 추가(09.10 정도훈)
             }
 
             //캐릭터 스킬 이펙트
@@ -715,7 +767,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 if(buffTime < 0)
                 {
                     buffTime = 0;
-                    Status.TotalAD = buffStat;
+                    Status.PercentAD = buffStat;
+                    Status.StatUpdate();
                     buffStat = 0;
                     buffType = "None";
                     ADBuff_On = false;
@@ -733,6 +786,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 {
                     buffTime = 0;
                     Status.TotalArmor = buffStat;
+                    Status.StatUpdate();
                     buffType = "None";
                     ArmorBuff_On = false;
                 }
@@ -756,6 +810,51 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             if(Input.GetKeyDown(KeyCode.Alpha3) && !anim.GetBool("isDie") && InvenCtrl.ArmorPotionCount > 0)
             {
                 ArmorUp();
+            }
+
+            //보조스킬 (09.14)
+            if(Swiftness_Buff_ON){
+                Swiftness_buffTime -= Time.deltaTime;
+                if(Swiftness_buffTime < 0)
+                {
+                    Swiftness_buffTime = 0;
+                    Status.PercentSpeed = Swiftness_Stat;
+                    Status.StatUpdate();
+                    Swiftness_Buff_ON = false;
+                    Debug.Log("신속 OFF");
+                }
+            }
+            if(RoarOfAnger_Buff_ON){
+                RoarOfAnger_buffTime -= Time.deltaTime;
+                if(RoarOfAnger_buffTime < 0)
+                {
+                    RoarOfAnger_buffTime = 0;
+                    Status.PercentAD = RoarOfAnger_Stat;
+                    Status.StatUpdate();
+                    RoarOfAnger_Buff_ON = false;
+                    Spell_RoarOfAnger_Effect.SetActive(false);
+                    Debug.Log("분노의 포효 OFF");
+                }
+            }
+            if(Unstoppable_Buff_ON){
+                Unstoppable_buffTime -= Time.deltaTime;
+                if(Unstoppable_buffTime < 0)
+                {
+                    Unstoppable_buffTime = 0;
+                    Unstoppable_Buff_ON = false;
+                    Debug.Log("저지불가 OFF");
+                }
+            }
+
+            if(Status.Spell_TimeSlowdown_ON){
+                TimeSlowdown_buffTime -= Time.deltaTime;
+                if(TimeSlowdown_buffTime < 0)
+                {
+                    TimeSlowdown_buffTime = 0;
+                    Status.Spell_TimeSlowdown_ON = false;
+                    Spell_TimeSlowdown_Effect.SetActive(false);
+                    Debug.Log("시간감속 OFF");
+                }
             }
 
         }
@@ -788,8 +887,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         buffTime = 60f;
         buffPer = 0.2f;
-        buffStat = Status.TotalAD;
-        Status.TotalAD += (Status.TotalAD * buffPer);
+        buffStat = Status.PercentAD;
+        Status.PercentAD += (Status.PercentAD * buffPer);
+        Status.StatUpdate();
         Debug.Log("힘 버프");
         yield break;
     }
@@ -800,6 +900,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         buffPer = 0.2f;
         buffStat = Status.TotalArmor;
         Status.TotalArmor += (Status.TotalArmor * buffPer);
+        Status.StatUpdate();
         Debug.Log("방패 버프");
         yield break;
     }
@@ -817,7 +918,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             Status.HP -= Damage;
             CheckHp();
-            PlayAnim("TakeDamage");
+            //저지불가 (09.14 정도훈)
+            if(Unstoppable_Buff_ON==false){
+                PlayAnim("TakeDamage"); 
+            }
             StartCoroutine(DamageTextAlpha());
             Damaged_on(); //맞았을 때 이펙트 애니메이션에서 코드로 옮김(08.30)
             cameraEffect.GetComponent<CameraEffectCtrl>().DamageCamera();
@@ -1454,4 +1558,116 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         StopAnim("isDodge");
     }
     #endregion
-}
+
+    #region 보조스킬
+    //신속(유체화)
+    public virtual void Spell_Swiftness(){
+        StartCoroutine(Spell_Swiftness_On());
+        Swiftness_Buff_ON = true;
+    }
+
+    public virtual IEnumerator Spell_Swiftness_On()
+    {
+        Swiftness_buffTime = 60f;
+        buffPer = 0.2f;
+        Swiftness_Stat = Status.PercentSpeed;
+        Status.PercentSpeed += (Status.PercentSpeed * buffPer);
+        Status.StatUpdate();
+        Debug.Log("신속 ON");
+        yield break;
+    }
+
+    //저지불가
+
+    public virtual void Spell_Unstoppable(){
+        Unstoppable_Buff_ON = true;
+        StartCoroutine(Spell_Unstoppable_On());
+        Debug.Log("저지불가 ON");
+    }
+
+    public virtual IEnumerator Spell_Unstoppable_On()
+    {
+        Unstoppable_buffTime = 60f;
+        yield break;
+    }
+
+    //회복
+    public virtual void Spell_Heal(){
+        Status.HP = Status.MaxHP;
+        CheckHp();
+        StartCoroutine(Spell_Heal_on());
+        Debug.Log("힐 ON");
+    }
+
+    public virtual IEnumerator Spell_Heal_on()
+    {
+        SkillEffect = Instantiate(Spell_Heal_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        SkillEffect.transform.localPosition = new Vector3(0,-0.9f,0);
+        yield return new WaitForSeconds(3.0f);
+        Destroy(SkillEffect);
+    }
+
+    //기절 미완
+    public virtual void Spell_Shouting(){
+        StartCoroutine(Spell_Shouting_on());
+        Debug.Log("기절 ON");
+    }
+    public virtual IEnumerator Spell_Shouting_on()
+    {
+        SkillEffect = Instantiate(Spell_Shouting_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        yield return new WaitForSeconds(1.0f);
+        Destroy(SkillEffect);
+    }
+
+
+    //무적
+    public virtual void Spell_Immune(){
+        StartCoroutine(Immune(2.0f));
+        StartCoroutine(Spell_Immune_on());
+        Debug.Log("무적 ON");
+    }
+    public virtual IEnumerator Spell_Immune_on()
+    {
+        Spell_Immune_Effect.SetActive(true);
+        yield return new WaitForSeconds(2.0f);
+        Spell_Immune_Effect.SetActive(false);
+    }
+
+    //시간 감속
+
+    public virtual void Spell_TimeSlowdown(){
+        StartCoroutine(Spell_TimeSlowdown_On());
+        Status.Spell_TimeSlowdown_ON = true;
+    }
+    public virtual IEnumerator Spell_TimeSlowdown_On()
+    {
+        TimeSlowdown_buffTime = 60f;
+        Debug.Log("시감감속 ON");
+        Spell_TimeSlowdown_Effect.SetActive(true);
+        yield break;
+    }
+
+    //부활
+
+    //분노의 포효
+    public virtual void Spell_RoarOfAnger(){
+        StartCoroutine(Spell_RoarOfAnger_On());
+        RoarOfAnger_Buff_ON = true;
+    }
+
+    public virtual IEnumerator Spell_RoarOfAnger_On()
+    {
+        RoarOfAnger_buffTime = 60f;
+        buffPer = 0.2f;
+        RoarOfAnger_Stat = Status.PercentAD;
+        Status.PercentAD += (Status.PercentAD * buffPer);
+        Status.StatUpdate();
+        Debug.Log("분노의 포효 ON");
+        Spell_RoarOfAnger_Effect.SetActive(true);
+        yield break;
+    }
+    #endregion
+    
+}   
