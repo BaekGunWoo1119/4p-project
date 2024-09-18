@@ -7059,8 +7059,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseButton: {fileID: 782131428}
-  resumeButton1: {fileID: 782131426}
-  resumeButton2: {fileID: 782131427}
+  resumeButton: {fileID: 782131426}
 --- !u!114 &106460089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7226,7 +7225,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   fireHit: {fileID: 995263401}
-  iceHit: {fileID: 995263402}
+  iceHit: {fileID: 782131427}
 --- !u!114 &106460097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25017,15 +25016,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3697607624694322898, guid: a135a320bcfe5864f974bd41b5df5dfa, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3697607624694322898, guid: a135a320bcfe5864f974bd41b5df5dfa, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3697607624694322898, guid: a135a320bcfe5864f974bd41b5df5dfa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 341.5
       objectReference: {fileID: 0}
     - target: {fileID: 4174272857706682668, guid: a135a320bcfe5864f974bd41b5df5dfa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -25140,17 +25139,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &782131427 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5481623510591884138, guid: a135a320bcfe5864f974bd41b5df5dfa, type: 3}
+--- !u!1 &782131427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5783588789105738756, guid: a135a320bcfe5864f974bd41b5df5dfa, type: 3}
   m_PrefabInstance: {fileID: 782131422}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &782131428 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1452080335162780698, guid: a135a320bcfe5864f974bd41b5df5dfa, type: 3}
@@ -29048,11 +29041,6 @@ PrefabInstance:
 --- !u!1 &995263401 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1448418565129402597, guid: a135a320bcfe5864f974bd41b5df5dfa, type: 3}
-  m_PrefabInstance: {fileID: 782131422}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &995263402 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1035409711502564385, guid: a135a320bcfe5864f974bd41b5df5dfa, type: 3}
   m_PrefabInstance: {fileID: 782131422}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &995490698
@@ -44096,7 +44084,7 @@ AudioSource:
   m_GameObject: {fileID: 1507388010}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -2229293984810041603, guid: fd08643af41d7724dabe3da31b3aa15f, type: 2}
   m_audioClip: {fileID: 8300000, guid: 036e3bdf2aadcd3418ba78547767cff6, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
