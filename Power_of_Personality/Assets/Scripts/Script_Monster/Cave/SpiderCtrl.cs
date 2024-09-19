@@ -56,7 +56,7 @@ public class SpiderCtrl : MonsterCtrl
         AttackCoolTime = 0;
         anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.25f*(1f/AnimSpeed));
-        Instantiate(AttackCollider, FirePos.position, FirePos.rotation);
+        Instantiate(AttackCollider, FirePos.position, FirePos.rotation, this.transform);
         yield return new WaitForSeconds(0.5f*(1f/AnimSpeed));
         anim.SetBool("isAttack", false);
         AttackCoolTime = 0;

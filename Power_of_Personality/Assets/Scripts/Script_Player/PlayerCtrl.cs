@@ -168,13 +168,30 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected float Swiftness_Stat;
     protected float RoarOfAnger_Stat;
     protected float TimeSlowdown_buffTime; //시간 감속
-    public GameObject Spell_Swiftness_Effect;
+    public GameObject Spell_Swiftness_Effect;//도훈 2024-09-20
     public GameObject Spell_Unstoppable_Effect;
     public GameObject Spell_RoarOfAnger_Effect;
     public GameObject Spell_TimeSlowdown_Effect;
     public GameObject Spell_Immune_Effect;
     public GameObject Spell_Shouting_Effect;
     public GameObject Spell_Heal_Effect;
+    protected float Spell_Swiftness_CoolTime;
+    protected float Spell_Unstoppable_CoolTime;
+    protected float Spell_RoarOfAnger_CoolTime;
+    protected float Spell_TimeSlowdown_CoolTime;
+    protected float Spell_Immune_CoolTime;
+    protected float Spell_Shouting_CoolTime;
+    protected float Spell_Heal_CoolTime;
+    protected bool Spell_Swiftness_Ready;
+    protected bool Spell_Unstoppable_Ready;
+    protected bool Spell_RoarOfAnger_Ready;
+    protected bool Spell_TimeSlowdown_Ready;
+    protected bool Spell_Immune_Ready;
+    protected bool Spell_Shouting_Ready;
+    protected bool Spell_Heal_Ready;//도훈 2024-09-20
+    protected string Spell_1; //보조스킬 받아오기
+    protected string Spell_2;
+
 
 
 
@@ -300,6 +317,11 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             audioSources[i].Stop();
         }
+
+        //보조스킬 받아오기
+        Spell_1 = PlayerPrefs.GetString("Spell_1");
+        Spell_2 = PlayerPrefs.GetString("Spell_2");
+        
     }
     protected virtual void FixedUpdate()
     {
@@ -556,7 +578,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             {
                 //Spell_Swiftness(); //(이펙트 추가해야됨)
                 //Spell_Immune(); //완료
-                Spell_TimeSlowdown();
+                //Spell_TimeSlowdown();
+                UseSpell(Spell_1);
             }
 
             //Skill_F (09.18 정도훈)
@@ -571,6 +594,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 //Spell_RoarOfAnger(); //완료
                 //Spell_Unstoppable(); //(이펙트 추가해야됨)
                 //Spell_Heal(); //완료
+                UseSpell(Spell_2); 
             }
 
 
@@ -1335,6 +1359,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         QSkillCoolTime += Time.deltaTime;
         WSkillCoolTime += Time.deltaTime;
         ESkillCoolTime += Time.deltaTime;
+        Spell_Heal_CoolTime += Time.deltaTime; //도훈 2024-09-20
+        Spell_Immune_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_RoarOfAnger_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_Shouting_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_Swiftness_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_TimeSlowdown_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_Unstoppable_CoolTime += Time.deltaTime;//도훈 2024-09-20
+
 
         if(QSkillCoolTime > TotalQSkillCoolTime) //도훈 2024-08-27
         {
@@ -1347,6 +1379,34 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         if (ESkillCoolTime > TotalESkillCoolTime) //도훈 2024-08-27
         {
             ESkillReady = true;
+        }
+        if(Spell_Heal_CoolTime> 60f) //도훈 2024-09-20
+        {
+            Spell_Heal_Ready =true;
+        }
+        if(Spell_Immune_CoolTime> 60f)//도훈 2024-09-20
+        {
+            Spell_Immune_Ready =true;
+        }
+        if(Spell_RoarOfAnger_CoolTime> 60f)//도훈 2024-09-20
+        {
+            Spell_RoarOfAnger_Ready =true;
+        }
+        if(Spell_Shouting_CoolTime> 60f)//도훈 2024-09-20
+        {
+            Spell_Shouting_Ready =true;
+        }
+        if(Spell_Swiftness_CoolTime> 60f)//도훈 2024-09-20
+        {
+            Spell_Swiftness_Ready =true;
+        }
+        if(Spell_TimeSlowdown_CoolTime> 60f)//도훈 2024-09-20
+        {
+            Spell_TimeSlowdown_Ready =true;
+        }
+        if(Spell_Unstoppable_CoolTime> 60f)//도훈 2024-09-20
+        {
+            Spell_Unstoppable_Ready =true;
         }
     }
     
@@ -1562,8 +1622,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #region 보조스킬
     //신속(유체화)
     public virtual void Spell_Swiftness(){
-        StartCoroutine(Spell_Swiftness_On());
-        Swiftness_Buff_ON = true;
+        if(Spell_Swiftness_Ready){
+            StartCoroutine(Spell_Swiftness_On());
+            Swiftness_Buff_ON = true;
+            Spell_Swiftness_CoolTime = 0f; //도훈 2024-09-20
+            Spell_Swiftness_Ready = false;
+        }
     }
 
     public virtual IEnumerator Spell_Swiftness_On()
@@ -1580,9 +1644,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //저지불가
 
     public virtual void Spell_Unstoppable(){
-        Unstoppable_Buff_ON = true;
-        StartCoroutine(Spell_Unstoppable_On());
-        Debug.Log("저지불가 ON");
+        if(Spell_Unstoppable_Ready){
+            Unstoppable_Buff_ON = true;
+            StartCoroutine(Spell_Unstoppable_On());
+            Debug.Log("저지불가 ON");
+            Spell_Unstoppable_CoolTime = 0f;    //도훈 2024-09-20
+            Spell_Unstoppable_Ready = false;
+        }
     }
 
     public virtual IEnumerator Spell_Unstoppable_On()
@@ -1593,10 +1661,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     //회복
     public virtual void Spell_Heal(){
-        Status.HP = Status.MaxHP;
-        CheckHp();
-        StartCoroutine(Spell_Heal_on());
-        Debug.Log("힐 ON");
+        if(Spell_Heal_Ready){
+            Status.HP = Status.MaxHP;
+            CheckHp();
+            StartCoroutine(Spell_Heal_on());
+            Debug.Log("힐 ON");
+            Spell_Heal_CoolTime = 0f;   //도훈 2024-09-20
+            Spell_Heal_Ready = false;
+        }
     }
 
     public virtual IEnumerator Spell_Heal_on()
@@ -1610,8 +1682,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     //기절 미완
     public virtual void Spell_Shouting(){
-        StartCoroutine(Spell_Shouting_on());
-        Debug.Log("기절 ON");
+        if(Spell_Shouting_Ready){
+            StartCoroutine(Spell_Shouting_on());
+            Debug.Log("기절 ON");
+            Spell_Shouting_CoolTime = 0f;   //도훈 2024-09-20
+            Spell_Shouting_Ready = false;
+        }
     }
     public virtual IEnumerator Spell_Shouting_on()
     {
@@ -1624,9 +1700,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     //무적
     public virtual void Spell_Immune(){
-        StartCoroutine(Immune(2.0f));
-        StartCoroutine(Spell_Immune_on());
-        Debug.Log("무적 ON");
+        if(Spell_Immune_Ready){
+            StartCoroutine(Immune(2.0f));
+            StartCoroutine(Spell_Immune_on());
+            Debug.Log("무적 ON");
+            Spell_Immune_CoolTime = 0f; //도훈 2024-09-20
+            Spell_Immune_Ready = false;
+        }
     }
     public virtual IEnumerator Spell_Immune_on()
     {
@@ -1638,8 +1718,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //시간 감속
 
     public virtual void Spell_TimeSlowdown(){
+        if(Spell_TimeSlowdown_Ready){
         StartCoroutine(Spell_TimeSlowdown_On());
         Status.Spell_TimeSlowdown_ON = true;
+        Spell_TimeSlowdown_CoolTime = 0f;   //도훈 2024-09-20
+        Spell_TimeSlowdown_Ready = false;
+        }
     }
     public virtual IEnumerator Spell_TimeSlowdown_On()
     {
@@ -1653,8 +1737,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     //분노의 포효
     public virtual void Spell_RoarOfAnger(){
-        StartCoroutine(Spell_RoarOfAnger_On());
-        RoarOfAnger_Buff_ON = true;
+        if(Spell_RoarOfAnger_Ready){
+            StartCoroutine(Spell_RoarOfAnger_On());
+            RoarOfAnger_Buff_ON = true;
+            Spell_RoarOfAnger_CoolTime = 0f;    //도훈 2024-09-20
+            Spell_RoarOfAnger_Ready = false;
+        }
     }
 
     public virtual IEnumerator Spell_RoarOfAnger_On()
@@ -1667,6 +1755,33 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Debug.Log("분노의 포효 ON");
         Spell_RoarOfAnger_Effect.SetActive(true);
         yield break;
+    }
+
+    //전체적으로 보조스킬 사용하도록 하는 함수
+    public virtual void UseSpell(string Spell){
+        switch(Spell){
+            case "Spell_Swiftness":
+                Spell_Swiftness();
+                break;
+            case "Spell_Unstoppable":
+                Spell_Unstoppable();
+                break;
+            case "Spell_Heal":
+                Spell_Heal();
+                break;
+            case "Spell_Shouting":
+                Spell_Shouting();
+                break;
+            case "Spell_Immune":
+                Spell_Immune();
+                break;
+            case "Spell_TimeSlowdown":
+                Spell_TimeSlowdown();
+                break;
+            case "Spell_RoarOfAnger":
+                Spell_RoarOfAnger();
+                break;
+        }
     }
     #endregion
     

@@ -98,6 +98,7 @@ public class MonsterCtrl : MonoBehaviour
         }
         AttackCoolTime += Time.deltaTime;
         TickCoolTime += Time.deltaTime;
+        hitCount -= Time.deltaTime;
         if(PlayerTr != null)
         {
             Turn();
