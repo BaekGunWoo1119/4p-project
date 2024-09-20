@@ -5,11 +5,15 @@ using UnityEngine.UI;
 public class SkillSelect : MonoBehaviour
 {
     public SceneLoader sceneLoader;
-    private ToggleGroup toggleGroup; // Æ¯Á¤ Toggle GroupÀ» Inspector¿¡¼­ ÁöÁ¤
+    private ToggleGroup toggleGroup; // Æ¯ï¿½ï¿½ Toggle Groupï¿½ï¿½ Inspectorï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private Toggle lastSelectedToggle;
     public GameObject DangerText_Exceed2;
     public GameObject DangerText_less2;
     public int selectedCount;
+    private Toggle Spell1; //ì²˜ìŒìœ¼ë¡œ ì„ íƒí•œ ë³´ì¡°ìŠ¤í‚¬
+    private Toggle Spell2; //ë‘ë²ˆì§¸ë¡œ ì„ íƒí•œ ë³´ì¡°ìŠ¤í‚¬
+    public Image spell1_image;
+    public Image spell2_image;
 
     void Start()
     {
@@ -20,7 +24,7 @@ public class SkillSelect : MonoBehaviour
         DangerText_less2.transform.localScale = new Vector3(1, 1, 1);
         if (toggleGroup != null)
         {
-            // Åä±Û ±×·ìÀÇ °¢ Åä±Û¿¡ ´ëÇÑ ÀÌº¥Æ® ¸®½º³Ê Ãß°¡
+            // ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
             Toggle[] toggles = toggleGroup.GetComponentsInChildren<Toggle>();
             foreach (Toggle toggle in toggles)
             {
@@ -29,12 +33,33 @@ public class SkillSelect : MonoBehaviour
         }
     }
 
-    // Åä±Û °ªÀÌ º¯°æµÉ ¶§ È£ÃâµÇ´Â ÇÔ¼ö
+    void Update(){
+        if(Spell1 != null){
+            //Spell1.graphic = spell1_image;
+            Spell1.gameObject.transform.Find("Background").transform.Find("Checkmark").GetComponent<Image>().sprite = spell1_image.sprite;
+        }
+        if(Spell2 != null){
+            //Spell2.graphic = spell2_image;
+            Spell2.gameObject.transform.Find("Background").transform.Find("Checkmark").GetComponent<Image>().sprite = spell2_image.sprite;
+        }
+    }
+
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½
     private void OnToggleValueChanged(Toggle changedToggle)
     {
         if (changedToggle.isOn)
         {
             selectedCount++;
+            if(selectedCount == 1){
+                PlayerPrefs.SetString("Spell_1",changedToggle.gameObject.name);
+                Debug.Log(PlayerPrefs.GetString("Spell_1"));
+                Spell1 = changedToggle;
+            }
+            else if(selectedCount == 2){
+                PlayerPrefs.SetString("Spell_2",changedToggle.gameObject.name);
+                Debug.Log(PlayerPrefs.GetString("Spell_2"));
+                Spell2 = changedToggle;
+            }
 
             if (selectedCount > 2)
             {
@@ -55,8 +80,19 @@ public class SkillSelect : MonoBehaviour
         }
         else
         {
-            // Åä±ÛÀÌ Ã¼Å© ÇØÁ¦µÉ ¶§
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å© ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             selectedCount--;
+            if (changedToggle == Spell1 && Spell2 == null){
+                Spell1 = null;
+            }
+            else if (changedToggle == Spell1){
+                Spell1 = Spell2;
+                PlayerPrefs.SetString("Spell_1",Spell1.gameObject.name);
+                Spell2 = null;
+            }
+            else{
+                Spell2 = null;
+            }
 
             if (selectedCount < 2)
             {

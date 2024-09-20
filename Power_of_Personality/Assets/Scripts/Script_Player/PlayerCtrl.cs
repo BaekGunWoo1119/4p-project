@@ -182,13 +182,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected float Spell_Immune_CoolTime;
     protected float Spell_Shouting_CoolTime;
     protected float Spell_Heal_CoolTime;
-    protected bool Spell_Swiftness_Ready;
-    protected bool Spell_Unstoppable_Ready;
-    protected bool Spell_RoarOfAnger_Ready;
-    protected bool Spell_TimeSlowdown_Ready;
-    protected bool Spell_Immune_Ready;
-    protected bool Spell_Shouting_Ready;
-    protected bool Spell_Heal_Ready;//도훈 2024-09-20
+    protected bool Spell_Swiftness_Ready = true;
+    protected bool Spell_Unstoppable_Ready = true;
+    protected bool Spell_RoarOfAnger_Ready = true;
+    protected bool Spell_TimeSlowdown_Ready = true;
+    protected bool Spell_Immune_Ready = true;
+    protected bool Spell_Shouting_Ready = true;
+    protected bool Spell_Heal_Ready = true;//도훈 2024-09-20
     protected string Spell_1; //보조스킬 받아오기
     protected string Spell_2;
 
@@ -1718,6 +1718,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //시간 감속
 
     public virtual void Spell_TimeSlowdown(){
+        Debug.Log(Spell_TimeSlowdown_Ready);
+        Debug.Log(Spell_TimeSlowdown_CoolTime);
         if(Spell_TimeSlowdown_Ready){
         StartCoroutine(Spell_TimeSlowdown_On());
         Status.Spell_TimeSlowdown_ON = true;
@@ -1759,6 +1761,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     //전체적으로 보조스킬 사용하도록 하는 함수
     public virtual void UseSpell(string Spell){
+        Debug.Log(Spell);
         switch(Spell){
             case "Spell_Swiftness":
                 Spell_Swiftness();
