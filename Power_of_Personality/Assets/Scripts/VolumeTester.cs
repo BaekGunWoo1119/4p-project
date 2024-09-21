@@ -2,10 +2,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class VolumeTester : MonoBehaviour, IBeginDragHandler, IEndDragHandler
+public class VolumeTester : MonoBehaviour//, IBeginDragHandler, IEndDragHandler
 {
+    /* 잦은 오류로 그냥 해당 코드 안쓰기로 함. 기술적인 문제 X(09.21)
     public Slider slider; // 참조할 Slider
     public AudioSource audioSource; // 사운드를 재생할 AudioSource
+    public AudioClip soundClip; // 재생할 사운드 클립
 
     private bool isPlaying = false; // 현재 사운드가 재생 중인지 확인
 
@@ -16,22 +18,33 @@ public class VolumeTester : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         {
             audioSource = GetComponent<AudioSource>();
         }
-        
+
+        // AudioClip이 할당되어 있는지 확인
+        if (soundClip == null)
+        {
+            Debug.LogError("SoundClip이 할당되지 않았습니다.");
+        }
+
+        // Slider가 할당되어 있는지 확인하고, 값 변경 리스너 추가
+        if (slider != null)
+        {
+            slider.onValueChanged.AddListener(OnSliderValueChanged);
+        }
+        else
+        {
+            Debug.LogError("Slider가 할당되지 않았습니다.");
+        }
+
         StopSound();
-        // Slider의 값이 변경될 때마다 호출되는 리스너 추가
-        slider.onValueChanged.AddListener(OnSliderValueChanged);
     }
 
     // Slider 값이 변경되었을 때 호출
     private void OnSliderValueChanged(float value)
     {
         // 사운드의 볼륨을 Slider 값에 맞춰 조정
-        audioSource.volume = value;
-
-        // 사운드가 재생 중이 아니면 재생 시작
-        if (!isPlaying)
+        if (audioSource != null)
         {
-            PlaySound();
+            audioSource.volume = value;
         }
     }
 
@@ -39,7 +52,7 @@ public class VolumeTester : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public void OnBeginDrag(PointerEventData eventData)
     {
         // 사운드가 재생 중이 아니면 재생 시작
-        if (!isPlaying)
+        if (!isPlaying && audioSource != null && soundClip != null)
         {
             PlaySound();
         }
@@ -49,7 +62,7 @@ public class VolumeTester : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     public void OnEndDrag(PointerEventData eventData)
     {
         // 사운드가 재생 중이면 정지
-        if (isPlaying)
+        if (isPlaying && audioSource != null)
         {
             StopSound();
         }
@@ -58,10 +71,12 @@ public class VolumeTester : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     // 사운드를 재생하는 함수
     private void PlaySound()
     {
-        if (audioSource != null)
+        if (audioSource != null && soundClip != null)
         {
+            audioSource.clip = soundClip;
             audioSource.Play();
             isPlaying = true;
+            Debug.Log("Sound Started");
         }
     }
 
@@ -72,6 +87,8 @@ public class VolumeTester : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         {
             audioSource.Stop();
             isPlaying = false;
+            Debug.Log("Sound Stopped");
         }
     }
+    */
 }

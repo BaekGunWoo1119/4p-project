@@ -28,9 +28,20 @@ public class SoundsVolume : MonoBehaviour
     // Slider 값 변경에 따라 Music 트랙의 볼륨 업데이트
     public void UpdateMusicVolume(float sliderValue)
     {
-        // Slider 값(0~1)을 dB 값(-80dB ~ 0dB)으로 변환
-        float volumeInDb = Mathf.Log10(sliderValue) * 20;
-        for(int i = 0; i < musicExposedParameter.Length; i++ )
+        float volumeInDb;
+
+        // Slider 값이 0일 때 -80dB로 설정
+        if (sliderValue == 0)
+        {
+            volumeInDb = -80f; // 최소 볼륨
+        }
+        else
+        {
+            // Slider 값(0~1)을 dB 값(-80dB ~ 0dB)으로 변환
+            volumeInDb = Mathf.Log10(sliderValue) * 20;
+        }
+
+        for (int i = 0; i < musicExposedParameter.Length; i++)
         {
             audioMixer.SetFloat(musicExposedParameter[i], volumeInDb);
         }
