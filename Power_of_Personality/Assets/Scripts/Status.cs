@@ -87,6 +87,7 @@ public class Status : MonoBehaviour
     public static bool set8_3_Activated = false;
 
     public static bool IsShop = false; //현재 상점인지 확인
+    public static bool Spell_TimeSlowdown_ON = false; //보조스킬 시간 감속 (09.18 정도훈)
     static int a = 0;
     void Start()
     {
@@ -124,6 +125,7 @@ public class Status : MonoBehaviour
         TotalADC = TotalDamage * (FixedADC * (PercentADC * 0.01f));
         TotalArmor = FixedArmor * (PercentArmor * 0.01f);
         TotalSpeed = FixedSpeed * (PercentSpeed * 0.01f) *0.01f;
+        TotalSpeed = (float)Math.Round(TotalSpeed, 2); //소수 둘째자리까지만 반올림 (09.18 정도훈)
         DisplayAP = FixedAP * (PercentAP * 0.01f);
         DisplayADC = FixedADC * (PercentADC * 0.01f);
     }
@@ -140,12 +142,12 @@ public class Status : MonoBehaviour
             }
             switch (set1Count)
             {
-                case 1: 
-                    Debug.Log("1번 세트 - " + set1Count + "개 활성화.");
-                    Debug.Log("플레이어 공격력 20 증가. 증가 전 = " + FixedAD + "증가 후 = " + (FixedAD + 20f));
-                    FixedAD += 20f;
-                    StatUpdate();
-                    break;
+                // case 1: 
+                //     Debug.Log("1번 세트 - " + set1Count + "개 활성화.");
+                //     Debug.Log("플레이어 공격력 20 증가. 증가 전 = " + FixedAD + "증가 후 = " + (FixedAD + 20f));
+                //     FixedAD += 20f;
+                //     StatUpdate();
+                //     break;
                 case 2: 
                     Debug.Log("1번 세트 - " + set1Count + "개 활성화.");
                     Debug.Log("플레이어 공격력 20% 증가. 증가 전 = " + PercentAD + "증가 후 = " + PercentAD * 1.2f);
@@ -178,11 +180,11 @@ public class Status : MonoBehaviour
             }
             switch (set2Count)
             {
-                case 1: 
-                    Debug.Log("2번 세트 - " + set2Count + "개 활성화.");
-                    Debug.Log("플레이어 방여력 20 증가. 증가 전 = " + FixedArmor + "증가 후 = " + (FixedArmor + 20f));
-                    FixedArmor += 20f;
-                    break;
+                // case 1: 
+                //     Debug.Log("2번 세트 - " + set2Count + "개 활성화.");
+                //     Debug.Log("플레이어 방여력 20 증가. 증가 전 = " + FixedArmor + "증가 후 = " + (FixedArmor + 20f));
+                //     FixedArmor += 20f;
+                //     break;
                 case 2: 
                     Debug.Log("2번 세트 - " + set2Count + "개 활성화.");
                     Debug.Log("플레이어 방여력 20% 증가. 증가 전 = " + PercentArmor + "증가 후 = " + PercentArmor * 1.2f);
@@ -216,12 +218,12 @@ public class Status : MonoBehaviour
             }
             switch (set3Count)
             {
-                case 1: 
-                    Debug.Log("3번 세트 - " + set3Count + "개 활성화.");
-                    Debug.Log("플레이어 화속성 데미지 20 증가. 증가 전 = " + FixedFire + "증가 후 = " + (FixedFire + 20f));
-                    FixedFire += 20f;
-                    StatUpdate();
-                    break;
+                // case 1: 
+                //     Debug.Log("3번 세트 - " + set3Count + "개 활성화.");
+                //     Debug.Log("플레이어 화속성 데미지 20 증가. 증가 전 = " + FixedFire + "증가 후 = " + (FixedFire + 20f));
+                //     FixedFire += 20f;
+                //     StatUpdate();
+                //     break;
                 case 2: 
                     Debug.Log("3번 세트 - " + set3Count + "개 활성화.");
                     Debug.Log("플레이어 화속성 데미지 20% 증가. 증가 전 = " + PercentFire + "증가 후 = " + PercentFire * 1.2f);
@@ -255,12 +257,12 @@ public class Status : MonoBehaviour
             }
             switch (set4Count)
             {
-                case 1: 
-                    Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
-                    Debug.Log("플레이어 빙속성 데미지 20 증가. 증가 전 = " + FixedIce + "증가 후 = " + (FixedIce + 20f));
-                    FixedIce += 20f;
-                    StatUpdate();
-                    break;
+                // case 1: 
+                //     Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
+                //     Debug.Log("플레이어 빙속성 데미지 20 증가. 증가 전 = " + FixedIce + "증가 후 = " + (FixedIce + 20f));
+                //     FixedIce += 20f;
+                //     StatUpdate();
+                //     break;
                 case 2: 
                     Debug.Log("4번 세트 - " + set4Count + "개 활성화.");
                     Debug.Log("플레이어 빙속성 데미지 20% 증가. 증가 전 = " + PercentIce + "증가 후 = " + PercentIce * 1.2f);
@@ -294,12 +296,12 @@ public class Status : MonoBehaviour
             }
             switch (set5Count)
             {
-                case 1: 
-                    Debug.Log("5번 세트 - " + set5Count + "개 활성화.");
-                    Debug.Log("플레이어 평타 데미지 20 증가. 증가 전 = " + FixedADC + "증가 후 = " + (FixedADC + 20f));
-                    FixedADC += 20f;
-                    StatUpdate();
-                    break;
+                // case 1: 
+                //     Debug.Log("5번 세트 - " + set5Count + "개 활성화.");
+                //     Debug.Log("플레이어 평타 데미지 20 증가. 증가 전 = " + FixedADC + "증가 후 = " + (FixedADC + 20f));
+                //     FixedADC += 20f;
+                //     StatUpdate();
+                //     break;
                 case 2: 
                     Debug.Log("5번 세트 - " + set5Count + "개 활성화.");
                     Debug.Log("플레이어 평타 데미지 20% 증가. 증가 전 = " + PercentADC + "증가 후 = " + PercentADC * 1.2f);
@@ -332,12 +334,12 @@ public class Status : MonoBehaviour
             }
             switch (set6Count)
             {
-                case 1: 
-                    Debug.Log("6번 세트 - " + set6Count + "개 활성화.");
-                    Debug.Log("플레이어 스킬 데미지 20 증가. 증가 전 = " + FixedAP + "증가 후 = " + (FixedAP + 20f));
-                    FixedAP += 20f;
-                    StatUpdate();
-                    break;
+                // case 1: 
+                //     Debug.Log("6번 세트 - " + set6Count + "개 활성화.");
+                //     Debug.Log("플레이어 스킬 데미지 20 증가. 증가 전 = " + FixedAP + "증가 후 = " + (FixedAP + 20f));
+                //     FixedAP += 20f;
+                //     StatUpdate();
+                //     break;
                 case 2: 
                     Debug.Log("6번 세트 - " + set6Count + "개 활성화.");
                     Debug.Log("플레이어 스킬 데미지 20% 증가. 증가 전 = " + PercentAP + "증가 후 = " + PercentAP * 1.2f);
@@ -370,16 +372,16 @@ public class Status : MonoBehaviour
             }
             switch (set7Count)
             {
-                case 1: 
-                    Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
-                    Debug.Log("플레이어 행동속도 20 증가. 증가 전 = " + FixedSpeed + "증가 후 = " + (FixedSpeed + 20f));
-                    FixedSpeed += 20;
-                    StatUpdate();
-                    break;
+                // case 1: 
+                //     Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
+                //     Debug.Log("플레이어 행동속도 20 증가. 증가 전 = " + FixedSpeed + "증가 후 = " + (FixedSpeed + 20f));
+                //     FixedSpeed += 20;
+                //     StatUpdate();
+                //     break;
                 case 2: 
                     Debug.Log("7번 세트 - " + set7Count + "개 활성화.");
-                    Debug.Log("플레이어 행동속도 20% 증가. 증가 전 = " + PercentSpeed + "증가 후 = " + PercentSpeed * 1.2f);
-                    PercentSpeed *= 1.2f;
+                    Debug.Log("플레이어 행동속도 10% 증가. 증가 전 = " + PercentSpeed + "증가 후 = " + PercentSpeed * 1.1f);
+                    PercentSpeed *= 1.1f;
                     StatUpdate();
                     break;
                 case 3: 
@@ -409,12 +411,12 @@ public class Status : MonoBehaviour
             }
             switch (set8Count)
             {
-                case 1: 
-                    Debug.Log("8번 세트 - " + set8Count + "개 활성화.");
-                    Debug.Log("플레이어 쿨타임 감소 1 증가. 증가 전 = " + FixedCooltime + "증가 후 = " + (FixedCooltime + 1f));
-                    FixedCooltime += 1;
-                    StatUpdate();
-                    break;
+                // case 1: 
+                //     Debug.Log("8번 세트 - " + set8Count + "개 활성화.");
+                //     Debug.Log("플레이어 쿨타임 감소 1 증가. 증가 전 = " + FixedCooltime + "증가 후 = " + (FixedCooltime + 1f));
+                //     FixedCooltime += 1;
+                //     StatUpdate();
+                //     break;
                 case 2: 
                     Debug.Log("8번 세트 - " + set8Count + "개 활성화.");
                     Debug.Log("플레이어 쿨타임 감소 20% 증가. 증가 전 = " + PercentCooltime + "증가 후 = " + PercentCooltime * 1.2f);
