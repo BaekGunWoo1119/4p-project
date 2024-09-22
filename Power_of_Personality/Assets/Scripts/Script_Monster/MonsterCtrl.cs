@@ -48,6 +48,7 @@ public class MonsterCtrl : MonoBehaviour
     public GameObject FireHit; //몬스터 피격 이펙트(불)
     public GameObject AttackEffect; //몬스터 공격 이펙트
     public GameObject EffectGen; //몬스터 공격 이펙트 소환 장소
+    public float AnimSpeed = 1.0f; //보조스킬 시간 감속용 변수 (09.18 정도훈)
 
     public Transform desiredParent;
 
@@ -79,6 +80,14 @@ public class MonsterCtrl : MonoBehaviour
 
     public virtual void Update()
     {
+        if(Status.Spell_TimeSlowdown_ON){
+            AnimSpeed = 0.3f;
+            anim.SetFloat("AnimSpeed", AnimSpeed);
+        }
+        else{
+            AnimSpeed = 1.0f;
+            anim.SetFloat("AnimSpeed", AnimSpeed);
+        }
         hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
         HpBar.transform.position = hpBarPosition;
         rd.AddForce(Vector3.down * 4, ForceMode.VelocityChange);
@@ -89,6 +98,7 @@ public class MonsterCtrl : MonoBehaviour
         }
         AttackCoolTime += Time.deltaTime;
         TickCoolTime += Time.deltaTime;
+        hitCount -= Time.deltaTime;
         if(PlayerTr != null)
         {
             Turn();
@@ -162,7 +172,7 @@ public class MonsterCtrl : MonoBehaviour
             StartCoroutine(Trace());
         }
 
-        if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && hitCount <= 0)
+        if (Distance <= attackRadius && AttackCoolTime >= 3.0f*(1f/AnimSpeed) && !isDie && hitCount <= 0)
         {
             StartCoroutine(Attack());
         }
@@ -194,7 +204,7 @@ public class MonsterCtrl : MonoBehaviour
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
         Vector3 movement;
         if(localPosition.z - playerLocalPosition.z > -1 && localPosition.z - playerLocalPosition.z < 1){
-            movement = new Vector3(directionToPlayer.x, 0, directionToPlayer.z) * MoveSpeed * Time.deltaTime;
+            movement = new Vector3(directionToPlayer.x, 0, directionToPlayer.z) * MoveSpeed * Time.deltaTime * AnimSpeed;
             transform.parent.Translate(movement, Space.World);
         }
         yield return null;

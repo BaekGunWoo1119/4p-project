@@ -56,7 +56,7 @@ public class GameEnd : MonoBehaviour
         if (fadeIn == true)
         {
             gameOverGRP.SetActive(true);
-            endText.text = "플레이 시간 : " + (int)PlayTime +" 초"+ "\n\n최종 MBTI : "+ PlayerPrefs.GetString("PlayerMBTI") +"\n\n추가 보너스 스텟 : 1";
+            endText.text = "플레이 시간 : " + (int)PlayTime +" 초"+ "\n최종 MBTI : "+ PlayerPrefs.GetString("PlayerMBTI") +"\n추가 보너스 스텟 : 1";
             targetGRP[0] = gameOverGRP.GetComponent<Graphic>();
             for(int i = 1; i <= gameOverGRP.transform.childCount; i++)
             {

@@ -6,14 +6,12 @@ using UnityEngine.UI;
 public class GamePause : MonoBehaviour
 {
     public Button pauseButton;
-    public Button resumeButton1;
-    public Button resumeButton2;
+    public Button resumeButton;
     // Start is called before the first frame update
     void Start()
     {
         pauseButton.onClick.AddListener(PauseGame);
-        resumeButton1.onClick.AddListener(ResumeGame);
-        resumeButton2.onClick.AddListener(ResumeGame);
+        resumeButton.onClick.AddListener(ResumeGame);
     }
 
     // Update is called once per frame

@@ -360,6 +360,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     public void GameClear(){
         //GameClear.SetActive(true);
         //delay
+        Status.isDie();
         PhotonNetwork.LoadLevel("1-2 (Multi Lobby)");
         IsDie=false;
     }
