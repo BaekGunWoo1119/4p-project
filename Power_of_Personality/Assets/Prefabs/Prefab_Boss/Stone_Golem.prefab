@@ -267,7 +267,6 @@ GameObject:
   - component: {fileID: 7463422546709310351}
   - component: {fileID: 3604994986887323594}
   - component: {fileID: 3666438635150257448}
-  - component: {fileID: 8005478025715604704}
   m_Layer: 0
   m_Name: Monster(Script)
   m_TagString: Untagged
@@ -335,30 +334,6 @@ MonoBehaviour:
   target: {fileID: 7058489028642018405}
   speed: 1
   height: 3
---- !u!114 &8005478025715604704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1667223962521680413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3af383a2754133146b20b60750184529, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HpBar: {fileID: 0}
-  matObj: {fileID: 0}
-  targetObj: {fileID: 0}
-  IceHit: {fileID: 0}
-  FireHit: {fileID: 0}
-  Coin: {fileID: 0}
-  ArmSwing_Effect: {fileID: 1234720115841870805, guid: de315c96cc448a44488902483985d361, type: 3}
-  GroundStamp_Effect: {fileID: 8449155066481782634, guid: eef1c3ee8df31504c86bb201c4f7050e, type: 3}
-  FallingRock_Effect: {fileID: 1458941610308127559, guid: 480a6d4ab8c421b46a14bc71d8c6c27e, type: 3}
-  GroundSmash_Effect: {fileID: 246773904365192213, guid: 62ac176170d52704b8fd37bed418335e, type: 3}
-  PowerSmash_Effect: {fileID: 246773904365192213, guid: 3ac441927867acf4c8993109938d88d9, type: 3}
-  JumpSmash_Effect: {fileID: 246773904365192213, guid: e5f18a9441b95084bb709403c27c7d65, type: 3}
 --- !u!1 &1758115165336430510
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,7 +574,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3196985243713667959
 Transform:
   m_ObjectHideFlags: 0
@@ -608,7 +583,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2986944893973629790}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.1175222, y: -1.7013927, z: -2.7500277}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
