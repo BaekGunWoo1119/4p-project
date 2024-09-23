@@ -173,24 +173,34 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public GameObject Spell_RoarOfAnger_Effect;
     public GameObject Spell_TimeSlowdown_Effect;
     public GameObject Spell_Immune_Effect;
-    public GameObject Spell_Shouting_Effect;
+    public GameObject Spell_Stun_Effect;
     public GameObject Spell_Heal_Effect;
     protected float Spell_Swiftness_CoolTime;
     protected float Spell_Unstoppable_CoolTime;
     protected float Spell_RoarOfAnger_CoolTime;
     protected float Spell_TimeSlowdown_CoolTime;
     protected float Spell_Immune_CoolTime;
-    protected float Spell_Shouting_CoolTime;
+    protected float Spell_Stun_CoolTime;
     protected float Spell_Heal_CoolTime;
     protected bool Spell_Swiftness_Ready = true;
     protected bool Spell_Unstoppable_Ready = true;
     protected bool Spell_RoarOfAnger_Ready = true;
     protected bool Spell_TimeSlowdown_Ready = true;
     protected bool Spell_Immune_Ready = true;
-    protected bool Spell_Shouting_Ready = true;
+    protected bool Spell_Stun_Ready = true;
     protected bool Spell_Heal_Ready = true;//도훈 2024-09-20
     protected string Spell_1; //보조스킬 받아오기
     protected string Spell_2;
+    protected float Spell_1_CoolTime = 0f; //쿨타임 UI용 변수
+    protected float Spell_2_CoolTime = 0f; //쿨타임 UI용 변수
+    protected float Swiftness_CoolTime = 60f;
+    protected float Unstoppable_CoolTime = 60f;
+    protected float RoarOfAnger_CoolTime = 60f;
+    protected float TimeSlowdown_CoolTime = 60f;
+    protected float Immune_CoolTime = 60f;
+    protected float Stun_CoolTime = 60f;
+    protected float Heal_CoolTime = 60f;
+
 
 
 
@@ -231,6 +241,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected Image Qcool;
     protected Image Wcool;
     protected Image Ecool;
+    protected Image Dcool;
+    protected Image Fcool;
     protected bool canTakeDamage = true; // 데미지를 가져올 수 있는지
     protected float damageCooldown = 1.0f; // 1초마다 틱데미지를 가져오기 위함
 
@@ -308,6 +320,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
         Wcool = GameObject.Find("CoolTime-W").GetComponent<Image>();
         Ecool = GameObject.Find("CoolTime-E").GetComponent<Image>();
+        Dcool = GameObject.Find("CoolTime-D").GetComponent<Image>();
+        Fcool = GameObject.Find("CoolTime-F").GetComponent<Image>();
 
         // 애니메이션, Rigidbody, Transform 컴포넌트 지정
         anim = this.GetComponent<Animator>();
@@ -421,6 +435,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             if (Ecool.fillAmount != 0)
             {
                 Ecool.fillAmount -= 1 * Time.smoothDeltaTime / TotalESkillCoolTime;
+            }
+            if (Dcool.fillAmount != 0)
+            {
+                Dcool.fillAmount -= 1 * Time.smoothDeltaTime / Spell_1_CoolTime;
+            }
+            if (Fcool.fillAmount != 0)
+            {
+                Fcool.fillAmount -= 1 * Time.smoothDeltaTime / Spell_2_CoolTime;
             }
             // 땅에 닿아있는지 체크
             isGrounded();
@@ -595,6 +617,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 //Spell_Immune(); //완료
                 //Spell_TimeSlowdown();
                 UseSpell(Spell_1);
+                Set_Spell_Cooltime(Spell_1, 1);
             }
 
             //Skill_F (09.18 정도훈)
@@ -610,6 +633,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 //Spell_Unstoppable(); //(이펙트 추가해야됨)
                 //Spell_Heal(); //완료
                 UseSpell(Spell_2); 
+                Set_Spell_Cooltime(Spell_2, 2);
             }
 
 
@@ -1380,7 +1404,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Spell_Heal_CoolTime += Time.deltaTime; //도훈 2024-09-20
         Spell_Immune_CoolTime += Time.deltaTime;//도훈 2024-09-20
         Spell_RoarOfAnger_CoolTime += Time.deltaTime;//도훈 2024-09-20
-        Spell_Shouting_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_Stun_CoolTime += Time.deltaTime;//도훈 2024-09-20
         Spell_Swiftness_CoolTime += Time.deltaTime;//도훈 2024-09-20
         Spell_TimeSlowdown_CoolTime += Time.deltaTime;//도훈 2024-09-20
         Spell_Unstoppable_CoolTime += Time.deltaTime;//도훈 2024-09-20
@@ -1398,31 +1422,31 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             ESkillReady = true;
         }
-        if(Spell_Heal_CoolTime> 60f) //도훈 2024-09-20
+        if(Spell_Heal_CoolTime> Heal_CoolTime) //도훈 2024-09-20
         {
             Spell_Heal_Ready =true;
         }
-        if(Spell_Immune_CoolTime> 60f)//도훈 2024-09-20
+        if(Spell_Immune_CoolTime> Immune_CoolTime)//도훈 2024-09-20
         {
             Spell_Immune_Ready =true;
         }
-        if(Spell_RoarOfAnger_CoolTime> 60f)//도훈 2024-09-20
+        if(Spell_RoarOfAnger_CoolTime> RoarOfAnger_CoolTime)//도훈 2024-09-20
         {
             Spell_RoarOfAnger_Ready =true;
         }
-        if(Spell_Shouting_CoolTime> 60f)//도훈 2024-09-20
+        if(Spell_Stun_CoolTime> Stun_CoolTime)//도훈 2024-09-20
         {
-            Spell_Shouting_Ready =true;
+            Spell_Stun_Ready =true;
         }
-        if(Spell_Swiftness_CoolTime> 60f)//도훈 2024-09-20
+        if(Spell_Swiftness_CoolTime> Swiftness_CoolTime)//도훈 2024-09-20
         {
             Spell_Swiftness_Ready =true;
         }
-        if(Spell_TimeSlowdown_CoolTime> 60f)//도훈 2024-09-20
+        if(Spell_TimeSlowdown_CoolTime> TimeSlowdown_CoolTime)//도훈 2024-09-20
         {
             Spell_TimeSlowdown_Ready =true;
         }
-        if(Spell_Unstoppable_CoolTime> 60f)//도훈 2024-09-20
+        if(Spell_Unstoppable_CoolTime> Unstoppable_CoolTime)//도훈 2024-09-20
         {
             Spell_Unstoppable_Ready =true;
         }
@@ -1699,19 +1723,18 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
 
     //기절 미완
-    public virtual void Spell_Shouting(){
-        if(Spell_Shouting_Ready){
-            StartCoroutine(Spell_Shouting_on());
+    public virtual void Spell_Stun(){
+        if(Spell_Stun_Ready){
+            StartCoroutine(Spell_Stun_on());
             Debug.Log("기절 ON");
-            Spell_Shouting_CoolTime = 0f;   //도훈 2024-09-20
-            Spell_Shouting_Ready = false;
+            Spell_Stun_CoolTime = 0f;   //도훈 2024-09-20
+            Spell_Stun_Ready = false;
         }
     }
-    public virtual IEnumerator Spell_Shouting_on()
+    public virtual IEnumerator Spell_Stun_on()
     {
-        SkillEffect = Instantiate(Spell_Shouting_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
-        SkillEffect.transform.parent = EffectGen.transform;
-        yield return new WaitForSeconds(1.0f);
+        SkillEffect = Instantiate(Spell_Stun_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot + 90f, 0));
+        yield return new WaitForSeconds(3.0f);
         Destroy(SkillEffect);
     }
 
@@ -1790,8 +1813,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             case "Spell_Heal":
                 Spell_Heal();
                 break;
-            case "Spell_Shouting":
-                Spell_Shouting();
+            case "Spell_Stun":
+                Spell_Stun();
                 break;
             case "Spell_Immune":
                 Spell_Immune();
@@ -1803,6 +1826,66 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 Spell_RoarOfAnger();
                 break;
         }
+    }
+    //보조스킬 쿨타임 적용하기
+    public virtual void Set_Spell_Cooltime(string Spell, int Spell_num){
+        switch(Spell_num){
+            case 1:
+                switch(Spell){
+                    case "Spell_Swiftness":
+                        Spell_1_CoolTime = Swiftness_CoolTime;
+                        break;
+                    case "Spell_Unstoppable":
+                        Spell_1_CoolTime = Unstoppable_CoolTime;
+                        break;
+                    case "Spell_Heal":
+                        Spell_1_CoolTime = Heal_CoolTime;
+                        break;
+                    case "Spell_Stun":
+                        Spell_1_CoolTime = Stun_CoolTime;
+                        break;
+                    case "Spell_Immune":
+                        Spell_1_CoolTime = Immune_CoolTime;
+                        break;
+                    case "Spell_TimeSlowdown":
+                        Spell_1_CoolTime = TimeSlowdown_CoolTime;
+                        break;
+                    case "Spell_RoarOfAnger":
+                        Spell_1_CoolTime = RoarOfAnger_CoolTime;
+                        break;
+                }
+            Dcool.fillAmount = 1;
+            Debug.Log(Spell_1_CoolTime);
+            break;
+            case 2:
+                switch(Spell){
+                    case "Spell_Swiftness":
+                        Spell_2_CoolTime = Swiftness_CoolTime;
+                        break;
+                    case "Spell_Unstoppable":
+                        Spell_2_CoolTime = Unstoppable_CoolTime;
+                        break;
+                    case "Spell_Heal":
+                        Spell_2_CoolTime = Heal_CoolTime;
+                        break;
+                    case "Spell_Stun":
+                        Spell_2_CoolTime = Stun_CoolTime;
+                        break;
+                    case "Spell_Immune":
+                        Spell_2_CoolTime = Immune_CoolTime;
+                        break;
+                    case "Spell_TimeSlowdown":
+                        Spell_2_CoolTime = TimeSlowdown_CoolTime;
+                        break;
+                    case "Spell_RoarOfAnger":
+                        Spell_2_CoolTime = RoarOfAnger_CoolTime;
+                        break;
+                }
+            Fcool.fillAmount = 1;
+            Debug.Log(Spell_2_CoolTime);
+            break;
+        }
+        
     }
     #endregion
     
