@@ -37,7 +37,7 @@ public class BossCtrl : MonoBehaviour
     public GameObject IceHit; //몬스터 피격 이펙트(얼음)
     public GameObject FireHit; //몬스터 피격 이펙트(불)
     public GameObject DamageText; //맞았을 때 나오는 데미지 텍스트
-    protected GameObject MonsterCanvas;
+    public GameObject MonsterCanvas;
     public GameObject Coin;     //몬스터를 죽이면 드랍되는 코인
 
     // 플레이어 추적 관련

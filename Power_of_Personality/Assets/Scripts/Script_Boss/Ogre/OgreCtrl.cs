@@ -43,6 +43,7 @@ public class OgreCtrl : BossCtrl
     {
         base.Update();
         SkillYRot = transform.localEulerAngles.y;
+        Debug.Log(MonsterCanvas);
         //캔버스 뒤집어지는 오류 해결(08.29)
         if(GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y > 0 && GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y < 180)
             MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot + 90f, 0);
