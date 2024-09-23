@@ -42,6 +42,7 @@ public class MonsterCtrl : MonoBehaviour
     public GameObject Coin;     //몬스터를 죽이면 드랍되는 코인
     public bool isDie;     //몬스터 사망체크
     public bool isHit;     //몬스터 피격체크
+    public bool isStun;  //스턴상태인지
     public float hitCount;  //몬스터가 맞았을 때, 시간을 늘려서 몬스터가 피격 상태인지 체크하기 위한 변수
 
     public GameObject IceHit; //몬스터 피격 이펙트(얼음)
@@ -49,6 +50,10 @@ public class MonsterCtrl : MonoBehaviour
     public GameObject AttackEffect; //몬스터 공격 이펙트
     public GameObject EffectGen; //몬스터 공격 이펙트 소환 장소
     public float AnimSpeed = 1.0f; //보조스킬 시간 감속용 변수 (09.18 정도훈)
+
+    public GameObject Stun_Effect_1; //스턴 이펙트 생성용
+    public GameObject Stun_Effect_2; //스턴 이펙트 On/Off용
+
 
     public Transform desiredParent;
 
@@ -91,8 +96,7 @@ public class MonsterCtrl : MonoBehaviour
         hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
         HpBar.transform.position = hpBarPosition;
         rd.AddForce(Vector3.down * 4, ForceMode.VelocityChange);
-
-        if (!isDie)     // 죽어있는 상태가 아니면
+        if (!isDie &&!isStun)     // 죽어있는 상태가 아니면
         {
             DistanceCheck();    // 플레이어와의 거리를 계산
         }
@@ -510,6 +514,13 @@ public class MonsterCtrl : MonoBehaviour
             StartCoroutine(TakeDamage(Damage));
         }
         #endregion
+        #region 보조스킬
+        if(col.tag == "Spell_Stun")
+        {
+            StartCoroutine(Stun());
+        }
+        #endregion
+        //Debug.Log("충돌한 객체 태그 : "+col.tag);
     }
 
     public virtual void OnTriggerStay(Collider col)
@@ -767,6 +778,18 @@ public class MonsterCtrl : MonoBehaviour
                 yield return null;
             }
         }
+    }
+    #endregion
+    #region 보조스킬 스턴
+    public virtual IEnumerator Stun()
+    {
+        isStun = true;
+        GameObject StunEffect = Instantiate(Stun_Effect_1, this.transform.position, Quaternion.Euler(0, 0, 0));
+        Destroy(StunEffect,2.0f);
+        Stun_Effect_2.SetActive(true);
+        yield return new WaitForSeconds(5f); //총 스턴 시간
+        Stun_Effect_2.SetActive(false);
+        isStun = false;
     }
     #endregion
 }

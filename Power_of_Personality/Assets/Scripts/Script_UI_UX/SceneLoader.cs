@@ -388,7 +388,7 @@ public class SceneLoader : MonoBehaviour
             //보조 스킬 선택 코드
             if(PlayerPrefs.GetString("Spell_1") == "Spell_Swiftness")
                 GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[0];
-            else if(PlayerPrefs.GetString("Spell_1") == "Spell_Shouting")
+            else if(PlayerPrefs.GetString("Spell_1") == "Spell_Stun")
                 GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[1];
             else if(PlayerPrefs.GetString("Spell_1") == "Spell_Heal")
                 GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[2];
@@ -405,7 +405,7 @@ public class SceneLoader : MonoBehaviour
 
             if(PlayerPrefs.GetString("Spell_2") == "Spell_Swiftness")
                 GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[0];
-            else if(PlayerPrefs.GetString("Spell_2") == "Spell_Shouting")
+            else if(PlayerPrefs.GetString("Spell_2") == "Spell_Stun")
                 GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[1];
             else if(PlayerPrefs.GetString("Spell_2") == "Spell_Heal")
                 GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[2];
