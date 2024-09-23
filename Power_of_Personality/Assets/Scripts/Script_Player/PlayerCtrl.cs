@@ -204,6 +204,17 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public GameObject Druid;
     public GameObject DruidGen;
 
+    public GameObject StoneGolem;
+    public GameObject StoneGolemGen;
+
+    public GameObject Ogre;
+    public GameObject OgreGen;
+
+    public GameObject DemonKing;
+    public GameObject DemonKingGen;
+
+
+
     // 쿨타임 관련
     protected bool QSkillReady;
 
@@ -261,6 +272,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         BossWall2Collider = BossWall2.GetComponent<BoxCollider>();
         //보스 소환 방식 변경(08.29)
         DruidGen = GameObject.Find("DruidGen");
+        StoneGolemGen = GameObject.Find("StoneGolemGen");
+        OgreGen = GameObject.Find("OgreGen");
+        DemonKingGen = GameObject.Find("DemonKingGen");
+
 
         // HP Bar 설정
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
@@ -1298,7 +1313,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             BossWall2.layer = 3;
             BossWall1Collider.isTrigger = false;
             BossWall2Collider.isTrigger = false;
-            Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            //Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            //Instantiate(StoneGolem, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            Instantiate(Ogre, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            //Instantiate(DemonKing, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
         }
     }
     #endregion
