@@ -10,7 +10,8 @@ public class PortalCtrl : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene(sceneName);
+            PlayerPrefs.SetString("NextScene_Name", sceneName);
+            SceneManager.LoadScene("LoadingScene"); //포탈을 타면 로딩씬으로 넘어간 후 넘어감(09.23)
         }
     }
 
