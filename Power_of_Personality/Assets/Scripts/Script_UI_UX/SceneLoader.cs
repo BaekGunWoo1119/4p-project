@@ -54,6 +54,7 @@ public class SceneLoader : MonoBehaviour
     private Button ClassChoice_Archer;
     private Button ClassChoice_Wizard;
     private Button ClassChoice_Back;
+    private GameObject NoneClassDanger;
 
     //캐릭터 프리펩
     public GameObject prf_Warrior;
@@ -84,6 +85,7 @@ public class SceneLoader : MonoBehaviour
             Main_Setting = GameObject.Find("Settings").GetComponent<Button>();
             Main_Exit = GameObject.Find("Exit").GetComponent<Button>();
             PlayerPrefs.SetFloat("Coin", 0);
+            PlayerPrefs.SetString("PlayerClass", "");
             if (Main_Single != null)
             {
                 Main_Single.onClick.AddListener(Main_Single_Pressed);
@@ -238,6 +240,7 @@ public class SceneLoader : MonoBehaviour
             ClassChoice_Archer = GameObject.Find("Archer").GetComponent<Button>();
             ClassChoice_Wizard = GameObject.Find("Wizard").GetComponent<Button>();
             ClassChoice_Back = GameObject.Find("Back").GetComponent<Button>();
+            NoneClassDanger = GameObject.Find("DangerText_NoneClass");
             Button ClassChoice_Select = GameObject.Find("SelectClass").GetComponent<Button>(); //셀렉 버튼 추가로 추가 (09.09)
             if (ClassChoice_Warrior != null)
             {
@@ -262,6 +265,7 @@ public class SceneLoader : MonoBehaviour
             //셀렉 버튼 추가로 추가 (09.09)
             if(ClassChoice_Select != null)
             {
+                Debug.Log(PlayerPrefs.GetString("PlayerClass"));
                 ClassChoice_Select.onClick.AddListener(ClassChoice_Class_Select_Pressed);
             }
         }
@@ -692,31 +696,58 @@ public class SceneLoader : MonoBehaviour
     }
     void ClassChoice_Class_Wizard_Pressed()
     {
+        if(NoneClassDanger != null)
+        {
+            NoneClassDanger.transform.localScale = new Vector3(0, 0, 0);
+        }
         LobbyManager.ClassSelectWizard();
         //셀렉 버튼 추가로 삭제 (09.09)
         //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
     void ClassChoice_Class_Warrior_Pressed()
     {
+        if(NoneClassDanger != null)
+        {
+            NoneClassDanger.transform.localScale = new Vector3(0, 0, 0);
+        }
         LobbyManager.ClassSelectWarrior();
         //셀렉 버튼 추가로 삭제 (09.09)
         //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
     void ClassChoice_Class_Rogue_Pressed()
     {
+        if(NoneClassDanger != null)
+        {
+            NoneClassDanger.transform.localScale = new Vector3(0, 0, 0);
+        }
         LobbyManager.ClassSelectRogue();
         //셀렉 버튼 추가로 삭제 (09.09)
         //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
     void ClassChoice_Class_Archer_Pressed()
     {
+        if(NoneClassDanger != null)
+        {
+            NoneClassDanger.transform.localScale = new Vector3(0, 0, 0);
+        }
         LobbyManager.ClassSelectArcher();
         //셀렉 버튼 추가로 삭제 (09.09)
         //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
     void ClassChoice_Class_Select_Pressed()
     {
-        SceneManager.LoadScene("2-3 (Spell Choice)");
+        if(string.IsNullOrEmpty(PlayerPrefs.GetString("PlayerClass")))
+        {
+            //플레이어 클래스가 선택되지 않으면 실행되지 않음(09.25)
+            if(NoneClassDanger != null)
+            {
+                NoneClassDanger.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene("2-3 (Spell Choice)");
+        }
     }
     void SpellChoice_Back_Pressed()
     {
