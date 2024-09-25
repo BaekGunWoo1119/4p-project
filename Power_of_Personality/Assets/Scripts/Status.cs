@@ -89,11 +89,14 @@ public class Status : MonoBehaviour
     public static bool IsShop = false; //현재 상점인지 확인
     public static bool Spell_TimeSlowdown_ON = false; //보조스킬 시간 감속 (09.18 정도훈)
     static int a = 0;
+    public static int BonusStat;
     void Start()
     {
         StatUpdate();
         Array.Fill(itemIds, -1);
         IsShop = false;
+        BonusStat = PlayerPrefs.GetInt("Stat") * 10;
+        ApplyBonusStat();
     }
 
     void Update()
@@ -512,5 +515,15 @@ public class Status : MonoBehaviour
         TotalCooltime = 1f; //총 쿨타임
         TotalSpeed = 1f; //총 행동속도
         EXP = 0f; // 현재 경험치
+    }
+
+    void ApplyBonusStat(){
+        FixedAD+=BonusStat;
+        FixedArmor+=BonusStat;
+        FixedSpeed+=BonusStat;
+        FixedADC+=BonusStat;
+        FixedAP+=BonusStat;
+        FixedFire+=BonusStat;
+        FixedIce+=BonusStat;
     }
 }
