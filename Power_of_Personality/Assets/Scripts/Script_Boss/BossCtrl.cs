@@ -71,7 +71,8 @@ public class BossCtrl : MonoBehaviour
 
     protected virtual void Start()
     {
-        StartCoroutine(FindPlayer());   
+        StartCoroutine(FindPlayer());
+           
         // 보스 문 할당
         BossWall1 = GameObject.Find("BossWall1").gameObject;
         BossWall1Collider = BossWall1.GetComponent<BoxCollider>();
@@ -636,6 +637,7 @@ public class BossCtrl : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         PlayerTr = GameObject.FindWithTag("Player").transform;
+        DistanceCheck();
     }
     protected virtual void DistanceCheck()
     {

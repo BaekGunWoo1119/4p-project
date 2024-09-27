@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BackGroundVideoCtrl : MonoBehaviour
 {
@@ -18,6 +19,14 @@ public class BackGroundVideoCtrl : MonoBehaviour
             // 인스턴스가 없으면 이 객체를 인스턴스로 지정하고 파괴되지 않도록 설정
             instance = this;
             DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (SceneManager.GetActiveScene().name == "2-1 (MBTI Choice)")
+        {
+            Destroy(gameObject);
         }
     }
 }

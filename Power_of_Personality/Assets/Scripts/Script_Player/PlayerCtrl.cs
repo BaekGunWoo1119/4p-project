@@ -884,6 +884,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                     Status.PercentSpeed = Swiftness_Stat;
                     Status.StatUpdate();
                     Swiftness_Buff_ON = false;
+                    Spell_Swiftness_Effect.SetActive(false);
                     Debug.Log("신속 OFF");
                 }
             }
@@ -1338,8 +1339,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             BossWall1Collider.isTrigger = false;
             BossWall2Collider.isTrigger = false;
             //Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
-            //Instantiate(StoneGolem, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
-            Instantiate(Ogre, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            Instantiate(StoneGolem, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            //Instantiate(Ogre, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
             //Instantiate(DemonKing, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
         }
     }
@@ -1679,6 +1680,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Swiftness_Stat = Status.PercentSpeed;
         Status.PercentSpeed += (Status.PercentSpeed * buffPer);
         Status.StatUpdate();
+        Spell_Swiftness_Effect.SetActive(true);
         Debug.Log("신속 ON");
         yield break;
     }

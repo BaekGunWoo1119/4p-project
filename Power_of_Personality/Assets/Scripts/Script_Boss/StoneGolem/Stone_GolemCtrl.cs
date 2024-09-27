@@ -13,8 +13,17 @@ public class Stone_Golem : BossCtrl
     public GameObject JumpSmash_Effect;
 
     // 보스 공격 컨트롤
+    public GameObject rock;
+    public Transform throwingHand;        
+    public Transform spawnPoint;    
+    //public Transform target;
+    public float speed;
+    public float height;
+    
+    private IEnumerator throwRockCoroutine;
+
     private bool canTraceAttack;
-    private float TraceTime = 0;
+    private bool isRangedAttack = true;
     private bool TraceOn;
     private Vector3 PrevPosition;
     #endregion
@@ -45,15 +54,6 @@ public class Stone_Golem : BossCtrl
         else
             MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
         DistanceCheck();
-        if(TraceOn == true)
-        {
-            TraceTime += Time.deltaTime;
-        }
-        if (TraceTime >= 3f)
-        {
-            TraceTime = 0;
-            TraceOn = false;
-        }
         if(isDie == true)
         {
             SoundsManager.Change_Sounds("Forest"); //소리 추가(08.31)
@@ -110,11 +110,13 @@ public class Stone_Golem : BossCtrl
     public IEnumerator Trace()
     {
         // 플레이어를 향해 이동하는 로직
+        Debug.Log("추적");
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
         Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
         transform.Translate(movement, Space.World);
         anim.SetBool("doMove", true);
-        if (Distance <= 3)
+
+        if (Distance <= 3f)
         {
             int ranAction = Random.Range(0, 3);
             anim.SetBool("doMove", false);
@@ -124,16 +126,51 @@ public class Stone_Golem : BossCtrl
                     Debug.Log("근접 약공 선택됨");
                     StartCoroutine(MeleeWeakAttack());
                     TraceOn = false;
+                    isRangedAttack = true;
                     break;
                 case 1:
                     Debug.Log("근접 강공 선택됨");
                     StartCoroutine(MeleeStrongAttack());
                     TraceOn = false;
+                    isRangedAttack = true;
                     break;
                 case 2:
                     Debug.Log("스킬 1 선택됨");
                     StartCoroutine(Skill_1());
                     TraceOn = false;
+                    isRangedAttack = true;
+                    break;
+            }
+        }
+        else if(Distance <= 12f && isRangedAttack)
+        {
+            int ranAction = Random.Range(0, 2);
+            anim.SetBool("doMove", false);
+            switch (ranAction)
+            {
+                case 0:
+                    int chooseAttack = Random.Range(0, 3);
+                    switch (chooseAttack)
+                    {
+                        case 0:
+                            Debug.Log("추적 후_원거리 약공 선택됨");
+                            StartCoroutine(RangedWeakAttack());
+                            TraceOn = false;
+                            break;
+                        case 1:
+                            Debug.Log("추적 후_원거리 강공 선택됨");
+                            StartCoroutine(RangedStrongAttack());
+                            TraceOn = false;
+                            break;
+                        case 2:
+                            Debug.Log("추적 후_스킬 2 선택됨");
+                            StartCoroutine(Skill_2());
+                            TraceOn = false;
+                            break;
+                    }
+                    break;
+                case 1:
+                    isRangedAttack = false;
                     break;
             }
         }
@@ -142,16 +179,13 @@ public class Stone_Golem : BossCtrl
             transform.Translate(movement, Space.World);
             anim.SetBool("doMove", true);
         }
-        if(TraceTime > 3)
-        {
-            TraceOn = false;
-        }
         yield return null;
     }
 
     protected override IEnumerator Think()
     {
         yield return new WaitForSeconds(0.1f);
+        Debug.Log("생각");
         Debug.Log("Distance = " + Distance);
         Debug.Log("여기까지는 잘 돼요");
         if(Distance <= 12f)
@@ -165,125 +199,182 @@ public class Stone_Golem : BossCtrl
                     Debug.Log("Trace 선택됨");
                     TraceOn = true;
                     break;
-            }
-        }
-        else
-        {
-            Debug.Log("2번 들어옴");
-            int ranAction = Random.Range(0, 2);
-            Debug.Log("선택된 번호는 ? = " + ranAction);
-            switch (ranAction)
-            {
-                case 0:
-                    int chooseAttack = Random.Range(0, 2);
+                case 1:
+                    int chooseAttack = Random.Range(0, 3);
                     switch (chooseAttack)
                     {
                         case 0:
                             Debug.Log("원거리 약공 선택됨");
                             StartCoroutine(RangedWeakAttack());
+                            TraceOn = false;
                             break;
                         case 1:
                             Debug.Log("원거리 강공 선택됨");
                             StartCoroutine(RangedStrongAttack());
+                            TraceOn = false;
+                            break;
+                        case 2:
+                            Debug.Log("스킬 2 선택됨");
+                            StartCoroutine(Skill_2());
+                            TraceOn = false;
                             break;
                     }
                     break;
-                case 1:
-                    Debug.Log("스킬 2 선택됨");
-                    StartCoroutine(Skill_2());
-                    break;
             }
+        }
+        else
+        {
+            TraceOn = true;
         }
     }
 
     // 공격 애니메이션 && 콜라이더 스크립트
-    protected override IEnumerator MeleeWeakAttack()
+    protected override IEnumerator MeleeWeakAttack() //첫번째 공격 애니메이션 3초 두번째 2초
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeWeakAttack");   // 애니메이션
-
-        yield return new WaitForSeconds(0.75f); // 스킬 콜라이더 ~~
-        yield return new WaitForSeconds(0.5f);
-        yield return new WaitForSeconds(0.4f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(5f);        //애니메이션 지속 시간
         isAttacking = false;
-        yield return new WaitForSeconds(4f);    // ~~ 스킬 콜라이더
+        yield return new WaitForSeconds(1f);        //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
     }
 
-    protected override IEnumerator MeleeStrongAttack()
+    protected override IEnumerator MeleeStrongAttack() //공격 애니메이션 1.6초
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeStrongAttack");     //애니메이션
-
-        yield return new WaitForSeconds(1f);        // 스킬 콜라이더 ~~
-
-        yield return new WaitForSeconds(0.25f);
-
-        yield return new WaitForSeconds(0.25f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.6f);        //애니메이션 지속 시간
         isAttacking = false;
-        yield return new WaitForSeconds(3f);        // ~~ 스킬 콜라이더
+        yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간
         StartCoroutine(Think());
     }
 
-    protected override IEnumerator RangedWeakAttack()
+    protected override IEnumerator RangedWeakAttack() //공격 애니메이션 1.9초
     {
         isAttacking = true;
-        anim.SetTrigger("doRangedWeakAttack");      // 애니메이션
-        yield return new WaitForSeconds(4f);
-
+        anim.SetTrigger("doRangedWeakAttack");
+        yield return new WaitForSeconds(1.9f);        //애니메이션 지속 시간
+        isAttacking = false;
+        yield return new WaitForSeconds(2f);        //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
     }
 
-    protected override IEnumerator RangedStrongAttack()
+    protected override IEnumerator RangedStrongAttack() //공격 애니메이션 2.1초 
     {
         isAttacking = true;
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
-
-        yield return new WaitForSeconds(2.5f);      // 스킬 콜라이더 ~~
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2.1f);        //애니메이션 지속 시간
         isAttacking = false;
-        yield return new WaitForSeconds(1.5f);      // ~~ 스킬 콜라이더
-
+        yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
     }
 
-    protected override IEnumerator Skill_1()
+    protected override IEnumerator Skill_1() //공격 애니메이션 3.4초
     {
         isAttacking = true;
         anim.SetTrigger("doSkill1");
-
-        yield return new WaitForSeconds(1f);          // 스킬 콜라이더 ~~
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-
-        yield return new WaitForSeconds(0.1f);          // 0.1초 대기
-
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-
-        yield return new WaitForSeconds(0.75f);          // 0.1초 대기
-
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
+        yield return new WaitForSeconds(3.4f);        //애니메이션 지속 시간
         isAttacking = false;
-        yield return new WaitForSeconds(3f);            // ~~ 스킬 콜라이더
-
+        yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
     }
 
-    protected override IEnumerator Skill_2()
+    protected override IEnumerator Skill_2() //공격 애니메이션 4.7초
     {
         isAttacking = true;
         anim.SetTrigger("doSkill2");
-        yield return new WaitForSeconds(0.75f);
-        yield return new WaitForSeconds(2.75f);
+        yield return new WaitForSeconds(2.7f);
+        StartCoroutine(MoveForwardForSeconds(1.3f));
+        yield return new WaitForSeconds(0.7f);        //애니메이션 지속 시간
         isAttacking = false;
+        yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
+    }
+
+    IEnumerator MoveForwardForSeconds(float seconds)
+    {
+        float elapsedTime = 0;
+        
+        while (elapsedTime < seconds)
+        {
+            elapsedTime += Time.deltaTime;
+            transform.Translate(Vector3.forward * 6.0f * Time.deltaTime);
+            yield return null;
+        }
+    }
+    #endregion
+
+    #region 돌 던지기 스크립트
+    public void SpawnRock()
+    {
+        rock.transform.position = spawnPoint.position;
+        rock.transform.rotation = Quaternion.identity;
+        rock.transform.SetParent(transform);
+        rock.SetActive(true);
+    }
+    
+    public void GrabRock()
+    {
+        rock.transform.SetParent(throwingHand);
+    }
+    
+    public void ThrowRock()
+    {
+        rock.transform.SetParent(null);
+        if(throwRockCoroutine != null)
+        {
+            StopCoroutine(throwRockCoroutine);
+        }
+        throwRockCoroutine = ThrowRockCoroutine();
+        StartCoroutine(throwRockCoroutine);
+    }
+    
+    public void RemoveRock()
+    {
+        if(throwRockCoroutine != null)
+        {
+            StopCoroutine(throwRockCoroutine);
+        }
+        rock.SetActive(false);
+    }
+    
+    IEnumerator ThrowRockCoroutine()
+    {
+        Vector3 initPosition = rock.transform.position;
+        
+        Vector3 midPoint = (initPosition + PlayerTr.position) / 2f;
+        midPoint.y += height;
+        float i = 0;
+        while(i < 1)
+        {
+            i += Time.deltaTime * speed;
+            
+            //Movement
+            rock.transform.position = Parabola(initPosition, midPoint, PlayerTr.position, i);
+            
+            //Rotation
+            Vector3 forwardVector = CalculateParabolaDirection(initPosition, midPoint, PlayerTr.position, i);
+            rock.transform.rotation = Quaternion.LookRotation(forwardVector, Vector3.up);
+            yield return null;
+        }
+    }
+    
+    private Vector3 Parabola(Vector3 start, Vector3 mid, Vector3 end, float t)
+    {
+        float u = 1 - t;
+        float tt = t * t;
+        float uu = u * u;
+        Vector3 result = (uu * start) + (2 * u * t * mid) + (tt * end);
+        return result;
+    }
+    
+    private Vector3 CalculateParabolaDirection(Vector3 start, Vector3 mid, Vector3 end, float t)
+    {
+        float u = 1 - t;
+        float uu = u * u;
+        float tt = t * t;
+        Vector3 tangent = 2 * ((u * (mid - start)) + (t * (end - mid)));
+        return tangent.normalized;
     }
     #endregion
 
@@ -292,11 +383,11 @@ public class Stone_Golem : BossCtrl
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(45, -90, 0));
+            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(45, 0, 0));
         }
         else
         {
-            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(45, -90, 0));
+            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(45, -180, 0));
         }
     }
 
@@ -304,34 +395,54 @@ public class Stone_Golem : BossCtrl
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(-70, -40, 0));
+            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(-70, 50, 0));
         }
         else
         {
-            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(-70, -40, 0));
+            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(-70, -130, 0));
         }
     }
     public void GroundStamp()
     {
-        SkillEffect = Instantiate(GroundStamp_Effect, new Vector3(EffectGen.transform.position.x - 0.5f, EffectGen.transform.position.y, EffectGen.transform.position.z + 1), Quaternion.Euler(0, 0, 0));
+        SkillEffect = Instantiate(GroundStamp_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 0, 0));
     }
     public void FallingRock()
     {
-        SkillEffect = Instantiate(FallingRock_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 7f, EffectGen.transform.position.z + 5f), Quaternion.Euler(0, 0, 0));
+        SkillEffect = Instantiate(FallingRock_Effect, new Vector3(PlayerTr.position.x, PlayerTr.position.y + 12f, PlayerTr.position.z), Quaternion.Euler(90f, 0, 0));
     }
     public void GroundSmash()
     {
-        SkillEffect = Instantiate(GroundSmash_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z + 5), Quaternion.Euler(0, 0, 0));
+        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
+        {
+            SkillEffect = Instantiate(GroundSmash_Effect, new Vector3(EffectGen.transform.position.x +5, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));
+        }
+        else
+        {
+            SkillEffect = Instantiate(GroundSmash_Effect, new Vector3(EffectGen.transform.position.x -5, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));
+        }
     }
     public void PowerSmash()
     {
-        SkillEffect = Instantiate(PowerSmash_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z + 5), Quaternion.Euler(0, 0, 0));
+        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
+        {
+            SkillEffect = Instantiate(PowerSmash_Effect, new Vector3(EffectGen.transform.position.x +5, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));
+        }
+        else
+        {
+            SkillEffect = Instantiate(PowerSmash_Effect, new Vector3(EffectGen.transform.position.x -5, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));        
+        }
     }
     public void JumpSmash()
     {
-        SkillEffect = Instantiate(JumpSmash_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z + 5), Quaternion.Euler(0, 0, 0));
+        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
+        {
+            SkillEffect = Instantiate(JumpSmash_Effect, new Vector3(EffectGen.transform.position.x +5, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));
+        }
+        else
+        {
+            SkillEffect = Instantiate(JumpSmash_Effect, new Vector3(EffectGen.transform.position.x -5, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));    
+        }
     }
 
     #endregion
 }
-
