@@ -266,7 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7463422546709310351}
   - component: {fileID: 3604994986887323594}
-  - component: {fileID: 3666438635150257448}
+  - component: {fileID: 1078127171386448376}
   m_Layer: 0
   m_Name: Monster(Script)
   m_TagString: Untagged
@@ -282,7 +282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667223962521680413}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.1175222, y: 1.7013927, z: 2.7500277}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -317,7 +317,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3666438635150257448
+--- !u!114 &1078127171386448376
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -326,15 +326,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 1667223962521680413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f75dbf222c75cd42855a779e5c6c578, type: 3}
+  m_Script: {fileID: 11500000, guid: d19705fa545001749ae92fbffd24f6f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HpBar: {fileID: 0}
+  matObj: {fileID: 0}
+  targetObj: {fileID: 5460576309001500470}
+  IceHit: {fileID: 1387851562293694130, guid: e2789a389dac3ba4d817abc6b1fc8df2, type: 3}
+  FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
+  DamageText: {fileID: 1880031391497513284, guid: 3f08f33154c6df6418d46b2e12f8cf2a, type: 3}
+  MonsterCanvas: {fileID: 2283892513988108787}
+  Coin: {fileID: 9137955520889552415, guid: 5e136e1029a3c0a4f842505d52c8ea4f, type: 3}
+  ArmSwing_Effect: {fileID: 1234720115841870805, guid: de315c96cc448a44488902483985d361, type: 3}
+  GroundStamp_Effect: {fileID: 8449155066481782634, guid: eef1c3ee8df31504c86bb201c4f7050e, type: 3}
+  FallingRock_Effect: {fileID: 1458941610308127559, guid: 480a6d4ab8c421b46a14bc71d8c6c27e, type: 3}
+  GroundSmash_Effect: {fileID: 246773904365192213, guid: 62ac176170d52704b8fd37bed418335e, type: 3}
+  PowerSmash_Effect: {fileID: 246773904365192213, guid: 3ac441927867acf4c8993109938d88d9, type: 3}
+  JumpSmash_Effect: {fileID: 246773904365192213, guid: e5f18a9441b95084bb709403c27c7d65, type: 3}
   rock: {fileID: 5737765900159340078}
   throwingHand: {fileID: 5816859944732996694}
   spawnPoint: {fileID: 4285235900534926781}
-  target: {fileID: 7058489028642018405}
   speed: 1
-  height: 3
+  height: 1
 --- !u!1 &1758115165336430510
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,7 +698,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2986944893973629790}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -693,7 +706,7 @@ Transform:
   - {fileID: 7463422546709310351}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &3816670908066764355
 GameObject:
   m_ObjectHideFlags: 0
