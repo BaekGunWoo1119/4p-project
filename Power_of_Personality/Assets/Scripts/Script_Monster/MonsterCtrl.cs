@@ -57,7 +57,8 @@ public class MonsterCtrl : MonoBehaviour
 
     public Transform desiredParent;
 
-    protected Rigidbody rd; // 리지드바디
+    protected Rigidbody rd; // 리지드바디 
+    public int bonusstat;
     #endregion
 
     public virtual void Awake()
@@ -75,6 +76,7 @@ public class MonsterCtrl : MonoBehaviour
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
         StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
         SetWeakProperty();  //약점 속성 설정
+        bonusstat = PlayerPrefs.GetInt("Drop");
     }
     
     public virtual void Start()
@@ -736,8 +738,10 @@ public class MonsterCtrl : MonoBehaviour
             isDie = true;
             anim.SetBool("Die", true);
             yield return new WaitForSeconds(1.5f);
-            Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.4f, gameObject.transform.position.z);
-            Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
+            if(Random.Range(0, 10)> 5-bonusstat){
+                Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.4f, gameObject.transform.position.z);
+                Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
+            }
             Destroy(HpBar.gameObject);
             Destroy(this.gameObject); // 개체 파괴
         }

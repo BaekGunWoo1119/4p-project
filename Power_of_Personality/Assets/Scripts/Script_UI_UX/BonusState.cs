@@ -4,43 +4,54 @@ using TMPro;
 
 public class BonusState : MonoBehaviour
 {
-    public Button[] starButtons; // º° ¹öÆ°µéÀ» ¹è¿­·Î ÁöÁ¤ÇØÁÖ¼¼¿ä
-    public Button plusButton; // + ¹öÆ°À» ÁöÁ¤ÇØÁÖ¼¼¿ä
-    public Button minusButton; // - ¹öÆ°À» ÁöÁ¤ÇØÁÖ¼¼¿ä
-    public Sprite filledStarSprite; // Ã¤¿öÁø º° ÀÌ¹ÌÁö¸¦ ÁöÁ¤ÇØÁÖ¼¼¿ä
-    public Sprite emptyStarSprite; // ºñ¾îÀÖ´Â º° ÀÌ¹ÌÁö¸¦ ÁöÁ¤ÇØÁÖ¼¼¿ä
+    public Button[] starButtons; // ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ï¿½ ï¿½è¿­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½
+    public Button plusButton; // + ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½
+    public Button minusButton; // - ï¿½ï¿½Æ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½
+    public Sprite filledStarSprite; // Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½
+    public Sprite emptyStarSprite; // ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½
+    private int bonusstat;
 
     private int initialStat = 10;
-    private int selectedStarIndex = -1; // ¼±ÅÃµÈ º°ÀÇ ÀÎµ¦½º
-    private int totalStars = 4; // º°ÀÇ ÃÑ °³¼ö (¿¹½Ã·Î 5·Î ¼³Á¤)
+    private int selectedStarIndex = -1; // ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
+    private int totalStars = 4; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½Ã·ï¿½ 5ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
     private TextMeshProUGUI StatText;
 
     void Start()
     {
-        PlayerPrefs.SetInt("RemainStat", initialStat);
+        if(PlayerPrefs.GetInt("IsFirst") == 0){
+            PlayerPrefs.SetInt("BonusStat", 0);
+            PlayerPrefs.SetInt("IsFirst", 1);
+        }
+        bonusstat = PlayerPrefs.GetInt("BonusStat");
+        PlayerPrefs.SetInt("RemainStat", bonusstat);
         StatText = GameObject.Find("StatPoint").GetComponent<TextMeshProUGUI>();
         EnableStarRating();
         EnablePlusMinusButtons();
         UpdateStatText();
+
+        PlayerPrefs.SetInt("Drop", 0);
+        PlayerPrefs.SetInt("Shop", 0);
+        PlayerPrefs.SetInt("Spawn",0);
+        PlayerPrefs.SetInt("Stat", 0);
     }
     private void UpdateStatText()
     {
-        StatText.text = "³²Àº º¸³Ê½º ½ºÅİ = " + PlayerPrefs.GetInt("RemainStat", initialStat);
+        StatText.text = "ë‚¨ì€ ë³´ë„ˆìŠ¤ ìŠ¤íƒ¯ = " + PlayerPrefs.GetInt("RemainStat", bonusstat);
     }
     
 
-    // º°Á¡ ½Ã½ºÅÛ È°¼ºÈ­
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­
     private void EnableStarRating()
     {
-        // º° ¹öÆ°µé¿¡ ´ëÇÑ ÀÌº¥Æ® ¸®½º³Ê Ãß°¡
+        // ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
         for (int i = 0; i < starButtons.Length; i++)
         {
-            int starIndex = i; // Å¬·ÎÀú º¯¼ö·Î ÀÎµ¦½º º¸Á¸
+            int starIndex = i; // Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             starButtons[i].onClick.AddListener(() => OnStarButtonClick(starIndex));
         }
     }
 
-    // +, - ¹öÆ° È°¼ºÈ­
+    // +, - ï¿½ï¿½Æ° È°ï¿½ï¿½È­
     private void EnablePlusMinusButtons()
     {
         if (plusButton != null)
@@ -54,17 +65,17 @@ public class BonusState : MonoBehaviour
         }
     }
 
-    // º°Á¡ ½Ã½ºÅÛ ºñÈ°¼ºÈ­
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
     private void DisableStarRating()
     {
-        // º° ¹öÆ°µé¿¡ ´ëÇÑ ÀÌº¥Æ® ¸®½º³Ê »èÁ¦
+        // ï¿½ï¿½ ï¿½ï¿½Æ°ï¿½é¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < starButtons.Length; i++)
         {
             starButtons[i].onClick.RemoveAllListeners();
         }
     }
 
-    // +, - ¹öÆ° ºñÈ°¼ºÈ­
+    // +, - ï¿½ï¿½Æ° ï¿½ï¿½È°ï¿½ï¿½È­
     private void DisablePlusMinusButtons()
     {
         if (plusButton != null)
@@ -78,7 +89,7 @@ public class BonusState : MonoBehaviour
         }
     }
 
-    // º° ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÇ´Â ÇÔ¼ö
+    // ï¿½ï¿½ ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½
     private void OnStarButtonClick(int clickedStarIndex)
     {
         if (selectedStarIndex == clickedStarIndex)
@@ -105,7 +116,7 @@ public class BonusState : MonoBehaviour
         }
     }
 
-        // + ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÇ´Â ÇÔ¼ö
+        // + ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½
     private void IncrementStarRating()
     {
         if (selectedStarIndex < totalStars - 1 && PlayerPrefs.GetInt("RemainStat") > 0)
@@ -114,10 +125,13 @@ public class BonusState : MonoBehaviour
             UpdateStarImages();
             PlayerPrefs.SetInt("RemainStat", PlayerPrefs.GetInt("RemainStat") - 1);
             UpdateStatText();
+            string stattype = this.transform.parent.name;
+            PlayerPrefs.SetInt(stattype, selectedStarIndex+1);
+            Debug.Log(PlayerPrefs.GetInt(stattype));
         }
     }
 
-    // - ¹öÆ° Å¬¸¯ ½Ã È£ÃâµÇ´Â ÇÔ¼ö
+    // - ï¿½ï¿½Æ° Å¬ï¿½ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ô¼ï¿½
     private void DecrementStarRating()
     {
         if (selectedStarIndex > -1 && PlayerPrefs.GetInt("RemainStat") < 10)
@@ -126,6 +140,9 @@ public class BonusState : MonoBehaviour
             UpdateStarImages();
             PlayerPrefs.SetInt("RemainStat", PlayerPrefs.GetInt("RemainStat") + 1);
             UpdateStatText();
+            string stattype = this.transform.parent.name;
+            PlayerPrefs.SetInt(stattype, selectedStarIndex+1);
+            Debug.Log(PlayerPrefs.GetInt(stattype));
         }
     }
 
