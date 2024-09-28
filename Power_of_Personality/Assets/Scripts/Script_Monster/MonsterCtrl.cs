@@ -16,7 +16,9 @@ public class MonsterCtrl : MonoBehaviour
     //몬스터의 스테이터스
     public float curHP;     // 현재 체력
     public float maxHP;     // 최대 체력
+    public float hpMul;     // 체력 배율
     public float ATK;  // 공격력
+    public float atkMul;    // 공격력 배율
     public float DEF;       // 방어력
     public float MoveSpeed;  // 이동 속도
     public float Damage;   // 받은 피해량
@@ -63,6 +65,7 @@ public class MonsterCtrl : MonoBehaviour
 
     public virtual void Awake()
     {
+        hpMul = PlayerPrefs.GetFloat("hpMul", 100);
         rd = GetComponent<Rigidbody>();
         // 몬스터 기본 설정
         if (this.tag == "Monster_Melee")     // 이 몬스터가 근접 몬스터일때
@@ -133,7 +136,10 @@ public class MonsterCtrl : MonoBehaviour
     #region 몬스터 초기 값 설정
     public virtual void SetHP(float amount) // HP 설정
     {
-        maxHP = amount;
+        Debug.Log("체력 배율 곱하기 전 몬스터의 체력 = " + amount);
+        maxHP = amount * (hpMul / 100);
+        Debug.Log("현재 몬스터의 체력 배율 = " + hpMul);
+        Debug.Log("체력 배율 곱한 후의 몬스터의 체력 = " + maxHP);
         curHP = maxHP;
     }
 

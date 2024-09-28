@@ -1604,7 +1604,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1801994042}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.33333352
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4012,7 +4012,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3558344404705536814}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.33333352
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4479,8 +4479,9 @@ GameObject:
   - component: {fileID: 4914502916435221243}
   - component: {fileID: 4914502916435221240}
   - component: {fileID: 2826669442344789605}
+  - component: {fileID: 4914502916435221244}
   m_Layer: 5
-  m_Name: Checkbox
+  m_Name: toggleGPT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4581,6 +4582,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &4914502916435221244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4914502916435221190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a18d1c85dfb904180366b8b9f9023a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useGPT: {fileID: 4914502916435221243}
 --- !u!1 &4914502916826133642
 GameObject:
   m_ObjectHideFlags: 0

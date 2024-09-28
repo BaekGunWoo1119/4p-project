@@ -775,6 +775,10 @@ public class SceneLoader : MonoBehaviour
         PlayerPrefs.SetString("NextScene_Name", "Forest_Example"); //바로 Forest로 넘어가지 않고(09.23)
         SceneManager.LoadScene("LoadingScene"); //로딩씬으로 넘어간 후 넘어감(09.23)
         PlayerPrefs.SetInt("GameSet", 1); //피 초기화 코드(08.28)
+        PlayerPrefs.SetFloat("clearTime", 0);
+        PlayerPrefs.SetInt("hitCount", 0);
+        PlayerPrefs.SetFloat("hpMul", 100);
+        PlayerPrefs.SetFloat("atkMul", 100);
     }
 
     void Shop_Exit_Pressed()

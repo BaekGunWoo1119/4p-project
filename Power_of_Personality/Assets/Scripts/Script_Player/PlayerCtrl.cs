@@ -980,6 +980,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         if (Status.MaxHP != 0 || Status.HP > 0)
         {
+            int hitCount = PlayerPrefs.GetInt("hitCount", 0);
+            PlayerPrefs.SetInt("hitCount", hitCount + 1);
+            Debug.Log(PlayerPrefs.GetInt("hitCount"));
             Status.HP -= Damage;
             CheckHp();
             //저지불가 (09.14 정도훈)

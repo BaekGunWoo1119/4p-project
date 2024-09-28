@@ -10,11 +10,11 @@ using OpenAI_API.Models;
 
 public class OpenAIController : MonoBehaviour
 {
-    public Text textField;
     public InputField inputField;
-    public Button okBtn;
-
+    public String inputText;
+   
     private OpenAIAPI api;
+    
     private List<ChatMessage> messages;
 
     public float clearTime;
@@ -23,22 +23,26 @@ public class OpenAIController : MonoBehaviour
     public float atkMul;
     public float nextHpMul;
     public float nextAtkMul;
+    public String apiKey;
+    private void Awake()
+    {
+        
+    }
     void Start()
     {
-        api = new OpenAIAPI("");
-        clearTime = 10;
-        hitCount = 10;
-        hpMul = 100;
-        atkMul = 100;
+        api = new OpenAIAPI(apiKey);
+        clearTime = PlayerPrefs.GetInt("clearTime", 0);
+        hitCount = PlayerPrefs.GetInt("hitCount", 0);
+        hpMul = PlayerPrefs.GetFloat("hpMul", 100);
+        atkMul = PlayerPrefs.GetFloat("atkMul", 100);
         StartConversation();
-        okBtn.onClick.AddListener(() => GetResponse());
     }
     private void StartConversation()
     {
         messages = new List<ChatMessage>
         {
             new ChatMessage(ChatMessageRole.System, "너는 게임을 밸런싱하는 시스템이야. " +
-            "이 게임의 평균 클리어 타임은 15분이고, 클리어한 게임의 평균 피격 횟수는 15회야. " +
+            "이 게임의 평균 클리어 타임은 900초이고, 클리어한 게임의 평균 피격 횟수는 15회야. " +
             "평균 클리어타임보다 짧게 클리어하거나 피격횟수가 평균보다 낮으면 체력배율과 공격력배율을 올리고, " +
             "평균 클리어타임보다 오래 걸려서 클리어하거나 피격횟수가 평균보다 많다면 체력배율과 공격력배율을 낮추는 식으로 밸런싱해줘. " +
             " 만약 너가 클리어 타임, 피격횟수, 몬스터의 현재 체력배율, 몬스터의 현재 공격력배율을 받으면, " +
@@ -47,37 +51,32 @@ public class OpenAIController : MonoBehaviour
             "'클리어타임 : x / 피격횟수 : x / 체력배율 : x / 공격력배율 : x'의 형식이 아닌 다른 입력을 받으면 '입력 형식이 잘못되었습니다.' 라고 출력해.")
         };
 
-        inputField.text = "클리어타임 :" + clearTime + "분 / 피격횟수 : "+ hitCount + "회 / 체력배율 : " + hpMul + "% / 공격력배율 : " + atkMul + "% ";
-        GetResponse();
+        inputText = "클리어타임 :" + clearTime + "초 / 피격횟수 : "+ hitCount + "회 / 체력배율 : " + hpMul + "% / 공격력배율 : " + atkMul + "% ";
+        Debug.Log(inputText);
+        if (!PlayerPrefs.GetString("NextScene_Name").Equals("Forest_Example") && PlayerPrefs.GetInt("UseGPT") == 1)
+        {
+            GetResponse();
+        }   
     }
 
     private async void GetResponse()
     {
-        if (inputField.text.Length < 1)
+        if (inputText.Length < 1)
         {
             return;
         }
-        //버튼 Disable
-        okBtn.enabled = false;
 
         //유저 메세지에 inputField를
         ChatMessage userMessage = new ChatMessage();
         userMessage.Role = ChatMessageRole.User;
-        userMessage.Content = inputField.text;
+        userMessage.Content = inputText;
         if (userMessage.Content.Length > 100)
         {
             userMessage.Content = userMessage.Content.Substring(0, 100);
         }
-        Debug.Log(string.Format("{0} : {1}", userMessage.Role, userMessage.Content));
 
         //list에 메세지 추가
         messages.Add(userMessage);
-
-        //textField에 userMessage표시 
-        textField.text = string.Format("You: {0}", userMessage.Content);
-
-        //inputField 초기화
-        inputField.text = "";
 
         // 전체 채팅을 openAI 서버에전송하여 다음 메시지(응답)를 가져오도록
         var chatResult = await api.Chat.CreateChatCompletionAsync(new ChatRequest()
@@ -103,15 +102,10 @@ public class OpenAIController : MonoBehaviour
         nextAtkMul = float.Parse(responseMessage.Content.Substring(secondColonIndex, percentIndex - secondColonIndex));   
         Debug.Log("nextHpMul 값은 ? " + nextHpMul + " / " + firstColonIndex);
         Debug.Log("nextAtkMul 값은 ? " + nextAtkMul + " / " + secondColonIndex);
-
+        PlayerPrefs.SetFloat("hpMul", nextHpMul);
+        PlayerPrefs.SetFloat("atkMul", nextAtkMul);
         //응답을 message리스트에 추가
         messages.Add(responseMessage);
-
-        //textField를 응답에 따라 Update
-        textField.text = string.Format("You: {0}\n\nChatGPT:\n{1}", userMessage.Content, responseMessage.Content);
-
-        //Okbtn다시 활성화
-        okBtn.enabled = true;
     }
 
 }
