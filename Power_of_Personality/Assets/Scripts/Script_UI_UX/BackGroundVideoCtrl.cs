@@ -24,7 +24,7 @@ public class BackGroundVideoCtrl : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (SceneManager.GetActiveScene().name == "2-1 (MBTI Choice)")
+        if (SceneManager.GetActiveScene().name == "Forest_Example" || SceneManager.GetActiveScene().name == "Forest_Example_Multi")
         {
             Destroy(gameObject);
         }
