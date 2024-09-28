@@ -37,7 +37,8 @@ public class MonsterSpawn : MonoBehaviour
 	
     void Start()
     {
-		string jsondata = Resources.Load<TextAsset>("JSON/Monsterdata").text;
+
+		string jsondata = Resources.Load<TextAsset>("JSON/Monsterdata"+PlayerPrefs.GetInt("Spawn")).text;
 		// JSON 데이터를 SpawnCases 클래스로 Deserialize
 		SpawnCases JSONSpawnCases = JsonUtility.FromJson<SpawnCases>(jsondata);
         // 선택된 스폰 데이터 가져오기

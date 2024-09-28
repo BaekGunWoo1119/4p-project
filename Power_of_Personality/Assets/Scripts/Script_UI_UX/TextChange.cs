@@ -145,11 +145,11 @@ public class TextChange : MonoBehaviour
             ChangeText("", 2);
             ChangeText("", 3);
             ChangeText("P", 4);
-            ChangeText("쿨타임", 5);
-            ChangeText("고정 쿨타임", 6);
+            ChangeText("고정 쿨타임", 5);
+            ChangeText("", 6);
             ChangeText("쿨타임 증가 비율", 7);
-            ChangeText(Status.TotalCooltime.ToString(), 8);
-            ChangeText(Status.FixedCooltime.ToString(), 9);
+            ChangeText(Status.FixedCooltime.ToString(), 8);
+            ChangeText("", 9);
             ChangeText(Status.PercentCooltime.ToString(), 10);
         }
 

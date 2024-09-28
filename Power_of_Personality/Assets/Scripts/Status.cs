@@ -90,13 +90,16 @@ public class Status : MonoBehaviour
     public static bool Spell_TimeSlowdown_ON = false; //보조스킬 시간 감속 (09.18 정도훈)
     static int a = 0;
     public static int BonusStat;
+    public static string MBTI; 
     void Start()
     {
-        StatUpdate();
         Array.Fill(itemIds, -1);
         IsShop = false;
         BonusStat = PlayerPrefs.GetInt("Stat") * 10;
+        MBTI = PlayerPrefs.GetString("PlayerMBTI");
         ApplyBonusStat();
+        ApplyMBTI(MBTI);
+        StatUpdate();
     }
 
     void Update()
@@ -517,6 +520,7 @@ public class Status : MonoBehaviour
         EXP = 0f; // 현재 경험치
     }
 
+    #region 보너스 스탯 적용
     void ApplyBonusStat(){
         FixedAD+=BonusStat;
         FixedArmor+=BonusStat;
@@ -526,4 +530,107 @@ public class Status : MonoBehaviour
         FixedFire+=BonusStat;
         FixedIce+=BonusStat;
     }
+    #endregion
+    #region MBTI 스탯 적용
+    void ApplyMBTI(string MBTI){
+        switch(MBTI){
+            case "INFP":
+                FixedArmor+=20;
+                FixedSpeed+=20;
+                FixedAP+=20;
+                FixedFire+=20;
+                break;
+            case "INFJ":
+                FixedArmor+=20;
+                FixedAP+=20;
+                FixedFire+=20;
+                FixedCooltime+=1;
+                break;
+            case "INTP":
+                FixedArmor+=20;
+                FixedSpeed+=20;
+                FixedAP+=20;
+                FixedIce+=20;
+                break;
+            case "INTJ":
+                FixedArmor+=20;
+                FixedAP+=20;
+                FixedIce+=20;
+                FixedCooltime+=1;
+                break;
+            case "ISFP":
+                FixedArmor+=20;
+                FixedSpeed+=20;
+                FixedADC+=20;
+                FixedFire+=20;
+                break;
+            case "ISFJ":
+                FixedArmor+=20;
+                FixedADC+=20;
+                FixedFire+=20;
+                FixedCooltime+=1;
+                break;
+            case "ISTP":
+                FixedArmor+=20;
+                FixedSpeed+=20;
+                FixedADC+=20;
+                FixedIce+=20;
+                break;
+            case "ISTJ":
+                FixedArmor+=20;
+                FixedADC+=20;
+                FixedIce+=20;
+                FixedCooltime+=1;
+                break;
+            case "ENFP":
+                FixedAD+=20;
+                FixedSpeed+=20;
+                FixedAP+=20;
+                FixedFire+=20;
+                break;
+            case "ENFJ":
+                FixedAD+=20;
+                FixedAP+=20;
+                FixedFire+=20;
+                FixedCooltime+=1;
+                break;
+            case "ENTP":
+                FixedAD+=20;
+                FixedSpeed+=20;
+                FixedAP+=20;
+                FixedIce+=20;
+                break;
+            case "ENTJ":
+                FixedAD+=20;
+                FixedAP+=20;
+                FixedIce+=20;
+                FixedCooltime+=1;
+                break;
+            case "ESFP":
+                FixedAD+=20;
+                FixedSpeed+=20;
+                FixedADC+=20;
+                FixedFire+=20;
+                break;
+            case "ESFJ":
+                FixedAD+=20;
+                FixedADC+=20;
+                FixedFire+=20;
+                FixedCooltime+=1;
+                break;
+            case "ESTP":
+                FixedAD+=20;
+                FixedSpeed+=20;
+                FixedADC+=20;
+                FixedIce+=20;
+                break;
+            case "ESTJ":
+                FixedAD+=20;
+                FixedADC+=20;
+                FixedIce+=20;
+                FixedCooltime+=1;
+                break;
+        }
+    }
+    #endregion
 }
