@@ -1338,8 +1338,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             BossWall2.layer = 3;
             BossWall1Collider.isTrigger = false;
             BossWall2Collider.isTrigger = false;
-            //Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
-            Instantiate(StoneGolem, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            //Instantiate(StoneGolem, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
             //Instantiate(Ogre, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
             //Instantiate(DemonKing, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
         }
