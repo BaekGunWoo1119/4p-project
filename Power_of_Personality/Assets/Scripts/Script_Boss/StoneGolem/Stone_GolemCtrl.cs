@@ -5,7 +5,8 @@ using UnityEngine;
 public class Stone_Golem : BossCtrl
 {
     #region 변수 선언
-    public GameObject ArmSwing_Effect;
+    public GameObject LArmSwing_Effect;
+    public GameObject RArmSwing_Effect;
     public GameObject GroundStamp_Effect;
     public GameObject FallingRock_Effect;
     public GameObject GroundSmash_Effect;
@@ -14,9 +15,10 @@ public class Stone_Golem : BossCtrl
 
     // 보스 공격 컨트롤
     public GameObject rock;
+    public GameObject rockCollider;
     public Transform throwingHand;        
     public Transform spawnPoint;    
-    //public Transform target;
+    public Transform target;
     public float speed;
     public float height;
     
@@ -265,7 +267,9 @@ public class Stone_Golem : BossCtrl
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
         yield return new WaitForSeconds(2.1f);        //애니메이션 지속 시간
         isAttacking = false;
-        yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간      
+        yield return new WaitForSeconds(1f);
+        RemoveRock();
+        yield return new WaitForSeconds(2f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
     }
 
@@ -316,6 +320,7 @@ public class Stone_Golem : BossCtrl
     public void GrabRock()
     {
         rock.transform.SetParent(throwingHand);
+        target.position = new Vector3(PlayerTr.transform.position.x, EffectGen.transform.position.y, PlayerTr.transform.position.z);
     }
     
     public void ThrowRock()
@@ -342,7 +347,7 @@ public class Stone_Golem : BossCtrl
     {
         Vector3 initPosition = rock.transform.position;
         
-        Vector3 midPoint = (initPosition + PlayerTr.position) / 2f;
+        Vector3 midPoint = (initPosition + target.position) / 2f;
         midPoint.y += height;
         float i = 0;
         while(i < 1)
@@ -350,10 +355,10 @@ public class Stone_Golem : BossCtrl
             i += Time.deltaTime * speed;
             
             //Movement
-            rock.transform.position = Parabola(initPosition, midPoint, PlayerTr.position, i);
+            rock.transform.position = Parabola(initPosition, midPoint, target.position, i);
             
             //Rotation
-            Vector3 forwardVector = CalculateParabolaDirection(initPosition, midPoint, PlayerTr.position, i);
+            Vector3 forwardVector = CalculateParabolaDirection(initPosition, midPoint, target.position, i);
             rock.transform.rotation = Quaternion.LookRotation(forwardVector, Vector3.up);
             yield return null;
         }
@@ -383,11 +388,11 @@ public class Stone_Golem : BossCtrl
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(45, 0, 0));
+            SkillEffect = Instantiate(LArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(0, 0, 0));
         }
         else
         {
-            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(45, -180, 0));
+            SkillEffect = Instantiate(LArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(0, -180, 0));
         }
     }
 
@@ -395,11 +400,11 @@ public class Stone_Golem : BossCtrl
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(-70, 50, 0));
+            SkillEffect = Instantiate(RArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(0, 0, 0));
         }
         else
         {
-            SkillEffect = Instantiate(ArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(-70, -130, 0));
+            SkillEffect = Instantiate(RArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(0, -180, 0));
         }
     }
     public void GroundStamp()
@@ -414,22 +419,22 @@ public class Stone_Golem : BossCtrl
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(GroundSmash_Effect, new Vector3(EffectGen.transform.position.x +5, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));
+            SkillEffect = Instantiate(GroundSmash_Effect, new Vector3(EffectGen.transform.position.x +4, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));
         }
         else
         {
-            SkillEffect = Instantiate(GroundSmash_Effect, new Vector3(EffectGen.transform.position.x -5, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));
+            SkillEffect = Instantiate(GroundSmash_Effect, new Vector3(EffectGen.transform.position.x -4, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));
         }
     }
     public void PowerSmash()
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(PowerSmash_Effect, new Vector3(EffectGen.transform.position.x +5, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));
+            SkillEffect = Instantiate(PowerSmash_Effect, new Vector3(EffectGen.transform.position.x +4, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));
         }
         else
         {
-            SkillEffect = Instantiate(PowerSmash_Effect, new Vector3(EffectGen.transform.position.x -5, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));        
+            SkillEffect = Instantiate(PowerSmash_Effect, new Vector3(EffectGen.transform.position.x -4, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));        
         }
     }
     public void JumpSmash()
