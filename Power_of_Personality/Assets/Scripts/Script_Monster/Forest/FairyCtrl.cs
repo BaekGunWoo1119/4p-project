@@ -51,7 +51,7 @@ public class FairyCtrl : MonsterCtrl
     {
         AttackCoolTime = 0;
         anim.SetBool("isAttack", true);
-        Instantiate(AttackCollider, FirePos.position, FirePos.rotation, this.transform);
+        Instantiate(AttackCollider, FirePos.position, FirePos.rotation);
         yield return new WaitForSeconds(0.5f*(1f/AnimSpeed));
         anim.SetBool("isAttack", false);
         AttackCoolTime = 0;

@@ -28,13 +28,10 @@ public class DruidCtrl : BossCtrl
     private GameObject ToxicPortal_Collider;
 
     // 보스 공격 컨트롤
+    private Coroutine currentCoroutine;
     private bool canTraceAttack;
     private float TraceTime = 0;
     private bool TraceOn;
-    private bool BackDashOn;
-    private Vector3 PrevPosition;
-    private GameObject LeftTPpoint;
-    private GameObject RightTPpoint;
     #endregion
 
     #region Awake, Start, Update문
@@ -47,8 +44,6 @@ public class DruidCtrl : BossCtrl
         GroundStrike_Collider_L = GameObject.Find("GroundStrike_L");
         Vine_Collider = GameObject.Find("Vine");
         ToxicPortal_Collider = GameObject.Find("ToxicPortal");
-        LeftTPpoint = GameObject.Find("LeftTPpoint");
-        RightTPpoint = GameObject.Find("RightTPpoint");
     }
 
     protected override void Start()
@@ -91,10 +86,7 @@ public class DruidCtrl : BossCtrl
             TraceTime = 0;
             TraceOn = false;
         }
-        if(BackDashOn == true)
-        {
-            StartCoroutine(BackDash());
-        }
+
         if(isDie == true)
         {
             SoundsManager.Change_Sounds("Forest"); //소리 추가(08.31)
@@ -190,69 +182,24 @@ public class DruidCtrl : BossCtrl
         yield return null;
     }
 
-    public IEnumerator BackDash()
-    {
-        if(canTeleport == false)
-        {
-            Vector3 ReversedirectionToPlayer = -(PlayerTr.position - transform.position).normalized;
-            Vector3 movement = new Vector3(ReversedirectionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
-            transform.Translate(movement, Space.World);
-            anim.SetBool("doBack", true);
-            if (Vector3.Distance(PrevPosition, transform.position) >= 3)
-            {
-                BackDashOn = false;
-                anim.SetBool("doBack", false);
-                StartCoroutine(Think());
-            }
-            yield return null;
-        }
-        else
-        {
-            BackDashOn = false;
-            Teleport();
-        }
-    }
-    public void Teleport()
-    {
-        if (Vector3.Distance(LeftTPpoint.transform.position, transform.position) < Vector3.Distance(RightTPpoint.transform.position, transform.position)) 
-        { 
-            transform.position = RightTPpoint.transform.position;
-            StartCoroutine(Think());
-        }
-        else
-        {
-            transform.position = LeftTPpoint.transform.position;
-            StartCoroutine(Think());
-        }
-    }
+
     protected override IEnumerator Think()
     {
         yield return new WaitForSeconds(0.1f);
-        Debug.Log("Distance = " + Distance);
-        Debug.Log("여기까지는 잘 돼요");
         if(Distance <= 12f)
         {
-            Debug.Log("1번 들어옴");
-            int ranAction = Random.Range(0, 2);
-            Debug.Log("선택된 번호는 ? = " + ranAction);
+            int ranAction = Random.Range(0, 1);
             switch (ranAction)
             {
                 case 0:
                     Debug.Log("Trace 선택됨");
                     TraceOn = true;
                     break;
-                case 1:
-                    Debug.Log("BackDash 선택됨");
-                    BackDashOn = true;
-                    PrevPosition = transform.position;
-                    break;
             }
         }
         else
         {
-            Debug.Log("2번 들어옴");
             int ranAction = Random.Range(0, 2);
-            Debug.Log("선택된 번호는 ? = " + ranAction);
             switch (ranAction)
             {
                 case 0:
@@ -404,25 +351,27 @@ public class DruidCtrl : BossCtrl
     #region 공격 이펙트 스크립트
     public void Scratch_1()
     {
-        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
+        if (SkillYRot == 90)
         {
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30, SkillYRot - 120f, 90));
+            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30, SkillYRot + 90f, 90));
         }
         else
         {
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30, SkillYRot - 120f, 90));
+            Debug.Log("이건가요??");
+            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30, SkillYRot - 180f, 90));
         }
     }
 
     public void Scratch_2()
     {
-        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
+        if (SkillYRot == 90)
         {
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(-30, SkillYRot - 120f, 90));
+            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(-30, SkillYRot + 90f, 90));
         }
         else
         {
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(-30, SkillYRot - 120f, 90));
+            Debug.Log("이건가요22??");
+            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(-30, SkillYRot - 180f, 90));
         }
     }
     public void GroundStrike()
@@ -432,13 +381,13 @@ public class DruidCtrl : BossCtrl
 
     public void Projectile()
     {
-        SkillEffect = Instantiate(Projectile_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-180, 0));
+        SkillEffect = Instantiate(Projectile_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-90, 0));
         SkillCollider = Instantiate(Projectile_Collider, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-180, 0));
     }
 
     public void Vine()
     {
-        SkillEffect = Instantiate(Vine_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(90, SkillYRot-180, 0));
+        SkillEffect = Instantiate(Vine_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y - 0.5f, EffectGen.transform.position.z), Quaternion.Euler(90, SkillYRot-90, 0));
     }
 
     public void ToxicPortal()

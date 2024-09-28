@@ -10,7 +10,7 @@ public class Fairy_Attack : MonoBehaviour
         PlayerTr = GameObject.FindWithTag("Player").transform;
         Vector3 targetPosition = PlayerTr.position + Vector3.up;
         rb = GetComponent<Rigidbody>();
-        Vector3 Dir = new Vector3(targetPosition.x - transform.position.x, 0, targetPosition.z - transform.position.z);
+        Vector3 Dir = new Vector3(targetPosition.x - transform.position.x, 0, targetPosition.z - transform.position.z).normalized;
         if(Status.Spell_TimeSlowdown_ON){
             rb.AddForce(Dir.normalized * 10 *0.3f, ForceMode.Impulse);
         }
@@ -25,5 +25,10 @@ public class Fairy_Attack : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void Update()
+    {
+        transform.localRotation = Quaternion.identity; // 초기 회전으로 설정
     }
 }

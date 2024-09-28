@@ -63,7 +63,7 @@ public class BossCtrl : MonoBehaviour
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
         EffectGen = transform.Find("EffectGen-Boss").gameObject;
         SkillYRot = transform.eulerAngles.y;
-        //HpBar = GameObject.Find("HPBar-Boss").GetComponent<UnityEngine.UI.Slider>();//보스 체력바 코드(06.29)
+        HpBar = GameObject.Find("HPBar-Boss").GetComponent<UnityEngine.UI.Slider>();//보스 체력바 코드(06.29)
         MonsterCanvas = GameObject.Find("Canvas_Boss");
         shopPortal = GameObject.Find("Normal_Shop_Portal");
         StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행 <<< Awake에 있으니까 맵 나갔다 들어올 때 계속 오류뜸

@@ -17,7 +17,7 @@ public class GameEnd : MonoBehaviour
     private float targetAlpha = 0.0f; //알파 값 (0: 투명, 1: 불투명)
 
     private TMP_Text endText; //정보 적을 텍스트
-    private float PlayTime = 0.0f;
+    public static float PlayTime = 0.0f;
     private float TempPlayTime = 0.0f;
 
     void Start()
