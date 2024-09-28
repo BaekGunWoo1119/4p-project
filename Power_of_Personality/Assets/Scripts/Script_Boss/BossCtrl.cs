@@ -627,7 +627,7 @@ public class BossCtrl : MonoBehaviour
             shopPortal.SetActive(true);
             shopPortal.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 2, this.transform.position.z);
             Destroy(HpBar.transform.parent.gameObject);
-            Destroy(this.gameObject); // 개체 파괴
+            Destroy(this.transform.parent.gameObject); // 개체 파괴
         }
     }
     #endregion

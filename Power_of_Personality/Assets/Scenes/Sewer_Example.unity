@@ -6962,6 +6962,7 @@ GameObject:
   - component: {fileID: 106460087}
   - component: {fileID: 106460086}
   - component: {fileID: 106460085}
+  - component: {fileID: 106460104}
   - component: {fileID: 106460084}
   - component: {fileID: 106460083}
   - component: {fileID: 106460101}
@@ -7060,6 +7061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseButton: {fileID: 782131428}
   resumeButton: {fileID: 782131426}
+  pauseWindow: {fileID: 0}
 --- !u!114 &106460089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7342,6 +7344,20 @@ MonoBehaviour:
   button: {fileID: 1414560819}
   newColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
   targetKey: 50
+--- !u!114 &106460104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106460082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bea163ef080814bb7e4b068681888f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeObj: {fileID: 2103828532}
+  ctrlKey: 27
 --- !u!1001 &107818970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -59869,6 +59885,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4950434728252360, guid: e3d923d65ef0ea8478b70faeee8b5afe, type: 3}
   m_PrefabInstance: {fileID: 2100414610}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2103828532 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1409470399439697748, guid: a135a320bcfe5864f974bd41b5df5dfa, type: 3}
+  m_PrefabInstance: {fileID: 782131422}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2109749882 stripped
 Transform:

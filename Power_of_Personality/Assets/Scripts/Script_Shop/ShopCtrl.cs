@@ -130,10 +130,11 @@ public class ShopCtrl : MonoBehaviour
         }
         else if(isSave == true)
         {
-            if(PlayerPrefs.GetFloat("Coin") >= 3) //코인 소모 부분 추후 기획 논의 후 재구성
+            if(PlayerPrefs.GetInt("Shop") >= 1) //코인소모에서 리롤횟수 소모로 바꿈 (09.28 정도훈)
             {
-                float currentCoin = PlayerPrefs.GetFloat("Coin", 0);
-                PlayerPrefs.SetFloat("Coin", currentCoin - 3);
+                int refresh = PlayerPrefs.GetInt("Shop", 0);
+                PlayerPrefs.SetInt("Shop", refresh - 1);
+                Debug.Log("남은 리롤 횟수" + PlayerPrefs.GetInt("Shop"));
                 GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
 
                 for (int i = 0; i < C_Slots; ++i)
