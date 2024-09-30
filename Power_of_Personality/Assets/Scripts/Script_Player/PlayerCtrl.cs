@@ -616,8 +616,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 //Spell_Swiftness(); //(이펙트 추가해야됨)
                 //Spell_Immune(); //완료
                 //Spell_TimeSlowdown();
-                UseSpell(Spell_1);
-                Set_Spell_Cooltime(Spell_1, 1);
+                UseSpell(Spell_1, 1);
             }
 
             //Skill_F (09.18 정도훈)
@@ -632,8 +631,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 //Spell_RoarOfAnger(); //완료
                 //Spell_Unstoppable(); //(이펙트 추가해야됨)
                 //Spell_Heal(); //완료
-                UseSpell(Spell_2); 
-                Set_Spell_Cooltime(Spell_2, 2);
+                UseSpell(Spell_2, 2); 
             }
 
 
@@ -1667,12 +1665,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     #region 보조스킬
     //신속(유체화)
-    public virtual void Spell_Swiftness(){
+    public virtual void Spell_Swiftness(int Spell_num){
         if(Spell_Swiftness_Ready){
             StartCoroutine(Spell_Swiftness_On());
             Swiftness_Buff_ON = true;
             Spell_Swiftness_CoolTime = 0f; //도훈 2024-09-20
             Spell_Swiftness_Ready = false;
+            Set_Spell_Cooltime("Spell_Swiftness", Spell_num);
         }
     }
 
@@ -1690,13 +1689,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     //저지불가
 
-    public virtual void Spell_Unstoppable(){
+    public virtual void Spell_Unstoppable(int Spell_num){
         if(Spell_Unstoppable_Ready){
             Unstoppable_Buff_ON = true;
             StartCoroutine(Spell_Unstoppable_On());
             Debug.Log("저지불가 ON");
             Spell_Unstoppable_CoolTime = 0f;    //도훈 2024-09-20
             Spell_Unstoppable_Ready = false;
+            Set_Spell_Cooltime("Spell_Unstoppable", Spell_num);
         }
     }
 
@@ -1707,7 +1707,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
 
     //회복
-    public virtual void Spell_Heal(){
+    public virtual void Spell_Heal(int Spell_num){
         if(Spell_Heal_Ready){
             Status.HP = Status.MaxHP;
             CheckHp();
@@ -1715,6 +1715,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             Debug.Log("힐 ON");
             Spell_Heal_CoolTime = 0f;   //도훈 2024-09-20
             Spell_Heal_Ready = false;
+            Set_Spell_Cooltime("Spell_Heal", Spell_num);
         }
     }
 
@@ -1728,12 +1729,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
 
     //기절 미완
-    public virtual void Spell_Stun(){
+    public virtual void Spell_Stun(int Spell_num){
         if(Spell_Stun_Ready){
             StartCoroutine(Spell_Stun_on());
             Debug.Log("기절 ON");
             Spell_Stun_CoolTime = 0f;   //도훈 2024-09-20
             Spell_Stun_Ready = false;
+            Set_Spell_Cooltime("Spell_Stun", Spell_num);
         }
     }
     public virtual IEnumerator Spell_Stun_on()
@@ -1745,13 +1747,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
 
     //무적
-    public virtual void Spell_Immune(){
+    public virtual void Spell_Immune(int Spell_num){
         if(Spell_Immune_Ready){
             StartCoroutine(Immune(2.0f));
             StartCoroutine(Spell_Immune_on());
             Debug.Log("무적 ON");
             Spell_Immune_CoolTime = 0f; //도훈 2024-09-20
             Spell_Immune_Ready = false;
+            Set_Spell_Cooltime("Spell_Immune", Spell_num);
         }
     }
     public virtual IEnumerator Spell_Immune_on()
@@ -1763,7 +1766,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     //시간 감속
 
-    public virtual void Spell_TimeSlowdown(){
+    public virtual void Spell_TimeSlowdown(int Spell_num){
         Debug.Log(Spell_TimeSlowdown_Ready);
         Debug.Log(Spell_TimeSlowdown_CoolTime);
         if(Spell_TimeSlowdown_Ready){
@@ -1771,6 +1774,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Status.Spell_TimeSlowdown_ON = true;
         Spell_TimeSlowdown_CoolTime = 0f;   //도훈 2024-09-20
         Spell_TimeSlowdown_Ready = false;
+        Set_Spell_Cooltime("Spell_TimeSlowdown", Spell_num);
         }
     }
     public virtual IEnumerator Spell_TimeSlowdown_On()
@@ -1784,12 +1788,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //부활
 
     //분노의 포효
-    public virtual void Spell_RoarOfAnger(){
+    public virtual void Spell_RoarOfAnger(int Spell_num){
         if(Spell_RoarOfAnger_Ready){
             StartCoroutine(Spell_RoarOfAnger_On());
             RoarOfAnger_Buff_ON = true;
             Spell_RoarOfAnger_CoolTime = 0f;    //도훈 2024-09-20
             Spell_RoarOfAnger_Ready = false;
+            Set_Spell_Cooltime("Spell_RoarOfAnger", Spell_num);
         }
     }
 
@@ -1806,29 +1811,29 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
 
     //전체적으로 보조스킬 사용하도록 하는 함수
-    public virtual void UseSpell(string Spell){
+    public virtual void UseSpell(string Spell, int Spell_num){
         Debug.Log(Spell);
         switch(Spell){
             case "Spell_Swiftness":
-                Spell_Swiftness();
+                Spell_Swiftness(Spell_num);
                 break;
             case "Spell_Unstoppable":
-                Spell_Unstoppable();
+                Spell_Unstoppable(Spell_num);
                 break;
             case "Spell_Heal":
-                Spell_Heal();
+                Spell_Heal(Spell_num);
                 break;
             case "Spell_Stun":
-                Spell_Stun();
+                Spell_Stun(Spell_num);
                 break;
             case "Spell_Immune":
-                Spell_Immune();
+                Spell_Immune(Spell_num);
                 break;
             case "Spell_TimeSlowdown":
-                Spell_TimeSlowdown();
+                Spell_TimeSlowdown(Spell_num);
                 break;
             case "Spell_RoarOfAnger":
-                Spell_RoarOfAnger();
+                Spell_RoarOfAnger(Spell_num);
                 break;
         }
     }
