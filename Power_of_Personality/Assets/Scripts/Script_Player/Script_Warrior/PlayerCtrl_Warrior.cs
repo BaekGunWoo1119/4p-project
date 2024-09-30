@@ -461,9 +461,9 @@ public class PlayerCtrl_Warrior : PlayerCtrl
         yield return null;
     }
 
-    public override IEnumerator Heal_on()
+    public override IEnumerator HPPotion_on()
     {
-        yield return base.Heal_on();
+        yield return base.HPPotion_on();
     }
 
     public override void Damaged_on()

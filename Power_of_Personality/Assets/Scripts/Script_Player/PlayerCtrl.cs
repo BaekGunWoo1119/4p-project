@@ -118,7 +118,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public GameObject SkillEffect;
     public GameObject DamageText; //텍스트
     public GameObject Damage_Effect;
-    public GameObject Heal_Effect;
+    public GameObject HPPotion_Effect;
+    public GameObject ATKPotion_Effect;
+    public GameObject DEFPotion_Effect;
     public GameObject Item_Weapon_Effect;
     public GameObject Item_Weapon_Ice_Effect;
     public GameObject Item_Weapon_Fire_Effect;
@@ -939,12 +941,14 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     {
         InvenCtrl.ADPotionCount -= 1; 
         buffType = "AD";
+        StartCoroutine(ATKPotion_on());
     }
 
     public virtual void ArmorUp()
     {
         InvenCtrl.ArmorPotionCount -= 1; 
         buffType = "Armor";
+        StartCoroutine(DEFPotion_on());
     }
 
     public virtual IEnumerator PowerUp_On()
@@ -1025,7 +1029,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         InvenCtrl.PotionCount -= 1; 
         Status.HP = Status.MaxHP;
         CheckHp();
-        StartCoroutine(Heal_on());
+        StartCoroutine(HPPotion_on());
     }
     //(06.01)
     protected virtual IEnumerator DamageTextAlpha()
@@ -1338,8 +1342,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             BossWall2.layer = 3;
             BossWall1Collider.isTrigger = false;
             BossWall2Collider.isTrigger = false;
-            Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
-            //Instantiate(StoneGolem, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            //Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            Instantiate(StoneGolem, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
             //Instantiate(Ogre, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
             //Instantiate(DemonKing, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
         }
@@ -1495,9 +1499,25 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     #region 이펙트 함수
 
-    public virtual IEnumerator Heal_on()
+    public virtual IEnumerator HPPotion_on()
     {
-        SkillEffect = Instantiate(Heal_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect = Instantiate(HPPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        yield return new WaitForSeconds(1.0f);
+        Destroy(SkillEffect);
+    }
+
+    public virtual IEnumerator ATKPotion_on()
+    {
+        SkillEffect = Instantiate(ATKPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        yield return new WaitForSeconds(1.0f);
+        Destroy(SkillEffect);
+    }
+
+    public virtual IEnumerator DEFPotion_on()
+    {
+        SkillEffect = Instantiate(DEFPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
         SkillEffect.transform.parent = EffectGen.transform;
         yield return new WaitForSeconds(1.0f);
         Destroy(SkillEffect);

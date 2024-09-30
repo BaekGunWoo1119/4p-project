@@ -89028,6 +89028,7 @@ Transform:
   - {fileID: 8754637757257113772}
   - {fileID: 7499055288377018220}
   - {fileID: 7921333878264161472}
+  - {fileID: 5456787574693580910}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -89082,7 +89083,9 @@ MonoBehaviour:
   SkillEffect: {fileID: 0}
   DamageText: {fileID: 5357283400005317788, guid: c87b9d34b3435f643a71a71e49449700, type: 3}
   Damage_Effect: {fileID: 2292867600362698915, guid: 356dc8270444ffd4eace122d8aa26061, type: 3}
-  Heal_Effect: {fileID: 4313010620861098664, guid: cb0e3529083d1a849875beded1854e79, type: 3}
+  HPPotion_Effect: {fileID: 4313010620861098664, guid: cb0e3529083d1a849875beded1854e79, type: 3}
+  ATKPotion_Effect: {fileID: 4313010620861098664, guid: a68307f59b031d8478310d336d3eefae, type: 3}
+  DEFPotion_Effect: {fileID: 4313010620861098664, guid: 02eb1761e37240c4caf348cfa05521d7, type: 3}
   Item_Weapon_Effect: {fileID: 0}
   Item_Weapon_Ice_Effect: {fileID: 2637379983276569166}
   Item_Weapon_Fire_Effect: {fileID: 5568657095234788397}
@@ -89097,7 +89100,7 @@ MonoBehaviour:
   hpPotionValue: {fileID: 0}
   ADPotionValue: {fileID: 0}
   ArmorPotionValue: {fileID: 0}
-  Spell_Swiftness_Effect: {fileID: 0}
+  Spell_Swiftness_Effect: {fileID: 5447462016822685029}
   Spell_Unstoppable_Effect: {fileID: 0}
   Spell_RoarOfAnger_Effect: {fileID: 6750669899011325939}
   Spell_TimeSlowdown_Effect: {fileID: 8423386613045782512}
@@ -89106,6 +89109,12 @@ MonoBehaviour:
   Spell_Heal_Effect: {fileID: 7986504087968017091, guid: 1a6a748ce620c6844a239c91413f9d59, type: 3}
   Druid: {fileID: 4398751061526869600, guid: 9f29281a70e34b74caaf5fa843a45b96, type: 3}
   DruidGen: {fileID: 8712608940472733577, guid: 575576ae99a386a41b7ca5076db6efa0, type: 3}
+  StoneGolem: {fileID: 2986944893973629790, guid: ce6a80a36f579da4e965068d4ced95c4, type: 3}
+  StoneGolemGen: {fileID: 0}
+  Ogre: {fileID: 456842570003906423, guid: 4e87ef37e754ee145b5ab49e125ae014, type: 3}
+  OgreGen: {fileID: 0}
+  DemonKing: {fileID: 0}
+  DemonKingGen: {fileID: 0}
   Attack_Collider_All: {fileID: 0}
   CommonAttack1_Collider: {fileID: 2742061885227191606, guid: 854ec77d1b83e034781f65dde36655a6, type: 3}
   CommonAttack2_Collider: {fileID: 2742061885227191606, guid: 4e9be720b0c7e744b837e6c954afab6b, type: 3}
@@ -149236,6 +149245,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 466ca5e463e546f498767ffd2962782a, type: 3}
   m_PrefabInstance: {fileID: 3266160866088785801}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4082393756689201906
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8129835036914310803}
+    m_Modifications:
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304310787151583127, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_Name
+      value: Effect_Swiftness
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304310787151583127, guid: 0532eae21945e034a838ed830059197c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0532eae21945e034a838ed830059197c, type: 3}
+--- !u!1 &5447462016822685029 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8304310787151583127, guid: 0532eae21945e034a838ed830059197c, type: 3}
+  m_PrefabInstance: {fileID: 4082393756689201906}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5456787574693580910 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8295054495299873436, guid: 0532eae21945e034a838ed830059197c, type: 3}
+  m_PrefabInstance: {fileID: 4082393756689201906}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4402002205037997326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -149550,7 +149634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5826759989119054442, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6466739813936008309, guid: 31b06af1b20e18a448f0481f431c7cb0, type: 3}
       propertyPath: m_RootOrder
