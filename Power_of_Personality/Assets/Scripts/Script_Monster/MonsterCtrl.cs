@@ -56,6 +56,8 @@ public class MonsterCtrl : MonoBehaviour
     public GameObject Stun_Effect_1; //스턴 이펙트 생성용
     public GameObject Stun_Effect_2; //스턴 이펙트 On/Off용
 
+    protected AudioSource hitAudio; //몬스터 히트 사운드 추가(09.30)
+    protected AudioSource atkAudio; //몬스터 공격 사운드 추가(09.30)
 
     public Transform desiredParent;
 
@@ -86,6 +88,11 @@ public class MonsterCtrl : MonoBehaviour
     {
         PlayerTr = this.transform;
         StartCoroutine(FindPlayer());
+
+        hitAudio = transform.parent.Find("Monster_Hitsound").GetComponent<AudioSource>(); //히트 시 재생 오디오 지정(09.30)
+        hitAudio.Stop(); //처음에는 소리 나오지 않게(09.30)
+        atkAudio = transform.parent.Find("Monster_Atksound").GetComponent<AudioSource>(); //공격 시 재생 오디오 지정(09.30)
+        atkAudio.Stop(); //처음에는 소리 나오지 않게(09.30)
     }
 
     public virtual void Update()
@@ -235,6 +242,7 @@ public class MonsterCtrl : MonoBehaviour
         AttackCoolTime = 0;
         AttackCollider.SetActive(true);
         anim.SetBool("isAttack", true);
+        atkAudio.PlayOneShot(atkAudio.clip); //공격 시 재생 오디오 재생(09.30)
         yield return new WaitForSeconds(0.5f);
         anim.SetBool("isAttack", false);
         AttackCollider.SetActive(false);
@@ -717,6 +725,7 @@ public class MonsterCtrl : MonoBehaviour
             Damage = Damage * (1 / (1 + DEF * 0.01f));
             Debug.Log("몬스터가 입은 피해량 = " + Damage);
             curHP -= Damage;
+            hitAudio.PlayOneShot(hitAudio.clip); //히트 시 재생 오디오 재생(09.30)
             CheckHP(); // HP 체크
             anim.SetBool("TakeDamage", true);
             foreach (Material material in materials)

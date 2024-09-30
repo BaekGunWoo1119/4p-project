@@ -135,6 +135,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected AudioClip[] effectAudio;
     protected bool isSound = false;
     protected AudioSource[] audioSources;
+    protected AudioSource hitAudio; //히트 사운드 추가(09.30)
 
     // 벽 충돌체크
     protected bool WallCollision;
@@ -346,6 +347,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             audioSources[i].Stop();
         }
+        hitAudio = transform.Find("Player_HitSound").GetComponent<AudioSource>(); //히트 시 재생 오디오 지정(09.30)
+        hitAudio.Stop(); //처음에는 소리 나오지 않게(09.30)
 
         //보조스킬 받아오기
         Spell_1 = PlayerPrefs.GetString("Spell_1");
@@ -989,6 +992,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             }
             StartCoroutine(DamageTextAlpha());
             Damaged_on(); //맞았을 때 이펙트 애니메이션에서 코드로 옮김(08.30)
+            hitAudio.PlayOneShot(hitAudio.clip); //히트 시 재생 오디오 재생(09.30)
             cameraEffect.GetComponent<CameraEffectCtrl>().DamageCamera();
             StartCoroutine(Immune(0.5f));   //무적 함수 실행
             yield return new WaitForSeconds(0.2f);
