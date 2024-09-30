@@ -15,6 +15,7 @@ public class CameraEffectCtrl : MonoBehaviour
     private Bloom bloom; //Bloom 효과(고급 색상 필터)
     private PaniniProjection paniniProjection; //Panini Projection 효과(볼록렌즈)
     private Vignette vignette; //Vignette 효과 (카메라 테두리)
+    private LensDistortion lensDistortion; //LensDistortion (카메라 렌즈) (09.30)
 
     private bool Reset = false;
 
@@ -44,6 +45,11 @@ public class CameraEffectCtrl : MonoBehaviour
     private float roundTime = 0;
     private bool rounding = false;
 
+    //카메라 렌즈 효과 값들
+    private float lensValue;
+    private float lensTime = 0;
+    private bool lensing = false;
+
     #endregion
 
     void Start()
@@ -66,7 +72,6 @@ public class CameraEffectCtrl : MonoBehaviour
             return;
         }
 
-        //파라미터 받아오기
         if (!volumeProfile.TryGet(out chromaticAberration))
         {
             Debug.LogError("Chromatic Aberration 파라미터를 찾을 수 없습니다.");
@@ -94,6 +99,12 @@ public class CameraEffectCtrl : MonoBehaviour
         if(!volumeProfile.TryGet(out vignette))
         {
             Debug.LogError("vignette 파라미터를 찾을 수 없습니다.");
+            return;
+        }
+
+        if (!volumeProfile.TryGet(out lensDistortion))
+        {
+            Debug.LogError("lensDistortion 파라미터를 찾을 수 없습니다.");
             return;
         }
     }
@@ -247,6 +258,13 @@ public class CameraEffectCtrl : MonoBehaviour
         rounding = true;
     }
 
+    public IEnumerator DistortionCamera(float Value, float time)
+    {
+        lensDistortion.intensity.value = Mathf.Lerp(0, Value, 0.5f); 
+        yield return new WaitForSeconds(time - 1f);
+        lensDistortion.intensity.value = Mathf.Lerp(Value, 0, 0.5f); 
+    }
+
     public void RoundCamera_Set()
     {
         if(!rounding)
@@ -307,6 +325,12 @@ public class CameraEffectCtrl : MonoBehaviour
     public void poisonEffectCamera()
     {
         StartCoroutine(RoyalFilter(4, 0.5f, 121, 0, 255, 4, texture[1], 0.9f));
+    }
+
+    public void unStoppableCamera()
+    {
+        StartCoroutine(DistortionCamera(0.5f, 60f));
+        StartCoroutine(RoundCamera(0.4f, 1, 0.05f, 0, 60f));
     }
 
     #endregion
