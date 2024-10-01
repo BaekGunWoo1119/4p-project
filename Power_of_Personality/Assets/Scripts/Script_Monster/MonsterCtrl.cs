@@ -240,22 +240,27 @@ public class MonsterCtrl : MonoBehaviour
     public virtual IEnumerator Attack()
     {
         AttackCoolTime = 0;
-        AttackCollider.SetActive(true);
         anim.SetBool("isAttack", true);
-        atkAudio.PlayOneShot(atkAudio.clip); //공격 시 재생 오디오 재생(09.30)
-        yield return new WaitForSeconds(0.5f);
-        anim.SetBool("isAttack", false);
-        AttackCollider.SetActive(false);
-        AttackCoolTime = 0;
+        yield return null;
     }
 
     public virtual void Attack_On()
     {
         if(EffectGen != null && AttackEffect != null)
         {
+            AttackCollider.SetActive(true);
+            atkAudio.PlayOneShot(atkAudio.clip); //공격 시 재생 오디오 재생(09.30)
             GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
             Destroy(effect_on, 3f);
+            StartCoroutine(Attack_On_2());
         }
+    }
+
+    public virtual IEnumerator Attack_On_2(){
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("isAttack", false);
+        AttackCollider.SetActive(false);
+        AttackCoolTime = 0;
     }
 
     #endregion

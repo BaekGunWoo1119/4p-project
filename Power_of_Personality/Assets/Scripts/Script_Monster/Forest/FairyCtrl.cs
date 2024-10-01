@@ -51,11 +51,12 @@ public class FairyCtrl : MonsterCtrl
     {
         AttackCoolTime = 0;
         anim.SetBool("isAttack", true);
-        Instantiate(AttackCollider, FirePos.position, FirePos.rotation);
-        yield return new WaitForSeconds(0.5f*(1f/AnimSpeed));
-        anim.SetBool("isAttack", false);
-        AttackCoolTime = 0;
+        yield return null;
     }
+    public override void Attack_On(){
+        StartCoroutine(Attack_On_2());
+    }
+
 
     public override void OnTriggerEnter(Collider col)
     {
@@ -76,5 +77,11 @@ public class FairyCtrl : MonsterCtrl
     public override IEnumerator DamageTextAlpha(float Damage)
     {
         yield return base.DamageTextAlpha(Damage);
+    }
+    public override IEnumerator Attack_On_2(){
+        Instantiate(AttackCollider, FirePos.position, FirePos.rotation);
+        yield return new WaitForSeconds(0.5f*(1f/AnimSpeed));
+        anim.SetBool("isAttack", false);
+        AttackCoolTime = 0;
     }
 }

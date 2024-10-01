@@ -51,11 +51,10 @@ public class BatCtrl : MonsterCtrl
     {
         AttackCoolTime = 0;
         anim.SetBool("isAttack", true);
-        yield return new WaitForSeconds(0.3f*(1f/AnimSpeed));
-        Instantiate(AttackCollider, FirePos.position, FirePos.rotation, this.transform);
-        yield return new WaitForSeconds(0.25f*(1f/AnimSpeed));
-        anim.SetBool("isAttack", false);
-        AttackCoolTime = 0;
+        yield return null;
+    }
+    public override void Attack_On(){
+        StartCoroutine(Attack_On_2());
     }
 
     public override void OnTriggerEnter(Collider col)
@@ -74,5 +73,11 @@ public class BatCtrl : MonsterCtrl
     public override IEnumerator DamageTextAlpha(float Damage)
     {
         yield return base.DamageTextAlpha(Damage);
+    }
+    public override IEnumerator Attack_On_2(){
+        Instantiate(AttackCollider, FirePos.position, FirePos.rotation, this.transform);
+        yield return new WaitForSeconds(0.25f*(1f/AnimSpeed));
+        anim.SetBool("isAttack", false);
+        AttackCoolTime = 0;
     }
 }
