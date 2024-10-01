@@ -9,7 +9,8 @@ using UnityEngine.UI;
 public class DruidCtrl : BossCtrl
 {
     #region 변수 선언
-    public GameObject Scratch_Effect;
+    public GameObject LScratch_Effect;
+    public GameObject RScratch_Effect;
     private GameObject Scratch_Collider;
 
     public GameObject GroundStrike_Effect;
@@ -228,112 +229,55 @@ public class DruidCtrl : BossCtrl
     }
 
     // 공격 애니메이션 && 콜라이더 스크립트
-    protected override IEnumerator MeleeWeakAttack()
+    protected override IEnumerator MeleeWeakAttack() //첫번째 공격 애니메이션 1.4초 두번째 1.2초
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeWeakAttack");   // 애니메이션
-
-        yield return new WaitForSeconds(0.75f); // 스킬 콜라이더 ~~
-        Scratch_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        Scratch_Collider.SetActive(false);
-        yield return new WaitForSeconds(0.4f);
-        Scratch_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        Scratch_Collider.SetActive(false);
+        yield return new WaitForSeconds(2.6f);   //애니메이션 지속 시간
         isAttacking = false;
-        yield return new WaitForSeconds(4f);    // ~~ 스킬 콜라이더
+        yield return new WaitForSeconds(1.5f);   //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
     }
 
-    protected override IEnumerator MeleeStrongAttack()
+    protected override IEnumerator MeleeStrongAttack() //공격 애니메이션 1.7초
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeStrongAttack");     //애니메이션
-
-        yield return new WaitForSeconds(1f);        // 스킬 콜라이더 ~~
-        GroundStrike_Collider_S.SetActive(true);
-        yield return new WaitForSeconds(0.25f);
-        GroundStrike_Collider_S.SetActive(false);
-        GroundStrike_Collider_M.SetActive(true);
-        yield return new WaitForSeconds(0.25f);
-        GroundStrike_Collider_M.SetActive(false);
-        GroundStrike_Collider_L.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        GroundStrike_Collider_L.SetActive(false);
+        yield return new WaitForSeconds(1.7f);     //애니메이션 지속 시간
         isAttacking = false;
-        yield return new WaitForSeconds(3f);        // ~~ 스킬 콜라이더
+        yield return new WaitForSeconds(3f);    //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
     }
 
-    protected override IEnumerator RangedWeakAttack()
+    protected override IEnumerator RangedWeakAttack() //공격 애니메이션 1.2초
     {
         isAttacking = true;
-        anim.SetTrigger("doRangedWeakAttack");      // 애니메이션
-        yield return new WaitForSeconds(4f);
+        anim.SetTrigger("doRangedWeakAttack");
+        yield return new WaitForSeconds(1.2f);      //애니메이션 지속 시간
+        isAttacking = false;
+        yield return new WaitForSeconds(1.5f);      //다음 행동까지 걸리는 시간 
 
         StartCoroutine(Think());
     }
 
-    protected override IEnumerator RangedStrongAttack()
+    protected override IEnumerator RangedStrongAttack() //공격 애니메이션 3.4초
     {
         isAttacking = true;
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
-
-        yield return new WaitForSeconds(2.5f);      // 스킬 콜라이더 ~~
-        Vine_Collider.SetActive(true);
-        isVine = true;
-        yield return new WaitForSeconds(4f);
-        isVine = false;
-        Vine_Collider.SetActive(false);
-        Vine_Collider.transform.localScale = new Vector3(1, 1, 1);
+        yield return new WaitForSeconds(3.4f);      //애니메이션 지속 시간
         isAttacking = false;
-        yield return new WaitForSeconds(1.5f);      // ~~ 스킬 콜라이더
+        yield return new WaitForSeconds(3f);      //다음 행동까지 걸리는 시간 
 
         StartCoroutine(Think());
     }
 
-    protected override IEnumerator Skill_1()
+    protected override IEnumerator Skill_1() //첫번째 공격 애니메이션 1.6초 두번째 1.4초 세번째 2초
     {
         isAttacking = true;
         anim.SetTrigger("doSkill1");
-
-        yield return new WaitForSeconds(1f);          // 스킬 콜라이더 ~~
-        GroundStrike_Collider_S.SetActive(true);        // 1-1 On
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        GroundStrike_Collider_S.SetActive(false);       // 1-1 Off
-        GroundStrike_Collider_M.SetActive(true);        // 1-2 On
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        GroundStrike_Collider_M.SetActive(false);       // 1-2 Off
-        GroundStrike_Collider_L.SetActive(true);        // 1-3 On
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        GroundStrike_Collider_L.SetActive(false);       // 1-3 Off
-
-        yield return new WaitForSeconds(0.1f);          // 0.1초 대기
-
-        GroundStrike_Collider_S.SetActive(true);        // 2-1 On
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        GroundStrike_Collider_S.SetActive(false);       // 2-1 Off
-        GroundStrike_Collider_M.SetActive(true);        // 2-2 On
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        GroundStrike_Collider_M.SetActive(false);       // 2-2 Off
-        GroundStrike_Collider_L.SetActive(true);        // 2-3 On
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        GroundStrike_Collider_L.SetActive(false);       // 2-3 Off
-
-        yield return new WaitForSeconds(0.75f);          // 0.1초 대기
-
-        GroundStrike_Collider_S.SetActive(true);        // 2-1 On
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        GroundStrike_Collider_S.SetActive(false);       // 2-1 Off
-        GroundStrike_Collider_M.SetActive(true);        // 2-2 On
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        GroundStrike_Collider_M.SetActive(false);       // 2-2 Off
-        GroundStrike_Collider_L.SetActive(true);        // 2-3 On
-        yield return new WaitForSeconds(0.25f);         // 0.25초 대기
-        GroundStrike_Collider_L.SetActive(false);       // 2-3 Off
+        yield return new WaitForSeconds(5f);     //애니메이션 지속 시간
         isAttacking = false;
-        yield return new WaitForSeconds(3f);            // ~~ 스킬 콜라이더
+        yield return new WaitForSeconds(3f);     //다음 행동까지 걸리는 시간 
 
         StartCoroutine(Think());
     }
@@ -342,11 +286,9 @@ public class DruidCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doSkill2");
-        yield return new WaitForSeconds(0.75f);
-        ToxicPortal_Collider.SetActive(true);
-        yield return new WaitForSeconds(2.75f);
-        ToxicPortal_Collider.SetActive(false);
+        yield return new WaitForSeconds(1.3f);      //애니메이션 지속 시간
         isAttacking = false;
+        yield return new WaitForSeconds(1.5f);      //다음 행동까지 걸리는 시간
         StartCoroutine(Think());
     }
     #endregion
@@ -356,12 +298,12 @@ public class DruidCtrl : BossCtrl
     {
         if (SkillYRot == 90)
         {
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30, SkillYRot + 90f, 90));
+            SkillEffect = Instantiate(RScratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, SkillYRot + 90f, 0));
         }
         else
         {
             Debug.Log("이건가요??");
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(30, SkillYRot - 180f, 90));
+            SkillEffect = Instantiate(RScratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0 , SkillYRot - 180f, 0));
         }
     }
 
@@ -369,12 +311,12 @@ public class DruidCtrl : BossCtrl
     {
         if (SkillYRot == 90)
         {
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(-30, SkillYRot + 90f, 90));
+            SkillEffect = Instantiate(LScratch_Effect, new Vector3(EffectGen.transform.position.x + 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, SkillYRot + 90f, 0));
         }
         else
         {
             Debug.Log("이건가요22??");
-            SkillEffect = Instantiate(Scratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(-30, SkillYRot - 180f, 90));
+            SkillEffect = Instantiate(LScratch_Effect, new Vector3(EffectGen.transform.position.x - 2, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, SkillYRot - 180f, 0));
         }
     }
     public void GroundStrike()
@@ -385,7 +327,7 @@ public class DruidCtrl : BossCtrl
     public void Projectile()
     {
         SkillEffect = Instantiate(Projectile_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-90, 0));
-        SkillCollider = Instantiate(Projectile_Collider, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-180, 0));
+        //SkillCollider = Instantiate(Projectile_Collider, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot-180, 0));
     }
 
     public void Vine()
