@@ -58,6 +58,7 @@ public class SpiderCtrl : MonsterCtrl
         yield return null;
     }
     public override void Attack_On(){
+        atkAudio.PlayOneShot(atkAudio.clip); 
         StartCoroutine(Attack_On_2());
     }
     public override void OnTriggerEnter(Collider col)

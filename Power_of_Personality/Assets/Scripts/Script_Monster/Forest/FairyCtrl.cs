@@ -54,6 +54,7 @@ public class FairyCtrl : MonsterCtrl
         yield return null;
     }
     public override void Attack_On(){
+        atkAudio.PlayOneShot(atkAudio.clip); 
         StartCoroutine(Attack_On_2());
     }
 
