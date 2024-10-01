@@ -204,6 +204,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected float Stun_CoolTime = 60f;
     protected float Heal_CoolTime = 60f;
 
+    //구르기 (10.01 정도훈)
+    public TMP_Text DodgeValue;
+    protected Image Rcool; 
+    protected float Dodge_CoolTime; //남은 구르기 쿨
+    protected float TotalDodge_CoolTime; //구르기 쿨타임
+    protected int DodgeAmount= 1; //남은 구르기 횟수
+
 
 
 
@@ -291,7 +298,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         OgreGen = GameObject.Find("OgreGen");
         DemonKingGen = GameObject.Find("DemonKingGen");
         //Null 오류 날 시 코드 추가(09.30)
-
+        TotalDodge_CoolTime = 10f; //구르기 쿨타임 (10.01)
 
         // HP Bar 설정
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
@@ -307,6 +314,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         hpPotionValue = GameObject.Find("HP_Potion - Text").GetComponent<TMP_Text>();
         ADPotionValue = GameObject.Find("AD_Potion - Text").GetComponent<TMP_Text>();
         ArmorPotionValue = GameObject.Find("Armor_Potion - Text").GetComponent<TMP_Text>();
+        DodgeValue = GameObject.Find("Dodge_Amount - Text").GetComponent<TMP_Text>();
 
         //스텟 UI 변동 설정(06.14)
         StateText = new TMP_Text[8];
@@ -326,6 +334,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Ecool = GameObject.Find("CoolTime-E").GetComponent<Image>();
         Dcool = GameObject.Find("CoolTime-D").GetComponent<Image>();
         Fcool = GameObject.Find("CoolTime-F").GetComponent<Image>();
+        Rcool = GameObject.Find("CoolTime-R").GetComponent<Image>(); //(10.01 정도훈)
+        Rcool.fillAmount = 1;
 
         // 애니메이션, Rigidbody, Transform 컴포넌트 지정
         anim = this.GetComponent<Animator>();
@@ -388,6 +398,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         //코인 업데이트(09.05)
         if(PlayerPrefs.GetFloat("Coin").ToString() != CoinText.text)
             CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
+
+        ChargeDodge(); //구르기 충전 
     }
 
     protected virtual void Update()
@@ -449,6 +461,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             if (Fcool.fillAmount != 0)
             {
                 Fcool.fillAmount -= 1 * Time.smoothDeltaTime / Spell_2_CoolTime;
+            }
+            if (Rcool.fillAmount != 0) //(10.01 정도훈)
+            {
+                Rcool.fillAmount -= 1 * Time.smoothDeltaTime /TotalDodge_CoolTime;
             }
             // 땅에 닿아있는지 체크
             isGrounded();
@@ -659,7 +675,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 isJumping = false;
             }
             // Dodge 함수 실행
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) && DodgeAmount>0)
             {
                 StartCoroutine(Dodge());
             }
@@ -1127,6 +1143,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     public virtual IEnumerator Dodge()
     {
+        DodgeAmount-=1;
         StartCoroutine(Immune(0.5f));
         PlayAnim("isDodge");
         isDodge = true;
@@ -1927,6 +1944,18 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             break;
         }
         
+    }
+    #endregion
+
+    #region 구르기
+    public virtual void ChargeDodge(){
+        DodgeValue.text = DodgeAmount.ToString();
+        Dodge_CoolTime += Time.deltaTime;
+        if(Dodge_CoolTime > TotalDodge_CoolTime){
+            DodgeAmount += 1;
+            Dodge_CoolTime = 0f;
+            Rcool.fillAmount = 1;
+        }
     }
     #endregion
     
