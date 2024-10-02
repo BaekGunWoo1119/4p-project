@@ -390,7 +390,8 @@ MonoBehaviour:
   DamageText: {fileID: 1880031391497513284, guid: 3f08f33154c6df6418d46b2e12f8cf2a, type: 3}
   MonsterCanvas: {fileID: 0}
   Coin: {fileID: 9137955520889552415, guid: 5e136e1029a3c0a4f842505d52c8ea4f, type: 3}
-  Scratch_Effect: {fileID: 8814671152554963876, guid: 2f04266f62c22e04c8da8b5527f70331, type: 3}
+  LScratch_Effect: {fileID: 0}
+  RScratch_Effect: {fileID: 0}
   GroundStrike_Effect: {fileID: 7370177148062651360, guid: 262f0e2fdecc8ba408a3507a77bc84f8, type: 3}
   Projectile_Effect: {fileID: 6033183710084239937, guid: 4d8096f3c6069e3428bba8e92fb71d42, type: 3}
   Projectile_Collider: {fileID: 3931726360720426008, guid: 137f9cdae7018514099898e3303e82bf, type: 3}
@@ -1382,7 +1383,7 @@ GameObject:
   - component: {fileID: 8262239010247962428}
   m_Layer: 0
   m_Name: Druid
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1768,6 +1769,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df63a64902b857147bec506976564c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Vine_Collider: {fileID: 0}
+  Vine_xGrowthRate: 10
+  maxDistance: 0
   ATK: 20
 --- !u!1 &5951344561128848290
 GameObject:

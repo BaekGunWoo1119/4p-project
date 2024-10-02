@@ -10,15 +10,14 @@ public class SoundsManager : MonoBehaviour
     public float fadeDuration = 0.5f;  // 페이드 지속 시간 (초 단위)
     public string musicName;
     private static SoundsManager instance;
-    public AudioClip orgSource;
-    public AudioClip changeSource;
+    public AudioClip[] cilpSource;
 
     void Awake()
     {
         Sound_Check();
     }
 
-    // Start is called before the first frame update
+    // 오디오 번호 0번 : 메인배경음 / 1번 : 숲 배경음 / 2번 : 숲 보스음 / 3번 : 동굴 / 4번 : 하수구 (10.02)
     void Start()
     {
         if(musicName == "MainBGM")
@@ -55,6 +54,12 @@ public class SoundsManager : MonoBehaviour
         {
             loopStartTime = 0;
             loopEndTime = 63f;
+        }
+
+        if(musicName == "Sewer_Boss")
+        {
+            loopStartTime = 80f;
+            loopEndTime = 152f;
         }
         // 처음부터 특정 구간만 반복 재생 및 페이드 아웃
         StartCoroutine(PlayLoopAudio());
@@ -156,27 +161,39 @@ public class SoundsManager : MonoBehaviour
         musicName = soundsName;
         if(musicName == "Forest_Boss")
         {
-            audioSource.clip = changeSource;
+            audioSource.clip = cilpSource[2];
             loopStartTime = 1f;
             loopEndTime = 95f;
         }
         else if(musicName == "Forest")
         {
-            audioSource.clip = orgSource;
+            audioSource.clip = cilpSource[1];
             loopStartTime = 0f;
             loopEndTime = 167f;
         }
         else if(musicName == "Cave_Boss")
         {
-            audioSource.clip = orgSource;
+            audioSource.clip = cilpSource[3];
             loopStartTime = 56f;
             loopEndTime = 159f;
         }
         else if(musicName == "Cave")
         {
-            audioSource.clip = changeSource;
+            audioSource.clip = cilpSource[3];
             loopStartTime = 16f;
             loopEndTime = 55f;
+        }
+        else if(musicName == "Sewer")
+        {
+            audioSource.clip = cilpSource[4];
+            loopStartTime = 0;
+            loopEndTime = 63f;
+        }
+        else if(musicName == "Sewer_Boss")
+        {
+            audioSource.clip = cilpSource[4];
+            loopStartTime = 80f;
+            loopEndTime = 152f;
         }
 
         //음악 재생

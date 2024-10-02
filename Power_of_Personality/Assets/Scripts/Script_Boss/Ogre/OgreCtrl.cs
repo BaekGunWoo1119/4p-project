@@ -55,7 +55,7 @@ public class OgreCtrl : BossCtrl
         DistanceCheck();
         if(isDie == true)
         {
-            SoundsManager.Change_Sounds("Forest"); //소리 추가(08.31)
+            SoundsManager.Change_Sounds("Sewer"); //소리 추가(08.31)
         }
     }
     #endregion
