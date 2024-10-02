@@ -50,6 +50,9 @@ public class CameraEffectCtrl : MonoBehaviour
     private float lensTime = 0;
     private bool lensing = false;
 
+    //저지불가용 bool(10.02)
+    private bool unStoppabling = false;
+
     #endregion
 
     void Start()
@@ -262,7 +265,8 @@ public class CameraEffectCtrl : MonoBehaviour
     {
         lensDistortion.intensity.value = Mathf.Lerp(0, Value, 0.5f); 
         yield return new WaitForSeconds(time - 1f);
-        lensDistortion.intensity.value = Mathf.Lerp(Value, 0, 0.5f); 
+        lensDistortion.intensity.value = Mathf.Lerp(Value, 0, 0.5f);
+        unStoppabling = false; 
     }
 
     public void RoundCamera_Set()
@@ -295,9 +299,12 @@ public class CameraEffectCtrl : MonoBehaviour
 
     public void DamageCamera()
     {
-        StartCoroutine(BlurCamera(2f, 0.3f));
-        StartCoroutine(ColorDiffuse(10f, 0.3f));
-        StartCoroutine(RoundCamera(0.4f, 1, 0, 0, 0.3f));
+        if(!unStoppabling)
+        {
+            StartCoroutine(BlurCamera(2f, 0.3f));
+            StartCoroutine(ColorDiffuse(10f, 0.3f));
+            StartCoroutine(RoundCamera(0.4f, 1, 0, 0, 0.3f));
+        }
     }
 
     public void BigAttackCamera()
@@ -329,8 +336,9 @@ public class CameraEffectCtrl : MonoBehaviour
 
     public void unStoppableCamera()
     {
-        StartCoroutine(DistortionCamera(0.5f, 60f));
-        StartCoroutine(RoundCamera(0.4f, 1, 0.05f, 0, 60f));
+        StartCoroutine(DistortionCamera(0.7f, 60f));
+        StartCoroutine(RoundCamera(0.55f, 1, 0.1f, 0, 60f));
+        unStoppabling = true;
     }
 
     #endregion
