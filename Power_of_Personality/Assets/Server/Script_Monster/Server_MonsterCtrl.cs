@@ -791,6 +791,7 @@ public class Server_MonsterCtrl : MonoBehaviour
         {
             isDie = true;
             anim.SetBool("Die", true);
+            AttackCollider.tag="Untagged";
             yield return new WaitForSeconds(1.5f);
             if(Random.Range(0, 10)> 5){
                 Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.4f, gameObject.transform.position.z);
