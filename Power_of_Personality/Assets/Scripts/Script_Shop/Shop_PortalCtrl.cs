@@ -33,6 +33,7 @@ public class Shop_PortalCtrl : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.S))
             {
                 Open_Shop(col);
+                GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().PotionCount++;
             }
         }
     }
@@ -59,6 +60,7 @@ public class Shop_PortalCtrl : MonoBehaviour
     public void Open_Shop(Collider col)
     {
         isShopOpen = true;
+        Status.IsShop = true;
         //현재 플레이어 위치 및 현재 스테이지 저장 후 상점으로 넘기기
         playerObj = col.gameObject;
         playerPos = col.gameObject.transform.position;
@@ -67,7 +69,6 @@ public class Shop_PortalCtrl : MonoBehaviour
         shopWindow.transform.localScale = new Vector3(1, 1, 1);
         exitshop.SetActive(false);
         orgWindow.transform.localScale = new Vector3(0, 0, 0);
-        Status.IsShop = true;
 
         GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().RemoveHadItem();
 
@@ -81,6 +82,7 @@ public class Shop_PortalCtrl : MonoBehaviour
 
     public void Exit_Shop()
     {
+        Debug.Log("상점나가기");
         playerObj.transform.position = playerPos;
         Status.IsShop = false;
         shopWindow.transform.localScale = new Vector3(0, 0, 0);

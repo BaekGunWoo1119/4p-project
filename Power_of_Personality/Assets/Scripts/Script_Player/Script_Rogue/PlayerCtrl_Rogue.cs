@@ -50,6 +50,11 @@ public class PlayerCtrl_Rogue : PlayerCtrl
     {
         base.Update(); // PlayerCtrl의 Update문을 상속 받아서 실행
 
+        if(Status.IsShop)
+        {   
+            StopAnim("isDash");
+        }
+
         //1 점프 1 점공 코드(08.29)
         if(stateJumpAttack2 == true)
         {

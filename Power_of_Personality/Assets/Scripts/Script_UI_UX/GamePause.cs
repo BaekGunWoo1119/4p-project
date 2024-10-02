@@ -14,7 +14,9 @@ public class GamePause : MonoBehaviour
     {
         originalScale = new Vector3(1, 1, 1);
         pauseWindow.transform.localScale = new Vector3(0, 0, 0);
-        pauseButton.onClick.AddListener(PauseWindowOpen);
+        if(pauseButton != null)
+            pauseButton.onClick.AddListener(PauseWindowOpen);
+        if(resumeButton != null)
         resumeButton.onClick.AddListener(ResumeGame);
     }
 

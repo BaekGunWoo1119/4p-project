@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class KeyDownCtrl : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class KeyDownCtrl : MonoBehaviour
     {
         if (Input.GetKeyDown(ctrlKey))
         {
-            if (ctrlKey == KeyCode.Escape)
+            if (ctrlKey == KeyCode.Escape && SceneManager.GetActiveScene().name != "Forest_Example_Multi")
             {
                 // Escape 키가 눌렸을 때 게임의 상태를 체크하고 일시 정지 혹은 재개
                 if (Time.timeScale == 0)
