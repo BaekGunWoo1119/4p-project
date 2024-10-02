@@ -52,11 +52,11 @@ public class Server_BatCtrl : Server_MonsterCtrl
     {
         AttackCoolTime = 0;
         anim.SetBool("isAttack", true);
-        yield return new WaitForSeconds(0.3f);
-        Instantiate(AttackCollider, FirePos.position, FirePos.rotation);
-        yield return new WaitForSeconds(0.25f);
-        anim.SetBool("isAttack", false);
-        AttackCoolTime = 0;
+        yield return null;
+    }
+    public override void Attack_On(){
+        atkAudio.PlayOneShot(atkAudio.clip);
+        StartCoroutine(Attack_On_2());
     }
 
     public override void OnTriggerEnter(Collider col)
@@ -90,5 +90,11 @@ public class Server_BatCtrl : Server_MonsterCtrl
     [PunRPC]
     public override void RPCDamage(float CurDamage){
         base.RPCDamage(CurDamage);
+    }
+    public override IEnumerator Attack_On_2(){
+        Instantiate(AttackCollider, FirePos.position, FirePos.rotation, this.transform);
+        yield return new WaitForSeconds(0.25f*(1f/AnimSpeed));
+        anim.SetBool("isAttack", false);
+        AttackCoolTime = 0;
     }
 }
