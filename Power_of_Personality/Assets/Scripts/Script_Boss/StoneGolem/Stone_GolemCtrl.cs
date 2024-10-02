@@ -58,7 +58,7 @@ public class Stone_Golem : BossCtrl
         DistanceCheck();
         if(isDie == true)
         {
-            SoundsManager.Change_Sounds("Forest"); //소리 추가(08.31)
+            SoundsManager.Change_Sounds("Cave"); //소리 추가(08.31)
         }
     }
     #endregion
