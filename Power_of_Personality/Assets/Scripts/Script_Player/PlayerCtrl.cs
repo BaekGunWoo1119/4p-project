@@ -387,31 +387,39 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         CheckState();
         // Move 함수 실행
-        if (!isSkill && !isAttack && !stateAttack3 && !anim.GetBool("isDie"))
+        if(!Status.IsShop)
         {
-            Move();
-            Turn();
-        }
-        if (hAxis == 0)
-        {
-            StopAnim("isRun");
-        }
+            if (!isSkill && !isAttack && !stateAttack3 && !anim.GetBool("isDie") && !stateDamage)
+            {
+                Move();
+                Turn();
+            }
+            if (hAxis == 0)
+            {
+                StopAnim("isRun");
+            }
 
-        // Turn 함수 실행
-        if (!isSkill && !isAttack && !stateIdle && !anim.GetBool("isDie"))
-        {
-            Turn();
+            // Turn 함수 실행
+            if (!isSkill && !isAttack && !stateIdle && !anim.GetBool("isDie") && !stateDamage)
+            {
+                Turn();
+            }
+
+            //코인 업데이트(09.05)
+            if(PlayerPrefs.GetFloat("Coin").ToString() != CoinText.text)
+                CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
         }
-
-        //코인 업데이트(09.05)
-        if(PlayerPrefs.GetFloat("Coin").ToString() != CoinText.text)
-            CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
-
         ChargeDodge(); //구르기 충전 
     }
 
     protected virtual void Update()
     {
+        
+        if(Status.IsShop)
+        {   
+            StopAnim("isRun");
+        }
+
         #region 7번 세트 3셋 이펙트 효과 (등 뒤에 잔상 이펙트)
         if (Status.set7_3_Activated && GetComponent<SkinnedMeshAfterImage>().enabled == false)
         {
@@ -470,9 +478,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             {
                 Fcool.fillAmount -= 1 * Time.smoothDeltaTime / Spell_2_CoolTime;
             }
-            if (Rcool.fillAmount != 0) //(10.01 정도훈)
+            if (Rcool.fillAmount != 0 && DodgeAmount < 2) //(10.01 정도훈)
             {
                 Rcool.fillAmount -= 1 * Time.smoothDeltaTime /TotalDodge_CoolTime;
+            } 
+            else
+            {
+                Rcool.fillAmount = 0;
             }
             // 땅에 닿아있는지 체크
             isGrounded();
@@ -508,23 +520,23 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             anim.SetFloat("AnimSpeed", Status.TotalSpeed);
 
             // Attack 함수 실행
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A) && !stateDamage)
             {
                 Attack_anim();
             }
 
             //기본공격1 & 기본공격3 시 전진 애니메이션
-            if (stateAttack1 == true && !isCommonAttack1InProgress)
+            if (stateAttack1 == true && !isCommonAttack1InProgress && !stateDamage)
             {
                 Attack(0);
                 isCommonAttack1InProgress = true;
             }
-            else if (stateAttack2 == true && !isCommonAttack2InProgress && !isSound)
+            else if (stateAttack2 == true && !isCommonAttack2InProgress && !isSound && !stateDamage)
             {
                 Attack(1);
                 isCommonAttack2InProgress = true;
             }
-            else if (stateAttack3 == true && !isCommonAttack3InProgress)
+            else if (stateAttack3 == true && !isCommonAttack3InProgress && !stateDamage)
             {
                 Attack(2);
                 isCommonAttack3InProgress = true;
@@ -544,17 +556,17 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             }
 
             //점프공격 카메라 && 사운드
-            else if (stateJumpAttack1 == true && !coroutineMove)
+            else if (stateJumpAttack1 == true && !coroutineMove  && !stateDamage)
             {
                 Attack(3);
                 PlayAnim("isFall");
             }
-            else if (stateJumpAttack2 == true && !isSound)
+            else if (stateJumpAttack2 == true && !isSound  && !stateDamage)
             {
                 Attack(4);
                 PlayAnim("isFall");
             }
-            else if (stateJumpAttack3 == true && !coroutineMove)
+            else if (stateJumpAttack3 == true && !coroutineMove  && !stateDamage)
             {
                 Attack(5);
                 PlayAnim("isFall");
@@ -593,7 +605,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !anim.GetBool("isFall")
             && QSkillCoolTime >= TotalQSkillCoolTime //도훈 2024-08-27
             && !isAttack
-            && !isDodge)
+            && !isDodge
+            && !stateDamage)
             {
                 UseSkill("Q");
                 TotalQSkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
@@ -609,7 +622,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !anim.GetBool("isFall")
             && WSkillCoolTime >= TotalWSkillCoolTime //도훈 2024-08-27
             && !isAttack
-            && !isDodge)
+            && !isDodge
+            && !stateDamage)
             {
                 UseSkill("W");
                 TotalWSkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
@@ -625,7 +639,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !anim.GetBool("isFall")
             && ESkillCoolTime >= TotalESkillCoolTime //도훈 2024-08-27
             && !isAttack
-            && !isDodge)
+            && !isDodge
+            && !stateDamage)
             {
                 UseSkill("E");
                 TotalESkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
@@ -667,7 +682,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && !isSkill && !isAttack && !isJumping
-                && !stateJump && !stateFall && !anim.GetBool("isFall") && !isDodge && JumpCoolTime == 0)
+                && !stateJump && !stateFall && !anim.GetBool("isFall") && !isDodge && JumpCoolTime == 0 && !stateDamage)
             {
                 isJumping = true;
                 JumpCoolTime += Time.deltaTime;
@@ -683,7 +698,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 isJumping = false;
             }
             // Dodge 함수 실행
-            if (Input.GetKeyDown(KeyCode.R) && DodgeAmount>0)
+            if (Input.GetKeyDown(KeyCode.R) && DodgeAmount>0 && !stateDamage)
             {
                 StartCoroutine(Dodge());
             }
@@ -1016,7 +1031,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             Status.HP -= Damage;
             CheckHp();
             //저지불가 (09.14 정도훈)
-            if(Unstoppable_Buff_ON==false){
+            if(Unstoppable_Buff_ON==false)
+            {
                 PlayAnim("TakeDamage"); 
             }
             StartCoroutine(DamageTextAlpha());
@@ -1064,7 +1080,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //(06.01)
     protected virtual IEnumerator DamageTextAlpha()
     {
-        if(anim.GetBool("Die") == false)
+        if(anim.GetBool("isDie") == false)
         {   
             //데미지 텍스트 출력 부분(05.31)
             GameObject instText = Instantiate(DamageText);
@@ -1155,6 +1171,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         StartCoroutine(Immune(0.5f));
         PlayAnim("isDodge");
         isDodge = true;
+
+        if(Rcool.fillAmount == 0)
+        {
+            Rcool.fillAmount = 1;
+        }
+
         yield return new WaitForSeconds(0.5f);
         StopAnim("isDodge");
         //구르기 연타하고 안 움직이는 버그 해결(09.04)
@@ -1965,13 +1987,17 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #endregion
 
     #region 구르기
-    public virtual void ChargeDodge(){
-        DodgeValue.text = DodgeAmount.ToString();
-        Dodge_CoolTime += Time.deltaTime;
-        if(Dodge_CoolTime > TotalDodge_CoolTime){
-            DodgeAmount += 1;
-            Dodge_CoolTime = 0f;
-            Rcool.fillAmount = 1;
+    public virtual void ChargeDodge()
+    {
+        if(DodgeAmount < 2)
+        {    
+            Dodge_CoolTime += Time.deltaTime;
+            if(Dodge_CoolTime > TotalDodge_CoolTime){
+                DodgeAmount += 1;
+                Dodge_CoolTime = 0f;
+                Rcool.fillAmount = 1;
+            }
+            DodgeValue.text = DodgeAmount.ToString();
         }
     }
     #endregion
