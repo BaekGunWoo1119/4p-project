@@ -52,9 +52,15 @@ public class Server_SpiderCtrl : Server_MonsterCtrl
     {
         AttackCoolTime = 0;
         anim.SetBool("isAttack", true);
-        yield return new WaitForSeconds(0.25f);
-        Instantiate(AttackCollider, FirePos.position, FirePos.rotation);
-        yield return new WaitForSeconds(0.5f);
+        yield return null;
+    }
+    public override void Attack_On(){
+        atkAudio.PlayOneShot(atkAudio.clip); 
+        StartCoroutine(Attack_On_2());
+    }
+    public override IEnumerator Attack_On_2(){
+        Instantiate(AttackCollider, FirePos.position, FirePos.rotation, this.transform);
+        yield return new WaitForSeconds(0.5f*(1f/AnimSpeed));
         anim.SetBool("isAttack", false);
         AttackCoolTime = 0;
     }
