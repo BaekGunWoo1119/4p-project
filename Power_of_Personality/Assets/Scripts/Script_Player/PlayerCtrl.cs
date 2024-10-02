@@ -138,6 +138,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected bool isSound = false;
     protected AudioSource[] audioSources;
     protected AudioSource hitAudio; //히트 사운드 추가(09.30)
+    protected AudioSource[] spellSounds; //스펠 사운드 추가(10.02)
 
     // 벽 충돌체크
     protected bool WallCollision;
@@ -366,6 +367,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         //보조스킬 받아오기
         Spell_1 = PlayerPrefs.GetString("Spell_1");
         Spell_2 = PlayerPrefs.GetString("Spell_2");
+
+        //보조스킬 사운드(10.02)
+        spellSounds = transform.Find("Spell_Sounds").GetComponents<AudioSource>();
+        for (int i = 0; i < spellSounds.Length; i++)
+        {
+            spellSounds[i].Stop();
+        }
         
     }
     protected virtual void FixedUpdate()
@@ -1729,6 +1737,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Swiftness_Stat = Status.PercentSpeed;
         Status.PercentSpeed += (Status.PercentSpeed * buffPer);
         Status.StatUpdate();
+        spellSounds[0].PlayOneShot(spellSounds[0].clip); //스펠 사운드 추가(10.02)
         Spell_Swiftness_Effect.SetActive(true);
         Debug.Log("신속 ON");
         yield break;
@@ -1750,6 +1759,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public virtual IEnumerator Spell_Unstoppable_On()
     {
         Unstoppable_buffTime = 60f;
+        spellSounds[4].PlayOneShot(spellSounds[4].clip); //스펠 사운드 추가(10.02)
         cameraEffect.GetComponent<CameraEffectCtrl>().unStoppableCamera(); //저지불가 이펙트 추가(09.30)
         yield break;
     }
@@ -1772,6 +1782,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         SkillEffect = Instantiate(Spell_Heal_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
         SkillEffect.transform.parent = EffectGen.transform;
         SkillEffect.transform.localPosition = new Vector3(0,-0.9f,0);
+        spellSounds[2].PlayOneShot(spellSounds[2].clip); //스펠 사운드 추가(10.02)
         yield return new WaitForSeconds(3.0f);
         Destroy(SkillEffect);
     }
@@ -1789,6 +1800,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public virtual IEnumerator Spell_Stun_on()
     {
         SkillEffect = Instantiate(Spell_Stun_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot + 90f, 0));
+        spellSounds[1].PlayOneShot(spellSounds[1].clip); //스펠 사운드 추가(10.02)
         yield return new WaitForSeconds(3.0f);
         Destroy(SkillEffect);
     }
@@ -1808,6 +1820,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public virtual IEnumerator Spell_Immune_on()
     {
         Spell_Immune_Effect.SetActive(true);
+        spellSounds[6].PlayOneShot(spellSounds[6].clip); //스펠 사운드 추가(10.02)
         yield return new WaitForSeconds(2.0f);
         Spell_Immune_Effect.SetActive(false);
     }
@@ -1830,10 +1843,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         TimeSlowdown_buffTime = 60f;
         Debug.Log("시감감속 ON");
         Spell_TimeSlowdown_Effect.SetActive(true);
+        spellSounds[5].PlayOneShot(spellSounds[5].clip); //스펠 사운드 추가(10.02)
         yield break;
     }
 
     //부활
+    //이거 진행해줘야함(10.02)
+    //spellSounds[7].PlayOneShot(spellSounds[7].clip); //스펠 사운드도 추가해야함(10.02)
 
     //분노의 포효
     public virtual void Spell_RoarOfAnger(int Spell_num){
@@ -1855,6 +1871,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         Status.StatUpdate();
         Debug.Log("분노의 포효 ON");
         Spell_RoarOfAnger_Effect.SetActive(true);
+        spellSounds[3].PlayOneShot(spellSounds[3].clip); //스펠 사운드 추가(10.02)
         yield break;
     }
 

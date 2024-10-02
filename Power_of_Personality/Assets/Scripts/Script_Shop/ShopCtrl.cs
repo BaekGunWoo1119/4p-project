@@ -19,7 +19,7 @@ public class ShopCtrl : MonoBehaviour
 
     private GameObject warningWindow;
 
-
+    public TMP_Text rerollShow;
 
     bool isSave = false;
     public int[] L_ItemID;
@@ -56,6 +56,10 @@ public class ShopCtrl : MonoBehaviour
         warningWindow.SetActive(false);
 
         GetRandomItemCode();
+
+        //리롤 표시 추가(10.02)
+        if(rerollShow != null)
+            rerollShow.text = "남은 새로고침 횟수 : " + PlayerPrefs.GetInt("Shop");
     }
 
     public void GetRandomItemCode()
@@ -134,7 +138,10 @@ public class ShopCtrl : MonoBehaviour
             {
                 int refresh = PlayerPrefs.GetInt("Shop", 0);
                 PlayerPrefs.SetInt("Shop", refresh - 1);
-                Debug.Log("남은 리롤 횟수" + PlayerPrefs.GetInt("Shop"));
+                //리롤 소모 횟수 표시(10.02)
+                if(rerollShow != null)
+                    rerollShow.text = "남은 새로고침 횟수 : " + PlayerPrefs.GetInt("Shop");
+                
                 GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
 
                 for (int i = 0; i < C_Slots; ++i)
@@ -208,7 +215,7 @@ public class ShopCtrl : MonoBehaviour
                 }
             } else
             {
-                Debug.Log("돈 부족");
+                Debug.Log("리롤 횟수 부족");
             }
         }
     }

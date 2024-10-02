@@ -41,12 +41,19 @@ public class ButtonSoundsManager : MonoBehaviour
 
     private void BtnSoundPlus()
     {
-        // 모든 버튼의 클릭 이벤트에 리스너 추가
         Button[] allButtons = FindObjectsOfType<Button>();
+        Toggle[] allToggles = FindObjectsOfType<Toggle>();
 
+        // 모든 버튼의 클릭 이벤트에 리스너 추가
         foreach (Button button in allButtons)
         {
             button.onClick.AddListener(PlayButtonSound);
+        }
+
+        // 모든 토글의 클릭 이벤트에 리스너 추가
+        foreach (Toggle toggle in allToggles)
+        {
+            toggle.onValueChanged.AddListener(delegate { PlayButtonSound(); });
         }
     }
 
