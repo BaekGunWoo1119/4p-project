@@ -125,6 +125,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                     // 몬스터가 0명이라면
                     if (MonsterCount < 1)
                     {
+                        IsWave = false;
                         if (PhotonNetwork.IsMasterClient){
                             if(CurrentWave>12){
                                 photonview.RPC("GameClear",RpcTarget.All);
