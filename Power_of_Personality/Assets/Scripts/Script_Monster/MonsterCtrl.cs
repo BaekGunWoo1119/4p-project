@@ -45,6 +45,7 @@ public class MonsterCtrl : MonoBehaviour
     public bool isDie;     //몬스터 사망체크
     public bool isHit;     //몬스터 피격체크
     public bool isStun;  //스턴상태인지
+    public bool isSpawn; //스폰상태인지
     public float hitCount;  //몬스터가 맞았을 때, 시간을 늘려서 몬스터가 피격 상태인지 체크하기 위한 변수
 
     public GameObject IceHit; //몬스터 피격 이펙트(얼음)
@@ -84,6 +85,9 @@ public class MonsterCtrl : MonoBehaviour
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
         StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
         SetWeakProperty();  //약점 속성 설정
+
+        StartCoroutine(Spawn_State());
+
         bonusstat = PlayerPrefs.GetInt("Drop");
     }
     
@@ -118,7 +122,7 @@ public class MonsterCtrl : MonoBehaviour
         AttackCoolTime += Time.deltaTime;
         TickCoolTime += Time.deltaTime;
         hitCount -= Time.deltaTime;
-        if(PlayerTr != null)
+        if(PlayerTr != null && !isSpawn)
         {
             Turn();
         }
@@ -189,12 +193,12 @@ public class MonsterCtrl : MonoBehaviour
     {
         Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
-        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit)
+        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn)
         {
             StartCoroutine(Trace());
         }
 
-        if (Distance <= attackRadius && AttackCoolTime >= 3.0f*(1f/AnimSpeed) && !isDie && hitCount <= 0)
+        if (Distance <= attackRadius && AttackCoolTime >= 3.0f*(1f/AnimSpeed) && !isDie && hitCount <= 0 && !isSpawn)
         {
             StartCoroutine(Attack());
         }
@@ -236,6 +240,16 @@ public class MonsterCtrl : MonoBehaviour
     {
         return transform.position + Vector3.up * 3.5f;
     }
+
+    public virtual IEnumerator Spawn_State()
+    {
+        this.gameObject.layer = 10;
+        isSpawn =true;
+        yield return new WaitForSeconds(2f);
+        this.gameObject.layer = 6;
+        isSpawn =false;
+    }
+
     #endregion
 
     #region 몬스터의 공격
@@ -758,6 +772,7 @@ public class MonsterCtrl : MonoBehaviour
         if (curHP <= 0) // 개체의 피가 0이 되었을 때 사망처리
         {
             isDie = true;
+            this.gameObject.layer = 10;
             anim.SetBool("Die", true);
             yield return new WaitForSeconds(1.5f);
             if(Random.Range(0, 10)> 5-bonusstat){

@@ -387,31 +387,39 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         CheckState();
         // Move 함수 실행
-        if (!isSkill && !isAttack && !stateAttack3 && !anim.GetBool("isDie") && !stateDamage)
+        if(!Status.IsShop)
         {
-            Move();
-            Turn();
-        }
-        if (hAxis == 0)
-        {
-            StopAnim("isRun");
-        }
+            if (!isSkill && !isAttack && !stateAttack3 && !anim.GetBool("isDie") && !stateDamage)
+            {
+                Move();
+                Turn();
+            }
+            if (hAxis == 0)
+            {
+                StopAnim("isRun");
+            }
 
-        // Turn 함수 실행
-        if (!isSkill && !isAttack && !stateIdle && !anim.GetBool("isDie") && !stateDamage)
-        {
-            Turn();
+            // Turn 함수 실행
+            if (!isSkill && !isAttack && !stateIdle && !anim.GetBool("isDie") && !stateDamage)
+            {
+                Turn();
+            }
+
+            //코인 업데이트(09.05)
+            if(PlayerPrefs.GetFloat("Coin").ToString() != CoinText.text)
+                CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
         }
-
-        //코인 업데이트(09.05)
-        if(PlayerPrefs.GetFloat("Coin").ToString() != CoinText.text)
-            CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
-
         ChargeDodge(); //구르기 충전 
     }
 
     protected virtual void Update()
     {
+        
+        if(Status.IsShop)
+        {   
+            StopAnim("isRun");
+        }
+
         #region 7번 세트 3셋 이펙트 효과 (등 뒤에 잔상 이펙트)
         if (Status.set7_3_Activated && GetComponent<SkinnedMeshAfterImage>().enabled == false)
         {
@@ -1072,7 +1080,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     //(06.01)
     protected virtual IEnumerator DamageTextAlpha()
     {
-        if(anim.GetBool("Die") == false)
+        if(anim.GetBool("isDie") == false)
         {   
             //데미지 텍스트 출력 부분(05.31)
             GameObject instText = Instantiate(DamageText);
