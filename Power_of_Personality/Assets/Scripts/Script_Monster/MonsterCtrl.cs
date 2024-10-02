@@ -68,6 +68,9 @@ public class MonsterCtrl : MonoBehaviour
     public virtual void Awake()
     {
         hpMul = PlayerPrefs.GetFloat("hpMul", 100);
+        atkMul = PlayerPrefs.GetFloat("atkMul", 100);
+        ATK = ATK*atkMul/100;
+        Debug.Log(ATK);
         rd = GetComponent<Rigidbody>();
         // 몬스터 기본 설정
         if (this.tag == "Monster_Melee")     // 이 몬스터가 근접 몬스터일때

@@ -387,7 +387,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         CheckState();
         // Move 함수 실행
-        if (!isSkill && !isAttack && !stateAttack3 && !anim.GetBool("isDie"))
+        if (!isSkill && !isAttack && !stateAttack3 && !anim.GetBool("isDie") && !stateDamage)
         {
             Move();
             Turn();
@@ -398,7 +398,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         }
 
         // Turn 함수 실행
-        if (!isSkill && !isAttack && !stateIdle && !anim.GetBool("isDie"))
+        if (!isSkill && !isAttack && !stateIdle && !anim.GetBool("isDie") && !stateDamage)
         {
             Turn();
         }
@@ -508,23 +508,23 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             anim.SetFloat("AnimSpeed", Status.TotalSpeed);
 
             // Attack 함수 실행
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A) && !stateDamage)
             {
                 Attack_anim();
             }
 
             //기본공격1 & 기본공격3 시 전진 애니메이션
-            if (stateAttack1 == true && !isCommonAttack1InProgress)
+            if (stateAttack1 == true && !isCommonAttack1InProgress && !stateDamage)
             {
                 Attack(0);
                 isCommonAttack1InProgress = true;
             }
-            else if (stateAttack2 == true && !isCommonAttack2InProgress && !isSound)
+            else if (stateAttack2 == true && !isCommonAttack2InProgress && !isSound && !stateDamage)
             {
                 Attack(1);
                 isCommonAttack2InProgress = true;
             }
-            else if (stateAttack3 == true && !isCommonAttack3InProgress)
+            else if (stateAttack3 == true && !isCommonAttack3InProgress && !stateDamage)
             {
                 Attack(2);
                 isCommonAttack3InProgress = true;
@@ -544,17 +544,17 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             }
 
             //점프공격 카메라 && 사운드
-            else if (stateJumpAttack1 == true && !coroutineMove)
+            else if (stateJumpAttack1 == true && !coroutineMove  && !stateDamage)
             {
                 Attack(3);
                 PlayAnim("isFall");
             }
-            else if (stateJumpAttack2 == true && !isSound)
+            else if (stateJumpAttack2 == true && !isSound  && !stateDamage)
             {
                 Attack(4);
                 PlayAnim("isFall");
             }
-            else if (stateJumpAttack3 == true && !coroutineMove)
+            else if (stateJumpAttack3 == true && !coroutineMove  && !stateDamage)
             {
                 Attack(5);
                 PlayAnim("isFall");
@@ -593,7 +593,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !anim.GetBool("isFall")
             && QSkillCoolTime >= TotalQSkillCoolTime //도훈 2024-08-27
             && !isAttack
-            && !isDodge)
+            && !isDodge
+            && !stateDamage)
             {
                 UseSkill("Q");
                 TotalQSkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
@@ -609,7 +610,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !anim.GetBool("isFall")
             && WSkillCoolTime >= TotalWSkillCoolTime //도훈 2024-08-27
             && !isAttack
-            && !isDodge)
+            && !isDodge
+            && !stateDamage)
             {
                 UseSkill("W");
                 TotalWSkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
@@ -625,7 +627,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !anim.GetBool("isFall")
             && ESkillCoolTime >= TotalESkillCoolTime //도훈 2024-08-27
             && !isAttack
-            && !isDodge)
+            && !isDodge
+            && !stateDamage)
             {
                 UseSkill("E");
                 TotalESkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
@@ -667,7 +670,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && !isSkill && !isAttack && !isJumping
-                && !stateJump && !stateFall && !anim.GetBool("isFall") && !isDodge && JumpCoolTime == 0)
+                && !stateJump && !stateFall && !anim.GetBool("isFall") && !isDodge && JumpCoolTime == 0 && !stateDamage)
             {
                 isJumping = true;
                 JumpCoolTime += Time.deltaTime;
@@ -683,7 +686,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 isJumping = false;
             }
             // Dodge 함수 실행
-            if (Input.GetKeyDown(KeyCode.R) && DodgeAmount>0)
+            if (Input.GetKeyDown(KeyCode.R) && DodgeAmount>0 && !stateDamage)
             {
                 StartCoroutine(Dodge());
             }
@@ -1016,7 +1019,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             Status.HP -= Damage;
             CheckHp();
             //저지불가 (09.14 정도훈)
-            if(Unstoppable_Buff_ON==false){
+            if(Unstoppable_Buff_ON==false)
+            {
                 PlayAnim("TakeDamage"); 
             }
             StartCoroutine(DamageTextAlpha());
