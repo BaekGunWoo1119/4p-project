@@ -90,6 +90,22 @@ public class OgreCtrl : BossCtrl
     }
     #endregion
 
+    public override void Turn()
+    {
+        if(PlayerTr != null)
+        {
+            if (this.transform.position.x - PlayerTr.transform.position.x < 0)
+            {
+                this.transform.rotation = Quaternion.Euler(0, -210, 0);
+            }
+            else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
+            {
+                this.transform.rotation = Quaternion.Euler(0, -30, 0);
+            }
+        }
+    }
+
+
     #region 보스 패턴 관련
     protected override IEnumerator FindPlayer()     // 플레이어를 찾아서 할당해주는 함수
     {
@@ -109,9 +125,9 @@ public class OgreCtrl : BossCtrl
     public IEnumerator Trace()
     {
         // 플레이어를 향해 이동하는 로직
-        Debug.Log("추적");
+        //Debug.Log("추적");
         Vector3 directionToPlayer = (PlayerTr.position - transform.position).normalized;
-        Vector3 movement = new Vector3(directionToPlayer.x, 0, 0) * MoveSpeed * Time.deltaTime;
+        Vector3 movement = new Vector3(directionToPlayer.x, 0, directionToPlayer.z) * MoveSpeed * Time.deltaTime;
         transform.Translate(movement, Space.World);
         anim.SetBool("doMove", true);
 
@@ -294,11 +310,11 @@ public class OgreCtrl : BossCtrl
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(LArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, 180, 0));
+            SkillEffect = Instantiate(LArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, 240, 0));
         }
         else
         {
-            SkillEffect = Instantiate(LArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, 0, 0));
+            SkillEffect = Instantiate(LArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, 60, 0));
         }
     }
 
@@ -306,22 +322,22 @@ public class OgreCtrl : BossCtrl
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(RArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, 180, 0));
+            SkillEffect = Instantiate(RArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, 240, 0));
         }
         else
         {
-            SkillEffect = Instantiate(RArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, 0, 0));
+            SkillEffect = Instantiate(RArmSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, 60, 0));
         }
     }
     public void HandSmash()
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(HandSmash_Effect, new Vector3(EffectGen.transform.position.x + 3, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 0, 0));
+            SkillEffect = Instantiate(HandSmash_Effect, new Vector3(EffectGen.transform.position.x +1f, EffectGen.transform.position.y, EffectGen.transform.position.z-3), Quaternion.Euler(0, 240, 0));
         }
         else
         {
-            SkillEffect = Instantiate(HandSmash_Effect, new Vector3(EffectGen.transform.position.x - 3, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 0, 0));
+            SkillEffect = Instantiate(HandSmash_Effect, new Vector3(EffectGen.transform.position.x -1f, EffectGen.transform.position.y, EffectGen.transform.position.z+3), Quaternion.Euler(0, 60, 0));
         } 
     }
 
@@ -329,11 +345,11 @@ public class OgreCtrl : BossCtrl
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(Tentacle_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, 90f, 0));
+            SkillEffect = Instantiate(Tentacle_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, -210, 0));
         }
         else
         {
-            SkillEffect = Instantiate(Tentacle_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, -90f, 0));
+            SkillEffect = Instantiate(Tentacle_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, -30, 0));
         }
     }
 
@@ -341,11 +357,11 @@ public class OgreCtrl : BossCtrl
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(SpewVenom_Effect, new Vector3(EffectGen.transform.position.x + 7f, EffectGen.transform.position.y + 0.25f, EffectGen.transform.position.z), Quaternion.Euler(0, 90f, 0));
+            SkillEffect = Instantiate(SpewVenom_Effect, new Vector3(EffectGen.transform.position.x + 3.5f, EffectGen.transform.position.y + 0.25f, EffectGen.transform.position.z-5.5f), Quaternion.Euler(0, -210, 0));
         }
         else
         {
-            SkillEffect = Instantiate(SpewVenom_Effect, new Vector3(EffectGen.transform.position.x - 7f, EffectGen.transform.position.y + 0.25f, EffectGen.transform.position.z), Quaternion.Euler(0, -90f, 0));
+            SkillEffect = Instantiate(SpewVenom_Effect, new Vector3(EffectGen.transform.position.x -3.5f, EffectGen.transform.position.y + 0.25f, EffectGen.transform.position.z+5.5f), Quaternion.Euler(0, -30, 0));
         } 
     }
 
@@ -359,11 +375,11 @@ public class OgreCtrl : BossCtrl
     {
         if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
         {
-            SkillEffect = Instantiate(RaiseTentacle_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));    
+            SkillEffect = Instantiate(RaiseTentacle_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -210, 0));    
         }
         else
         {
-            SkillEffect = Instantiate(RaiseTentacle_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));
+            SkillEffect = Instantiate(RaiseTentacle_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -30, 0));
         }
     }
     #endregion

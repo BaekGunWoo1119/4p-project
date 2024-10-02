@@ -1354,7 +1354,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             else if(StoneGolemGen != null)
                 Instantiate(StoneGolem, StoneGolemGen.transform.position, Quaternion.Euler(0, -90f, 0));
             else if(OgreGen != null)
-                Instantiate(Ogre, OgreGen.transform.position, Quaternion.Euler(0, -90f, 0));
+                Instantiate(Ogre, OgreGen.transform.position, Quaternion.Euler(0, 0f, 0));
             else if(DemonKingGen!= null)
                 Instantiate(DemonKing, DemonKingGen.transform.position, Quaternion.Euler(0, -90f, 0));
         }
