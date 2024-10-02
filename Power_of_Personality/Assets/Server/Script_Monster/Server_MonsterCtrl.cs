@@ -17,7 +17,9 @@ public class Server_MonsterCtrl : MonoBehaviour
     //몬스터의 스테이터스
     public float curHP;     // 현재 체력
     public float maxHP;     // 최대 체력
+    public float hpMul;     // 체력 배율
     public float ATK;  // 공격력
+    public float atkMul;    // 공격력 배율
     public float DEF;       // 방어력
     public float MoveSpeed;  // 이동 속도
     public float Damage;   // 받은 피해량
@@ -36,8 +38,8 @@ public class Server_MonsterCtrl : MonoBehaviour
     public GameObject[] Targets;    // 모든 플레이어 오브젝트 배열
     public Transform PlayerTr;     // 플레이어 Transform
     public float PlayerDistance;        // 타겟 플레이어와 몬스터 간의 거리
-    public float TempDistance;         // 타겟 플레이어와 몬스터 간의 거리 (저장용)
     public float Distance;         // 플레이어와 몬스터 간의 거리
+    public float TempDistance;         // 타겟 플레이어와 몬스터 간의 거리 (저장용)
     public float TraceRadius;  // 몬스터가 플레이어를 추적(Trace)하기 시작하는 거리
     public float attackRadius;  // 몬스터가 플레이어를 공격(Attack)하기 시작하는 거리
     public float AttackCoolTime;       // 몬스터의 공격 쿨타임
@@ -45,33 +47,47 @@ public class Server_MonsterCtrl : MonoBehaviour
     public GameObject Coin;     //몬스터를 죽이면 드랍되는 코인
     public bool isDie;     //몬스터 사망체크
     public bool isHit;     //몬스터 피격체크
+    public bool isStun;  //스턴상태인지
+    public float hitCount;  //몬스터가 맞았을 때, 시간을 늘려서 몬스터가 피격 상태인지 체크하기 위한 변수
 
     public GameObject IceHit; //몬스터 피격 이펙트(얼음)
     public GameObject FireHit; //몬스터 피격 이펙트(불)
     public GameObject AttackEffect; //몬스터 공격 이펙트
     public GameObject EffectGen; //몬스터 공격 이펙트 소환 장소
+    public float AnimSpeed = 1.0f; //보조스킬 시간 감속용 변수 (09.18 정도훈)
+
+    public GameObject Stun_Effect_1; //스턴 이펙트 생성용
+    public GameObject Stun_Effect_2; //스턴 이펙트 On/Off용
+
+    protected AudioSource hitAudio; //몬스터 히트 사운드 추가(09.30)
+    protected AudioSource atkAudio; //몬스터 공격 사운드 추가(09.30)
 
     public Transform desiredParent;
     protected PhotonView photonview;
     protected string CurProperty;
 
-    protected Rigidbody rd; // 리지드바디
+    protected Rigidbody rd; // 리지드바디 
+    public int bonusstat;
     #endregion
 
     public virtual void Awake()
     {
         photonview = GetComponent<PhotonView>();
+        hpMul = PlayerPrefs.GetFloat("hpMul", 100);
         rd = GetComponent<Rigidbody>();
         // 몬스터 기본 설정
         if (this.tag == "Monster_Melee")     // 이 몬스터가 근접 몬스터일때
         {
             AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
         }
-        SetHP(50);                         // 몬스터의 기본 HP를 설정
+        
+        SetHP(100);                         // 몬스터의 기본 HP를 설정
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
+        StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
         SetWeakProperty();  //약점 속성 설정
+        bonusstat = PlayerPrefs.GetInt("Drop",0);
         PlayerTr = this.transform;          // 플레이어 Transform을 설정하기 전에 임시로 몬스터(스크립트가 들어있는 게임 오브젝트)의 Transform을 담아놓음.
         TempDistance = -4f;                 // 플레이어 거리 측정 전 임시 수치
         if (PhotonNetwork.IsMasterClient){
@@ -83,18 +99,23 @@ public class Server_MonsterCtrl : MonoBehaviour
     {
         PlayerTr = this.transform;
         StartCoroutine(FindPlayer());
+        hitAudio = transform.parent.Find("Monster_Hitsound").GetComponent<AudioSource>(); //히트 시 재생 오디오 지정(09.30)
+        hitAudio.Stop(); //처음에는 소리 나오지 않게(09.30)
+        atkAudio = transform.parent.Find("Monster_Atksound").GetComponent<AudioSource>(); //공격 시 재생 오디오 지정(09.30)
+        atkAudio.Stop(); //처음에는 소리 나오지 않게(09.30)
     }
 
     public virtual void Update()
     {
+            AnimSpeed = 1.0f;
+            anim.SetFloat("AnimSpeed", AnimSpeed);
         CurProperty = PlayerPrefs.GetString("property");
         hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
         HpBar.transform.position = hpBarPosition;
         rd.AddForce(Vector3.down * 4, ForceMode.VelocityChange);
-
         if (PhotonNetwork.IsMasterClient){
             
-            if (!isDie)     // 죽어있는 상태가 아니면
+            if (!isDie &&!isStun)     // 죽어있는 상태가 아니면
             {
                 if(PlayerTr != null)
                 {
@@ -108,8 +129,9 @@ public class Server_MonsterCtrl : MonoBehaviour
             }
             AttackCoolTime += Time.deltaTime;
             TickCoolTime += Time.deltaTime;
+            hitCount -= Time.deltaTime;
         }
-            
+        
         #region 3/4세트 4세트 효과
         if (Status.set3_4_Activated && WeakProperty != "Fire")
         {
@@ -131,7 +153,6 @@ public class Server_MonsterCtrl : MonoBehaviour
             {
                 this.transform.rotation = Quaternion.Euler(0, -90, 0);
             }
-
         //캔버스 뒤집어지는 오류 해결(08.29)
         if(GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y > 0 && GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y < 180)
             MonsterCanvas.transform.localRotation = Quaternion.Euler(0, CanvasYRot, 0);
@@ -256,21 +277,27 @@ public class Server_MonsterCtrl : MonoBehaviour
     public virtual IEnumerator Attack()
     {
         AttackCoolTime = 0;
-        AttackCollider.SetActive(true);
         anim.SetBool("isAttack", true);
-        yield return new WaitForSeconds(0.5f);
-        anim.SetBool("isAttack", false);
-        AttackCollider.SetActive(false);
-        AttackCoolTime = 0;
+        yield return null;
     }
 
     public virtual void Attack_On()
     {
         if(EffectGen != null && AttackEffect != null)
         {
+            AttackCollider.SetActive(true);
+            atkAudio.PlayOneShot(atkAudio.clip); //공격 시 재생 오디오 재생(09.30)
             GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
             Destroy(effect_on, 3f);
+            StartCoroutine(Attack_On_2());
         }
+    }
+
+    public virtual IEnumerator Attack_On_2(){
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("isAttack", false);
+        AttackCollider.SetActive(false);
+        AttackCoolTime = 0;
     }
 
     #endregion
@@ -336,6 +363,12 @@ public class Server_MonsterCtrl : MonoBehaviour
         }
         #endregion
         #region 도적
+        if (col.tag == "RougeDashAttack")
+        {
+            isHit = true;
+            Damage = Status.TotalADC;
+            photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
+        }
         if (col.tag == "RougeAttack1")
         {
             isHit = true;
@@ -539,6 +572,13 @@ public class Server_MonsterCtrl : MonoBehaviour
             photonview.RPC("RPCTakeDamage", RpcTarget.All, Damage ,CurProperty);
         }
         #endregion
+        #region 보조스킬
+        if(col.tag == "Spell_Stun")
+        {
+            StartCoroutine(Stun());
+        }
+        #endregion
+        //Debug.Log("충돌한 객체 태그 : "+col.tag);
     }
 
     public virtual void OnTriggerStay(Collider col)
@@ -663,6 +703,7 @@ public class Server_MonsterCtrl : MonoBehaviour
     {
         if (maxHP != 0 || curHP > 0)
         {
+            hitCondition();
             if (Property == "Ice")
             {
                 Instantiate(IceHit, this.transform.position, Quaternion.Euler(0, 0, 0));
@@ -720,7 +761,6 @@ public class Server_MonsterCtrl : MonoBehaviour
             #region 7번 세트 3셋 효과
             if (Status.set7_3_Activated == true)
             {
-                Debug.Log("7활성화되어잇음");
                 Damage = Damage * 1.2f;
             }
             #endregion
@@ -731,13 +771,12 @@ public class Server_MonsterCtrl : MonoBehaviour
             {
                 material.color = Color.red;
             }
-            if(photonview.IsMine){
             photonview.RPC("RPCDamage", RpcTarget.All, Damage);
-            }
+            hitAudio.PlayOneShot(hitAudio.clip); //히트 시 재생 오디오 재생(09.30)
             CheckHP(); // HP 체크
             yield return new WaitForSeconds(0.1f);
             anim.SetBool("TakeDamage", false);
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
             if (anim.GetBool("TakeDamage") == false)
             {
                 isHit = false;
@@ -753,13 +792,20 @@ public class Server_MonsterCtrl : MonoBehaviour
             isDie = true;
             anim.SetBool("Die", true);
             yield return new WaitForSeconds(1.5f);
-            Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.4f, gameObject.transform.position.z);
-            Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
+            if(Random.Range(0, 10)> 5){
+                Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.4f, gameObject.transform.position.z);
+                Instantiate(Coin, CoinPosition, gameObject.transform.rotation);
+            }
             this.gameObject.transform.parent.tag="Untagged";
             Destroy(HpBar.gameObject);
             Destroy(this.gameObject); // 개체 파괴
             Destroy(this.transform.parent.gameObject);
         }
+    }
+
+    public virtual void hitCondition()
+    {
+        hitCount = 1f;
     }
     #endregion
 
@@ -794,6 +840,19 @@ public class Server_MonsterCtrl : MonoBehaviour
         }
     }
     #endregion
+    #region 보조스킬 스턴
+    public virtual IEnumerator Stun()
+    {
+        isStun = true;
+        GameObject StunEffect = Instantiate(Stun_Effect_1, this.transform.position, Quaternion.Euler(0, 0, 0));
+        Destroy(StunEffect,2.0f);
+        Stun_Effect_2.SetActive(true);
+        yield return new WaitForSeconds(5f); //총 스턴 시간
+        Stun_Effect_2.SetActive(false);
+        isStun = false;
+    }
+    #endregion
+
     [PunRPC]
     public virtual void RPCTakeDamage(float CurDamage, string Property){
         StartCoroutine(TakeDamage(CurDamage,Property));

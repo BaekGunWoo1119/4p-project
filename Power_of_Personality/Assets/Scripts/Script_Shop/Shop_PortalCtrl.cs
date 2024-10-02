@@ -47,7 +47,7 @@ public class Shop_PortalCtrl : MonoBehaviour
 
     IEnumerator FindInventory()
     {
-        yield return new WaitForSeconds(0.03f);
+        yield return new WaitForSeconds(3f);
         GameObject[] player = GameObject.FindGameObjectsWithTag("Player");
         inventory = new Inventory[player.Length];
         for (int i = 0; i < player.Length; i++)

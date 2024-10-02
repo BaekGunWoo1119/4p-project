@@ -39,4 +39,14 @@ public class GamePause : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+
+    public void MultiPauseWindowOpen()
+    {
+        pauseWindow.transform.localScale = originalScale;
+    }
+
+    public void MultiPauseWindowClose()
+    {
+        pauseWindow.transform.localScale = originalScale;
+    }
 }

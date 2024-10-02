@@ -81,14 +81,13 @@ public class MonsterCtrl : MonoBehaviour
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
         StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
         SetWeakProperty();  //약점 속성 설정
-        bonusstat = PlayerPrefs.GetInt("Drop");
+        bonusstat = PlayerPrefs.GetInt("Drop",0);
     }
     
     public virtual void Start()
     {
         PlayerTr = this.transform;
         StartCoroutine(FindPlayer());
-
         hitAudio = transform.parent.Find("Monster_Hitsound").GetComponent<AudioSource>(); //히트 시 재생 오디오 지정(09.30)
         hitAudio.Stop(); //처음에는 소리 나오지 않게(09.30)
         atkAudio = transform.parent.Find("Monster_Atksound").GetComponent<AudioSource>(); //공격 시 재생 오디오 지정(09.30)
