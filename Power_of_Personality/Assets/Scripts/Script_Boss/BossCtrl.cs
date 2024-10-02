@@ -32,6 +32,8 @@ public class BossCtrl : MonoBehaviour
     protected GameObject SkillCollider;
     protected GameObject SkillEffect;
     protected float SkillYRot;
+    // 공격 사운드(10.03)
+    protected AudioSource[] atkAudio;
 
     // 보스 피격 관련
     public GameObject IceHit; //몬스터 피격 이펙트(얼음)
@@ -81,6 +83,14 @@ public class BossCtrl : MonoBehaviour
         SetHP(100);
         CheckHP();
         GameObject.Find("Boss_HP_Bar").transform.localScale = new Vector3(1, 1, 1);
+
+        // 공격 사운드 할당(10.03)
+        atkAudio = transform.Find("Boss_AtkSound").GetComponents<AudioSource>();
+
+        for(int i = 0; i < atkAudio.Length; i++)
+        {
+            atkAudio[i].Stop();
+        }
     }
 
     protected virtual void Update()

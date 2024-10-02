@@ -233,7 +233,9 @@ public class DruidCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeWeakAttack");   // 애니메이션
-        yield return new WaitForSeconds(2.6f);   //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.7f);   //애니메이션 지속 시간(10.03 수정)
+        atkAudio[0].PlayOneShot(atkAudio[0].clip); //약 공격(할퀴기) 사운드(10.03)
+        yield return new WaitForSeconds(1.9f);   //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(1.5f);   //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
@@ -243,7 +245,9 @@ public class DruidCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeStrongAttack");     //애니메이션
-        yield return new WaitForSeconds(1.7f);     //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.7f);     //애니메이션 지속 시간(10.03 수정)
+        atkAudio[1].PlayOneShot(atkAudio[1].clip); //강 공격(바닥 1번 찍기) 사운드(10.03)
+        yield return new WaitForSeconds(1.0f);     //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(3f);    //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
@@ -253,7 +257,9 @@ public class DruidCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doRangedWeakAttack");
-        yield return new WaitForSeconds(1.2f);      //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.4f);      //애니메이션 지속 시간(10.03 수정)
+        atkAudio[2].PlayOneShot(atkAudio[2].clip); //약 공격(에너지파 날리기) 사운드(10.03)
+        yield return new WaitForSeconds(0.8f);      //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(1.5f);      //다음 행동까지 걸리는 시간 
 
@@ -264,7 +270,9 @@ public class DruidCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
-        yield return new WaitForSeconds(3.4f);      //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.7f);      //애니메이션 지속 시간(10.03 수정)
+        atkAudio[3].PlayOneShot(atkAudio[3].clip); //강 공격(쿵쿵따) 사운드(10.03)
+        yield return new WaitForSeconds(2.7f);      //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(3f);      //다음 행동까지 걸리는 시간 
 
@@ -275,7 +283,9 @@ public class DruidCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doSkill1");
-        yield return new WaitForSeconds(5f);     //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.8f);     //애니메이션 지속 시간(10.03 수정)
+        atkAudio[4].PlayOneShot(atkAudio[4].clip); //스킬 1(바닥 3번찍기) 사운드(10.03)
+        yield return new WaitForSeconds(4.2f);     //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(3f);     //다음 행동까지 걸리는 시간 
 
@@ -286,6 +296,7 @@ public class DruidCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doSkill2");
+        atkAudio[5].PlayOneShot(atkAudio[5].clip); //스킬 2(독구름) 사운드(10.03)
         yield return new WaitForSeconds(1.3f);      //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(1.5f);      //다음 행동까지 걸리는 시간

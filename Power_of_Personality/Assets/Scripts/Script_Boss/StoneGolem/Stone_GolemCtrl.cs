@@ -43,7 +43,7 @@ public class Stone_Golem : BossCtrl
 
         shopPortal.SetActive(false);
         StartCoroutine(Think());
-        SoundsManager.Change_Sounds("Forest_Boss"); //소리 추가(08.31)
+        SoundsManager.Change_Sounds("Cave_Boss"); //소리 추가(08.31)
     }
 
     protected override void Update()
