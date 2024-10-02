@@ -33,6 +33,7 @@ public class Shop_PortalCtrl : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.S))
             {
                 Open_Shop(col);
+                GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().PotionCount++;
             }
         }
     }
@@ -81,6 +82,7 @@ public class Shop_PortalCtrl : MonoBehaviour
 
     public void Exit_Shop()
     {
+        Debug.Log("상점나가기");
         playerObj.transform.position = playerPos;
         Status.IsShop = false;
         shopWindow.transform.localScale = new Vector3(0, 0, 0);

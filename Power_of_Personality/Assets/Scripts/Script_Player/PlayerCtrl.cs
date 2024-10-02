@@ -470,9 +470,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             {
                 Fcool.fillAmount -= 1 * Time.smoothDeltaTime / Spell_2_CoolTime;
             }
-            if (Rcool.fillAmount != 0) //(10.01 정도훈)
+            if (Rcool.fillAmount != 0 && DodgeAmount < 2) //(10.01 정도훈)
             {
                 Rcool.fillAmount -= 1 * Time.smoothDeltaTime /TotalDodge_CoolTime;
+            } 
+            else
+            {
+                Rcool.fillAmount = 0;
             }
             // 땅에 닿아있는지 체크
             isGrounded();
@@ -1159,6 +1163,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         StartCoroutine(Immune(0.5f));
         PlayAnim("isDodge");
         isDodge = true;
+
+        if(Rcool.fillAmount == 0)
+        {
+            Rcool.fillAmount = 1;
+        }
+
         yield return new WaitForSeconds(0.5f);
         StopAnim("isDodge");
         //구르기 연타하고 안 움직이는 버그 해결(09.04)
@@ -1969,13 +1979,17 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     #endregion
 
     #region 구르기
-    public virtual void ChargeDodge(){
-        DodgeValue.text = DodgeAmount.ToString();
-        Dodge_CoolTime += Time.deltaTime;
-        if(Dodge_CoolTime > TotalDodge_CoolTime){
-            DodgeAmount += 1;
-            Dodge_CoolTime = 0f;
-            Rcool.fillAmount = 1;
+    public virtual void ChargeDodge()
+    {
+        if(DodgeAmount < 2)
+        {    
+            Dodge_CoolTime += Time.deltaTime;
+            if(Dodge_CoolTime > TotalDodge_CoolTime){
+                DodgeAmount += 1;
+                Dodge_CoolTime = 0f;
+                Rcool.fillAmount = 1;
+            }
+            DodgeValue.text = DodgeAmount.ToString();
         }
     }
     #endregion
