@@ -139,7 +139,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                         WaveUpdate();
                     }
                 }
-                else
+                else if (Spawned < TargetSpawn)
                 {
                     // 일정 주기로 몬스터 생성
                     if (TempTime >= RespawnTime)
@@ -252,6 +252,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     // 스폰포인트로 플레이어 이동 후 웨이브 시작
     void StartWave()
     {
+        Debug.Log("Targetspawn: "+ TargetSpawn);
         if(IsWave ==false){
             int playerViewID = Player.GetComponent<PhotonView>().ViewID;
             int SpawnPointViewID;
