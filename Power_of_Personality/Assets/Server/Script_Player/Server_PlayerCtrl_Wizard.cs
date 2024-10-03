@@ -29,7 +29,6 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     private GameObject Skill_Aura_Effect;
     private GameObject SkillE_Aura_Effect;
     private string CurProperty;
-
     private Vector3 tgPos;
     #endregion
 
@@ -52,11 +51,13 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     protected override void Update()
     {
         base.Update();
+
+        //1 점프 1 점공 코드(08.29)
         if(stateJumpAttack2 == true)
         {
             isJumpAttack = true;
         }
-        if(photonview.IsMine){
+        if(photonview.IsMine){  
             CurProperty = PlayerPrefs.GetString("property");
             photonview.RPC("SetProperty",RpcTarget.All, CurProperty);
             if (stateSkillE == true)    //E 스킬
@@ -72,7 +73,10 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             QSkill_Collider.transform.localScale = newScale;
         }
         */
-        
+        if (stateSkillE == true)    //E 스킬
+        {
+            transform.position = Vector3.Lerp(transform.position, tgPos, 0.01f);
+        }
     }
     #endregion
 
@@ -217,7 +221,9 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     }
     public IEnumerator Skill_E_Move()
     {
+        if(photonview.IsMine){
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Wizard(LocalSkillYRot);
+        }
         StartCoroutine(Immune(6f));
         tgPos = new Vector3(transform.position.x, transform.position.y + 7.0f, transform.position.z); //높이 조금 더 높게 조정(08.31)
         rd.useGravity = false;
@@ -228,6 +234,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         ESkillCoolTime = 0;
         Ecool.fillAmount = 1;
     }
+
     public void comboAttack_1_on()
     {
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
@@ -244,7 +251,7 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
             SkillEffect.transform.position = EffectGen.transform.position;
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
-            }           
+            }
         }
     }
     public void comboAttack_2_on()
@@ -401,9 +408,9 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         }
     }
 
-    public override IEnumerator Heal_on()
+    public override IEnumerator HPPotion_on()
     {
-        yield return base.Heal_on();
+        yield return base.HPPotion_on();
     }
 
     public override void Damaged_on()
@@ -480,9 +487,8 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         }
     }
     #endregion
-
-    #region 애니메이션
-    [PunRPC] 
+    [PunRPC]
+    #region 애니메이션 
     public override void PlayAnim(string AnimationName)
     {
         base.PlayAnim(AnimationName);
@@ -493,6 +499,11 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         base.StopAnim(AnimationName);
     }
     #endregion
+    [PunRPC]
+    public override void AnimReset()
+    {
+        base.AnimReset();
+    }
     [PunRPC]
     public void SetProperty(string CurProperty){
             if (CurProperty == "Fire")
@@ -532,10 +543,4 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
     public void RPCAttackSound(int number, float time){
         StartCoroutine(Attack_Sound(number, time)); //소리 추가(08.31)
     }
-
-     public override void AnimReset()
-    {
-        base.AnimReset();
-    }
-
 }

@@ -49,7 +49,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
                 if(PhotonNetwork.PlayerList.Length>1)
                 {
                     Player2Class.text = (string)PhotonNetwork.PlayerList[1].CustomProperties["PlayerClass"];
-                    if((bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] == false || (bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] ==null)
+                    if((bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] == null || (bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] ==false)
                     {
                         Player2Ready.SetActive(false);
                         Player2Wait.SetActive(true);
@@ -58,7 +58,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
                         Player2Ready.SetActive(true);
                         Player2Wait.SetActive(false);
                     }
-                    if((bool)PhotonNetwork.PlayerList[0].CustomProperties["IsReady"] == false){
+                    if((bool)PhotonNetwork.PlayerList[0].CustomProperties["IsReady"] == false || (bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] ==false){
                         Player1Ready.SetActive(false);
                         Player1Wait.SetActive(true);
                     }
@@ -195,8 +195,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         
     }
     public override void OnPlayerLeftRoom (Player otherPlayer){
-        Ready();
-        Debug.Log("OnPlayerLeftRoom"+(bool)PhotonNetwork.PlayerList[0].CustomProperties["IsReady"]);
+        if((bool)PlayerProperties["IsReady"]== true){
+            Ready();
+        }
+        Debug.Log("OnPlayerLeftRoom : "+(bool)otherPlayer.CustomProperties["IsReady"]);
     }
 #endregion
 

@@ -8,7 +8,7 @@ using Unity.Burst.CompilerServices;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttack
+public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IPlayerAttack
 {
     #region 변수 선언
     //Raycast 관련
@@ -119,7 +119,9 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     public GameObject SkillEffect;
     public GameObject DamageText; //텍스트
     public GameObject Damage_Effect;
-    public GameObject Heal_Effect;
+    public GameObject HPPotion_Effect;
+    public GameObject ATKPotion_Effect;
+    public GameObject DEFPotion_Effect;
     public GameObject Item_Weapon_Effect;
     public GameObject Item_Weapon_Ice_Effect;
     public GameObject Item_Weapon_Fire_Effect;
@@ -136,6 +138,8 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     protected AudioClip[] effectAudio;
     protected bool isSound = false;
     protected AudioSource[] audioSources;
+    protected AudioSource hitAudio; //히트 사운드 추가(09.30)
+    protected AudioSource[] spellSounds; //스펠 사운드 추가(10.02)
 
     // 벽 충돌체크
     protected bool WallCollision;
@@ -143,6 +147,9 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     // HP Bar
     protected Slider HpBar;
     public TMP_Text HpText;
+
+    //코인
+    protected TextMeshProUGUI CoinText;
 
     //포션
     public InventoryCtrl InvenCtrl;
@@ -156,6 +163,64 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     protected bool ADBuff_On;
     protected bool ArmorBuff_On;
 
+    //보조스킬 관련
+    protected bool Swiftness_Buff_ON; //신속
+    protected bool Unstoppable_Buff_ON; //저지불가
+    protected bool RoarOfAnger_Buff_ON; //분노의 포효
+    protected float Swiftness_buffTime;
+    protected float Unstoppable_buffTime;
+    protected float RoarOfAnger_buffTime;
+    protected float Swiftness_Stat;
+    protected float RoarOfAnger_Stat;
+    protected float TimeSlowdown_buffTime; //시간 감속
+    public GameObject Spell_Swiftness_Effect;//도훈 2024-09-20
+    public GameObject Spell_Unstoppable_Effect;
+    public GameObject Spell_RoarOfAnger_Effect;
+    public GameObject Spell_TimeSlowdown_Effect;
+    public GameObject Spell_Immune_Effect;
+    public GameObject Spell_Stun_Effect;
+    public GameObject Spell_Heal_Effect;
+    public GameObject Spell_Resurrect_Effect;
+    protected float Spell_Swiftness_CoolTime;
+    protected float Spell_Unstoppable_CoolTime;
+    protected float Spell_RoarOfAnger_CoolTime;
+    protected float Spell_TimeSlowdown_CoolTime;
+    protected float Spell_Immune_CoolTime;
+    protected float Spell_Stun_CoolTime;
+    protected float Spell_Heal_CoolTime;
+    protected float Spell_Resurrect_CoolTime;
+    protected bool Spell_Swiftness_Ready = true;
+    protected bool Spell_Unstoppable_Ready = true;
+    protected bool Spell_RoarOfAnger_Ready = true;
+    protected bool Spell_TimeSlowdown_Ready = true;
+    protected bool Spell_Immune_Ready = true;
+    protected bool Spell_Stun_Ready = true;
+    protected bool Spell_Heal_Ready = true;//도훈 2024-09-20
+    protected bool Spell_Resurrect_Ready = true;
+    protected string Spell_1; //보조스킬 받아오기
+    protected string Spell_2;
+    protected float Spell_1_CoolTime = 0f; //쿨타임 UI용 변수
+    protected float Spell_2_CoolTime = 0f; //쿨타임 UI용 변수
+    protected float Swiftness_CoolTime = 60f;
+    protected float Unstoppable_CoolTime = 60f;
+    protected float RoarOfAnger_CoolTime = 60f;
+    protected float TimeSlowdown_CoolTime = 60f;
+    protected float Immune_CoolTime = 60f;
+    protected float Stun_CoolTime = 60f;
+    protected float Heal_CoolTime = 60f;
+    protected float Resurrect_CoolTime = 60f;
+
+    //구르기 (10.01 정도훈)
+    public TMP_Text DodgeValue;
+    protected Image Rcool; 
+    protected float Dodge_CoolTime; //남은 구르기 쿨
+    protected float TotalDodge_CoolTime; //구르기 쿨타임
+    protected int DodgeAmount= 1; //남은 구르기 횟수
+
+
+
+
+
     //스탯 UI 관련
     protected TMP_Text[] StateText; 
 
@@ -164,6 +229,17 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     //보스 관련
     public GameObject Druid;
     public GameObject DruidGen;
+
+    public GameObject StoneGolem;
+    public GameObject StoneGolemGen;
+
+    public GameObject Ogre;
+    public GameObject OgreGen;
+
+    public GameObject DemonKing;
+    public GameObject DemonKingGen;
+
+
 
     // 쿨타임 관련
     protected bool QSkillReady;
@@ -181,6 +257,8 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     protected Image Qcool;
     protected Image Wcool;
     protected Image Ecool;
+    protected Image Dcool;
+    protected Image Fcool;
     protected bool canTakeDamage = true; // 데미지를 가져올 수 있는지
     protected float damageCooldown = 1.0f; // 1초마다 틱데미지를 가져오기 위함
 
@@ -197,16 +275,12 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     protected int currentStack = 0;
     protected float clockEffectTime = 0;
     Stack prevADC = new Stack();
-    protected TextMeshProUGUI CoinText;
 
     #endregion
-
-    
     #region 서버 관련
     private string RPCproperty;
     protected PhotonView photonview;
     #endregion
-
     protected virtual void Start()
     {
         // 8번 세트 3번 이펙트 효과 관리
@@ -227,6 +301,13 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         // BossWall1Collider = BossWall1.GetComponent<BoxCollider>();
         // BossWall2 = GameObject.Find("BossWall2").gameObject;
         // BossWall2Collider = BossWall2.GetComponent<BoxCollider>();
+        //보스 소환 방식 변경(08.29)
+        // DruidGen = GameObject.Find("DruidGen");
+        // StoneGolemGen = GameObject.Find("StoneGolemGen");
+        // OgreGen = GameObject.Find("OgreGen");
+        // DemonKingGen = GameObject.Find("DemonKingGen");
+        //Null 오류 날 시 코드 추가(09.30)
+        TotalDodge_CoolTime = 10f; //구르기 쿨타임 (10.01)
 
         // HP Bar 설정
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
@@ -242,6 +323,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         hpPotionValue = GameObject.Find("HP_Potion - Text").GetComponent<TMP_Text>();
         ADPotionValue = GameObject.Find("AD_Potion - Text").GetComponent<TMP_Text>();
         ArmorPotionValue = GameObject.Find("Armor_Potion - Text").GetComponent<TMP_Text>();
+        DodgeValue = GameObject.Find("Dodge_Amount - Text").GetComponent<TMP_Text>();
 
         //스텟 UI 변동 설정(06.14)
         StateText = new TMP_Text[8];
@@ -259,6 +341,10 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         Qcool = GameObject.Find("CoolTime-Q").GetComponent<Image>();
         Wcool = GameObject.Find("CoolTime-W").GetComponent<Image>();
         Ecool = GameObject.Find("CoolTime-E").GetComponent<Image>();
+        Dcool = GameObject.Find("CoolTime-D").GetComponent<Image>();
+        Fcool = GameObject.Find("CoolTime-F").GetComponent<Image>();
+        Rcool = GameObject.Find("CoolTime-R").GetComponent<Image>(); //(10.01 정도훈)
+        Rcool.fillAmount = 1;
 
         // 애니메이션, Rigidbody, Transform 컴포넌트 지정
         anim = this.GetComponent<Animator>();
@@ -283,6 +369,19 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         {
             audioSources[i].Stop();
         }
+        hitAudio = transform.Find("Player_HitSound").GetComponent<AudioSource>(); //히트 시 재생 오디오 지정(09.30)
+        hitAudio.Stop(); //처음에는 소리 나오지 않게(09.30)
+
+        //보조스킬 받아오기
+        Spell_1 = PlayerPrefs.GetString("Spell_1");
+        Spell_2 = PlayerPrefs.GetString("Spell_2");
+
+        //보조스킬 사운드(10.02)
+        spellSounds = transform.Find("Spell_Sounds").GetComponents<AudioSource>();
+        for (int i = 0; i < spellSounds.Length; i++)
+        {
+            spellSounds[i].Stop();
+        }
         photonview = GetComponent<PhotonView>();
         if(photonview.IsMine){
             this.gameObject.tag = "Player";
@@ -290,39 +389,58 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         else{
             this.gameObject.tag = "OtherPlayer";
         }
-
+        
     }
     protected virtual void FixedUpdate()
     {
+        if(photonview == null){
+            photonview = GetComponent<PhotonView>();
+        }
         if(!photonview.IsMine){
                 moveVec = Vector3.forward;
-            }
-            
+        }
+        //처음 시작 시에만 피 초기화
+        if(PlayerPrefs.GetInt("GameSet") == 1)
+        {
+            SetHp(100);
+            PlayerPrefs.SetInt("GameSet", 0);
+        }
         if(photonview.IsMine){
             CheckState();
             // Move 함수 실행
-            if (!isSkill && !isAttack && !stateAttack3 && !anim.GetBool("isDie"))
+            if(!Status.IsShop)
             {
-                Move();
-                Turn();
-            }
+                if (!isSkill && !isAttack && !stateAttack3 && !anim.GetBool("isDie") && !stateDamage)
+                {
+                    Move();
+                    Turn();
+                }
+                if (hAxis == 0)
+                {
+                    StopAnim("isRun");
+                }
 
-            // Turn 함수 실행
-            if (!isSkill && !isAttack && !stateIdle && !anim.GetBool("isDie"))
-            {
-                Turn();
+                // Turn 함수 실행
+                if (!isSkill && !isAttack && !stateIdle && !anim.GetBool("isDie") && !stateDamage)
+                {
+                    Turn();
+                }
+
+                //코인 업데이트(09.05)
+                if(PlayerPrefs.GetFloat("Coin").ToString() != CoinText.text)
+                    CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
             }
+            ChargeDodge(); //구르기 충전 
         }
-        //코인 업데이트(09.05)
-        if(PlayerPrefs.GetFloat("Coin").ToString() != CoinText.text)
-            CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
-        CheckHp();
     }
 
     protected virtual void Update()
     {
-        
         if(photonview.IsMine){
+            if(Status.IsShop)
+            {   
+                StopAnim("isRun");
+            }
             #region 7번 세트 3셋 이펙트 효과 (등 뒤에 잔상 이펙트)
             if (Status.set7_3_Activated && GetComponent<SkinnedMeshAfterImage>().enabled == false)
             {
@@ -340,11 +458,8 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             }
             #endregion
         }
-    
-        // 해당 bool값 실행 시 모든 행동 멈춤
-        if(!Status.IsShop && !anim.GetBool("isDie"))
-        {
-            ////////////////////////////////////내꺼 아닐때도 호출
+
+        ////////////////////////////////////내꺼 아닐때도 호출
             // 땅에 닿아있는지 체크
             isGrounded();
             //애니메이션 상태 확인
@@ -352,7 +467,18 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             photonview.RPC("AnimState",RpcTarget.All);
             }
 
-            ////////////////////////////////////내꺼 일때만 호출
+
+        // 해당 bool값 실행 시 모든 행동 멈춤
+        if(!Status.IsShop && !anim.GetBool("isDie"))
+        {
+            if(stateShop == true)
+            {
+                stateShop = false;
+                AnimReset();
+            }
+
+            CheckHp(); //Hp 체크(08.30)
+
             if (!canTakeDamage)
             {
                 damageCooldown -= Time.deltaTime;
@@ -363,7 +489,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 }
             }
             if(photonview.IsMine){
-               //스킬 쿨타임 UI(03.18)
+            //스킬 쿨타임 UI(03.18)
                 if (Qcool.fillAmount != 0)
                 {
                     Qcool.fillAmount -= 1 * Time.smoothDeltaTime / TotalQSkillCoolTime;
@@ -376,15 +502,30 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 {
                     Ecool.fillAmount -= 1 * Time.smoothDeltaTime / TotalESkillCoolTime;
                 }
+                if (Dcool.fillAmount != 0)
+                {
+                    Dcool.fillAmount -= 1 * Time.smoothDeltaTime / Spell_1_CoolTime;
+                }
+                if (Fcool.fillAmount != 0)
+                {
+                    Fcool.fillAmount -= 1 * Time.smoothDeltaTime / Spell_2_CoolTime;
+                }
+                if (Rcool.fillAmount != 0 && DodgeAmount < 2) //(10.01 정도훈)
+                {
+                    Rcool.fillAmount -= 1 * Time.smoothDeltaTime /TotalDodge_CoolTime;
+                } 
+                else
+                {
+                    Rcool.fillAmount = 0;
+                }
             }
 
             // 벽 충돌체크 함수 실행
             WallCheck();
-
-            
             if(photonview.IsMine){
                 // 애니메이션 업데이트
                 GetInput();
+
                 //스킬 쿨타임 충전
                 SkillCoolTimeCharge();
             }
@@ -398,36 +539,39 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             // char 오브젝트 위치 고정
             transform.GetChild(0).localPosition = Vector3.zero;
 
-            //데미지 캔버스 Y값 고정
+            //데미지 캔버스 Y값 고정(08.29)
             if(mainCamera.transform.eulerAngles.y > 0 && mainCamera.transform.eulerAngles.y < 180)
                 PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot - 180f, 0);
             else
                 PlayerCanvas.transform.localRotation = Quaternion.Euler(0, LocalSkillYRot + 180f, 0);
 
+            //애니메이션 속도 조절 (평타, 대쉬, 걷기)(09.10 정도훈)
+            anim.SetFloat("AnimSpeed", Status.TotalSpeed);
+
             // Attack 함수 실행
-            if (Input.GetKeyDown(KeyCode.A))
-            {   
+            if (Input.GetKeyDown(KeyCode.A) && !stateDamage)
+            {
                 if(photonview.IsMine){
                 photonview.RPC("Attack_anim",RpcTarget.All);
                 }
             }
 
             //기본공격1 & 기본공격3 시 전진 애니메이션
-            if (stateAttack1 == true && !isCommonAttack1InProgress)
-            {   
+            if (stateAttack1 == true && !isCommonAttack1InProgress && !stateDamage)
+            {
                 if(photonview.IsMine){
                 photonview.RPC("Attack",RpcTarget.All,0);
                 }
                 isCommonAttack1InProgress = true;
             }
-            else if (stateAttack2 == true && !isCommonAttack2InProgress && !isSound)
+            else if (stateAttack2 == true && !isCommonAttack2InProgress && !isSound && !stateDamage)
             {
                 if(photonview.IsMine){
                 photonview.RPC("Attack",RpcTarget.All,1);
                 }
                 isCommonAttack2InProgress = true;
             }
-            else if (stateAttack3 == true && !isCommonAttack3InProgress)
+            else if (stateAttack3 == true && !isCommonAttack3InProgress && !stateDamage)
             {
                 if(photonview.IsMine){
                 photonview.RPC("Attack",RpcTarget.All,2);
@@ -449,21 +593,21 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             }
 
             //점프공격 카메라 && 사운드
-            else if (stateJumpAttack1 == true && !coroutineMove)
+            else if (stateJumpAttack1 == true && !coroutineMove  && !stateDamage)
             {
                 if(photonview.IsMine){
                 photonview.RPC("Attack",RpcTarget.All,3);
                 }
                 PlayAnim("isFall");
             }
-            else if (stateJumpAttack2 == true && !isSound)
+            else if (stateJumpAttack2 == true && !isSound  && !stateDamage)
             {
                 if(photonview.IsMine){
                 photonview.RPC("Attack",RpcTarget.All,4);
                 }
                 PlayAnim("isFall");
             }
-            else if (stateJumpAttack3 == true && !coroutineMove)
+            else if (stateJumpAttack3 == true && !coroutineMove  && !stateDamage)
             {
                 if(photonview.IsMine){
                 photonview.RPC("Attack",RpcTarget.All,5);
@@ -504,7 +648,8 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             && !anim.GetBool("isFall")
             && QSkillCoolTime >= TotalQSkillCoolTime //도훈 2024-08-27
             && !isAttack
-            && !isDodge)
+            && !isDodge
+            && !stateDamage)
             {
                 if(photonview.IsMine){
                 photonview.RPC("UseSkill",RpcTarget.All,"Q");
@@ -522,7 +667,8 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             && !anim.GetBool("isFall")
             && WSkillCoolTime >= TotalWSkillCoolTime //도훈 2024-08-27
             && !isAttack
-            && !isDodge)
+            && !isDodge
+            && !stateDamage)
             {
                 if(photonview.IsMine){
                 photonview.RPC("UseSkill",RpcTarget.All,"W");
@@ -540,7 +686,8 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             && !anim.GetBool("isFall")
             && ESkillCoolTime >= TotalESkillCoolTime //도훈 2024-08-27
             && !isAttack
-            && !isDodge)
+            && !isDodge
+            && !stateDamage)
             {
                 if(photonview.IsMine){
                 photonview.RPC("UseSkill",RpcTarget.All,"E");
@@ -551,9 +698,44 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 // Debug.Log("Status.PercentCooltime :" + Status.PercentCooltime);
             }
 
+            //Skill_D (09.18 정도훈)
+            if (Input.GetKeyDown(KeyCode.D)
+            && !isSkill
+            && !isJumping
+            && !anim.GetBool("isFall")
+            //&& DSkillCoolTime >= TotalDSkillCoolTime
+            && !isAttack
+            && !isDodge)
+            {
+                //Spell_Swiftness(); //(이펙트 추가해야됨)
+                //Spell_Immune(); //완료
+                //Spell_TimeSlowdown();
+                if(photonview.IsMine){
+                    UseSpell(Spell_1, 1);   
+                }
+            }
+
+            //Skill_F (09.18 정도훈)
+            if (Input.GetKeyDown(KeyCode.F)
+            && !isSkill
+            && !isJumping
+            && !anim.GetBool("isFall")
+            //&& DSkillCoolTime >= TotalDSkillCoolTime
+            && !isAttack
+            && !isDodge)
+            {
+                //Spell_RoarOfAnger(); //완료
+                //Spell_Unstoppable(); //(이펙트 추가해야됨)
+                //Spell_Heal(); //완료
+                if(photonview.IsMine){
+                    UseSpell(Spell_2, 2);   
+                }
+            }
+
+
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && !isSkill && !isAttack && !isJumping
-                && !stateJump && !stateFall && !anim.GetBool("isFall") && !isDodge && JumpCoolTime == 0)
+                && !stateJump && !stateFall && !anim.GetBool("isFall") && !isDodge && JumpCoolTime == 0 && !stateDamage)
             {
                 if(photonview.IsMine){
                 photonview.RPC("RPCJump",RpcTarget.All);
@@ -572,7 +754,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 isJumping = false;
             }
             // Dodge 함수 실행
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) && DodgeAmount>0 && !stateDamage)
             {
                 if(photonview.IsMine){
                 photonview.RPC("RPCDodge",RpcTarget.All);
@@ -611,17 +793,16 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             //대쉬일 때
             else if (stateDash == true)
             {
-                moveSpd = moveSpeed * 1.25f;
+                moveSpd = moveSpeed * 1.25f *Status.TotalSpeed; // 행동속도 조절 추가(09.10 정도훈)
             }
             else
             {
-                moveSpd = moveSpeed;
+                moveSpd = moveSpeed * Status.TotalSpeed; // 행동속도 조절 추가(09.10 정도훈)
             }
 
             //캐릭터 스킬 이펙트
             LocalSkillYRot = transform.localEulerAngles.y;
             SkillYRot = transform.eulerAngles.y;
-
             if(photonview.IsMine){
                 RPCproperty = PlayerPrefs.GetString("property");
                 photonview.RPC("ApplyProperty",RpcTarget.All, RPCproperty);
@@ -631,7 +812,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                     photonview.RPC("SetEffect",RpcTarget.All, 4);
                 }
             }
-
+            
 
             // 플레이어 피가 30보다 작으면 지속적으로 화면이 깜빡임
             if(Status.HP <= 30)
@@ -651,7 +832,8 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 if(buffTime < 0)
                 {
                     buffTime = 0;
-                    Status.TotalAD = buffStat;
+                    Status.PercentAD = buffStat;
+                    Status.StatUpdate();
                     buffStat = 0;
                     buffType = "None";
                     ADBuff_On = false;
@@ -669,11 +851,13 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 {
                     buffTime = 0;
                     Status.TotalArmor = buffStat;
+                    Status.StatUpdate();
                     buffType = "None";
                     ArmorBuff_On = false;
                 }
             }
             //포션 눌렀을 때
+            //포션 음수되는 오류 수정(08.29)
             // 힐 Potion
             hpPotionValue.text = InvenCtrl.PotionCount.ToString();
             if(Input.GetKeyDown(KeyCode.Alpha1) && !anim.GetBool("isDie") && InvenCtrl.PotionCount > 0)
@@ -699,6 +883,40 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 }
             }
 
+            //보조스킬 (09.14)
+            if(Swiftness_Buff_ON){
+                Swiftness_buffTime -= Time.deltaTime;
+                if(Swiftness_buffTime < 0)
+                {
+                    Swiftness_buffTime = 0;
+                    Status.PercentSpeed = Swiftness_Stat;
+                    Status.StatUpdate();
+                    Swiftness_Buff_ON = false;
+                    photonview.RPC("RPC_Spell_Swiftness_Off",RpcTarget.All);
+                    Debug.Log("신속 OFF");
+                }
+            }
+            if(RoarOfAnger_Buff_ON){
+                RoarOfAnger_buffTime -= Time.deltaTime;
+                if(RoarOfAnger_buffTime < 0)
+                {
+                    RoarOfAnger_buffTime = 0;
+                    Status.PercentAD = RoarOfAnger_Stat;
+                    Status.StatUpdate();
+                    RoarOfAnger_Buff_ON = false;
+                    Spell_RoarOfAnger_Effect.SetActive(false);
+                    Debug.Log("분노의 포효 OFF");
+                }
+            }
+            if(Unstoppable_Buff_ON){
+                Unstoppable_buffTime -= Time.deltaTime;
+                if(Unstoppable_buffTime < 0)
+                {
+                    Unstoppable_buffTime = 0;
+                    Unstoppable_Buff_ON = false;
+                    Debug.Log("저지불가 OFF");
+                }
+            }
         }
         else if(Status.IsShop == true) //(09.05)
         {
@@ -717,20 +935,23 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     {
         InvenCtrl.ADPotionCount -= 1; 
         buffType = "AD";
+        StartCoroutine(ATKPotion_on());
     }
 
     public virtual void ArmorUp()
     {
         InvenCtrl.ArmorPotionCount -= 1; 
         buffType = "Armor";
+        StartCoroutine(DEFPotion_on());
     }
 
     public virtual IEnumerator PowerUp_On()
     {
         buffTime = 60f;
         buffPer = 0.2f;
-        buffStat = Status.TotalAD;
-        Status.TotalAD += (Status.TotalAD * buffPer);
+        buffStat = Status.PercentAD;
+        Status.PercentAD += (Status.PercentAD * buffPer);
+        Status.StatUpdate();
         Debug.Log("힘 버프");
         yield break;
     }
@@ -741,10 +962,10 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         buffPer = 0.2f;
         buffStat = Status.TotalArmor;
         Status.TotalArmor += (Status.TotalArmor * buffPer);
+        Status.StatUpdate();
         Debug.Log("방패 버프");
         yield break;
     }
-
     #endregion
 
     //도적용 무기 세트효과(08.31)
@@ -757,28 +978,33 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     {
         if (Status.MaxHP != 0 || Status.HP > 0)
         {
+            int hitCount = PlayerPrefs.GetInt("hitCount", 0);
+            PlayerPrefs.SetInt("hitCount", hitCount + 1);
+            Debug.Log(PlayerPrefs.GetInt("hitCount"));
             Status.HP -= Damage;
             CheckHp();
-            PlayAnim("TakeDamage");
+            //저지불가 (09.14 정도훈)
+            if(Unstoppable_Buff_ON==false)
+            {
+                PlayAnim("TakeDamage"); 
+            }
             StartCoroutine(DamageTextAlpha());
+            Damaged_on(); //맞았을 때 이펙트 애니메이션에서 코드로 옮김(08.30)
+            hitAudio.PlayOneShot(hitAudio.clip); //히트 시 재생 오디오 재생(09.30)
             cameraEffect.GetComponent<CameraEffectCtrl>().DamageCamera();
             StartCoroutine(Immune(0.5f));   //무적 함수 실행
             yield return new WaitForSeconds(0.2f);
             StopAnim("TakeDamage");
-
             AnimReset(); //애니메이션 리셋(09.05)
             cameraEffect.GetComponent<CameraEffectCtrl>().ResetCameraEffect();
         }
 
-        if (Status.HP <= 0) // 플레이어가 죽으면 게임오버 창 띄움
+        if (Status.HP <= 0 && !MultiGameManager.IsDie) // 플레이어가 죽으면 게임오버 창 띄움
         {
             PlayAnim("isDie");
-
-            //InvenCtrl.ResetInven();
-
             yield return new WaitForSeconds(2.0f);
+            MultiGameManager.IsDie = true;
             photonview.RPC("DestroyPlayer",RpcTarget.All);//플레이어 삭제
-            //GameObject.Find("EventSystem").GetComponent<GameEnd>().GameOver(true);
         }
     }
     public virtual void SetHp(float amount) // Hp 세팅
@@ -799,12 +1025,12 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         InvenCtrl.PotionCount -= 1; 
         Status.HP = Status.MaxHP;
         CheckHp();
-        StartCoroutine(Heal_on());
+        StartCoroutine(HPPotion_on());
     }
     //(06.01)
     protected virtual IEnumerator DamageTextAlpha()
     {
-        if(anim.GetBool("Die") == false)
+        if(anim.GetBool("isDie") == false)
         {   
             //데미지 텍스트 출력 부분(05.31)
             GameObject instText = Instantiate(DamageText);
@@ -821,6 +1047,12 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
                 fadecolor.a = Mathf.Lerp(1, 0, time * 2f);
                 instText.GetComponent<TMP_Text>().color = fadecolor; // 페이드 되면서 사라짐
                 instText.transform.position = new Vector3(transform.position.x, transform.position.y + time * 3f + 0.5f, transform.position.z); // 서서히 올라감
+                //데미지 텍스트 사라지게 해둠(08.30)
+                if(fadecolor.a == 0)
+                {
+                    Destroy(instText);
+                    yield break;
+                }
                 yield return null;
             }
         }
@@ -867,14 +1099,12 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
 
     public virtual void Move()
     {
-        
         if (hAxis != 0)
         {
             if(photonview.IsMine){
             photonview.RPC("PlayAnim",RpcTarget.All,"isRun");
             moveVec = AdjustDirectionToSlope(transform.forward);
             }
-            
         }
         else
         {
@@ -882,7 +1112,6 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             photonview.RPC("StopAnim",RpcTarget.All,"isRun");
             moveVec = Vector3.zero;
             }
-            
         }
         if (!WallCollision)
         {
@@ -894,11 +1123,21 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     }
     public virtual IEnumerator Dodge()
     {
+        DodgeAmount-=1;
         StartCoroutine(Immune(0.5f));
         PlayAnim("isDodge");
         isDodge = true;
+
+        if(Rcool.fillAmount == 0)
+        {
+            Rcool.fillAmount = 1;
+        }
+
         yield return new WaitForSeconds(0.5f);
         StopAnim("isDodge");
+        //구르기 연타하고 안 움직이는 버그 해결(09.04)
+        StopAnim("CommonAttack");
+        StopAnim("isRun");
         isDodge = false;
     }
 
@@ -981,7 +1220,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
     #region 충돌 관련 함수
     protected virtual void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Monster_Melee" &&!isImmune )
+        if (col.gameObject.tag == "Monster_Melee" && !isImmune)
         {
             // 특정 이름을 가진 부모 객체를 찾습니다.
             string targetParentName = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
@@ -1002,7 +1241,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             if(monsterCtrl != null && Status.set2_3_Activated)
             {
                 float reflectDamage = Status.TotalArmor;
-                StartCoroutine(monsterCtrl.TakeDamage(reflectDamage,RPCproperty));
+                StartCoroutine(monsterCtrl.TakeDamage(reflectDamage, RPCproperty));
             }
 
             // 가져온 몬스터 스크립트가 유효한지 확인합니다.
@@ -1054,9 +1293,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             if (monsterCtrl != null && Status.set2_3_Activated)
             {
                 float reflectDamage = Status.TotalArmor;
-                if(photonview.IsMine){
                 StartCoroutine(monsterCtrl.TakeDamage(reflectDamage));
-                }
             }
 
             // 충돌한 몬스터 공격에서 해당 스크립트를 가져옵니다.
@@ -1121,7 +1358,15 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             BossWall2.layer = 3;
             BossWall1Collider.isTrigger = false;
             BossWall2Collider.isTrigger = false;
-            Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            //스테이지마다 생성되는 보스 다르게 수정(09.30)
+            if(DruidGen != null)
+                Instantiate(Druid, DruidGen.transform.position, Quaternion.Euler(0, 0, 0));
+            else if(StoneGolemGen != null)
+                Instantiate(StoneGolem, StoneGolemGen.transform.position, Quaternion.Euler(0, -90f, 0));
+            else if(OgreGen != null)
+                Instantiate(Ogre, OgreGen.transform.position, Quaternion.Euler(0, 0f, 0));
+            else if(DemonKingGen!= null)
+                Instantiate(DemonKing, DemonKingGen.transform.position, Quaternion.Euler(0, -90f, 0));
         }
     }
     #endregion
@@ -1185,6 +1430,14 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         QSkillCoolTime += Time.deltaTime;
         WSkillCoolTime += Time.deltaTime;
         ESkillCoolTime += Time.deltaTime;
+        Spell_Heal_CoolTime += Time.deltaTime; //도훈 2024-09-20
+        Spell_Immune_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_RoarOfAnger_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_Stun_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_Swiftness_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_TimeSlowdown_CoolTime += Time.deltaTime;//도훈 2024-09-20
+        Spell_Unstoppable_CoolTime += Time.deltaTime;//도훈 2024-09-20
+
 
         if(QSkillCoolTime > TotalQSkillCoolTime) //도훈 2024-08-27
         {
@@ -1197,6 +1450,34 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         if (ESkillCoolTime > TotalESkillCoolTime) //도훈 2024-08-27
         {
             ESkillReady = true;
+        }
+        if(Spell_Heal_CoolTime> Heal_CoolTime) //도훈 2024-09-20
+        {
+            Spell_Heal_Ready =true;
+        }
+        if(Spell_Immune_CoolTime> Immune_CoolTime)//도훈 2024-09-20
+        {
+            Spell_Immune_Ready =true;
+        }
+        if(Spell_RoarOfAnger_CoolTime> RoarOfAnger_CoolTime)//도훈 2024-09-20
+        {
+            Spell_RoarOfAnger_Ready =true;
+        }
+        if(Spell_Stun_CoolTime> Stun_CoolTime)//도훈 2024-09-20
+        {
+            Spell_Stun_Ready =true;
+        }
+        if(Spell_Swiftness_CoolTime> Swiftness_CoolTime)//도훈 2024-09-20
+        {
+            Spell_Swiftness_Ready =true;
+        }
+        if(Spell_TimeSlowdown_CoolTime> TimeSlowdown_CoolTime)//도훈 2024-09-20
+        {
+            Spell_TimeSlowdown_Ready =true;
+        }
+        if(Spell_Unstoppable_CoolTime> Unstoppable_CoolTime)//도훈 2024-09-20
+        {
+            Spell_Unstoppable_Ready =true;
         }
     }
     
@@ -1215,15 +1496,14 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             ResetAttackInProgressStates();
         }
     }
-
+    
     [PunRPC]
     public virtual void UseSkill(string skillName)
     {
-        if(photonview.IsMine){
-            if (Status.set8_3_Activated)
-            {
-                photonview.RPC("SetEffect",RpcTarget.All, 5);
-            }
+        if (Status.set8_3_Activated)
+        {
+            clockEffectTime += 3;
+            Item_Time_Effect.SetActive(true);
         }
     }
     #endregion
@@ -1244,9 +1524,25 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
 
     #region 이펙트 함수
 
-    public virtual IEnumerator Heal_on()
+    public virtual IEnumerator HPPotion_on()
     {
-        SkillEffect = Instantiate(Heal_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect = Instantiate(HPPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        yield return new WaitForSeconds(1.0f);
+        Destroy(SkillEffect);
+    }
+
+    public virtual IEnumerator ATKPotion_on()
+    {
+        SkillEffect = Instantiate(ATKPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        yield return new WaitForSeconds(1.0f);
+        Destroy(SkillEffect);
+    }
+
+    public virtual IEnumerator DEFPotion_on()
+    {
+        SkillEffect = Instantiate(DEFPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
         SkillEffect.transform.parent = EffectGen.transform;
         yield return new WaitForSeconds(1.0f);
         Destroy(SkillEffect);
@@ -1295,7 +1591,6 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             anim.SetBool(AnimationName, true);
         }
     }
-
     [PunRPC]
     public virtual void StopAnim(string AnimationName)
     {
@@ -1308,7 +1603,6 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             anim.SetBool(AnimationName, false);
         }
     }
-
     [PunRPC]
     public virtual void AnimState()
     {
@@ -1397,6 +1691,7 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
         else
             stateDie = false;
     }
+
     public virtual void AnimReset()
     {
         //애니메이션 초기화(09.05)
@@ -1597,4 +1892,330 @@ public class Server_PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlay
             }
         }
 
-}
+    #region 보조스킬
+    //신속(유체화)
+    public virtual void Spell_Swiftness(int Spell_num){
+        if(Spell_Swiftness_Ready){
+            StartCoroutine(Spell_Swiftness_On());
+            Swiftness_Buff_ON = true;
+            Spell_Swiftness_CoolTime = 0f; //도훈 2024-09-20
+            Spell_Swiftness_Ready = false;
+            Set_Spell_Cooltime("Spell_Swiftness", Spell_num);
+            photonview.RPC("RPC_Spell_Swiftness_On",RpcTarget.All);
+        }
+    }
+
+    public virtual IEnumerator Spell_Swiftness_On()
+    {
+        Swiftness_buffTime = 60f;
+        buffPer = 0.2f;
+        Swiftness_Stat = Status.PercentSpeed;
+        Status.PercentSpeed += (Status.PercentSpeed * buffPer);
+        Status.StatUpdate();
+        spellSounds[0].PlayOneShot(spellSounds[0].clip); //스펠 사운드 추가(10.02)
+        Debug.Log("신속 ON");
+        yield break;
+    }
+
+    [PunRPC]
+    public virtual void RPC_Spell_Swiftness_On()
+    {
+        Spell_Swiftness_Effect.SetActive(true);
+    }
+
+    [PunRPC]
+    public virtual void RPC_Spell_Swiftness_Off()
+    {
+        Spell_Swiftness_Effect.SetActive(false);
+    }
+    
+
+    //저지불가
+
+    public virtual void Spell_Unstoppable(int Spell_num){
+        if(Spell_Unstoppable_Ready){
+            Unstoppable_Buff_ON = true;
+            StartCoroutine(Spell_Unstoppable_On());
+            Debug.Log("저지불가 ON");
+            Spell_Unstoppable_CoolTime = 0f;    //도훈 2024-09-20
+            Spell_Unstoppable_Ready = false;
+            Set_Spell_Cooltime("Spell_Unstoppable", Spell_num);
+        }
+    }
+
+    public virtual IEnumerator Spell_Unstoppable_On()
+    {
+        Unstoppable_buffTime = 60f;
+        spellSounds[4].PlayOneShot(spellSounds[4].clip); //스펠 사운드 추가(10.02)
+        cameraEffect.GetComponent<CameraEffectCtrl>().unStoppableCamera(); //저지불가 이펙트 추가(09.30)
+        yield break;
+    }
+
+    //회복
+    public virtual void Spell_Heal(int Spell_num){
+        if(Spell_Heal_Ready){
+            Status.HP = Status.MaxHP;
+            CheckHp();
+            photonview.RPC("RPC_Spell_Heal_on",RpcTarget.All);
+            Debug.Log("힐 ON");
+            Spell_Heal_CoolTime = 0f;   //도훈 2024-09-20
+            Spell_Heal_Ready = false;
+            Set_Spell_Cooltime("Spell_Heal", Spell_num);
+        }
+    }
+
+    public virtual IEnumerator Spell_Heal_on()
+    {
+        SkillEffect = Instantiate(Spell_Heal_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        SkillEffect.transform.localPosition = new Vector3(0,-0.9f,0);
+        Destroy(SkillEffect, 3.0f);
+        spellSounds[2].PlayOneShot(spellSounds[2].clip); //스펠 사운드 추가(10.02)
+        yield return new WaitForSeconds(3.0f);
+        
+    }
+    [PunRPC]
+    public virtual void RPC_Spell_Heal_on()
+    {
+        StartCoroutine(Spell_Heal_on());
+    }
+
+    //기절 미완
+    public virtual void Spell_Stun(int Spell_num){
+        if(Spell_Stun_Ready){
+            photonview.RPC("RPC_Spell_Stun_on",RpcTarget.All);
+            Debug.Log("기절 ON");
+            Spell_Stun_CoolTime = 0f;   //도훈 2024-09-20
+            Spell_Stun_Ready = false;
+            Set_Spell_Cooltime("Spell_Stun", Spell_num);
+        }
+    }
+    public virtual IEnumerator Spell_Stun_on()
+    {
+        SkillEffect = Instantiate(Spell_Stun_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot + 90f, 0));
+        spellSounds[1].PlayOneShot(spellSounds[1].clip); //스펠 사운드 추가(10.02)
+        Destroy(SkillEffect, 3.0f);
+        yield return new WaitForSeconds(3.0f);
+    }
+    [PunRPC]
+    public virtual void RPC_Spell_Stun_on()
+    {
+        StartCoroutine(Spell_Stun_on());
+    }
+
+
+    //무적
+    public virtual void Spell_Immune(int Spell_num){
+        if(Spell_Immune_Ready){
+            StartCoroutine(Immune(2.0f));
+            StartCoroutine(Spell_Immune_on());
+            Debug.Log("무적 ON");
+            Spell_Immune_CoolTime = 0f; //도훈 2024-09-20
+            Spell_Immune_Ready = false;
+            Set_Spell_Cooltime("Spell_Immune", Spell_num);
+        }
+    }
+    public virtual IEnumerator Spell_Immune_on()
+    {
+        Spell_Immune_Effect.SetActive(true);
+        spellSounds[6].PlayOneShot(spellSounds[6].clip); //스펠 사운드 추가(10.02)
+        yield return new WaitForSeconds(2.0f);
+        Spell_Immune_Effect.SetActive(false);
+    }
+
+    //시간 감속
+
+    public virtual void Spell_TimeSlowdown(int Spell_num){
+        Debug.Log(Spell_TimeSlowdown_Ready);
+        Debug.Log(Spell_TimeSlowdown_CoolTime);
+        if(Spell_TimeSlowdown_Ready){
+        StartCoroutine(Spell_TimeSlowdown_On());
+        Status.Spell_TimeSlowdown_ON = true;
+        Spell_TimeSlowdown_CoolTime = 0f;   //도훈 2024-09-20
+        Spell_TimeSlowdown_Ready = false;
+        Set_Spell_Cooltime("Spell_TimeSlowdown", Spell_num);
+        }
+    }
+    public virtual IEnumerator Spell_TimeSlowdown_On()
+    {
+        TimeSlowdown_buffTime = 60f;
+        Debug.Log("시감감속 ON");
+        Spell_TimeSlowdown_Effect.SetActive(true);
+        spellSounds[5].PlayOneShot(spellSounds[5].clip); //스펠 사운드 추가(10.02)
+        yield break;
+    }
+
+    //부활
+    public virtual void Spell_Resurrect(int Spell_num){
+        if(Spell_Resurrect_Ready){
+            if(GameObject.FindGameObjectsWithTag("Target").Length==1){
+                photonview.RPC("RPC_Spell_Resurrect_on",RpcTarget.All);
+                Debug.Log("부활 ON");
+                Spell_Resurrect_CoolTime = 0f;   
+                Spell_Resurrect_Ready = false;
+                Set_Spell_Cooltime("Spell_Resurrect", Spell_num);
+            }
+            
+        }
+    }
+    public virtual IEnumerator Spell_Resurrect_on()
+    {
+        SkillEffect = Instantiate(Spell_Resurrect_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect.transform.parent = EffectGen.transform;
+        SkillEffect.transform.localPosition = new Vector3(0,-0.9f,0);
+        spellSounds[7].PlayOneShot(spellSounds[7].clip); //스펠 사운드 추가(10.02)
+        Destroy(SkillEffect, 3.0f);
+        yield return new WaitForSeconds(3.0f);
+        
+    }
+
+    [PunRPC]
+    public virtual void RPC_Spell_Resurrect_on()
+    {
+        StartCoroutine(Spell_Resurrect_on());
+        if(MultiGameManager.IsDie){
+            MultiPlayStart.Instance.SpawnPlayer(MultiGameManager.SpawnPoints[1]);
+            Status.HP = Status.MaxHP;
+            MultiGameManager.IsDie = false; 
+        }
+    }
+
+
+    //분노의 포효
+    public virtual void Spell_RoarOfAnger(int Spell_num){
+        if(Spell_RoarOfAnger_Ready){
+            StartCoroutine(Spell_RoarOfAnger_On());
+            RoarOfAnger_Buff_ON = true;
+            Spell_RoarOfAnger_CoolTime = 0f;    //도훈 2024-09-20
+            Spell_RoarOfAnger_Ready = false;
+            Set_Spell_Cooltime("Spell_RoarOfAnger", Spell_num);
+        }
+    }
+
+    public virtual IEnumerator Spell_RoarOfAnger_On()
+    {
+        RoarOfAnger_buffTime = 60f;
+        buffPer = 0.2f;
+        RoarOfAnger_Stat = Status.PercentAD;
+        Status.PercentAD += (Status.PercentAD * buffPer);
+        Status.StatUpdate();
+        Debug.Log("분노의 포효 ON");
+        Spell_RoarOfAnger_Effect.SetActive(true);
+        spellSounds[3].PlayOneShot(spellSounds[3].clip); //스펠 사운드 추가(10.02)
+        yield break;
+    }
+
+    //전체적으로 보조스킬 사용하도록 하는 함수
+    public virtual void UseSpell(string Spell, int Spell_num){
+        Debug.Log(Spell);
+        switch(Spell){
+            case "Spell_Swiftness":
+                Spell_Swiftness(Spell_num);
+                break;
+            case "Spell_Unstoppable":
+                Spell_Unstoppable(Spell_num);
+                break;
+            case "Spell_Heal":
+                Spell_Heal(Spell_num);
+                break;
+            case "Spell_Stun":
+                Spell_Stun(Spell_num);
+                break;
+            case "Spell_Immune":
+                Spell_Immune(Spell_num);
+                break;
+            case "Spell_TimeSlowdown":
+                Spell_TimeSlowdown(Spell_num);
+                break;
+            case "Spell_RoarOfAnger":
+                Spell_RoarOfAnger(Spell_num);
+                break;
+            case "Spell_Resurrect":
+                Spell_Resurrect(Spell_num);
+                break;
+        }
+    }
+    //보조스킬 쿨타임 적용하기
+    public virtual void Set_Spell_Cooltime(string Spell, int Spell_num){
+        switch(Spell_num){
+            case 1:
+                switch(Spell){
+                    case "Spell_Swiftness":
+                        Spell_1_CoolTime = Swiftness_CoolTime;
+                        break;
+                    case "Spell_Unstoppable":
+                        Spell_1_CoolTime = Unstoppable_CoolTime;
+                        break;
+                    case "Spell_Heal":
+                        Spell_1_CoolTime = Heal_CoolTime;
+                        break;
+                    case "Spell_Stun":
+                        Spell_1_CoolTime = Stun_CoolTime;
+                        break;
+                    case "Spell_Immune":
+                        Spell_1_CoolTime = Immune_CoolTime;
+                        break;
+                    case "Spell_TimeSlowdown":
+                        Spell_1_CoolTime = TimeSlowdown_CoolTime;
+                        break;
+                    case "Spell_RoarOfAnger":
+                        Spell_1_CoolTime = RoarOfAnger_CoolTime;
+                        break;
+                    case "Spell_Resurrect":
+                        Spell_1_CoolTime = Resurrect_CoolTime;
+                        break;
+                }
+            Dcool.fillAmount = 1;
+            Debug.Log(Spell_1_CoolTime);
+            break;
+            case 2:
+                switch(Spell){
+                    case "Spell_Swiftness":
+                        Spell_2_CoolTime = Swiftness_CoolTime;
+                        break;
+                    case "Spell_Unstoppable":
+                        Spell_2_CoolTime = Unstoppable_CoolTime;
+                        break;
+                    case "Spell_Heal":
+                        Spell_2_CoolTime = Heal_CoolTime;
+                        break;
+                    case "Spell_Stun":
+                        Spell_2_CoolTime = Stun_CoolTime;
+                        break;
+                    case "Spell_Immune":
+                        Spell_2_CoolTime = Immune_CoolTime;
+                        break;
+                    case "Spell_TimeSlowdown":
+                        Spell_2_CoolTime = TimeSlowdown_CoolTime;
+                        break;
+                    case "Spell_RoarOfAnger":
+                        Spell_2_CoolTime = RoarOfAnger_CoolTime;
+                        break;
+                    case "Spell_Resurrect":
+                        Spell_2_CoolTime = Resurrect_CoolTime;
+                        break;
+                }
+            Fcool.fillAmount = 1;
+            Debug.Log(Spell_2_CoolTime);
+            break;
+        }
+    }
+    #endregion
+
+    #region 구르기
+    public virtual void ChargeDodge()
+    {
+        if(DodgeAmount < 2)
+        {    
+            Dodge_CoolTime += Time.deltaTime;
+            if(Dodge_CoolTime > TotalDodge_CoolTime){
+                DodgeAmount += 1;
+                Dodge_CoolTime = 0f;
+                Rcool.fillAmount = 1;
+            }
+            DodgeValue.text = DodgeAmount.ToString();
+        }
+    }
+    #endregion
+    
+}   

@@ -22,11 +22,12 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     private GameObject Attack_1_Collider;
     private GameObject Attack_2_Collider;
     private GameObject Attack_3_Collider;
-
+    public GameObject DashAttackColler;
     //도적은 양손 검이라 무기 이펙트 하나 더 추가해야 함
     public GameObject Item_Weapon2_Effect;
     public GameObject Item_Weapon2_Ice_Effect;
     public GameObject Item_Weapon2_Fire_Effect;
+
     private string CurProperty;
 
     protected override void Start()
@@ -45,35 +46,47 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        //isImmune = true; //실험용 무적 코드
     }
+
     protected override void Update()
     {
         base.Update(); // PlayerCtrl의 Update문을 상속 받아서 실행
+
+        if(Status.IsShop)
+        {   
+            StopAnim("isDash");
+        }
+
+        //1 점프 1 점공 코드(08.29)
         if(stateJumpAttack2 == true)
         {
             isJumpAttack = true;
         }
 
-        //대쉬일 때
+        //대쉬일 때(08.31) 코드 간소화
         if (stateDash == true)
         {
-            moveSpd = moveSpeed * 1.25f;
+            moveSpd = moveSpeed * 1.25f * Status.TotalSpeed; // 행동속도 조절 추가(09.10 정도훈)
         }
         else
         {
-            moveSpd = moveSpeed;
+            moveSpd = moveSpeed * Status.TotalSpeed; // 행동속도 조절 추가(09.10 정도훈)
         }
+
         if(photonview.IsMine){
             CurProperty = PlayerPrefs.GetString("property");
             photonview.RPC("SetProperty",RpcTarget.All, CurProperty);
         }
+        
+
         //상점에서 대쉬 안 되게(09.04)
         if(Status.IsShop == true)
         {
             isDash = false;
             StopAnim("isDash");
         }
-        
+
     }
     #region HP 설정
     public override void SetHp(float amount)
@@ -112,6 +125,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     #endregion
 
     #region 이동 관련 함수
+
     protected override void WallCheck()
     {
         base.WallCheck();
@@ -124,15 +138,16 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
 
     public override void Move()
     {
+        
         base.Move();
+        
     }
-
+    [PunRPC]
     protected override void Turn()
     {
         base.Turn();
     }
 
-    [PunRPC]
     protected override void Jump()
     {
         base.Jump();
@@ -196,7 +211,6 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             photonview.RPC("StopAnim",RpcTarget.All,"CommonAttack");
         }
     }
-    
     [PunRPC]
     protected override void Attack_anim()
     {
@@ -207,11 +221,12 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     //도적 스킬 E 카메라 무브 및 스킬 공격
     IEnumerator Skill_E_Move()
     {
+        //소리 추가를 위해 타이밍 전체적으로 변경(08.31)
         if(photonview.IsMine){
         mainCamera.GetComponent<CameraCtrl>().UltimateCamera_Rogue(LocalSkillYRot);
         }
         yield return new WaitForSeconds(1.2f);
-        StartCoroutine(Attack_Sound(5, 5.0f)); //소리 추가(08.31)
+        StartCoroutine(Attack_Sound(5, 5.0f));
         //ESkill_Collider1.SetActive(true);
         yield return new WaitForSeconds(0.25f);
         //ESkill_Collider1.SetActive(false);
@@ -226,7 +241,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         //ESkill_Collider4.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         //ESkill_Collider4.SetActive(false);
-        //스킬 나갈 시 사운드 및 콜라이더(추가 예정)
+        //UI 쿨타임 시간 변경(08.29)
         yield return new WaitForSeconds(1.2f);
         ESkillCoolTime = 0;
         Ecool.fillAmount = 1;
@@ -277,7 +292,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         {
             SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
-            StartCoroutine(Attack_Sound(2, 0.5f)); //소리 추가(08.31)
+            StartCoroutine(Attack_Sound(2, 0.5f)); //대쉬공격 때문에 여기에 소리 추가(08.31)
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
             }
@@ -286,11 +301,16 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         {
             SkillEffect = Instantiate(Attack3_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90, 0));
             SkillEffect.transform.parent = EffectGen.transform;
-            StartCoroutine(Attack_Sound(2, 0.5f)); //소리 추가(08.31)
+            StartCoroutine(Attack_Sound(2, 0.5f)); //대쉬공격 때문에 여기에 소리 추가(08.31)
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
             }
         }
+    }
+
+    public void dashFront()
+    {
+
     }
 
     public void comboAttack_off()
@@ -414,9 +434,9 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         base.SkillCoolTimeCharge();
     }
 
-     public override IEnumerator Heal_on()
+    public override IEnumerator HPPotion_on()
     {
-        yield return base.Heal_on();
+        yield return base.HPPotion_on();
     }
 
     public override void Damaged_on()
@@ -430,7 +450,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     }
     #endregion
 
-    #region 도적 Dash 함수
+    #region 도적 Dash, 무기 세트효과 함수
     IEnumerator DashListener()
     {
         if(photonview.IsMine){
@@ -515,7 +535,6 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         }
 
     }
-
     #endregion
 
     #region 스킬이나 공격 움직임, Delay 등 세부 조정 함수
@@ -566,7 +585,6 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         {
             yield return new WaitForSeconds(0.3f);
         }
-        
     }
     IEnumerator Skill_W()
     {
@@ -622,7 +640,6 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     {
         base.StopAnim(AnimationName);
     }
-
     [PunRPC]
     public override void AnimState()
     {
@@ -683,5 +700,4 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
     {
         base.AnimReset();
     }
-
 }

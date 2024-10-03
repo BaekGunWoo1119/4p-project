@@ -20,7 +20,8 @@ public class Server_ChangeEffect : MonoBehaviourPun
 
     // Update is called once per frame
     void Update()
-    {   if(photonview.IsMine)
+    {   
+        if(photonview.IsMine)
         {
             CurProperty = PlayerPrefs.GetString("property");
             photonview.RPC("SetEffect",RpcTarget.All,CurProperty);

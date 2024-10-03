@@ -498,6 +498,40 @@ public class SceneLoader : MonoBehaviour
                     }
                 }
             }
+            //보조 스킬 선택 코드(09.29)
+            if(PlayerPrefs.GetString("Spell_1") == "Spell_Swiftness")
+                GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[0];
+            else if(PlayerPrefs.GetString("Spell_1") == "Spell_Stun")
+                GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[1];
+            else if(PlayerPrefs.GetString("Spell_1") == "Spell_Heal")
+                GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[2];
+            else if(PlayerPrefs.GetString("Spell_1") == "Spell_RoarOfAnger")
+                GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[3];
+            else if(PlayerPrefs.GetString("Spell_1") == "Spell_Unstoppable")
+                GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[4];
+            else if(PlayerPrefs.GetString("Spell_1") == "Spell_TimeSlowdown")
+                GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[5];
+            else if(PlayerPrefs.GetString("Spell_1") == "Spell_Immune")
+                GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[6];
+            else if(PlayerPrefs.GetString("Spell_1") == "Spell_Resurrect")
+                GameObject.Find("SkillImg-D").GetComponent<Image>().sprite = img_SubSpell[7];
+
+            if(PlayerPrefs.GetString("Spell_2") == "Spell_Swiftness")
+                GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[0];
+            else if(PlayerPrefs.GetString("Spell_2") == "Spell_Stun")
+                GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[1];
+            else if(PlayerPrefs.GetString("Spell_2") == "Spell_Heal")
+                GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[2];
+            else if(PlayerPrefs.GetString("Spell_2") == "Spell_RoarOfAnger")
+                GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[3];
+            else if(PlayerPrefs.GetString("Spell_2") == "Spell_Unstoppable")
+                GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[4];
+            else if(PlayerPrefs.GetString("Spell_2") == "Spell_TimeSlowdown")
+                GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[5];
+            else if(PlayerPrefs.GetString("Spell_2") == "Spell_Immune")
+                GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[6];
+            else if(PlayerPrefs.GetString("Spell_2") == "Spell_Resurrect")
+                GameObject.Find("SkillImg-F").GetComponent<Image>().sprite = img_SubSpell[7];
         }
 
         if(SceneManager.GetActiveScene().name == "Hidden_Shop")
