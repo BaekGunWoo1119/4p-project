@@ -6,6 +6,7 @@ using UnityEngine.UI;
 //using static UnityEditor.PlayerSettings;
 using Unity.VisualScripting;
 using Photon.Pun;
+
 //궁수 애니메이션
 public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
 {
@@ -46,10 +47,13 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     protected override void Update()
     {
         base.Update();
+
+        //1 점프 1 점공 코드(08.29)
         if(stateJumpAttack2 == true)
         {
             isJumpAttack = true;
         }
+
         if (isSkillWE)      //W, E 스킬 사용 시 공중 고정
         {
             transform.position = new Vector3(transform.position.x, fixedY, transform.position.z);
@@ -172,12 +176,8 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
             StartCoroutine(Attack_Sound(2, 0.7f)); //소리 추가(08.31)
             StopAnim("CommonAttack"); //점공 후 트리거 초기화(08.28)
         }
-
-        if (AttackNumber == 5)
-        {
-
-        }
     }
+
     public void Skill_Q()
     {
         isSkill = true;
@@ -249,18 +249,18 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
             }
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
             }
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
     }
     public void comboAttack_2_on()
@@ -268,18 +268,18 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
             }
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
             }
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
     }
     public void comboAttack_off()
@@ -291,18 +291,18 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
             }
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot, 0));
-            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
             }
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
     }
 
@@ -311,18 +311,18 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         if (SkillYRot == 90 || (SkillYRot < 92 && SkillYRot > 88))
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
-            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
             }
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
         else
         {
             SkillEffect = Instantiate(Attack2_Effect, EffectGen.transform.position, Quaternion.Euler(60, SkillYRot-90, 0));
-            //SkillEffect.transform.parent = EffectGen.transform;
             if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
             }
+            //SkillEffect.transform.parent = EffectGen.transform;
         }
     }
 
@@ -391,9 +391,9 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
 
     }
 
-    public override IEnumerator Heal_on()
+    public override IEnumerator HPPotion_on()
     {
-        yield return base.Heal_on();
+        yield return base.HPPotion_on();
     }
 
     public override void Damaged_on()
@@ -456,14 +456,18 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     {
         base.PlayAnim(AnimationName);
     }
-
     [PunRPC]
     public override void StopAnim(string AnimationName)
     {
         base.StopAnim(AnimationName);
     }
     #endregion
-        [PunRPC]
+    [PunRPC]
+    public override void AnimReset()
+    {
+        base.AnimReset();
+    }
+    [PunRPC]
     public override void RPCDodge()
     {
         base.RPCDodge();
@@ -482,9 +486,5 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
     public override void ToggleGameObjects(GameObject go)
     {
         base.ToggleGameObjects(go);
-    }
-    public override void AnimReset()
-    {
-        base.AnimReset();
     }
 }

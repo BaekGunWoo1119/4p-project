@@ -39,9 +39,8 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     private ParticleSystem setParticles4;
     private ParticleSystem setParticles5;
     private ParticleSystem setParticles6;
-
-    private string CurProperty;
     #endregion
+    private string CurProperty;
 
     #region Start, FixedUpdate, Update
     protected override void Start()
@@ -76,7 +75,6 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
             CurProperty = PlayerPrefs.GetString("property");
             photonview.RPC("SetProperty",RpcTarget.All, CurProperty);
         }
-
         //점프공격 시 Y 포지션 고정
         if (stateJumpAttack1 == true && !isJumpAttack)
         {
@@ -213,8 +211,8 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         isAttack = true;
     }
     
-    [PunRPC]
     //Attack 함수 통합/분리 (번호 할당 => 기본공격 1,2,3 = 0,1,2 / 점프공격 1,2,3 = 3,4,5)
+    [PunRPC]
     public override void Attack(int AttackNumber)
     {
         if(AttackNumber == 0)
@@ -281,37 +279,6 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
 
     }
 
-    /*
-    IEnumerator Attack1_Collider()
-    {
-        yield return new WaitForSeconds(0.125f);
-        Attack_1_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
-        if (Attack_1_Collider == true)
-        {
-            Attack_1_Collider.SetActive(false);
-        }
-    }
-    IEnumerator Attack2_Collider()
-    {
-        Attack_2_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.3f);
-        if (Attack_2_Collider == true)
-        {
-            Attack_2_Collider.SetActive(false);
-        }
-    }
-    IEnumerator Attack3_Collider()
-    {
-        yield return new WaitForSeconds(0.125f);
-        Attack_3_Collider.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        if (Attack_3_Collider == true)
-        {
-            Attack_3_Collider.SetActive(false);
-        }
-    }
-    */
 
     public override IEnumerator Attack_Sound(int AttackValue, float playsec)
     {
@@ -405,7 +372,7 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
 
     public void comboAttack_1_on()
     {
-        SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SkillEffect = Instantiate(Attack1_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0) );
         SkillEffect.transform.parent = EffectGen.transform;
         if(!photonview.IsMine){
             ToggleGameObjects(SkillEffect);
@@ -526,9 +493,9 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         yield return null;
     }
 
-    public override IEnumerator Heal_on()
+    public override IEnumerator HPPotion_on()
     {
-        yield return base.Heal_on();
+        yield return base.HPPotion_on();
     }
 
     public override void Damaged_on()
@@ -543,7 +510,6 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     #endregion
 
     #region 스킬이나 공격 움직임, Delay 등 세부 조정 함수
-
     [PunRPC]
     public override void UseSkill(string skillName)
     {
@@ -622,16 +588,21 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     {
         base.StopAnim(AnimationName);
     }
-
     [PunRPC]
     public override void AnimState()
     {
         base.AnimState();
     }
     #endregion
+    [PunRPC]
+    public override void AnimReset()
+    {
+        base.AnimReset();
+    }
 
     [PunRPC]
     public void SetProperty(string CurProperty){
+
         if (CurProperty == "Fire")
         {
             SkillE_Effect = Skill_FireE_Effect;
@@ -657,10 +628,6 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
     public override void ToggleGameObjects(GameObject go)
     {
         base.ToggleGameObjects(go);
-    }
-    public override void AnimReset()
-    {
-        base.AnimReset();
     }
 
 }

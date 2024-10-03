@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
 
-public class Server_MonsterCtrl : MonoBehaviour
+public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
 {
     #region 변수 선언
 
@@ -36,6 +36,7 @@ public class Server_MonsterCtrl : MonoBehaviour
     public SkinnedMeshRenderer matObj;
     public GameObject targetObj;
     public GameObject[] Targets;    // 모든 플레이어 오브젝트 배열
+    public GameObject CurTarget;
     public Transform PlayerTr;     // 플레이어 Transform
     public float PlayerDistance;        // 타겟 플레이어와 몬스터 간의 거리
     public float Distance;         // 플레이어와 몬스터 간의 거리
@@ -65,7 +66,8 @@ public class Server_MonsterCtrl : MonoBehaviour
     public Transform desiredParent;
     protected PhotonView photonview;
     protected string CurProperty;
-
+    protected Vector3 receivePos;
+    protected Quaternion receiveRot;
     protected Rigidbody rd; // 리지드바디 
     public int bonusstat;
     #endregion
@@ -93,6 +95,7 @@ public class Server_MonsterCtrl : MonoBehaviour
         if (PhotonNetwork.IsMasterClient){
             StartCoroutine(FindPlayer());       // 플레이어를 찾는 코루틴 함수 실행
         }
+        
     }
     
     public virtual void Start()
@@ -105,10 +108,13 @@ public class Server_MonsterCtrl : MonoBehaviour
         atkAudio.Stop(); //처음에는 소리 나오지 않게(09.30)
     }
 
-    public virtual void Update()
-    {
-            AnimSpeed = 1.0f;
-            anim.SetFloat("AnimSpeed", AnimSpeed);
+    public virtual void Update(){
+        if(photonview == null){
+                photonview = GetComponent<PhotonView>();
+            }
+            CheckHP();
+        AnimSpeed = 1.0f;
+        anim.SetFloat("AnimSpeed", AnimSpeed);
         CurProperty = PlayerPrefs.GetString("property");
         hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
         HpBar.transform.position = hpBarPosition;
@@ -130,6 +136,11 @@ public class Server_MonsterCtrl : MonoBehaviour
             AttackCoolTime += Time.deltaTime;
             TickCoolTime += Time.deltaTime;
             hitCount -= Time.deltaTime;
+        }
+        else{
+            //transform.position = Vector3.Lerp(transform.position, receivePos, 2.0f * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(gameObject.transform.position, receivePos, 2.0f);
+            transform.rotation = Quaternion.Lerp(transform.rotation,receiveRot, 2.0f * Time.deltaTime);
         }
         
         #region 3/4세트 4세트 효과
@@ -202,7 +213,7 @@ public class Server_MonsterCtrl : MonoBehaviour
 
     public virtual void DistanceCheck()
     {
-        if(PlayerTr != null){
+        if(CurTarget != null){
             Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
             if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit)
@@ -232,6 +243,7 @@ public class Server_MonsterCtrl : MonoBehaviour
             PlayerDistance = Vector3.Distance(transform.position, TargetTr.position);
             if (PlayerDistance < TempDistance || TempDistance < 1f){
                 TempDistance = PlayerDistance;
+                CurTarget = Player;
                 PlayerTr = TargetTr;
             }   
         }
@@ -771,7 +783,9 @@ public class Server_MonsterCtrl : MonoBehaviour
             {
                 material.color = Color.red;
             }
+            if(photonview.IsMine){
             photonview.RPC("RPCDamage", RpcTarget.All, Damage);
+            }
             hitAudio.PlayOneShot(hitAudio.clip); //히트 시 재생 오디오 재생(09.30)
             CheckHP(); // HP 체크
             yield return new WaitForSeconds(0.1f);
@@ -791,6 +805,7 @@ public class Server_MonsterCtrl : MonoBehaviour
         {
             isDie = true;
             anim.SetBool("Die", true);
+            AttackCollider.tag="Untagged";
             yield return new WaitForSeconds(1.5f);
             if(Random.Range(0, 10)> 5){
                 Vector3 CoinPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.4f, gameObject.transform.position.z);
@@ -862,5 +877,19 @@ public class Server_MonsterCtrl : MonoBehaviour
     public virtual void RPCDamage(float CurDamage){
         curHP -= CurDamage;
         StartCoroutine(DamageTextAlpha(CurDamage));
+    }
+
+    public virtual void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
+        if (stream.IsWriting)
+        {
+            // We own this player: send the others our data
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            receivePos = (Vector3)stream.ReceiveNext();
+            receiveRot = (Quaternion)stream.ReceiveNext();
+        }
     }
 }

@@ -17,7 +17,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     public float TempTime; // 몬스터 저장용 시간
     public float sec; // 타이머용 시간
     public int min; // 타이머용 시간
-    public Transform[] SpawnPoints; // 현재 스테이지 몬스터 스폰 포인트들
+    public static Transform[] SpawnPoints; // 현재 스테이지 몬스터 스폰 포인트들
     public Transform[] SpawnPoints1; // 1스테이지 몬스터 스폰 포인트들
     public Transform[] SpawnPoints2; // 2스테이지 몬스터 스폰 포인트들
     public Transform[] SpawnPoints3; // 3스테이지 몬스터 스폰 포인트들
@@ -26,7 +26,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     public Transform ShopTr; // 상점 위치
     public TMP_Text timerText;
     public GameObject Player;
-    public bool IsDie; // 죽었는지 판단
+    public static bool IsDie; // 죽었는지 판단
     private WaveDatas JSONWaveList; // JSON에서 받아온 웨이브 데이터
     public bool IsWave; // 현재 웨이브 진행 중인지
     public Collider PlayerCol; // 플레이어 콜라이더
@@ -68,6 +68,8 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        PhotonNetwork.SerializationRate = 60;
+        PhotonNetwork.SendRate = 60;
         WaveTime = 10f;
         CurrentTime = 0f;
         TempTime = 0f;
@@ -165,7 +167,6 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
             }
             //죽으면 다른 플레이어 관전(UI추가해야함)
             if (Status.HP<=0){
-                IsDie = true;
                 //내가 죽어있을 떄 다른 플레이어도 죽어있다면
                 if(GameObject.FindGameObjectWithTag("OtherPlayer") == null){
                     photonview.RPC("GameOver",RpcTarget.All);
@@ -176,8 +177,10 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                 }
             }
             else {
+                IsDie = false;
                 if(GameObject.FindGameObjectWithTag("Player") != null)
                 {
+                    SetPlayer();
                     Watching.SetActive(false);
                     CameraCtrl.target = GameObject.FindGameObjectWithTag("Player").transform;
                 }
