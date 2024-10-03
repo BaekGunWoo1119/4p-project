@@ -235,7 +235,11 @@ public class Stone_Golem : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeWeakAttack");   // 애니메이션
-        yield return new WaitForSeconds(5f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(1f);    //애니메이션 지속 시간(10.03 수정)
+        atkAudio[0].PlayOneShot(atkAudio[0].clip);  //약 공격 (주먹 휘두르기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(1f);        //애니메이션 지속 시간(10.03 수정)
+        atkAudio[0].PlayOneShot(atkAudio[0].clip);  //약 공격 (주먹 휘두르기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(3f);        //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(1f);        //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
@@ -245,7 +249,9 @@ public class Stone_Golem : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeStrongAttack");     //애니메이션
-        yield return new WaitForSeconds(1.6f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.6f);    //애니메이션 지속 시간(10.03 수정)
+        atkAudio[1].PlayOneShot(atkAudio[1].clip);  //강 공격 (주먹 내리찍기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(1.0f);        //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간
         StartCoroutine(Think());
@@ -255,7 +261,9 @@ public class Stone_Golem : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doRangedWeakAttack");
-        yield return new WaitForSeconds(1.9f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.8f);    //애니메이션 지속 시간(10.03 수정)
+        atkAudio[2].PlayOneShot(atkAudio[2].clip);  //약 공격 (발 굴러서 돌 떨구기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(1.1f);        //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(2f);        //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
@@ -265,7 +273,9 @@ public class Stone_Golem : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
-        yield return new WaitForSeconds(2.1f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(1.2f);        //애니메이션 지속 시간(10.03 수정)
+        atkAudio[0].PlayOneShot(atkAudio[0].clip);    //강 공격 (양손으로 돌 던지기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(0.9f);        //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(1f);
         RemoveRock();
@@ -277,7 +287,9 @@ public class Stone_Golem : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doSkill1");
-        yield return new WaitForSeconds(3.4f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.8f);        //애니메이션 지속 시간(10.03 수정)
+        atkAudio[4].PlayOneShot(atkAudio[4].clip);    //스킬 공격 (손 치고 바닥 찍기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(2.6f);        //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
@@ -287,7 +299,9 @@ public class Stone_Golem : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doSkill2");
-        yield return new WaitForSeconds(2.7f);
+        yield return new WaitForSeconds(0.8f);        //애니메이션 지속 시간(10.03 수정)
+        atkAudio[5].PlayOneShot(atkAudio[5].clip);    //스킬 공격 (손 치고 점프해서 찍기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(1.9f);        //애니메이션 지속 시간(10.03 수정)
         StartCoroutine(MoveForwardForSeconds(1.3f));
         yield return new WaitForSeconds(0.7f);        //애니메이션 지속 시간
         isAttacking = false;
@@ -362,6 +376,7 @@ public class Stone_Golem : BossCtrl
             rock.transform.rotation = Quaternion.LookRotation(forwardVector, Vector3.up);
             yield return null;
         }
+        atkAudio[3].PlayOneShot(atkAudio[3].clip);    //돌 맞을 때 소리 추가(10.03 수정)
     }
     
     private Vector3 Parabola(Vector3 start, Vector3 mid, Vector3 end, float t)
@@ -413,6 +428,7 @@ public class Stone_Golem : BossCtrl
     }
     public void FallingRock()
     {
+        atkAudio[3].PlayOneShot(atkAudio[3].clip);  //소리 추가(10.03 수정)
         SkillEffect = Instantiate(FallingRock_Effect, new Vector3(PlayerTr.position.x, PlayerTr.position.y + 12f, PlayerTr.position.z), Quaternion.Euler(90f, 0, 0));
     }
     public void GroundSmash()
