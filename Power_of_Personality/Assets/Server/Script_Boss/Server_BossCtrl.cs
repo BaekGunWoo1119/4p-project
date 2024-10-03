@@ -45,7 +45,7 @@ public class Server_BossCtrl : MonoBehaviourPun, IPunObservable
     public GameObject Coin;     //몬스터를 죽이면 드랍되는 코인
 
     // 플레이어 추적 관련
-    protected Transform PlayerTr;     // 플레이어 Transform
+    public Transform PlayerTr;     // 플레이어 Transform
     protected float Distance;         // 플레이어와 몬스터 간의 거리
     protected float TraceRadius;  // 몬스터가 플레이어를 추적(Trace)하기 시작하는 거리
     protected float attackRadius;  // 몬스터가 플레이어를 공격(Attack)하기 시작하는 거리
@@ -84,9 +84,7 @@ public class Server_BossCtrl : MonoBehaviourPun, IPunObservable
         MonsterCanvas = GameObject.Find("Canvas_Boss");
         TempDistance = -4f;                 // 플레이어 거리 측정 전 임시 수치
         //shopPortal = GameObject.Find("Normal_Shop_Portal");
-        if(photonview.IsMine){
-            StartCoroutine(FindPlayer());
-        }     // 플레이어를 찾는 코루틴 함수 실행 <<< Awake에 있으니까 맵 나갔다 들어올 때 계속 오류뜸
+        StartCoroutine(FindPlayer());
     }
 
     protected virtual void Start()
@@ -163,7 +161,7 @@ public class Server_BossCtrl : MonoBehaviourPun, IPunObservable
             }
         }
         else{
-            Settarget();
+            photonview.RPC("RPCSetTarget", RpcTarget.All);
         }
     }
     protected virtual void TeleportCheck()
@@ -686,12 +684,13 @@ public class Server_BossCtrl : MonoBehaviourPun, IPunObservable
     {
         yield return new WaitForSeconds(0.1f);
         Targets = GameObject.FindGameObjectsWithTag("Target");
-        Settarget();
+        photonview.RPC("RPCSetTarget", RpcTarget.All);
         DistanceCheck();
     }
 
     public virtual void Settarget()
     {
+        Targets = GameObject.FindGameObjectsWithTag("Target");
         TempDistance = -4f;
 
         foreach (GameObject Player in Targets){
@@ -826,5 +825,10 @@ public class Server_BossCtrl : MonoBehaviourPun, IPunObservable
             receivePos = (Vector3)stream.ReceiveNext();
             receiveRot = (Quaternion)stream.ReceiveNext();
         }
+    }
+
+    [PunRPC]
+    public virtual void RPCSetTarget(){
+        Settarget();
     }
 }
