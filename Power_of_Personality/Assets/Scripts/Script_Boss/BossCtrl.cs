@@ -58,6 +58,7 @@ public class BossCtrl : MonoBehaviour
     //상점 포탈
     protected GameObject shopPortal;
 
+
     #endregion
     protected virtual void Awake()
     {
