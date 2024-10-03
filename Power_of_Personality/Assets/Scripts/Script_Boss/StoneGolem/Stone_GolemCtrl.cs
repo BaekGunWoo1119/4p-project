@@ -235,11 +235,11 @@ public class Stone_Golem : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeWeakAttack");   // 애니메이션
-        yield return new WaitForSeconds(1f);    //애니메이션 지속 시간(10.03 수정)
+        yield return new WaitForSeconds(1.5f);    //애니메이션 지속 시간(10.03 수정)
         atkAudio[0].PlayOneShot(atkAudio[0].clip);  //약 공격 (주먹 휘두르기)소리 추가(10.03 수정)
-        yield return new WaitForSeconds(1f);        //애니메이션 지속 시간(10.03 수정)
+        yield return new WaitForSeconds(2f);        //애니메이션 지속 시간(10.03 수정)
         atkAudio[0].PlayOneShot(atkAudio[0].clip);  //약 공격 (주먹 휘두르기)소리 추가(10.03 수정)
-        yield return new WaitForSeconds(3f);        //애니메이션 지속 시간(10.03 수정)
+        yield return new WaitForSeconds(1.5f);        //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(1f);        //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());

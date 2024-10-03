@@ -22,14 +22,14 @@ public class GamePause : MonoBehaviour
 
     public void PauseWindowOpen()
     {
-        GamePause.PauseGame();
         pauseWindow.transform.localScale = originalScale;
+        GamePause.PauseGame();
     }
 
     public void PauseWindowClose()
     {
-        GamePause.ResumeGame();
         pauseWindow.transform.localScale = originalScale;
+        GamePause.ResumeGame();
     }
 
     public static void PauseGame()

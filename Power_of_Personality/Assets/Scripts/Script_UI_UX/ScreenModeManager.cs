@@ -29,7 +29,6 @@ public class ScreenModeManager : MonoBehaviour
         if (screenModeDropdown != null)
             screenModeDropdown.onValueChanged.AddListener(delegate { OnScreenModeChange(screenModeDropdown); });
 
-        // 현재 해상도와 화면 모드를 기본 선택 값으로 설정
         SetDefaultResolution();
         SetDefaultScreenMode();
     }
@@ -90,17 +89,21 @@ public class ScreenModeManager : MonoBehaviour
     }
 
     // 현재 해상도를 기본 선택 값으로 설정
-    void SetDefaultResolution()
+    public void SetDefaultResolution()
     {
-        Resolution currentResolution = Screen.currentResolution;
+        int currentWidth = Screen.width;
+        int currentHeight = Screen.height;
 
         for (int i = 0; i < uniqueResolutions.Count; i++)
         {
-            if (uniqueResolutions[i].width == currentResolution.width &&
-                uniqueResolutions[i].height == currentResolution.height)
+            if (uniqueResolutions[i].width == currentWidth &&
+                uniqueResolutions[i].height == currentHeight)
             {
                 if (resolutionDropdown != null)
-                    resolutionDropdown.value = i;
+                {
+                    resolutionDropdown.value = i; // 해상도 Dropdown에서 현재 해상도 선택
+                    resolutionDropdown.RefreshShownValue(); // Dropdown UI 갱신
+                }
                 break;
             }
         }
@@ -152,7 +155,7 @@ public class ScreenModeManager : MonoBehaviour
     }
 
     // 현재 화면 모드를 기본 선택 값으로 설정
-    void SetDefaultScreenMode()
+    public void SetDefaultScreenMode()
     {
         FullScreenMode currentMode = Screen.fullScreenMode;
 
@@ -160,15 +163,24 @@ public class ScreenModeManager : MonoBehaviour
         {
             case FullScreenMode.Windowed:
                 if (screenModeDropdown != null)
-                    screenModeDropdown.value = 0; // 창모드
+                {
+                    screenModeDropdown.value = 0; // 창모드 선택
+                    screenModeDropdown.RefreshShownValue(); // Dropdown UI 갱신
+                }
                 break;
             case FullScreenMode.FullScreenWindow:
                 if (screenModeDropdown != null)
-                    screenModeDropdown.value = 1; // 테두리 없는 창모드
+                {
+                    screenModeDropdown.value = 1; // 테두리 없는 창모드 선택
+                    screenModeDropdown.RefreshShownValue(); // Dropdown UI 갱신
+                }
                 break;
             case FullScreenMode.ExclusiveFullScreen:
                 if (screenModeDropdown != null)
-                    screenModeDropdown.value = 2; // 전체화면
+                {
+                    screenModeDropdown.value = 2; // 전체화면 선택
+                    screenModeDropdown.RefreshShownValue(); // Dropdown UI 갱신
+                }
                 break;
         }
     }
