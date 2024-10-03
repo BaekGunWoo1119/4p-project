@@ -40,7 +40,7 @@ public class OgreCtrl : BossCtrl
 
         shopPortal.SetActive(false);
         StartCoroutine(Think());
-        SoundsManager.Change_Sounds("Forest_Boss"); //소리 추가(08.31)
+        SoundsManager.Change_Sounds("Sewer_Boss"); //소리 추가(08.31)
     }
 
     protected override void Update()
@@ -248,7 +248,9 @@ public class OgreCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeWeakAttack");   // 애니메이션
-        yield return new WaitForSeconds(3.1f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(1.1f);        //애니메이션 지속 시간(10.03 수정)
+        atkAudio[0].PlayOneShot(atkAudio[0].clip);    //약 공격 (양손 휘두르기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(2f);        //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(2f);        //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
@@ -258,7 +260,9 @@ public class OgreCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeStrongAttack");     //애니메이션
-        yield return new WaitForSeconds(3f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(1.5f);        //애니메이션 지속 시간(10.03 수정)
+        atkAudio[1].PlayOneShot(atkAudio[1].clip);    //강 공격 (손뼉 치기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(1.5f);        //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간
         StartCoroutine(Think());
@@ -268,7 +272,9 @@ public class OgreCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doRangedWeakAttack");
-        yield return new WaitForSeconds(3.6f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(1.6f);        //애니메이션 지속 시간(10.03 수정)
+        atkAudio[2].PlayOneShot(atkAudio[2].clip);    //약 공격 (촉수 찌르기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(2f);        //애니메이션 지속 시간(10.03 수정)
         isAttacking = false;
         yield return new WaitForSeconds(2f);        //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
@@ -278,7 +284,9 @@ public class OgreCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
-        yield return new WaitForSeconds(4.2f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(1.2f);        //애니메이션 지속 시간
+        atkAudio[3].PlayOneShot(atkAudio[3].clip);    //강 공격 (토하기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(3.0f);        //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
@@ -288,7 +296,9 @@ public class OgreCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doSkill1");
-        yield return new WaitForSeconds(3.1f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.4f);        //애니메이션 지속 시간
+        atkAudio[4].PlayOneShot(atkAudio[4].clip);    //스킬 공격 (광란 팔 휘두르기)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(2.7f);        //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
@@ -298,7 +308,9 @@ public class OgreCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doSkill2");
-        yield return new WaitForSeconds(3.8f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(1.8f);        //애니메이션 지속 시간
+        atkAudio[5].PlayOneShot(atkAudio[5].clip);    //스킬 공격 (솟아나는 촉수)소리 추가(10.03 수정)
+        yield return new WaitForSeconds(2f);        //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(3f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
