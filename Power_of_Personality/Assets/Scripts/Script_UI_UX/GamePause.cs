@@ -9,6 +9,8 @@ public class GamePause : MonoBehaviour
     public Button resumeButton;
     public GameObject pauseWindow;
     private Vector3 originalScale;
+
+    public static bool IsPaused;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,17 +20,20 @@ public class GamePause : MonoBehaviour
             pauseButton.onClick.AddListener(PauseWindowOpen);
         if(resumeButton != null)
         resumeButton.onClick.AddListener(ResumeGame);
+        IsPaused = false;
     }
 
     public void PauseWindowOpen()
     {
         pauseWindow.transform.localScale = originalScale;
+        IsPaused = true;
         GamePause.PauseGame();
     }
 
     public void PauseWindowClose()
     {
         pauseWindow.transform.localScale = originalScale;
+        IsPaused = false;
         GamePause.ResumeGame();
     }
 
@@ -45,10 +50,12 @@ public class GamePause : MonoBehaviour
     public void MultiPauseWindowOpen()
     {
         pauseWindow.transform.localScale = originalScale;
+        IsPaused = true;
     }
 
     public void MultiPauseWindowClose()
     {
         pauseWindow.transform.localScale = originalScale;
+        IsPaused = false;
     }
 }

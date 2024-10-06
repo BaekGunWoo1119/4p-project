@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SettingWindowCtrl : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SettingWindowCtrl : MonoBehaviour
     public KeyDownCtrl escKeyDown; //ESC 키 제어
     private Vector3 originalScale;
     private Button button;
+    private bool IsSetting= false;
 
     private void Start()
     {
@@ -29,8 +31,13 @@ public class SettingWindowCtrl : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-
+        {    
+            if(IsSetting == true){
+                if(SceneManager.GetActiveScene().name != "Forest_Example_Multi"){
+                        GamePause.ResumeGame();
+                }
+                Setting_Off();
+            }
         }
     }
 
@@ -42,6 +49,7 @@ public class SettingWindowCtrl : MonoBehaviour
             // 오브젝트의 스케일을 초기 스케일로 변경
             setWindow.transform.localScale = originalScale;
             escKeyDown.enabled = false;
+            IsSetting = true;
         }
     }
 
@@ -50,6 +58,7 @@ public class SettingWindowCtrl : MonoBehaviour
     {
         setWindow.transform.localScale = new Vector3(0, 0, 0);
         escKeyDown.enabled = true;
+        IsSetting = false;
     }
 
 

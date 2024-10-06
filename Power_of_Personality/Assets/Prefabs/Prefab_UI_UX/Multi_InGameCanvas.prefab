@@ -1077,7 +1077,7 @@ GameObject:
   - component: {fileID: 4099403402179722126}
   - component: {fileID: 5473745168658832777}
   - component: {fileID: 3556261965252770656}
-  - component: {fileID: 571927077700461576}
+  - component: {fileID: 5184221445678299198}
   - component: {fileID: 7433456758766760725}
   - component: {fileID: 4989073118958657359}
   - component: {fileID: 2460794788476176127}
@@ -1207,7 +1207,7 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.29803923}
   m_EffectDistance: {x: 0, y: -6}
   m_UseGraphicAlpha: 1
---- !u!114 &571927077700461576
+--- !u!114 &5184221445678299198
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1216,10 +1216,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 179895337800109281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d963e7925feb69746bae22afe5ef5be7, type: 3}
+  m_Script: {fileID: 11500000, guid: a1dcbb3b23f065d4197e45c4e456a0c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeObj: {fileID: 7854831744061741674}
+  setWindow: {fileID: 7854831744061741674}
+  escKeyDown: {fileID: 0}
 --- !u!114 &7433456758766760725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94833,7 +94834,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 344629201721256973}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.33333334
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -122436,7 +122437,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 6019109764374958396}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.33333334
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -123413,9 +123414,9 @@ RectTransform:
   m_Father: {fileID: 3225348806457305634}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 341.5, y: 0}
   m_SizeDelta: {x: 683, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9055376930683009002

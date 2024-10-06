@@ -12,17 +12,21 @@ public class KeyDownCtrl : MonoBehaviour
     {
         if (Input.GetKeyDown(ctrlKey))
         {
-            if (ctrlKey == KeyCode.Escape && SceneManager.GetActiveScene().name != "Forest_Example_Multi")
+            if (ctrlKey == KeyCode.Escape)
             {
                 // Escape 키가 눌렸을 때 게임의 상태를 체크하고 일시 정지 혹은 재개
-                if (Time.timeScale == 0)
+                if (GamePause.IsPaused == true)
                 {
-                    GamePause.ResumeGame();
+                    if(SceneManager.GetActiveScene().name != "Forest_Example_Multi"){
+                        GamePause.ResumeGame();
+                    }
                     UnSetActiveObj();
                 }
                 else
                 {
-                    GamePause.PauseGame();
+                    if(SceneManager.GetActiveScene().name != "Forest_Example_Multi"){
+                        GamePause.PauseGame();
+                    }
                     SetActiveObj();
                 }
             }
@@ -40,6 +44,7 @@ public class KeyDownCtrl : MonoBehaviour
         {
             // 오브젝트의 스케일을 초기 스케일로 변경
             activeObj.transform.localScale = new Vector3(1, 1, 1);
+            GamePause.IsPaused = true;
         }
     }
 
@@ -49,6 +54,7 @@ public class KeyDownCtrl : MonoBehaviour
         {
             // 오브젝트의 스케일을 초기 스케일로 변경
             activeObj.transform.localScale = new Vector3(0, 0, 0);
+            GamePause.IsPaused = false;
         }
     }
 }
