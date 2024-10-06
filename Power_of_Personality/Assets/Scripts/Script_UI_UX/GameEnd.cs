@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameEnd : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class GameEnd : MonoBehaviour
     private TMP_Text endText; //정보 적을 텍스트
     public static float PlayTime = 0.0f;
     private float TempPlayTime = 0.0f;
+    private int defaultBonus;
+    private int afterBonus;
+    private int BonusGap;
 
     void Start()
     {
@@ -30,6 +34,7 @@ public class GameEnd : MonoBehaviour
         targetGRP = new Graphic[gameOverGRP.transform.childCount + 1];
         gameOverGRP.SetActive(false);
         PlayTime = 0.0f;
+        defaultBonus = PlayerPrefs.GetInt("BonusStat", 0);
     }
 
     void Update()
@@ -54,9 +59,10 @@ public class GameEnd : MonoBehaviour
         
         // 페이드 중이 아닌 경우에만 페이드를 시작
         if (fadeIn == true)
-        {
+        {   
+            SetBonusStat();
             gameOverGRP.SetActive(true);
-            endText.text = "플레이 시간 : " + (int)PlayTime +" 초"+ "\n최종 MBTI : "+ PlayerPrefs.GetString("PlayerMBTI") +"\n추가 보너스 스텟 : 1";
+            endText.text = "플레이 시간 : " + (int)PlayTime +" 초"+ "\n최종 MBTI : "+ PlayerPrefs.GetString("PlayerMBTI") +"\n추가 보너스 스텟 : "+ BonusGap;
             targetGRP[0] = gameOverGRP.GetComponent<Graphic>();
             for(int i = 1; i <= gameOverGRP.transform.childCount; i++)
             {
@@ -100,4 +106,26 @@ public class GameEnd : MonoBehaviour
         SceneManager.LoadScene("1 (Main)");
     }
 
+    private void SetBonusStat()
+    {   
+        Scene scene = SceneManager.GetActiveScene(); //함수 안에 선언하여 사용한다.
+        switch (scene.name){
+            case "Forest_Example":
+                afterBonus = 0;
+                break;
+            case "Cave_Example":
+                afterBonus = 4;
+                break;
+            case "Sewer_Example":
+                afterBonus = 8;
+                break;
+            case "Castle_Example":
+                afterBonus = 12;
+                break;
+        }
+        BonusGap = afterBonus - defaultBonus;
+        if(BonusGap > 0){
+            PlayerPrefs.SetInt("BonusStat", afterBonus);
+        }
+    }
 }
