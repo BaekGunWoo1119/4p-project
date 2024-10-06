@@ -67,7 +67,7 @@ public class DruidCtrl : BossCtrl
         base.Update();
         SkillYRot = transform.localEulerAngles.y;
         //캔버스 뒤집어지는 오류 해결(08.29)
-        //일단 비활성화(09.30)
+        MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
         /*
         if(GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y > 0 && GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y < 180)
             MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot + 90f, 0);

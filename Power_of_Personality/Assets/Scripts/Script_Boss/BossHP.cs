@@ -9,24 +9,27 @@ public class BossHP : MonoBehaviour
     public Image hpBarImg;
     public GameObject bossType;
 
-    void Start(){
+    void Start()
+    {
         hpBarImg.gameObject.transform.parent.localScale = new Vector3(0, 0, 0);
     }
     
-    void Update(){
+    void Update()
+    {
+        Debug.Log("HP바 변경 잘 됨");
         bossType = GameObject.FindWithTag("Boss");
         if(bossType != null){
-            if(bossType.name == "Druid")
+            if(bossType.name == "Druid(Clone)")
             {
                 hpBarImg.sprite = bossHpImg[0];
             }
 
-            if(bossType.name == "Stone_Golem")
+            if(bossType.name == "Stone_Golem(Clone)")
             {
                 hpBarImg.sprite = bossHpImg[1];
             }
 
-            if(bossType.name == "Ogre")
+            if(bossType.name == "Ogre(Clone)")
             {
                 hpBarImg.sprite = bossHpImg[2];
             }            
