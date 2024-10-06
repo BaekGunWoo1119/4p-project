@@ -140,6 +140,7 @@ public class Server_BossCtrl : MonoBehaviourPun, IPunObservable
 
         // 레이캐스트를 실행하여 결과를 저장
         bool canTeleport = Physics.Raycast(rayOrigin, rayDirection, rayLength, LayerMask.GetMask("Wall"));
+        this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y, 0);
 
         // 시각화를 위해 Debug.DrawRay를 사용하여 레이를 그림
         Debug.DrawRay(rayOrigin, rayDirection * rayLength, canTeleport ? Color.green : Color.red);
