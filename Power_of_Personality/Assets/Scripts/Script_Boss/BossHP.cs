@@ -32,7 +32,22 @@ public class BossHP : MonoBehaviour
             if(bossType.name == "Ogre(Clone)")
             {
                 hpBarImg.sprite = bossHpImg[2];
-            }            
+            }   
+
+            if(bossType.name == "Server_Druid(Clone)")
+            {
+                hpBarImg.sprite = bossHpImg[0];
+            }
+
+            if(bossType.name == "Server_Stone_Golem(Clone)")
+            {
+                hpBarImg.sprite = bossHpImg[1];
+            }
+
+            if(bossType.name == "Server_Ogre(Clone)")
+            {
+                hpBarImg.sprite = bossHpImg[2];
+            }          
         }
     }
 }

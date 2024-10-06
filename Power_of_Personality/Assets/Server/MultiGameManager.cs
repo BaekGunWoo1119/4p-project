@@ -205,6 +205,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         WaveUpdate(); // 다음 웨이브 설정
         // 상점으로 이동
         GameObject.Find("EventSystem").GetComponent<Shop_PortalCtrl>().Open_Shop(PlayerCol);
+        PlayerPrefs.SetInt("Shop", 1);
         Player.transform.position = ShopTr.position;
     }
 
