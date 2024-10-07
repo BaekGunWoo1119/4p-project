@@ -8,25 +8,36 @@ public class SpellHover : MonoBehaviour
     private string titleText;
     private string innerText;
     private float a;
+    private float screenWidth;
+    private float screenHeight;
 
     void Start()
     {
         actObj.transform.localScale = new Vector3(0, 0, 0);
+        // 현재 화면의 크기 정보 가져오기
+        screenWidth = Screen.width;
+        screenHeight = Screen.height;
     }
 
     void Update() 
     {         
-        //호버 시 따라다니게
+        // 호버 시 따라다니게
         float yRect = Input.mousePosition.y;
-        if(yRect > 580)
+        if (yRect > screenHeight * 0.537f)  // 580 / 1080을 비율로 계산
         {
-            a = 820;
+            a = screenHeight * 0.6f;      // 820 / 1080을 비율로 계산
         }
-        else if(yRect <= 580)
+        else if (yRect <= screenHeight * 0.537f)  // 580 / 1080
         {
-            a = 210;
+            a = screenHeight * 0.3f;      // 210 / 1080
         }
-        actObj.GetComponent<RectTransform>().localPosition = new Vector3(Input.mousePosition.x - 900, Input.mousePosition.y - a, Input.mousePosition.z);
+
+        // 마우스 위치에 맞게 actObj의 위치를 설정 (화면 비율 고려)
+        actObj.GetComponent<RectTransform>().localPosition = new Vector3(
+            (Input.mousePosition.x / screenWidth) * 1920 - 900,  // x 좌표 비율 조정
+            (Input.mousePosition.y / screenHeight) * 1080 - a,   // y 좌표 비율 조정
+            Input.mousePosition.z
+        );
     }
 
     public void Spell_SwiftnessHover()
