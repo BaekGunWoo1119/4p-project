@@ -15,7 +15,8 @@ public class Trap_FlowerCheck : MonoBehaviour
     }
 
     public IEnumerator PosionOn()
-    {
+    {   
+        yield return new WaitForSeconds(1f);
         Posion.SetActive(true);
         yield return new WaitForSeconds(3f);
         Posion.SetActive(false);
