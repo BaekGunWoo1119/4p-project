@@ -8,24 +8,24 @@ public class LoadingManager : MonoBehaviour
 {
     private string nextScene;
     public Slider loadingBar;
+    public AsyncOperation op;
 
     // Start is called before the first frame update
     void Start()
     {
         nextScene = PlayerPrefs.GetString("NextScene_Name");
+        op = SceneManager.LoadSceneAsync(nextScene);
         StartCoroutine(LoadScene());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     IEnumerator LoadScene()
     {
         yield return null;
-        AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
         op.allowSceneActivation = false;
         float timer = 0.0f;
         while (!op.isDone)
@@ -42,6 +42,9 @@ public class LoadingManager : MonoBehaviour
             }
             else
             {
+                if(timer == 0)
+                    timer = 0.5f;
+                    
                 loadingBar.value = Mathf.Lerp(loadingBar.value, 1f, timer);
                 if (loadingBar.value == 1.0f)
                 {
@@ -49,6 +52,13 @@ public class LoadingManager : MonoBehaviour
                     yield break;
                 }
             }
+        }
+
+        //무한로딩 해결을 위해 추가
+        if(op.isDone)
+        {
+            loadingBar.value = 1f;
+            SceneManager.LoadScene(nextScene);
         }
     }
 }
