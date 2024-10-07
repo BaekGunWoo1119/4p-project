@@ -43,12 +43,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
 
             if(PhotonNetwork.InRoom == true)
             {
+                PlayersList = PhotonNetwork.PlayerList;
+                Debug.Log(PlayersList.Length);
                 ResetSetting();
                 Debug.Log((string)PhotonNetwork.PlayerList[0].CustomProperties["PlayerClass"]);
                 Player1Class.text = (string)PhotonNetwork.PlayerList[0].CustomProperties["PlayerClass"];
                 if(PhotonNetwork.PlayerList.Length>1)
                 {
                     Player2Class.text = (string)PhotonNetwork.PlayerList[1].CustomProperties["PlayerClass"];
+                    if((bool)PhotonNetwork.PlayerList[0].CustomProperties["IsReady"] == false || (bool)PhotonNetwork.PlayerList[0].CustomProperties["IsReady"] ==null){
+                        Player1Ready.SetActive(false);
+                        Player1Wait.SetActive(true);
+                    }
+                    else{
+                        Player1Ready.SetActive(true);
+                        Player1Wait.SetActive(false);
+                    }
                     if((bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] == null || (bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] ==false)
                     {
                         Player2Ready.SetActive(false);
@@ -58,20 +68,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
                         Player2Ready.SetActive(true);
                         Player2Wait.SetActive(false);
                     }
-                    if((bool)PhotonNetwork.PlayerList[0].CustomProperties["IsReady"] == false || (bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"] ==false){
-                        Player1Ready.SetActive(false);
-                        Player1Wait.SetActive(true);
-                    }
-                    else{
-                        Player1Ready.SetActive(true);
-                        Player1Wait.SetActive(false);
-                    }
                 }
                 else{
                     Player1Ready.SetActive(false);
                     Player1Wait.SetActive(true);
                 }
-        }
+            }
     }
     
     public void Update(){
@@ -89,6 +91,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
                 Player2.SetActive(false);
                 
             }
+
+            //Debug.Log((bool)PhotonNetwork.PlayerList[1].CustomProperties["IsReady"]);
         }
     }
 
@@ -308,11 +312,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         return IsAllReady;
     }
 
-    public void ResetSetting(){
+    public static void ResetSetting(){
         PlayerProperties["PlayerClass"] = PlayerPrefs.GetString("PlayerClass");
         PlayerProperties["IsReady"]=false;
         PlayerProperties["IsExitShop"]=false;
         PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties); //클래스 프로퍼티 설정
+    }
+
+    public void OnPlayerEnteredRoom(){
+        ResetSetting();
     }
 #endregion
 
