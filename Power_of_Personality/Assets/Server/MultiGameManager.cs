@@ -203,6 +203,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         // 체력 회복
         CurrentTime = 0f; // 초기화 추가
         WaveUpdate(); // 다음 웨이브 설정
+        SetSpawnPoint();
         // 상점으로 이동
         GameObject.Find("EventSystem").GetComponent<Shop_PortalCtrl>().Open_Shop(PlayerCol);
         PlayerPrefs.SetInt("Shop", 1);
@@ -270,7 +271,6 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                 case 1:
                 case 2:
                 case 3:
-                    StageSpawnPoints[0].tag="CurrentSpawnPotint";
                     SpawnPointViewID = StageSpawnPoints[0].gameObject.GetComponent<PhotonView>().ViewID;
                     MultiPlayStart.Instance.PlayerSetParent(playerViewID,SpawnPointViewID);
                     Player.transform.position = StageSpawnPoints[0].position;
@@ -278,8 +278,6 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                 case 4:
                 case 5:
                 case 6:
-                    StageSpawnPoints[0].tag="Untagged";
-                    StageSpawnPoints[1].tag="CurrentSpawnPotint";
                     SpawnPointViewID = StageSpawnPoints[1].gameObject.GetComponent<PhotonView>().ViewID;
                     MultiPlayStart.Instance.PlayerSetParent(playerViewID,SpawnPointViewID);
                     Player.transform.position = StageSpawnPoints[1].position;
@@ -287,8 +285,6 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                 case 7:
                 case 8:
                 case 9:
-                    StageSpawnPoints[1].tag="Untagged";
-                    StageSpawnPoints[2].tag="CurrentSpawnPotint";
                     SpawnPointViewID = StageSpawnPoints[2].gameObject.GetComponent<PhotonView>().ViewID;
                     MultiPlayStart.Instance.PlayerSetParent(playerViewID,SpawnPointViewID);
                     Player.transform.position = StageSpawnPoints[2].position;
@@ -296,13 +292,39 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                 case 10:
                 case 11:
                 case 12:
-                    StageSpawnPoints[2].tag="Untagged";
-                    StageSpawnPoints[3].tag="CurrentSpawnPotint";
                     SpawnPointViewID = StageSpawnPoints[3].gameObject.GetComponent<PhotonView>().ViewID;
                     MultiPlayStart.Instance.PlayerSetParent(playerViewID,SpawnPointViewID);
                     Player.transform.position = StageSpawnPoints[3].position;
                     break;
             }
+        }
+    }
+    public void SetSpawnPoint(){
+        switch (CurrentWave)
+        {
+                case 1:
+                case 2:
+                case 3:
+                    StageSpawnPoints[0].tag="CurrentSpawnPotint";
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                    StageSpawnPoints[0].tag="Untagged";
+                    StageSpawnPoints[1].tag="CurrentSpawnPotint";
+                    break;
+                case 7:
+                case 8:
+                case 9:
+                    StageSpawnPoints[1].tag="Untagged";
+                    StageSpawnPoints[2].tag="CurrentSpawnPotint";
+                    break;
+                case 10:
+                case 11:
+                case 12:
+                    StageSpawnPoints[2].tag="Untagged";
+                    StageSpawnPoints[3].tag="CurrentSpawnPotint";
+                    break;
         }
     }
 

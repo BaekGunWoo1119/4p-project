@@ -609,6 +609,11 @@ public class SceneLoader : MonoBehaviour
     void MultiLobby_Back_Pressed()
     {
         LobbyManager.Leave();
+        //게임 나갈 때 인벤 초기화 시키는 코드
+        GameObject Inven = GameObject.Find("InventoryCtrl");
+        if(Inven != null)
+            Destroy(Inven);
+        Status.isDie(); //10.07
     }
     void Setting_Back_Pressed()
     {
@@ -617,6 +622,7 @@ public class SceneLoader : MonoBehaviour
         GameObject Inven = GameObject.Find("InventoryCtrl");
         if(Inven != null)
             Destroy(Inven);
+        Status.isDie(); //10.07
     }
     void MBTIChoice_Back_Pressed()
     {
