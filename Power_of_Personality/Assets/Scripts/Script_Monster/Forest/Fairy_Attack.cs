@@ -5,6 +5,8 @@ public class Fairy_Attack : MonoBehaviour
     private Transform PlayerTr;
     private Rigidbody rb;
     public float ATK = 5.0f;
+    private string fairyParent = "Monster(Script)"; // 찾고자 하는 부모 객체의 이름
+    public MonsterCtrl monsterCtrl;
     void Awake()
     {
         PlayerTr = GameObject.FindWithTag("Player").transform;
@@ -17,13 +19,34 @@ public class Fairy_Attack : MonoBehaviour
         else{
             rb.AddForce(Dir.normalized * 10, ForceMode.Impulse);
         }
+        Transform parent = this.transform;
+        monsterCtrl = null;
+
+        while (parent != null)
+        {
+            if (parent.name ==  fairyParent)
+            {
+                monsterCtrl = parent.GetComponent<MonsterCtrl>();
+                break;
+            }
+            parent = parent.parent;
+        }
+
+        this.transform.SetParent(null);
+        
     }
 
     private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            if (monsterCtrl != null && Status.set2_3_Activated)
+            {
+                float reflectDamage = Status.TotalArmor;
+                StartCoroutine(monsterCtrl.TakeDamage(reflectDamage));
+            }
+            this.transform.localPosition = new Vector3(0, -600f, 0);
+            Destroy(gameObject,5.0f);
         }
     }
 
@@ -31,4 +54,5 @@ public class Fairy_Attack : MonoBehaviour
     {
         transform.localRotation = Quaternion.identity; // 초기 회전으로 설정
     }
+    
 }
