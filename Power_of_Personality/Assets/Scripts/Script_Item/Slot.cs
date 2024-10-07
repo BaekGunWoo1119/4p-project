@@ -13,7 +13,7 @@ public class Slot : MonoBehaviour
     //Text amountText;
     void Start()
     {
-        defaultSprite = transform.GetChild(1).GetComponent<Image>().sprite;
+        defaultSprite = transform.GetChild(0).GetComponent<Image>().sprite;
         //amountText = transform.GetChild(0).GetComponent<Text>();
         //amountText.text = "";
 
@@ -27,16 +27,16 @@ public class Slot : MonoBehaviour
     
     public void CheckForItem()
     {
-        if(transform.childCount > 3)
+        if(transform.childCount > 2)
         {
-            slotsItem = transform.GetChild(3).GetComponent<Item>();
-            itemID = transform.GetChild(3).GetComponent<Item>().itemID;
-            transform.GetChild(1).GetComponent<Image>().sprite = slotsItem.itemSprite;
+            slotsItem = transform.GetChild(2).GetComponent<Item>();
+            itemID = transform.GetChild(2).GetComponent<Item>().itemID;
+            transform.GetChild(0).GetComponent<Image>().sprite = slotsItem.itemSprite;
         }
         else
         {
             slotsItem = null;
-            transform.GetChild(1).GetComponent<Image>().sprite = defaultSprite;
+            transform.GetChild(0).GetComponent<Image>().sprite = defaultSprite;
             //amountText.text = "";
         }
     }

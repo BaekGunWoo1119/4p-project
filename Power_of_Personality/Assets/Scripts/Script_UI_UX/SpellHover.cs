@@ -20,7 +20,12 @@ public class SpellHover : MonoBehaviour
     }
 
     void Update() 
-    {         
+    {   
+        if(screenWidth != Screen.width)
+            screenWidth = Screen.width;
+        if(screenHeight != Screen.height)
+            screenHeight = Screen.height;
+                  
         // 호버 시 따라다니게
         float yRect = Input.mousePosition.y;
         if (yRect > screenHeight * 0.537f)  // 580 / 1080을 비율로 계산
