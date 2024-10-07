@@ -118,9 +118,9 @@ public class ScreenModeManager : MonoBehaviour
         // Dropdown에 표시될 화면 모드 리스트를 준비
         List<string> options = new List<string>
         {
-            "Window",
-            "FullScreenWindow",
-            "FullScreen"
+            "창모드",
+            "테두리 없음",
+            "전체 화면"
         };
 
         // Dropdown에 옵션 추가
