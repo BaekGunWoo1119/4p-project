@@ -16,6 +16,7 @@ public class PhotonCallBack : MonoBehaviourPunCallbacks
     public Hashtable PlayerProperties;
 
     private Player[] PlayersList;
+    public static bool IsSelectClass = false;
 
     // 마스터 서버 접속 성공시 자동 실행
     public override void OnConnectedToMaster() {

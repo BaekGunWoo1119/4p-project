@@ -62,22 +62,22 @@ public class MultiPlayStart : MonoBehaviourPunCallbacks
         Debug.Log("SpawnPlayer");
         if (PlayerClass == "Wizard")
         {
-            Player_Character = PhotonNetwork.Instantiate("Server/Wizard/Server_Player_wizard", SpawnPoint.position, SpawnPoint.rotation, 0);
+            Player_Character = PhotonNetwork.Instantiate("Server/Wizard/Server_Player_wizard", SpawnPoint.position,Quaternion.Euler(0, 90, 0), 0);
             Debug.Log("Wizard");
         }
         else if (PlayerClass == "Archer")
         {
-            Player_Character = PhotonNetwork.Instantiate("Server/Archer/Server_Player_archer", SpawnPoint.position, SpawnPoint.rotation, 0);
+            Player_Character = PhotonNetwork.Instantiate("Server/Archer/Server_Player_archer", SpawnPoint.position, Quaternion.Euler(0, 90, 0), 0);
             Debug.Log("Archer");
         }
         else if (PlayerClass == "Warrior")
         {
-            Player_Character = PhotonNetwork.Instantiate("Server/Warrior/Server_Player_warrior", SpawnPoint.position, SpawnPoint.rotation, 0);
+            Player_Character = PhotonNetwork.Instantiate("Server/Warrior/Server_Player_warrior", SpawnPoint.position, Quaternion.Euler(0, 90, 0), 0);
             Debug.Log("Warrior");
         }
         else if (PlayerClass == "Rogue")
         {
-            Player_Character = PhotonNetwork.Instantiate("Server/Rogue/Server_Player_rogue", SpawnPoint.position, SpawnPoint.rotation, 0);
+            Player_Character = PhotonNetwork.Instantiate("Server/Rogue/Server_Player_rogue", SpawnPoint.position, Quaternion.Euler(0, 90, 0), 0);
             Debug.Log("Rogue");
         }
         if (Player_Character != null)

@@ -29,6 +29,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
     public TextMeshProUGUI Player1Class;
     public TextMeshProUGUI Player2Class;
     public TextMeshProUGUI CurrentLobbyCode;
+    public GameObject readywarning;
+    public static LobbyManager LM;
+
 
     #endregion
     public static Hashtable PlayerProperties = new Hashtable(); //로컬플레이어 프로퍼티
@@ -39,6 +42,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
     private static string TempLobbyCode;
 
     public void Start(){
+        LM = this;
         CurrentLobbyCode.text = TempLobbyCode;
 
             if(PhotonNetwork.InRoom == true)
@@ -212,6 +216,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         PlayerProperties["PlayerClass"]="Archer";
         PlayerProperties["IsReady"]=false;
         PlayerPrefs.SetString("PlayerClass","Archer");
+        PhotonCallBack.IsSelectClass = true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties);
     }
     //전사 선택
@@ -219,6 +224,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         PlayerProperties["PlayerClass"]="Warrior";
         PlayerProperties["IsReady"]=false;
         PlayerPrefs.SetString("PlayerClass","Warrior");
+        PhotonCallBack.IsSelectClass = true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties);
     }
     //도적 선택
@@ -226,6 +232,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         PlayerProperties["PlayerClass"]="Rogue";
         PlayerProperties["IsReady"]=false;
         PlayerPrefs.SetString("PlayerClass","Rogue");
+        PhotonCallBack.IsSelectClass = true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties);
     }
     //법사 선택
@@ -233,6 +240,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         PlayerProperties["PlayerClass"]="Wizard";
         PlayerProperties["IsReady"]=false;
         PlayerPrefs.SetString("PlayerClass","Wizard");
+        PhotonCallBack.IsSelectClass = true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties);
     }
 
@@ -255,13 +263,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
 
 //레디
     public static void Ready(){
-        if((bool)PlayerProperties["IsReady"]==true){
+        if(PhotonCallBack.IsSelectClass == true){
+            if((bool)PlayerProperties["IsReady"]==true){
             PlayerProperties["IsReady"]=(bool)false;
+            }
+            else{
+                PlayerProperties["IsReady"]=(bool)true;
+            }
+            PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties);
         }
         else{
-            PlayerProperties["IsReady"]=(bool)true;
-        }
-        PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerProperties);
+            LM.StartCoroutine(LM.ReadyWarning());
+        } 
     }
 
 //랜덤 로비코드 생성
@@ -321,6 +334,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
 
     public void OnPlayerEnteredRoom(){
         ResetSetting();
+    }
+
+    public IEnumerator ReadyWarning(){
+        readywarning.SetActive(true);
+        yield return new WaitForSeconds(3f);
+        readywarning.SetActive(false);
     }
 #endregion
 
