@@ -7,21 +7,22 @@ using UnityEngine.UI;
 public class CoinCtrl : MonoBehaviour
 {
     private TextMeshProUGUI CoinText;
+    private AudioSource audio;
 
     private void Start()
     {
         CoinText = GameObject.Find("CoinText").GetComponent<TextMeshProUGUI>();
+        audio = GameObject.Find("CoinText").GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
         {
+            audio.PlayOneShot(audio.clip);
             Destroy(this.gameObject);
             float currentCoin = PlayerPrefs.GetFloat("Coin", 0);
             PlayerPrefs.SetFloat("Coin", currentCoin + 1);
-            //Debug.Log("���� = " + PlayerPrefs.GetFloat("Coin"));
-            //CoinText.text = PlayerPrefs.GetFloat("Coin").ToString();
         }
     }
 }
