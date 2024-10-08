@@ -103,6 +103,7 @@ public class MonsterCtrl : MonoBehaviour
 
     public virtual void Update()
     {
+        this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y, 0f);
         if(Status.Spell_TimeSlowdown_ON){
             AnimSpeed = 0.3f;
             anim.SetFloat("AnimSpeed", AnimSpeed);
@@ -121,7 +122,7 @@ public class MonsterCtrl : MonoBehaviour
         AttackCoolTime += Time.deltaTime;
         TickCoolTime += Time.deltaTime;
         hitCount -= Time.deltaTime;
-        if(PlayerTr != null && !isSpawn)
+        if(PlayerTr != null && !isSpawn && !anim.GetBool("isAttack"))
         {
             Turn();
         }
