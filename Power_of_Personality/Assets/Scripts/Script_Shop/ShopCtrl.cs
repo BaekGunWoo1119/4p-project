@@ -27,6 +27,8 @@ public class ShopCtrl : MonoBehaviour
     int C_Slots;
     int C_Items;
 
+    private AudioSource buyAudio;
+
     //아이템 가격
 
     void Awake()
@@ -60,6 +62,9 @@ public class ShopCtrl : MonoBehaviour
         //리롤 표시 추가(10.02)
         if(rerollShow != null)
             rerollShow.text = "남은 새로고침 횟수 : " + PlayerPrefs.GetInt("Shop");
+
+        buyAudio = this.GetComponent<AudioSource>();
+        buyAudio.Stop();
     }
 
     public void GetRandomItemCode()
@@ -257,6 +262,7 @@ public class ShopCtrl : MonoBehaviour
             }
             
             Debug.Log(index + "번 구매 완료");
+            buyAudio.PlayOneShot(buyAudio.clip);
             soldOut[index].SetActive(true);
 
             InvenCtrl.itemCount++;
