@@ -6,6 +6,8 @@ using System.Linq;
 
 public class Inventory : MonoBehaviour
 {
+    private bool isDuplicated;
+    public List<int> invenlist;
     public GameObject inventoryObject;
     public InventoryCtrl InvenCtrl;
 
@@ -53,6 +55,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(Item itemToBeAdded, Item startingItem = null)
     {
+        isDuplicated = false;
         List<Slot> emptySlots = new List<Slot>();
 
         foreach(Slot i in slots)
@@ -61,31 +64,38 @@ public class Inventory : MonoBehaviour
         }
         if(emptySlots.Count > 0)
         {
-            itemToBeAdded.transform.parent = emptySlots[itemToBeAdded.SlotIndex].transform;
-            itemToBeAdded.gameObject.SetActive(false);
-            Status.FixedAD += itemToBeAdded.FixedAD;
-            Status.PercentAD += itemToBeAdded.PercentAD;
-            Status.FixedArmor += itemToBeAdded.FixedArmor;
-            Status.PercentArmor += itemToBeAdded.PercentArmor;
-            Status.FixedSpeed += itemToBeAdded.FixedSpeed;
-            Status.PercentSpeed += itemToBeAdded.PercentSpeed;
-            Status.FixedADC += itemToBeAdded.FixedADC;
-            Status.PercentADC += itemToBeAdded.PercentADC;
-            Status.FixedAP += itemToBeAdded.FixedAP;
-            Status.PercentAP += itemToBeAdded.PercentAP;
-            Status.FixedCooltime += itemToBeAdded.FixedCooltime;
-            Status.PercentCooltime += itemToBeAdded.PercentCooltime;
-            Status.FixedFire += itemToBeAdded.FixedFire;
-            Status.PercentFire += itemToBeAdded.PercentFire;
-            Status.FixedIce += itemToBeAdded.FixedIce;
-            Status.PercentIce += itemToBeAdded.PercentIce;
-            Status.StatUpdate();
-
+            foreach(int id in invenlist){
+                if(id == itemToBeAdded.itemID){
+                    isDuplicated = true;
+                }
+            }
+            if(isDuplicated != true){
+                    itemToBeAdded.transform.parent = emptySlots[itemToBeAdded.SlotIndex].transform;
+                    itemToBeAdded.gameObject.SetActive(false);
+                    Status.FixedAD += itemToBeAdded.FixedAD;
+                    Status.PercentAD += itemToBeAdded.PercentAD;
+                    Status.FixedArmor += itemToBeAdded.FixedArmor;
+                    Status.PercentArmor += itemToBeAdded.PercentArmor;
+                    Status.FixedSpeed += itemToBeAdded.FixedSpeed;
+                    Status.PercentSpeed += itemToBeAdded.PercentSpeed;
+                    Status.FixedADC += itemToBeAdded.FixedADC;
+                    Status.PercentADC += itemToBeAdded.PercentADC;
+                    Status.FixedAP += itemToBeAdded.FixedAP;
+                    Status.PercentAP += itemToBeAdded.PercentAP;
+                    Status.FixedCooltime += itemToBeAdded.FixedCooltime;
+                    Status.PercentCooltime += itemToBeAdded.PercentCooltime;
+                    Status.FixedFire += itemToBeAdded.FixedFire;
+                    Status.PercentFire += itemToBeAdded.PercentFire;
+                    Status.FixedIce += itemToBeAdded.FixedIce;
+                    Status.PercentIce += itemToBeAdded.PercentIce;
+                    Status.StatUpdate();
+                    invenlist.Add(itemToBeAdded.itemID);
+                }
             Debug.Log(itemToBeAdded.itemID);
-
             Status.SetUpdate(itemToBeAdded.itemID);
         }
     }
+
 
     public void ItemPlus()
     {

@@ -93,6 +93,7 @@ public class Status : MonoBehaviour
     public static string MBTI; 
     void Start()
     {
+        isDie();
         Array.Fill(itemIds, -1);
         IsShop = false;
         BonusStat = PlayerPrefs.GetInt("Stat") * 10;
