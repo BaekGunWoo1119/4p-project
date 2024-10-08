@@ -1168,7 +1168,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public virtual IEnumerator Dodge()
     {
         DodgeAmount-=1;
-        StartCoroutine(Immune(0.5f));
+        StartCoroutine(Immune(1.0f));
         PlayAnim("isDodge");
         isDodge = true;
 
