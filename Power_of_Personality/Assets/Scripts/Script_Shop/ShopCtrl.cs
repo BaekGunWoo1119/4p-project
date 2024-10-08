@@ -57,6 +57,8 @@ public class ShopCtrl : MonoBehaviour
 
         warningWindow.SetActive(false);
 
+        PlayerPrefs.SetInt("Shop", PlayerPrefs.GetInt("Shop") + 1);
+
         GetRandomItemCode();
 
         //리롤 표시 추가(10.02)
@@ -141,7 +143,7 @@ public class ShopCtrl : MonoBehaviour
         {
             if(PlayerPrefs.GetInt("Shop") >= 1) //코인소모에서 리롤횟수 소모로 바꿈 (09.28 정도훈)
             {
-                int refresh = PlayerPrefs.GetInt("Shop", 0);
+                int refresh = PlayerPrefs.GetInt("Shop");
                 PlayerPrefs.SetInt("Shop", refresh - 1);
                 //리롤 소모 횟수 표시(10.02)
                 if(rerollShow != null)
@@ -291,6 +293,81 @@ public class ShopCtrl : MonoBehaviour
             warningWindow.SetActive(true);
             yield return new WaitForSeconds(0.5f);
             warningWindow.SetActive(false);
+        }
+    }
+
+    public void Reroll_Item()
+    {
+        int[] randItemCode = new int[C_Slots];
+        bool isSame;
+        for (int i = 0; i < C_Slots; ++i)
+        {
+            if (newItem[i] != null)
+            {
+                Destroy(newItem[i]);
+            }
+        }
+        for (int i = 0; i < C_Slots; ++i)
+        {
+            while (true)
+            {
+                randItemCode[i] = Random.Range(0, C_Items);
+                soldOut[i].SetActive(false);
+
+                if (InvenCtrl.collectedItemsID.Contains(randItemCode[i])|| L_ItemID.Contains(randItemCode[i]))
+                {
+                    continue;
+                }
+
+                isSame = false;
+
+                for (int j = 0; j < i; ++j)
+                {
+                    if (randItemCode[j] == randItemCode[i])
+                    {
+                        isSame = true;
+                        break;
+                    }
+                }
+                if (!isSame) break;
+            }
+        }
+            
+        for (int i = 0; i < C_Slots; ++i)
+        {
+            if (Items[randItemCode[i]] != null)
+            {
+                newItem[i] = Instantiate(Items[randItemCode[i]].gameObject, HS_Slots[i].transform.position, Quaternion.identity);
+                newItem[i].transform.parent = HS_Slots[i].transform;
+                HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(newItem[i].GetComponent<Item>().Name, 0); 
+                HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(newItem[i].GetComponent<Item>().Description, 1); 
+
+                //색깔 변경
+                if(newItem[i].GetComponent<Item>().Grade == "커먼")
+                {
+                    HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeTextColor(127, 127, 127, 0);
+                    itemCost[i] = 5f;
+                }
+                else if(newItem[i].GetComponent<Item>().Grade == "레어")
+                {
+                    HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeTextColor(74, 134, 232, 0);
+                    itemCost[i] = 10f;
+                }
+                else if(newItem[i].GetComponent<Item>().Grade == "에픽")
+                {    
+                    HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeTextColor(153, 0, 255, 0);
+                    itemCost[i] = 15f;
+                }
+                else if(newItem[i].GetComponent<Item>().Grade == "유니크")
+                {
+                    HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeTextColor(255, 255, 0, 0);
+                    itemCost[i] = 20f;
+                }
+                        //가격 적용
+                HS_Slots[i].transform.gameObject.GetComponent<TextChange>().ChangeText(itemCost[i].ToString(), 2); 
+                Debug.Log(itemCost[i] + "로 가격 변경 완료");
+                newItem[i].SetActive(false);
+            }
         }
     }
 }
