@@ -827,7 +827,7 @@ public class MonsterCtrl : MonoBehaviour
         GameObject StunEffect = Instantiate(Stun_Effect_1, this.transform.position, Quaternion.Euler(0, 0, 0));
         Destroy(StunEffect,2.0f);
         Stun_Effect_2.SetActive(true);
-        yield return new WaitForSeconds(5f); //총 스턴 시간
+        yield return new WaitForSeconds(10f); //총 스턴 시간
         Stun_Effect_2.SetActive(false);
         isStun = false;
     }

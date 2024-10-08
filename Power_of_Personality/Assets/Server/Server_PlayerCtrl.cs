@@ -201,14 +201,14 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
     protected string Spell_2;
     protected float Spell_1_CoolTime = 0f; //쿨타임 UI용 변수
     protected float Spell_2_CoolTime = 0f; //쿨타임 UI용 변수
-    protected float Swiftness_CoolTime = 60f;
-    protected float Unstoppable_CoolTime = 60f;
-    protected float RoarOfAnger_CoolTime = 60f;
-    protected float TimeSlowdown_CoolTime = 60f;
-    protected float Immune_CoolTime = 60f;
-    protected float Stun_CoolTime = 60f;
-    protected float Heal_CoolTime = 60f;
-    protected float Resurrect_CoolTime = 60f;
+    protected float Swiftness_CoolTime = 180f;
+    protected float Unstoppable_CoolTime = 120f;
+    protected float RoarOfAnger_CoolTime = 120f;
+    protected float TimeSlowdown_CoolTime = 180f;
+    protected float Immune_CoolTime = 180f;
+    protected float Stun_CoolTime = 180f;
+    protected float Heal_CoolTime = 120f;
+    protected float Resurrect_CoolTime = 240f;
 
     //구르기 (10.01 정도훈)
     public TMP_Text DodgeValue;
@@ -1124,7 +1124,7 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
     public virtual IEnumerator Dodge()
     {
         DodgeAmount-=1;
-        StartCoroutine(Immune(0.5f));
+        StartCoroutine(Immune(1.0f));
         PlayAnim("isDodge");
         isDodge = true;
 
@@ -1907,7 +1907,7 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
 
     public virtual IEnumerator Spell_Swiftness_On()
     {
-        Swiftness_buffTime = 60f;
+        Swiftness_buffTime = 15f;
         buffPer = 0.2f;
         Swiftness_Stat = Status.PercentSpeed;
         Status.PercentSpeed += (Status.PercentSpeed * buffPer);
@@ -1945,7 +1945,7 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
 
     public virtual IEnumerator Spell_Unstoppable_On()
     {
-        Unstoppable_buffTime = 60f;
+        Unstoppable_buffTime = 20f;
         spellSounds[4].PlayOneShot(spellSounds[4].clip); //스펠 사운드 추가(10.02)
         cameraEffect.GetComponent<CameraEffectCtrl>().unStoppableCamera(); //저지불가 이펙트 추가(09.30)
         yield break;
@@ -2007,7 +2007,7 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
     //무적
     public virtual void Spell_Immune(int Spell_num){
         if(Spell_Immune_Ready){
-            StartCoroutine(Immune(2.0f));
+            StartCoroutine(Immune(10.0f));
             StartCoroutine(Spell_Immune_on());
             Debug.Log("무적 ON");
             Spell_Immune_CoolTime = 0f; //도훈 2024-09-20
@@ -2019,7 +2019,7 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
     {
         Spell_Immune_Effect.SetActive(true);
         spellSounds[6].PlayOneShot(spellSounds[6].clip); //스펠 사운드 추가(10.02)
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(10.0f);
         Spell_Immune_Effect.SetActive(false);
     }
 
@@ -2038,7 +2038,7 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
     }
     public virtual IEnumerator Spell_TimeSlowdown_On()
     {
-        TimeSlowdown_buffTime = 60f;
+        TimeSlowdown_buffTime = 15f;
         Debug.Log("시감감속 ON");
         Spell_TimeSlowdown_Effect.SetActive(true);
         spellSounds[5].PlayOneShot(spellSounds[5].clip); //스펠 사운드 추가(10.02)
@@ -2094,7 +2094,7 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
 
     public virtual IEnumerator Spell_RoarOfAnger_On()
     {
-        RoarOfAnger_buffTime = 60f;
+        RoarOfAnger_buffTime = 15f;
         buffPer = 0.2f;
         RoarOfAnger_Stat = Status.PercentAD;
         Status.PercentAD += (Status.PercentAD * buffPer);
