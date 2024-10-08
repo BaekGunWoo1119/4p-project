@@ -59,7 +59,7 @@ public class Server_FairyCtrl : Server_MonsterCtrl
         StartCoroutine(Attack_On_2());
     }
     public override IEnumerator Attack_On_2(){
-        Instantiate(AttackCollider, FirePos.position, FirePos.rotation);
+        Instantiate(AttackCollider, FirePos.position, FirePos.rotation, this.transform);
         yield return new WaitForSeconds(0.5f*(1f/AnimSpeed));
         anim.SetBool("isAttack", false);
         AttackCoolTime = 0;

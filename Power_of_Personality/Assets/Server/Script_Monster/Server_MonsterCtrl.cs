@@ -892,4 +892,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
             receiveRot = (Quaternion)stream.ReceiveNext();
         }
     }
+    public void ReflectDamage(float CurDamage, string Property){
+        photonview.RPC("RPCTakeDamage", RpcTarget.All, CurDamage ,Property);
+    }
 }

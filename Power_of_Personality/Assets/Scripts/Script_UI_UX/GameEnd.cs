@@ -127,5 +127,8 @@ public class GameEnd : MonoBehaviour
         if(BonusGap > 0){
             PlayerPrefs.SetInt("BonusStat", afterBonus);
         }
+        else{
+            BonusGap = 0;
+        }
     }
 }
