@@ -79,7 +79,7 @@ public class SpiderCtrl : MonsterCtrl
         yield return base.DamageTextAlpha(Damage);
     }
     public override IEnumerator Attack_On_2(){
-        Instantiate(AttackCollider, FirePos.position, this.transform.rotation, this.transform);
+        Instantiate(AttackCollider, FirePos.position, FirePos.rotation, this.transform);
         yield return new WaitForSeconds(0.5f*(1f/AnimSpeed));
         anim.SetBool("isAttack", false);
         AttackCoolTime = 0;

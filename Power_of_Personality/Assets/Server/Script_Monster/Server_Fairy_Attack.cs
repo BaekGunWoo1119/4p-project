@@ -15,12 +15,11 @@ public class Server_Fairy_Attack : MonoBehaviour
         PlayerTr = GameObject.FindWithTag("Player").transform;
         Vector3 targetPosition = PlayerTr.position + Vector3.up;
         rb = GetComponent<Rigidbody>();
-        Vector3 Dir = new Vector3(targetPosition.x - transform.position.x, 0, targetPosition.z - transform.position.z).normalized;
         if(Status.Spell_TimeSlowdown_ON){
-            rb.AddForce(Dir.normalized * 10 *0.3f, ForceMode.Impulse);
+            rb.AddForce(transform.forward * 10 *0.3f, ForceMode.Impulse);
         }
         else{
-            rb.AddForce(Dir.normalized * 10, ForceMode.Impulse);
+            rb.AddForce(transform.forward * 10, ForceMode.Impulse);
         }
         Transform parent = this.transform;
         monsterCtrl = null;
