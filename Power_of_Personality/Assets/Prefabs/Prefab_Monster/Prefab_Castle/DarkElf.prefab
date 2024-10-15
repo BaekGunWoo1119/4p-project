@@ -682,6 +682,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6334358369296452749}
+  - {fileID: 1208918992444471801}
   - {fileID: 5647668812561304906}
   - {fileID: 1428652973829009157}
   - {fileID: 309662476175911243}
@@ -1087,7 +1088,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1208918992444471801}
   m_Layer: 0
-  m_Name: EffectGen
+  m_Name: FirePos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1100,14 +1101,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3711339677740375289}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -2, y: 1, z: 0}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6334358369296452749}
+  m_Father: {fileID: 965050198462121550}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &3748337673881694219
 GameObject:
   m_ObjectHideFlags: 0
@@ -3153,6 +3154,8 @@ GameObject:
   - component: {fileID: 6334358369296452749}
   - component: {fileID: 1696198312466959215}
   - component: {fileID: 4763797656934530292}
+  - component: {fileID: 8765356522106497856}
+  - component: {fileID: 86686155836044773}
   m_Layer: 0
   m_Name: Monster(Script)
   m_TagString: Untagged
@@ -3183,7 +3186,6 @@ Transform:
   - {fileID: 6676728271713195855}
   - {fileID: 8116163775639150130}
   - {fileID: 4960660148516503614}
-  - {fileID: 1208918992444471801}
   m_Father: {fileID: 965050198462121550}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3221,46 +3223,94 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
-  HpBar: {fileID: 0}
+  HpBar: {fileID: 1093664543775797032}
   curHP: 0
   maxHP: 0
   hpMul: 0
-  ATK: 0
+  ATK: 15
   atkMul: 0
-  DEF: 0
+  DEF: 10
   MoveSpeed: 0
   Damage: 0
   ownWeakProperty: 
   WeakProperty: 
   TickCoolTime: 0
-  DamageText: {fileID: 0}
-  MonsterCanvas: {fileID: 0}
+  DamageText: {fileID: 1880031391497513284, guid: 3f08f33154c6df6418d46b2e12f8cf2a, type: 3}
+  MonsterCanvas: {fileID: 5079187364042467936}
   CanvasYRot: 0
   hpBarPosition: {x: 0, y: 0, z: 0}
   matObj: {fileID: 0}
-  targetObj: {fileID: 0}
+  targetObj: {fileID: 5457883222752992933}
   PlayerTr: {fileID: 0}
   Distance: 0
   TraceRadius: 0
   attackRadius: 0
   AttackCoolTime: 0
-  AttackCollider: {fileID: 0}
-  Coin: {fileID: 0}
+  AttackCollider: {fileID: 1319398647745027786, guid: 1881ba1afcbab53499807fe4eecc8f07, type: 3}
+  Coin: {fileID: 9137955520889552415, guid: 5e136e1029a3c0a4f842505d52c8ea4f, type: 3}
   isDie: 0
   isHit: 0
   isStun: 0
   isSpawn: 0
   hitCount: 0
-  IceHit: {fileID: 0}
-  FireHit: {fileID: 0}
+  IceHit: {fileID: 1387851562293694130, guid: e2789a389dac3ba4d817abc6b1fc8df2, type: 3}
+  FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
   AttackEffect: {fileID: 0}
   EffectGen: {fileID: 0}
   AnimSpeed: 1
-  Stun_Effect_1: {fileID: 0}
-  Stun_Effect_2: {fileID: 0}
+  Stun_Effect_1: {fileID: 5107822234195925743, guid: b3cc62fd1fa01ac4c957919e84b067a0, type: 3}
+  Stun_Effect_2: {fileID: 1428652973829009158}
   desiredParent: {fileID: 0}
   bonusstat: 0
-  FirePos: {fileID: 0}
+  FirePos: {fileID: 1208918992444471801}
+--- !u!65 &8765356522106497856
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334019738305160244}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &86686155836044773
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334019738305160244}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &7886882382529908966
 GameObject:
   m_ObjectHideFlags: 0
@@ -3818,6 +3868,11 @@ PrefabInstance:
 --- !u!4 &1428652973829009157 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5659291355382750491, guid: ce7e02c68722d064eac99494a719e7e3, type: 3}
+  m_PrefabInstance: {fileID: 6726776746364187166}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1428652973829009158 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5659291355382750488, guid: ce7e02c68722d064eac99494a719e7e3, type: 3}
   m_PrefabInstance: {fileID: 6726776746364187166}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8371177459604823188

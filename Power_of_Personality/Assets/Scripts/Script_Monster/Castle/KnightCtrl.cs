@@ -43,10 +43,13 @@ public class KnightCtrl : MonsterCtrl
     {
         Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
-        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn)
+        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn&&!anim.GetBool("isAttack"))
         {
             anim.SetBool("isRun", true);
             StartCoroutine(Trace());
+        }
+        if(Distance <= attackRadius){
+            anim.SetBool("isRun", false);
         }
 
         if (Distance <= attackRadius && AttackCoolTime >= 3.0f*(1f/AnimSpeed) && !isDie && hitCount <= 0 && !isSpawn)
@@ -84,5 +87,26 @@ public class KnightCtrl : MonsterCtrl
     public override IEnumerator DamageTextAlpha(float Damage)
     {
         yield return base.DamageTextAlpha(Damage);
+    }
+
+    public override void Attack_On()
+    {
+        if(EffectGen != null && AttackEffect != null)
+        {
+            AttackCollider.SetActive(false);
+            AttackCollider.SetActive(true);
+            atkAudio.PlayOneShot(atkAudio.clip); //공격 시 재생 오디오 재생(09.30)
+            GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);
+            Destroy(effect_on, 3f);
+        }
+    }
+    
+    public void Attack_Off()
+    {
+        anim.SetBool("isAttack", false);
+        AttackCoolTime = 0;
+    }
+    public void Attack_Off_2(){
+        AttackCollider.SetActive(false);
     }
 }

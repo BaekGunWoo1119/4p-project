@@ -13,7 +13,7 @@ public class DarkElfCtrl : MonsterCtrl
     {
         ownWeakProperty ="Fire";
         ATK = 5;
-        MoveSpeed = 2.0f;
+        MoveSpeed = 3.5f;
         Damage = 10.0f;
         TraceRadius = 10.0f;
         attackRadius = 5.0f;
@@ -46,10 +46,13 @@ public class DarkElfCtrl : MonsterCtrl
     {
         Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
-        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn)
+        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn&&!anim.GetBool("isAttack"))
         {
             anim.SetBool("isRun", true);
             StartCoroutine(Trace());
+        }
+        if(Distance <= attackRadius){
+            anim.SetBool("isRun", false);
         }
 
         if (Distance <= attackRadius && AttackCoolTime >= 3.0f*(1f/AnimSpeed) && !isDie && hitCount <= 0 && !isSpawn)

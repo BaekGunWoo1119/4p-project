@@ -193,7 +193,7 @@ public class MonsterCtrl : MonoBehaviour
     {
         Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
-        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn)
+        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn && !anim.GetBool("isAttack"))
         {
             StartCoroutine(Trace());
         }

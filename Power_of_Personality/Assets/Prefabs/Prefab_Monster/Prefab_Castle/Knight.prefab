@@ -128,6 +128,90 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1301234541317849910
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1237345475380956156}
+  m_Layer: 0
+  m_Name: EffectGen
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1237345475380956156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301234541317849910}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.91, z: 0.75}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8041637261339069434}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &2208871799714092652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2194340338870916098}
+  - component: {fileID: 3313416581446651043}
+  m_Layer: 0
+  m_Name: AttackCollider
+  m_TagString: Monster_Melee
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2194340338870916098
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2208871799714092652}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8041637261339069434}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3313416581446651043
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2208871799714092652}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.3404068, z: 2.9093485}
+  m_Center: {x: 0, y: 1.1702063, z: 0.95467365}
 --- !u!1 &2639010223495420985
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,6 +2318,8 @@ GameObject:
   - component: {fileID: 8041637261339069434}
   - component: {fileID: 7987447552777472944}
   - component: {fileID: 5919153809754018525}
+  - component: {fileID: 8780071540841974420}
+  - component: {fileID: 4314178331549941824}
   m_Layer: 0
   m_Name: Monster(Script)
   m_TagString: Untagged
@@ -2265,6 +2351,8 @@ Transform:
   - {fileID: 8036646262425331764}
   - {fileID: 8036456864125680624}
   - {fileID: 8036607125094061262}
+  - {fileID: 1237345475380956156}
+  - {fileID: 2194340338870916098}
   m_Father: {fileID: 8006802576571207685}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -2302,45 +2390,93 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
-  HpBar: {fileID: 0}
+  HpBar: {fileID: 8214212481425389191}
   curHP: 0
   maxHP: 0
   hpMul: 0
-  ATK: 0
+  ATK: 15
   atkMul: 0
-  DEF: 0
+  DEF: 10
   MoveSpeed: 0
   Damage: 0
   ownWeakProperty: 
   WeakProperty: 
   TickCoolTime: 0
-  DamageText: {fileID: 0}
-  MonsterCanvas: {fileID: 0}
+  DamageText: {fileID: 1880031391497513284, guid: 3f08f33154c6df6418d46b2e12f8cf2a, type: 3}
+  MonsterCanvas: {fileID: 2639010223495420985}
   CanvasYRot: 0
   hpBarPosition: {x: 0, y: 0, z: 0}
-  matObj: {fileID: 0}
-  targetObj: {fileID: 0}
+  matObj: {fileID: 7953690664074131408}
+  targetObj: {fileID: 8038121656646348634}
   PlayerTr: {fileID: 0}
   Distance: 0
   TraceRadius: 0
   attackRadius: 0
   AttackCoolTime: 0
-  AttackCollider: {fileID: 0}
-  Coin: {fileID: 0}
+  AttackCollider: {fileID: 2208871799714092652}
+  Coin: {fileID: 9137955520889552415, guid: 5e136e1029a3c0a4f842505d52c8ea4f, type: 3}
   isDie: 0
   isHit: 0
   isStun: 0
   isSpawn: 0
   hitCount: 0
-  IceHit: {fileID: 0}
-  FireHit: {fileID: 0}
-  AttackEffect: {fileID: 0}
-  EffectGen: {fileID: 0}
+  IceHit: {fileID: 1387851562293694130, guid: e2789a389dac3ba4d817abc6b1fc8df2, type: 3}
+  FireHit: {fileID: 696893655172728521, guid: 5ab45174e04b13a41a5326c083a93311, type: 3}
+  AttackEffect: {fileID: 1011157772751556, guid: 328a1ed90c1b36b4e80447ddfaaeca59, type: 3}
+  EffectGen: {fileID: 1301234541317849910}
   AnimSpeed: 1
-  Stun_Effect_1: {fileID: 0}
-  Stun_Effect_2: {fileID: 0}
+  Stun_Effect_1: {fileID: 5107822234195925743, guid: b3cc62fd1fa01ac4c957919e84b067a0, type: 3}
+  Stun_Effect_2: {fileID: 8775391293140919057}
   desiredParent: {fileID: 0}
   bonusstat: 0
+--- !u!65 &8780071540841974420
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038295766397075952}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!54 &4314178331549941824
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038295766397075952}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &8038313208550493358
 GameObject:
   m_ObjectHideFlags: 0
@@ -3949,6 +4085,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce7e02c68722d064eac99494a719e7e3, type: 3}
+--- !u!1 &8775391293140919057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5659291355382750488, guid: ce7e02c68722d064eac99494a719e7e3, type: 3}
+  m_PrefabInstance: {fileID: 3981644294954909193}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8775391293140919058 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5659291355382750491, guid: ce7e02c68722d064eac99494a719e7e3, type: 3}
