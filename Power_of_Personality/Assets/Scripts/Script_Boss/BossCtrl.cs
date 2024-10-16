@@ -85,13 +85,6 @@ public class BossCtrl : MonoBehaviour
         CheckHP();
         GameObject.Find("Boss_HP_Bar").transform.localScale = new Vector3(1, 1, 1);
 
-        // 공격 사운드 할당(10.03)
-        atkAudio = transform.Find("Boss_AtkSound").GetComponents<AudioSource>();
-
-        for(int i = 0; i < atkAudio.Length; i++)
-        {
-            atkAudio[i].Stop();
-        }
     }
 
     protected virtual void Update()
