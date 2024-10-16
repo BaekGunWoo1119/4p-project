@@ -106,7 +106,24 @@ public class LobbyManager : MonoBehaviourPunCallbacks {
         // 접속에 필요한 정보(게임 버전) 설정
         //PhotonNetwork.GameVersion = gameVersion;
         // 설정한 정보를 가지고 마스터 서버 접속 시도
-        PhotonNetwork.ConnectUsingSettings();
+        Debug.Log(PhotonNetwork.NetworkingClient.State);
+        if (PhotonNetwork.NetworkingClient.State == ClientState.ConnectingToNameServer)
+        {
+            PhotonNetwork.Disconnect();  // 연결 시도 중단
+        }
+        else if (PhotonNetwork.NetworkingClient.State == ClientState.PeerCreated)
+        {
+            PhotonNetwork.Disconnect();
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        else if (PhotonNetwork.NetworkingClient.State == ClientState.Disconnected)
+        {
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        else{
+            PhotonNetwork.NetworkingClient.LoadBalancingPeer.StopThread();
+        }
+        
         // 룸 접속 버튼을 잠시 비활성화
         //joinButton.interactable = false;
         // 접속을 시도 중임을 텍스트로 표시
