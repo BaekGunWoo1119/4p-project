@@ -62,7 +62,11 @@ public class SoundsManager : MonoBehaviour
             loopEndTime = 152f;
         }
 
-
+        if(musicName == "Castle")
+        {
+            loopStartTime = 0f;
+            loopEndTime = 120f;
+        }
 
         if(musicName == "Credit")
         {
@@ -92,7 +96,7 @@ public class SoundsManager : MonoBehaviour
                 Destroy(gameObject); // 이미 다른 SoundsManager 인스턴스가 존재하면, 자신을 파괴
             }
         }
-        else if(musicName == "Forest" || musicName == "Cave" || musicName == "Sewer" || musicName == "Credit")
+        else if(musicName == "Forest" || musicName == "Cave" || musicName == "Sewer" || musicName == "Castle" || musicName == "Credit")
         {
             instance = this;
         }
@@ -202,6 +206,12 @@ public class SoundsManager : MonoBehaviour
             audioSource.clip = cilpSource[4];
             loopStartTime = 80f;
             loopEndTime = 152f;
+        }
+        else if(musicName == "Castle")
+        {
+            audioSource.clip = cilpSource[5];
+            loopStartTime = 0f;
+            loopEndTime = 120f;
         }
 
         //음악 재생

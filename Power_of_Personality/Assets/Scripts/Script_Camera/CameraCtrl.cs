@@ -586,13 +586,12 @@ public class CameraCtrl : MonoBehaviour
         CCT.ShakeCamera(15f, 0.3f, "zoom");
         yield return new WaitForSeconds(1.5f);
         CCT.ShakeCamera(45f, 0.3f, "zoom");
-        cameraEffect.GetComponent<CameraEffectCtrl>().PropEffectCamera(0, 1, 1.2f);
-        yield return new WaitForSeconds(1.0f);
-        SetCamera(0);
+        yield return new WaitForSeconds(1.5f);
+        SetCamera(0); 
         virtualCameras[41].m_Lens.FieldOfView = currentFOV; 
         virtualCameras[37].m_Lens.FieldOfView = currentFOV; 
         virtualCameras[24].m_Lens.FieldOfView = currentFOV; 
-        virtualCameras[35].m_Lens.FieldOfView = currentFOV; 
+        virtualCameras[35].m_Lens.FieldOfView = currentFOV;
     }
 
     #endregion

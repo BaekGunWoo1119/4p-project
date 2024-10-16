@@ -21,8 +21,8 @@ public class ObjectMoveDestroys : MonoBehaviour
     public string mtag; // 태그
     public bool isShieldActive = false; // 쉴드 활성화 여부
     public bool isHitMake = true; // 충돌 객체 생성 여부
-    public Volume globalVolume; // Global Volume 참조
-    private VolumeProfile volumeProfile; // Volume Profile을 참조
+
+    private CameraEffectCtrl cameraEffect; //카메라 이펙트
 
     float time; // 시간
     bool ishit; // 충돌 여부
@@ -32,6 +32,7 @@ public class ObjectMoveDestroys : MonoBehaviour
     {
         m_scalefactor = 1;
         time = Time.time;
+        cameraEffect = GameObject.FindWithTag("CameraEffect").GetComponent<CameraEffectCtrl>();
     }
 
     void LateUpdate()
@@ -102,6 +103,8 @@ public class ObjectMoveDestroys : MonoBehaviour
                 m_sc.AddHitObject(hit.point);
         }
 
+        //이펙트
+        cameraEffect.PropEffectCamera(0, 1, 1.2f);
         // 현재 객체 파괴
         Destroy(this.gameObject);
         // 꼬리 객체 파괴
