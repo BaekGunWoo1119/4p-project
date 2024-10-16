@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class ObjectMoveDestroys : MonoBehaviour
 {
@@ -19,6 +21,8 @@ public class ObjectMoveDestroys : MonoBehaviour
     public string mtag; // 태그
     public bool isShieldActive = false; // 쉴드 활성화 여부
     public bool isHitMake = true; // 충돌 객체 생성 여부
+    public Volume globalVolume; // Global Volume 참조
+    private VolumeProfile volumeProfile; // Volume Profile을 참조
 
     float time; // 시간
     bool ishit; // 충돌 여부
