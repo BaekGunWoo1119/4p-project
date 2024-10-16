@@ -740,7 +740,11 @@ public class SceneLoader : MonoBehaviour
         {
             NoneClassDanger.transform.localScale = new Vector3(0, 0, 0);
         }
-        LobbyManager.ClassSelectWizard();
+        if(PlayerPrefs.GetString("PlayMode") == "Multi"){
+            LobbyManager.ClassSelectWizard();
+        }
+        PlayerPrefs.SetString("PlayerClass","Wizard");
+        
         //셀렉 버튼 추가로 삭제 (09.09)
         //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
@@ -750,7 +754,10 @@ public class SceneLoader : MonoBehaviour
         {
             NoneClassDanger.transform.localScale = new Vector3(0, 0, 0);
         }
+        if(PlayerPrefs.GetString("PlayMode") == "Multi"){
         LobbyManager.ClassSelectWarrior();
+        }
+        PlayerPrefs.SetString("PlayerClass","Warrior");
         //셀렉 버튼 추가로 삭제 (09.09)
         //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
@@ -760,7 +767,10 @@ public class SceneLoader : MonoBehaviour
         {
             NoneClassDanger.transform.localScale = new Vector3(0, 0, 0);
         }
+        if(PlayerPrefs.GetString("PlayMode") == "Multi"){
         LobbyManager.ClassSelectRogue();
+        }
+        PlayerPrefs.SetString("PlayerClass","Rogue");
         //셀렉 버튼 추가로 삭제 (09.09)
         //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
@@ -770,7 +780,10 @@ public class SceneLoader : MonoBehaviour
         {
             NoneClassDanger.transform.localScale = new Vector3(0, 0, 0);
         }
+        if(PlayerPrefs.GetString("PlayMode") == "Multi"){
         LobbyManager.ClassSelectArcher();
+        }
+        PlayerPrefs.SetString("PlayerClass","Archer");
         //셀렉 버튼 추가로 삭제 (09.09)
         //SceneManager.LoadScene("2-3 (Spell Choice)");
     }
