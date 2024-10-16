@@ -61,6 +61,14 @@ public class SoundsManager : MonoBehaviour
             loopStartTime = 80f;
             loopEndTime = 152f;
         }
+
+
+
+        if(musicName == "Credit")
+        {
+            loopStartTime = 0f;
+            loopEndTime = 233f;
+        }
         // 처음부터 특정 구간만 반복 재생 및 페이드 아웃
         StartCoroutine(PlayLoopAudio());
     }
@@ -84,7 +92,7 @@ public class SoundsManager : MonoBehaviour
                 Destroy(gameObject); // 이미 다른 SoundsManager 인스턴스가 존재하면, 자신을 파괴
             }
         }
-        else if(musicName == "Forest" || musicName == "Cave" || musicName == "Sewer")
+        else if(musicName == "Forest" || musicName == "Cave" || musicName == "Sewer" || musicName == "Credit")
         {
             instance = this;
         }
