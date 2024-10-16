@@ -193,7 +193,7 @@ public class MonsterCtrl : MonoBehaviour
     {
         Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
-        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn)
+        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn && !anim.GetBool("isAttack"))
         {
             StartCoroutine(Trace());
         }
@@ -265,6 +265,7 @@ public class MonsterCtrl : MonoBehaviour
     {
         if(EffectGen != null && AttackEffect != null)
         {
+            AttackCollider.SetActive(false);
             AttackCollider.SetActive(true);
             atkAudio.PlayOneShot(atkAudio.clip); //공격 시 재생 오디오 재생(09.30)
             GameObject effect_on = Instantiate(AttackEffect, EffectGen.transform.position, EffectGen.transform.rotation);

@@ -16,7 +16,7 @@ public class BossHP : MonoBehaviour
     
     void Update()
     {
-        Debug.Log("HP바 변경 잘 됨");
+        //Debug.Log("HP바 변경 잘 됨");
         bossType = GameObject.FindWithTag("Boss");
         if(bossType != null){
             if(bossType.name == "Druid(Clone)")
