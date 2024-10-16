@@ -8,7 +8,9 @@ using UnityEngine.UI;
 
 public class KnightCtrl : MonsterCtrl
 {
-
+    public GameObject AttackEffect1;
+    public GameObject AttackEffect2;
+    public GameObject AttackEffect3;
     public override void Awake()
     {
         ownWeakProperty = "Ice";
@@ -100,7 +102,36 @@ public class KnightCtrl : MonsterCtrl
             Destroy(effect_on, 3f);
         }
     }
-    
+    public void ComboAttack_On_1(){
+        if(EffectGen != null && AttackEffect != null)
+        {
+            AttackCollider.SetActive(false);
+            AttackCollider.SetActive(true);
+            atkAudio.PlayOneShot(atkAudio.clip); //공격 시 재생 오디오 재생(09.30)
+            GameObject effect_on = Instantiate(AttackEffect1, EffectGen.transform.position, EffectGen.transform.rotation);
+            Destroy(effect_on, 3f);
+        }
+    }
+    public void ComboAttack_On_2(){
+        if(EffectGen != null && AttackEffect != null)
+        {
+            AttackCollider.SetActive(false);
+            AttackCollider.SetActive(true);
+            atkAudio.PlayOneShot(atkAudio.clip); //공격 시 재생 오디오 재생(09.30)
+            GameObject effect_on = Instantiate(AttackEffect2, EffectGen.transform.position, EffectGen.transform.rotation);
+            Destroy(effect_on, 3f);
+        }
+    }
+    public void ComboAttack_On_3(){
+        if(EffectGen != null && AttackEffect != null)
+        {
+            AttackCollider.SetActive(false);
+            AttackCollider.SetActive(true);
+            atkAudio.PlayOneShot(atkAudio.clip); //공격 시 재생 오디오 재생(09.30)
+            GameObject effect_on = Instantiate(AttackEffect3, EffectGen.transform.position, EffectGen.transform.rotation);
+            Destroy(effect_on, 3f);
+        }
+    }
     public void Attack_Off()
     {
         anim.SetBool("isAttack", false);
