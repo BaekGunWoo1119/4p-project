@@ -4,16 +4,16 @@ using TMPro;
 
 public class BonusState : MonoBehaviour
 {
-    public Button[] starButtons; // �� ��ư���� �迭�� �������ּ���
-    public Button plusButton; // + ��ư�� �������ּ���
-    public Button minusButton; // - ��ư�� �������ּ���
-    public Sprite filledStarSprite; // ä���� �� �̹����� �������ּ���
-    public Sprite emptyStarSprite; // ����ִ� �� �̹����� �������ּ���
+    public Button[] starButtons; // ?? ??????? ?��?? ???????????
+    public Button plusButton; // + ????? ???????????
+    public Button minusButton; // - ????? ???????????
+    public Sprite filledStarSprite; // ????? ?? ??????? ???????????
+    public Sprite emptyStarSprite; // ?????? ?? ??????? ???????????
     private int bonusstat;
 
     private int initialStat = 10;
-    private int selectedStarIndex = -1; // ���õ� ���� �ε���
-    private int totalStars = 4; // ���� �� ���� (���÷� 5�� ����)
+    private int selectedStarIndex = -1; // ????? ???? ?��???
+    private int totalStars = 4; // ???? ?? ???? (???��? 5?? ????)
     private TextMeshProUGUI StatText;
 
     void Start()
@@ -36,22 +36,22 @@ public class BonusState : MonoBehaviour
     }
     private void UpdateStatText()
     {
-        StatText.text = "남은 보너스 스탯 = " + PlayerPrefs.GetInt("RemainStat", bonusstat);
+        StatText.text = "���� ���ʽ� ���� = " + PlayerPrefs.GetInt("RemainStat", bonusstat);
     }
     
 
-    // ���� �ý��� Ȱ��ȭ
+    // ???? ????? ????
     private void EnableStarRating()
     {
-        // �� ��ư�鿡 ���� �̺�Ʈ ������ �߰�
+        // ?? ????? ???? ???? ?????? ???
         for (int i = 0; i < starButtons.Length; i++)
         {
-            int starIndex = i; // Ŭ���� ������ �ε��� ����
+            int starIndex = i; // ????? ?????? ?��??? ????
             starButtons[i].onClick.AddListener(() => OnStarButtonClick(starIndex));
         }
     }
 
-    // +, - ��ư Ȱ��ȭ
+    // +, - ??? ????
     private void EnablePlusMinusButtons()
     {
         if (plusButton != null)
@@ -65,17 +65,17 @@ public class BonusState : MonoBehaviour
         }
     }
 
-    // ���� �ý��� ��Ȱ��ȭ
+    // ???? ????? ??????
     private void DisableStarRating()
     {
-        // �� ��ư�鿡 ���� �̺�Ʈ ������ ����
+        // ?? ????? ???? ???? ?????? ????
         for (int i = 0; i < starButtons.Length; i++)
         {
             starButtons[i].onClick.RemoveAllListeners();
         }
     }
 
-    // +, - ��ư ��Ȱ��ȭ
+    // +, - ??? ??????
     private void DisablePlusMinusButtons()
     {
         if (plusButton != null)
@@ -89,7 +89,7 @@ public class BonusState : MonoBehaviour
         }
     }
 
-    // �� ��ư Ŭ�� �� ȣ��Ǵ� �Լ�
+    // ?? ??? ??? ?? ????? ???
     private void OnStarButtonClick(int clickedStarIndex)
     {
         if (selectedStarIndex == clickedStarIndex)
@@ -116,7 +116,7 @@ public class BonusState : MonoBehaviour
         }
     }
 
-        // + ��ư Ŭ�� �� ȣ��Ǵ� �Լ�
+        // + ??? ??? ?? ????? ???
     private void IncrementStarRating()
     {
         if (selectedStarIndex < totalStars - 1 && PlayerPrefs.GetInt("RemainStat") > 0)
@@ -131,7 +131,7 @@ public class BonusState : MonoBehaviour
         }
     }
 
-    // - ��ư Ŭ�� �� ȣ��Ǵ� �Լ�
+    // - ??? ??? ?? ????? ???
     private void DecrementStarRating()
     {
         if (selectedStarIndex > -1 && PlayerPrefs.GetInt("RemainStat") < 10)

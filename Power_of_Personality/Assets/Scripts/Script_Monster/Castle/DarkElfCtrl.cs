@@ -12,7 +12,9 @@ public class DarkElfCtrl : MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty ="Fire";
-        ATK = 5;
+        maxHP = 500f;
+        ATK = 15.0f;
+        DEF = 50f;
         MoveSpeed = 3.5f;
         Damage = 10.0f;
         TraceRadius = 10.0f;
@@ -30,7 +32,7 @@ public class DarkElfCtrl : MonsterCtrl
 
     public override void SetHP(float amount)
     {
-        base.SetHP(amount);
+        base.SetHP(maxHP);
     }
     public override void CheckHP()
     {
