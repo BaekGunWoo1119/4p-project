@@ -18,9 +18,9 @@ public class Trap_SpikeCheck : MonoBehaviour
     {
         yield return new WaitForSeconds(0.75f);
         Spike.SetActive(true);
-        Spike.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);
+        Spike.transform.localPosition = new Vector3(this.transform.localPosition.x, 0, this.transform.localPosition.z);
         yield return new WaitForSeconds(2f);
-        Spike.transform.position = new Vector3(this.transform.position.x, -2, this.transform.position.z);
+        Spike.transform.localPosition = new Vector3(this.transform.localPosition.x, -2, this.transform.localPosition.z);
         Spike.SetActive(false);
     }
 

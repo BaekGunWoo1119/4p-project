@@ -255,6 +255,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected Image Dcool;
     protected Image Fcool;
     protected bool canTakeDamage = true; // 데미지를 가져올 수 있는지
+    protected bool hitstop = true; //경직 받는지
+    protected float hitstopCooldown = 1.0f; //경직 받는지
     protected float damageCooldown = 1.0f; // 1초마다 틱데미지를 가져오기 위함
 
     // 무적 관련
@@ -454,6 +456,15 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 {
                     canTakeDamage = true;
                     damageCooldown = 1.0f;
+                }
+            }
+            if (!hitstop)
+            {
+                hitstopCooldown -= Time.deltaTime;
+                if (hitstopCooldown < 0)
+                {
+                    hitstop = true;
+                    hitstopCooldown = 1.0f;
                 }
             }
 
@@ -1031,15 +1042,16 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             Status.HP -= Damage;
             CheckHp();
             //저지불가 (09.14 정도훈)
-            if(Unstoppable_Buff_ON==false)
+            if(Unstoppable_Buff_ON==false && hitstop == true)
             {
-                PlayAnim("TakeDamage"); 
+                PlayAnim("TakeDamage");
+                hitstop = false;
             }
             StartCoroutine(DamageTextAlpha());
             Damaged_on(); //맞았을 때 이펙트 애니메이션에서 코드로 옮김(08.30)
             hitAudio.PlayOneShot(hitAudio.clip); //히트 시 재생 오디오 재생(09.30)
             cameraEffect.GetComponent<CameraEffectCtrl>().DamageCamera();
-            StartCoroutine(Immune(0.5f));   //무적 함수 실행
+            StartCoroutine(Immune(0.2f));   //무적 함수 실행
             yield return new WaitForSeconds(0.2f);
             StopAnim("TakeDamage");
             AnimReset(); //애니메이션 리셋(09.05)
