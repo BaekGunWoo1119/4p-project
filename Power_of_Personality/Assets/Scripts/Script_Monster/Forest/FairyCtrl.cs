@@ -12,7 +12,9 @@ public class FairyCtrl : MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty ="Fire";
+        maxHP = 75f;
         ATK = 5;
+        DEF = 50f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
         TraceRadius = 10.0f;
@@ -26,7 +28,7 @@ public class FairyCtrl : MonsterCtrl
 
     public override void SetHP(float amount)
     {
-        base.SetHP(amount);
+        base.SetHP(maxHP);
     }
     public override void CheckHP()
     {

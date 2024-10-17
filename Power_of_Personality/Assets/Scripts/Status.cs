@@ -13,7 +13,7 @@ public class Status : MonoBehaviour
     public static float PercentSpeed = 100f; //행동속도 비율
     public static float FixedADC = 50f; //평타 데미지 고정
     public static float PercentADC = 100f; // 평타 데미지 비율
-    public static float FixedAP = 50f; // 스킬 데미지 고정
+    public static float FixedAP = 25f; // 스킬 데미지 고정
     public static float PercentAP = 100f; // 스킬 데미지 비율
     public static float FixedCooltime = 0f; // 스킬 고정 쿨감
     public static float PercentCooltime = 100f; // 스킬 퍼센트 쿨감
@@ -96,7 +96,7 @@ public class Status : MonoBehaviour
         isDie();
         Array.Fill(itemIds, -1);
         IsShop = false;
-        BonusStat = PlayerPrefs.GetInt("Stat") * 10;
+        BonusStat = PlayerPrefs.GetInt("Stat") * 5;
         MBTI = PlayerPrefs.GetString("PlayerMBTI");
         ApplyBonusStat();
         ApplyMBTI(MBTI);
@@ -536,99 +536,99 @@ public class Status : MonoBehaviour
     void ApplyMBTI(string MBTI){
         switch(MBTI){
             case "INFP":
-                FixedArmor+=20;
-                FixedSpeed+=20;
-                FixedAP+=20;
-                FixedFire+=20;
+                FixedArmor+=10;
+                FixedSpeed+=10;
+                FixedAP+=10;
+                FixedFire+=10;
                 break;
             case "INFJ":
-                FixedArmor+=20;
-                FixedAP+=20;
-                FixedFire+=20;
+                FixedArmor+=10;
+                FixedAP+=10;
+                FixedFire+=10;
                 FixedCooltime+=1;
                 break;
             case "INTP":
-                FixedArmor+=20;
-                FixedSpeed+=20;
-                FixedAP+=20;
-                FixedIce+=20;
+                FixedArmor+=10;
+                FixedSpeed+=10;
+                FixedAP+=10;
+                FixedIce+=10;
                 break;
             case "INTJ":
-                FixedArmor+=20;
-                FixedAP+=20;
-                FixedIce+=20;
+                FixedArmor+=10;
+                FixedAP+=10;
+                FixedIce+=10;
                 FixedCooltime+=1;
                 break;
             case "ISFP":
-                FixedArmor+=20;
-                FixedSpeed+=20;
-                FixedADC+=20;
-                FixedFire+=20;
+                FixedArmor+=10;
+                FixedSpeed+=10;
+                FixedADC+=10;
+                FixedFire+=10;
                 break;
             case "ISFJ":
-                FixedArmor+=20;
-                FixedADC+=20;
-                FixedFire+=20;
+                FixedArmor+=10;
+                FixedADC+=10;
+                FixedFire+=10;
                 FixedCooltime+=1;
                 break;
             case "ISTP":
-                FixedArmor+=20;
-                FixedSpeed+=20;
-                FixedADC+=20;
-                FixedIce+=20;
+                FixedArmor+=10;
+                FixedSpeed+=10;
+                FixedADC+=10;
+                FixedIce+=10;
                 break;
             case "ISTJ":
-                FixedArmor+=20;
-                FixedADC+=20;
-                FixedIce+=20;
+                FixedArmor+=10;
+                FixedADC+=10;
+                FixedIce+=10;
                 FixedCooltime+=1;
                 break;
             case "ENFP":
-                FixedAD+=20;
-                FixedSpeed+=20;
-                FixedAP+=20;
-                FixedFire+=20;
+                FixedAD+=10;
+                FixedSpeed+=10;
+                FixedAP+=10;
+                FixedFire+=10;
                 break;
             case "ENFJ":
-                FixedAD+=20;
-                FixedAP+=20;
-                FixedFire+=20;
+                FixedAD+=10;
+                FixedAP+=10;
+                FixedFire+=10;
                 FixedCooltime+=1;
                 break;
             case "ENTP":
-                FixedAD+=20;
-                FixedSpeed+=20;
-                FixedAP+=20;
-                FixedIce+=20;
+                FixedAD+=10;
+                FixedSpeed+=10;
+                FixedAP+=10;
+                FixedIce+=10;
                 break;
             case "ENTJ":
-                FixedAD+=20;
-                FixedAP+=20;
-                FixedIce+=20;
+                FixedAD+=10;
+                FixedAP+=10;
+                FixedIce+=10;
                 FixedCooltime+=1;
                 break;
             case "ESFP":
-                FixedAD+=20;
-                FixedSpeed+=20;
-                FixedADC+=20;
-                FixedFire+=20;
+                FixedAD+=10;
+                FixedSpeed+=10;
+                FixedADC+=10;
+                FixedFire+=10;
                 break;
             case "ESFJ":
-                FixedAD+=20;
-                FixedADC+=20;
-                FixedFire+=20;
+                FixedAD+=10;
+                FixedADC+=10;
+                FixedFire+=10;
                 FixedCooltime+=1;
                 break;
             case "ESTP":
-                FixedAD+=20;
-                FixedSpeed+=20;
-                FixedADC+=20;
-                FixedIce+=20;
+                FixedAD+=10;
+                FixedSpeed+=10;
+                FixedADC+=10;
+                FixedIce+=10;
                 break;
             case "ESTJ":
-                FixedAD+=20;
-                FixedADC+=20;
-                FixedIce+=20;
+                FixedAD+=10;
+                FixedADC+=10;
+                FixedIce+=10;
                 FixedCooltime+=1;
                 break;
         }

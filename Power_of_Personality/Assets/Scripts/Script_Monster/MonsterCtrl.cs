@@ -471,7 +471,7 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "ArcherSkillQ")
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.1f;
+            Damage = Status.TotalAP * 0.25f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -565,7 +565,7 @@ public class MonsterCtrl : MonoBehaviour
     public virtual void OnTriggerStay(Collider col)
     {
         #region 전사
-        if (col.tag == "WarriorSkillW" && TickCoolTime >= 0.75f)
+        if (col.tag == "WarriorSkillW" && TickCoolTime >= 0.5f)
         {
             isHit = true;
             Damage = Status.TotalAP * 1.5f;
@@ -633,7 +633,7 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "ArcherSkillW" && TickCoolTime >= 0.25f)
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.75f;
+            Damage = Status.TotalAP * 0.35f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -665,7 +665,7 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "WizardSkillQ" && TickCoolTime >= 0.25f)
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.75f;
+            Damage = Status.TotalAP * 0.5f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -774,6 +774,7 @@ public class MonsterCtrl : MonoBehaviour
         {
             isDie = true;
             this.gameObject.layer = 10;
+            this.gameObject.tag = "Untagged";
             anim.SetBool("Die", true);
             yield return new WaitForSeconds(1.5f);
             if(Random.Range(0, 10)> 5-bonusstat){

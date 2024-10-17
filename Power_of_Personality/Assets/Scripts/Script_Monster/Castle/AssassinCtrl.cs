@@ -14,7 +14,9 @@ public class AssassinCtrl : MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty ="Ice";
-        ATK = 10.0f;
+        maxHP = 500;
+        ATK = 15.0f;
+        DEF = 100f;
         MoveSpeed = 3.5f;
         Damage = 10.0f;
         TraceRadius = 10.0f;
@@ -32,7 +34,7 @@ public class AssassinCtrl : MonsterCtrl
 
     public override void SetHP(float amount)
     {
-        base.SetHP(amount);
+        base.SetHP(maxHP);
     }
     public override void CheckHP()
     {

@@ -11,7 +11,9 @@ public class WormCtrl : MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty ="Ice";
+        maxHP = 500f;
         ATK = 10.0f;
+        DEF = 200f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
         TraceRadius = 10.0f;
@@ -25,7 +27,7 @@ public class WormCtrl : MonsterCtrl
 
     public override void SetHP(float amount)
     {
-        base.SetHP(amount);
+        base.SetHP(maxHP);
     }
     public override void CheckHP()
     {
