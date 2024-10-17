@@ -682,7 +682,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6334358369296452749}
-  - {fileID: 1208918992444471801}
   - {fileID: 5647668812561304906}
   - {fileID: 1428652973829009157}
   - {fileID: 309662476175911243}
@@ -1101,14 +1100,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3711339677740375289}
-  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -2, y: 1, z: 0}
-  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 965050198462121550}
+  m_Father: {fileID: 6334358369296452749}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3748337673881694219
 GameObject:
   m_ObjectHideFlags: 0
@@ -3153,10 +3152,11 @@ GameObject:
   m_Component:
   - component: {fileID: 6334358369296452749}
   - component: {fileID: 1696198312466959215}
+  - component: {fileID: 8485100337974472020}
   - component: {fileID: 4763797656934530292}
   - component: {fileID: 8765356522106497856}
   - component: {fileID: 86686155836044773}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Monster(Script)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3185,6 +3185,7 @@ Transform:
   - {fileID: 6292591748842000877}
   - {fileID: 6676728271713195855}
   - {fileID: 8116163775639150130}
+  - {fileID: 1208918992444471801}
   - {fileID: 4960660148516503614}
   m_Father: {fileID: 965050198462121550}
   m_RootOrder: -1
@@ -3210,6 +3211,63 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8485100337974472020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334019738305160244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaee79021cceabb4f8c4a1049d86d355, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  HpBar: {fileID: 1093664543775797032}
+  curHP: 0
+  maxHP: 0
+  hpMul: 0
+  ATK: 0
+  atkMul: 0
+  DEF: 0
+  MoveSpeed: 0
+  Damage: 0
+  ownWeakProperty: 
+  WeakProperty: 
+  TickCoolTime: 0
+  DamageText: {fileID: 0}
+  MonsterCanvas: {fileID: 0}
+  CanvasYRot: 0
+  hpBarPosition: {x: 0, y: 0, z: 0}
+  matObj: {fileID: 0}
+  targetObj: {fileID: 0}
+  Targets: []
+  CurTarget: {fileID: 0}
+  PlayerTr: {fileID: 0}
+  PlayerDistance: 0
+  Distance: 0
+  TempDistance: 0
+  TraceRadius: 0
+  attackRadius: 0
+  AttackCoolTime: 0
+  AttackCollider: {fileID: 0}
+  Coin: {fileID: 0}
+  isDie: 0
+  isHit: 0
+  isStun: 0
+  isSpawn: 0
+  hitCount: 0
+  IceHit: {fileID: 0}
+  FireHit: {fileID: 0}
+  AttackEffect: {fileID: 0}
+  EffectGen: {fileID: 0}
+  AnimSpeed: 1
+  Stun_Effect_1: {fileID: 0}
+  Stun_Effect_2: {fileID: 0}
+  desiredParent: {fileID: 0}
+  bonusstat: 0
+  FirePos: {fileID: 0}
 --- !u!114 &4763797656934530292
 MonoBehaviour:
   m_ObjectHideFlags: 0

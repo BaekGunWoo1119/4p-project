@@ -49,6 +49,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
     public bool isDie;     //몬스터 사망체크
     public bool isHit;     //몬스터 피격체크
     public bool isStun;  //스턴상태인지
+    public bool isSpawn; //스폰상태인지
     public float hitCount;  //몬스터가 맞았을 때, 시간을 늘려서 몬스터가 피격 상태인지 체크하기 위한 변수
 
     public GameObject IceHit; //몬스터 피격 이펙트(얼음)
@@ -121,7 +122,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         rd.AddForce(Vector3.down * 4, ForceMode.VelocityChange);
         if (PhotonNetwork.IsMasterClient){
             
-            if (!isDie &&!isStun)     // 죽어있는 상태가 아니면
+            if (!isDie &&!isStun&& !isSpawn)     // 죽어있는 상태가 아니면
             {
                 if(PlayerTr != null)
                 {
@@ -216,7 +217,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         if(CurTarget != null){
             Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
-            if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit)
+            if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn)
             {
                 StartCoroutine(Trace());
             }
@@ -224,7 +225,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
                 Settarget();
             }
 
-            if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && !isHit)
+            if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && !isHit && !isSpawn)
             {
                 photonview.RPC("Server_Attack", RpcTarget.All);
                 //StartCoroutine(Attack());
@@ -894,5 +895,13 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
     }
     public void ReflectDamage(float CurDamage, string Property){
         photonview.RPC("RPCTakeDamage", RpcTarget.All, CurDamage ,Property);
+    }
+    public virtual IEnumerator Spawn_State()
+    {
+        this.gameObject.layer = 10;
+        isSpawn =true;
+        yield return new WaitForSeconds(2f);
+        this.gameObject.layer = 6;
+        isSpawn =false;
     }
 }
