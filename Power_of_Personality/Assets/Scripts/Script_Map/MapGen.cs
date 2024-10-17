@@ -31,9 +31,9 @@ public class MapGen : MonoBehaviour
 
     // 선택된 맵 데이터
     private MapData selectedMapData;
-    public GameObject PlatformMid;
-    public GameObject PlatformShort;
-    public GameObject PlatformLong;
+    public GameObject[] PlatformMid;
+    public GameObject[] PlatformShort;
+    public GameObject[] PlatformLong;
     public GameObject PlatformCase;
 
 	public MapCases JSONMapCases;
@@ -56,15 +56,16 @@ public class MapGen : MonoBehaviour
 			//Debug.Log(MapCases);
 			foreach (var platformData in selectedMapData.MapCase)
 			{
+                int randomInt = Random.Range(1, 6);
 				switch (platformData.platform){
 					case "Mid":
-						PlatformCase = PlatformMid;
+						PlatformCase = PlatformMid[randomInt-1];
 						break;
 					case "Long":
-						PlatformCase = PlatformLong;
+						PlatformCase = PlatformLong[randomInt-1];
 						break;
 					case "Short":
-						PlatformCase = PlatformShort;
+						PlatformCase = PlatformShort[randomInt-1];
 						break;
 					default:
 						break;
