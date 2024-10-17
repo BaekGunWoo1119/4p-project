@@ -303,7 +303,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         OgreGen = GameObject.Find("OgreGen");
         DemonKingGen = GameObject.Find("DemonKingGen");
         //Null 오류 날 시 코드 추가(09.30)
-        TotalDodge_CoolTime = 10f; //구르기 쿨타임 (10.01)
+        TotalDodge_CoolTime = 5f; //구르기 쿨타임 (10.01)
 
         // HP Bar 설정
         HpBar = GameObject.Find("HPBar-Player").GetComponent<Slider>();
@@ -1040,7 +1040,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             int hitCount = PlayerPrefs.GetInt("hitCount", 0);
             PlayerPrefs.SetInt("hitCount", hitCount + 1);
-            Debug.Log(PlayerPrefs.GetInt("hitCount"));
+            //Debug.Log(PlayerPrefs.GetInt("hitCount"));
             Status.HP -= Damage;
             CheckHp();
             //저지불가 (09.14 정도훈)
@@ -1318,7 +1318,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
                 // 몬스터 스크립트로 캐스팅된 객체에서 ATK 값을 가져옵니다.
                 float atkValue = (float)((specificMonsterCtrl as MonoBehaviour).GetType().GetField("ATK").GetValue(specificMonsterCtrl));
-                Debug.Log("몬스터의 ATK 값: " + atkValue);
+                //Debug.Log("몬스터의 ATK 값: " + atkValue);
                 Damage = atkValue;
                 StartCoroutine(TakeDamage());
             }
@@ -1359,7 +1359,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             {
                 // 몬스터 스크립트로 캐스팅된 객체에서 ATK 값을 가져옵니다.
                 float atkValue = (float)attackCtrl.GetType().GetField("ATK").GetValue(attackCtrl);
-                Debug.Log("몬스터의 ATK 값: " + atkValue);
+                //Debug.Log("몬스터의 ATK 값: " + atkValue);
                 Damage = atkValue;
                 StartCoroutine(TakeDamage());
             }
@@ -1382,7 +1382,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             {
                 // 몬스터 스크립트로 캐스팅된 객체에서 ATK 값을 가져옵니다.
                 float atkValue = (float)monsterCtrl.GetType().GetField("ATK").GetValue(monsterCtrl);
-                Debug.Log("몬스터의 ATK 값: " + atkValue);
+                //Debug.Log("몬스터의 ATK 값: " + atkValue);
                 Damage = atkValue;
                 canTakeDamage = false;
                 StartCoroutine(TakeDamage());
@@ -1435,7 +1435,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     public virtual void Attack(int AttackNumber)
     {
-        Debug.Log("Attack 메서드 실행, AttackNumber는 = " + AttackNumber);
+        //Debug.Log("Attack 메서드 실행, AttackNumber는 = " + AttackNumber);
         switch (AttackNumber) {
             case 0:
             case 1:
@@ -1447,7 +1447,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                     }
                     if(attackCount == 3 && currentStack < 3 && Status.set5_4_Activated)
                     {
-                        Debug.Log("평타 " + attackCount + "번 침");
+                        //Debug.Log("평타 " + attackCount + "번 침");
                         StartCoroutine(set5_4());
                     }
                     if(attackCount >= 3 && Status.set5_4_Activated)
@@ -1464,13 +1464,13 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         currentStack++;
         prevADC.Push(Status.TotalADC);
         Status.TotalADC = Status.TotalADC * 1.2f;
-        Debug.Log("강화된 공격력 : " + Status.TotalADC);
-        Debug.Log("현재 " + currentStack + "스택");
+        //Debug.Log("강화된 공격력 : " + Status.TotalADC);
+        //Debug.Log("현재 " + currentStack + "스택");
         yield return new WaitForSeconds(7);
         currentStack--;
         Status.TotalADC = (float)prevADC.Pop();
-        Debug.Log("돌아간 공격력 : " + Status.TotalADC);
-        Debug.Log("현재 " + currentStack + "스택");
+        //Debug.Log("돌아간 공격력 : " + Status.TotalADC);
+        //Debug.Log("현재 " + currentStack + "스택");
     }
 
     protected virtual void SkillCoolTimeCharge()

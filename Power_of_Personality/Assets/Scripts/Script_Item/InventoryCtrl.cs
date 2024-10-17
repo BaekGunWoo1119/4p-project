@@ -64,9 +64,9 @@ public class InventoryCtrl : MonoBehaviour
             HadItemsID[i] = -1;
         }
 
-        PotionCount = 10;
-        ADPotionCount = 10;
-        ArmorPotionCount = 10;
+        PotionCount = 0;
+        ADPotionCount = 0;
+        ArmorPotionCount = 0;
         StatPoint = 0;
 
         HiddenShopSlots = GameObject.Find("HiddenShop_Slots");
@@ -93,6 +93,11 @@ public class InventoryCtrl : MonoBehaviour
         CheckInven();
 
         CheckPlayer();
+
+        for(int i = 0; i < HadItemsID.Length; i++)
+        {
+            HadItemsID[i] = -1;
+        }
 
         if(scene.name == "Hidden_Shop")
         {
@@ -150,7 +155,7 @@ public class InventoryCtrl : MonoBehaviour
         StatPoint = 0;
     }
 
-    public void RemoveHadItem()
+    public void SetHadItem()
     {
         for(int i = 0; i < collectedItemsID.Length; i++)
         {

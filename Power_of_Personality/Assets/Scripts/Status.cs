@@ -145,7 +145,7 @@ public class Status : MonoBehaviour
         {
             if (itemIds[itemID] == itemID)
             {
-                set1Count++;
+                //set1Count++;
             }
             switch (set1Count)
             {
@@ -183,7 +183,7 @@ public class Status : MonoBehaviour
         {
             if (itemIds[itemID] == itemID)
             {
-                set2Count++;
+                //set2Count++;
             }
             switch (set2Count)
             {
@@ -221,7 +221,7 @@ public class Status : MonoBehaviour
         {
             if (itemIds[itemID] == itemID)
             {
-                set3Count++;
+                //set3Count++;
             }
             switch (set3Count)
             {
@@ -260,7 +260,7 @@ public class Status : MonoBehaviour
             Debug.Log("얼음세트먹음");
             if (itemIds[itemID] == itemID)
             {
-                set4Count++;
+                //set4Count++;
             }
             switch (set4Count)
             {
@@ -299,7 +299,7 @@ public class Status : MonoBehaviour
         {
             if (itemIds[itemID] == itemID)
             {
-                set5Count++;
+                //set5Count++;
             }
             switch (set5Count)
             {
@@ -337,7 +337,7 @@ public class Status : MonoBehaviour
         {
             if (itemIds[itemID] == itemID)
             {
-                set6Count++;
+                //set6Count++;
             }
             switch (set6Count)
             {
@@ -375,7 +375,7 @@ public class Status : MonoBehaviour
         {
             if (itemIds[itemID] == itemID)
             {
-                set7Count++;
+                //set7Count++;
             }
             switch (set7Count)
             {
@@ -414,7 +414,7 @@ public class Status : MonoBehaviour
             Debug.Log("8번 세트머금");
             if (itemIds[itemID] == itemID)
             {
-                set8Count++;
+                //set8Count++;
             }
             switch (set8Count)
             {
@@ -489,6 +489,17 @@ public class Status : MonoBehaviour
 
         set8_Activate = false;
         set8_3_Activated = false;
+
+        set1Count = 0;
+        set2Count = 0;
+        set3Count = 0;
+        set4Count = 0;
+        set5Count = 0;
+        set6Count = 0;
+        set7Count = 0;
+        set8Count = 0;
+
+
 
         MaxHP = 100f;
         FixedAD = 50f; //공격력 고정

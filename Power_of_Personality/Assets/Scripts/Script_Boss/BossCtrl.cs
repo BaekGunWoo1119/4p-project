@@ -81,8 +81,6 @@ public class BossCtrl : MonoBehaviour
         BossWall1Collider = BossWall1.GetComponent<BoxCollider>();
         BossWall2 = GameObject.Find("BossWall2").gameObject;
         BossWall2Collider = BossWall2.GetComponent<BoxCollider>();
-        SetHP(100);
-        CheckHP();
         GameObject.Find("Boss_HP_Bar").transform.localScale = new Vector3(1, 1, 1);
 
         // 공격 사운드 할당(10.03)
