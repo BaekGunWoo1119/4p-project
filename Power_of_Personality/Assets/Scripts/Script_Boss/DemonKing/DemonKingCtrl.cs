@@ -226,7 +226,11 @@ public class DemonKingCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeWeakAttack");   // 애니메이션
-        yield return new WaitForSeconds(2.25f); //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.65f); 
+        atkAudio[0].PlayOneShot(atkAudio[0].clip); //약 공격(창 3번 스윙) 사운드(10.03)
+        yield return new WaitForSeconds(0.6f); 
+        atkAudio[6].PlayOneShot(atkAudio[6].clip); //약 공격(창 3번 스윙) 사운드(10.03)
+        yield return new WaitForSeconds(1.0f); //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(1f);        //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
@@ -236,7 +240,9 @@ public class DemonKingCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doMeleeStrongAttack");     //애니메이션
-        yield return new WaitForSeconds(1.8f);    //애니메이션 지속 시간
+        yield return new WaitForSeconds(1.0f); 
+        atkAudio[1].PlayOneShot(atkAudio[1].clip); //강 공격(창 강한 스윙) 사운드(10.03)
+        yield return new WaitForSeconds(0.8f);    //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(1.5f);        //다음 행동까지 걸리는 시간
         StartCoroutine(Think());
@@ -246,7 +252,9 @@ public class DemonKingCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doRangedWeakAttack");      // 애니메이션
-        yield return new WaitForSeconds(1.15f);    //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.93f); 
+        atkAudio[2].PlayOneShot(atkAudio[2].clip); //약 공격(파이어 샷) 사운드(10.03)
+        yield return new WaitForSeconds(0.22f);    //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(1f);        //다음 행동까지 걸리는 시간 
         StartCoroutine(Think());
@@ -256,7 +264,9 @@ public class DemonKingCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doRangedStrongAttack");    // 애니메이션
-        yield return new WaitForSeconds(1.3f);      //애니메이션 지속 시간
+        yield return new WaitForSeconds(0.93f); 
+        atkAudio[3].PlayOneShot(atkAudio[3].clip); //강 공격(창 포탈) 사운드(10.03)
+        yield return new WaitForSeconds(0.37f);      //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(1.5f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
@@ -266,7 +276,9 @@ public class DemonKingCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doSkill1");    // 애니메이션
-        yield return new WaitForSeconds(3.4f);      //애니메이션 지속 시간
+        yield return new WaitForSeconds(2.6f); 
+        atkAudio[4].PlayOneShot(atkAudio[4].clip); //강 공격(창 포탈) 사운드(10.03)
+        yield return new WaitForSeconds(0.8f);      //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(2f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
@@ -276,7 +288,9 @@ public class DemonKingCtrl : BossCtrl
     {
         isAttacking = true;
         anim.SetTrigger("doSkill2");    // 애니메이션
-        yield return new WaitForSeconds(2.1f);        //애니메이션 지속 시간
+        yield return new WaitForSeconds(1.55f); 
+        atkAudio[6].PlayOneShot(atkAudio[6].clip); //강 공격(창 포탈) 사운드(10.03)
+        yield return new WaitForSeconds(0.55f);        //애니메이션 지속 시간
         isAttacking = false;
         yield return new WaitForSeconds(2f);        //다음 행동까지 걸리는 시간      
         StartCoroutine(Think());
