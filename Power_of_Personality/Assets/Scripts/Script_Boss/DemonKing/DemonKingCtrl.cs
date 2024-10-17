@@ -34,7 +34,7 @@ public class DemonKingCtrl : BossCtrl
 
         shopPortal.SetActive(false);
         StartCoroutine(Think());
-        SoundsManager.Change_Sounds("Cave_Boss"); //소리 추가(08.31)
+        //SoundsManager.Change_Sounds("Castle_Boss"); //소리 추가(08.31)
     }
 
     protected override void Update()
@@ -49,7 +49,7 @@ public class DemonKingCtrl : BossCtrl
         DistanceCheck();
         if(isDie == true)
         {
-            SoundsManager.Change_Sounds("Cave"); //소리 추가(08.31)
+            SoundsManager.Change_Sounds("Castle"); //소리 추가(08.31)
         }
     }
     #endregion
