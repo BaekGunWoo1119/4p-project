@@ -148,6 +148,7 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         base.Turn();
     }
 
+    [PunRPC]
     protected override void Jump()
     {
         base.Jump();
