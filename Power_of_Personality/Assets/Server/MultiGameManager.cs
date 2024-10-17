@@ -156,12 +156,12 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
             if (IsWave == false)
             {
                 // 플레이어가 상점에서 나오면 서버로 응답 보냄
-                if (Status.IsShop == false && wavedelay >10.0f)
+                if (Status.IsShop == false)
                 {
                     ExitShop();
                     if (CheckExitShop() == true)
                     {
-                        if (PhotonNetwork.IsMasterClient){
+                        if (PhotonNetwork.IsMasterClient && wavedelay >10.0f){
                             photonview.RPC("StartWave",RpcTarget.All);
                         }
                     }

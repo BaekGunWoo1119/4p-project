@@ -50,17 +50,17 @@ public class Server_DarkElfCtrl : Server_MonsterCtrl
 
         if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn&&!anim.GetBool("isAttack"))
         {
-            anim.SetBool("isRun", true);
+            photonview.RPC("RPCRun", RpcTarget.All, true);
             StartCoroutine(Trace());
         }
         if(Distance <= attackRadius){
-            anim.SetBool("isRun", false);
+            photonview.RPC("RPCRun", RpcTarget.All, false);
         }
 
         if (Distance <= attackRadius && AttackCoolTime >= 3.0f*(1f/AnimSpeed) && !isDie && hitCount <= 0 && !isSpawn)
         {
-            anim.SetBool("isRun", false);
-            StartCoroutine(Attack());
+            photonview.RPC("RPCRun", RpcTarget.All, false);
+            photonview.RPC("Server_Attack", RpcTarget.All);
         }
     }
 
@@ -115,5 +115,9 @@ public class Server_DarkElfCtrl : Server_MonsterCtrl
     [PunRPC]
     public override void RPCDamage(float CurDamage){
         base.RPCDamage(CurDamage);
+    }
+    [PunRPC]
+    public  void RPCRun(bool state){
+        anim.SetBool("isRun", state);
     }
 }
