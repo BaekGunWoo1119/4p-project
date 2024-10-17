@@ -116,6 +116,8 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     public float LocalSkillYRot;
     public GameObject EffectGen;
     public GameObject SkillEffect;
+    public GameObject PotionEffect;
+    public GameObject SpellEffect;
     public GameObject DamageText; //텍스트
     public GameObject Damage_Effect;
     public GameObject HPPotion_Effect;
@@ -1571,26 +1573,26 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     public virtual IEnumerator HPPotion_on()
     {
-        SkillEffect = Instantiate(HPPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
-        SkillEffect.transform.parent = EffectGen.transform;
+        PotionEffect = Instantiate(HPPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        PotionEffect.transform.parent = EffectGen.transform;
         yield return new WaitForSeconds(1.0f);
-        Destroy(SkillEffect);
+        Destroy(PotionEffect);
     }
 
     public virtual IEnumerator ATKPotion_on()
     {
-        SkillEffect = Instantiate(ATKPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
-        SkillEffect.transform.parent = EffectGen.transform;
+        PotionEffect = Instantiate(ATKPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        PotionEffect.transform.parent = EffectGen.transform;
         yield return new WaitForSeconds(1.0f);
-        Destroy(SkillEffect);
+        Destroy(PotionEffect);
     }
 
     public virtual IEnumerator DEFPotion_on()
     {
-        SkillEffect = Instantiate(DEFPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
-        SkillEffect.transform.parent = EffectGen.transform;
+        PotionEffect = Instantiate(DEFPotion_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        PotionEffect.transform.parent = EffectGen.transform;
         yield return new WaitForSeconds(1.0f);
-        Destroy(SkillEffect);
+        Destroy(PotionEffect);
     }
 
     public virtual void Damaged_on()
@@ -1813,12 +1815,12 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
     public virtual IEnumerator Spell_Heal_on()
     {
-        SkillEffect = Instantiate(Spell_Heal_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
-        SkillEffect.transform.parent = EffectGen.transform;
-        SkillEffect.transform.localPosition = new Vector3(0,-0.9f,0);
+        SpellEffect = Instantiate(Spell_Heal_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot - 90f, 0));
+        SpellEffect.transform.parent = EffectGen.transform;
+        SpellEffect.transform.localPosition = new Vector3(0,-0.9f,0);
         spellSounds[2].PlayOneShot(spellSounds[2].clip); //스펠 사운드 추가(10.02)
         yield return new WaitForSeconds(3.0f);
-        Destroy(SkillEffect);
+        Destroy(SpellEffect);
     }
 
     //기절 미완
@@ -1833,10 +1835,10 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     }
     public virtual IEnumerator Spell_Stun_on()
     {
-        SkillEffect = Instantiate(Spell_Stun_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot + 90f, 0));
+        SpellEffect = Instantiate(Spell_Stun_Effect, EffectGen.transform.position, Quaternion.Euler(0, SkillYRot + 90f, 0));
         spellSounds[1].PlayOneShot(spellSounds[1].clip); //스펠 사운드 추가(10.02)
         yield return new WaitForSeconds(3.0f);
-        Destroy(SkillEffect);
+        Destroy(SpellEffect);
     }
 
 
