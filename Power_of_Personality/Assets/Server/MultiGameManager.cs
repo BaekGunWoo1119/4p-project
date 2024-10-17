@@ -17,6 +17,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     public float TempTime; // 몬스터 저장용 시간
     public float sec; // 타이머용 시간
     public int min; // 타이머용 시간
+    public float wavedelay; //웨이브 끝나고 대기시간용
     public static Transform[] SpawnPoints; // 현재 스테이지 몬스터 스폰 포인트들
     public Transform[] SpawnPoints1; // 1스테이지 몬스터 스폰 포인트들
     public Transform[] SpawnPoints2; // 2스테이지 몬스터 스폰 포인트들
@@ -117,6 +118,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
 
             CurrentTime += Time.deltaTime;
             TempTime += Time.deltaTime;
+            wavedelay += Time.deltaTime;
             MonsterCount = GameObject.FindGameObjectsWithTag("Monster").Length; // 몬스터 수 카운트
 
             //웨이브 중일때
@@ -127,6 +129,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                     // 몬스터가 0명이라면
                     if (MonsterCount < 1)
                     {
+                        wavedelay = 0f;
                         IsWave = false;
                         if (PhotonNetwork.IsMasterClient){
                             if(CurrentWave>12){
@@ -153,7 +156,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
             if (IsWave == false)
             {
                 // 플레이어가 상점에서 나오면 서버로 응답 보냄
-                if (Status.IsShop == false)
+                if (Status.IsShop == false && wavedelay >10.0f)
                 {
                     ExitShop();
                     if (CheckExitShop() == true)
@@ -187,7 +190,12 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
             }
         }
     }
-
+    [PunRPC]
+    void gotoshop(){
+        PlayerPrefs.SetInt("Shop", 1);
+        GameObject.Find("EventSystem").GetComponent<Shop_PortalCtrl>().Open_Shop(PlayerCol);
+        Player.transform.position = ShopTr.position;
+    }
     [PunRPC]
     // 웨이브 종료 후 상점으로 이동
     void EndWave()
@@ -205,9 +213,8 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         WaveUpdate(); // 다음 웨이브 설정
         SetSpawnPoint();
         // 상점으로 이동
-        PlayerPrefs.SetInt("Shop", 1);
-        GameObject.Find("EventSystem").GetComponent<Shop_PortalCtrl>().Open_Shop(PlayerCol);
-        Player.transform.position = ShopTr.position;
+        Invoke("gotoshop", 5.0f);
+        
     }
 
     // 몬스터 스폰
