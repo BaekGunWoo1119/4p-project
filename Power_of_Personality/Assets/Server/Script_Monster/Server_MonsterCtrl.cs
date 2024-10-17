@@ -120,6 +120,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         hpBarPosition = GetHPBarPosition(); // 몬스터의 상단으로 설정
         HpBar.transform.position = hpBarPosition;
         rd.AddForce(Vector3.down * 4, ForceMode.VelocityChange);
+        TickCoolTime += Time.deltaTime;
         if (PhotonNetwork.IsMasterClient){
             
             if (!isDie &&!isStun&& !isSpawn)     // 죽어있는 상태가 아니면
@@ -135,7 +136,6 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
                 DistanceCheck();    // 플레이어와의 거리를 계산
             }
             AttackCoolTime += Time.deltaTime;
-            TickCoolTime += Time.deltaTime;
             hitCount -= Time.deltaTime;
         }
         else{
