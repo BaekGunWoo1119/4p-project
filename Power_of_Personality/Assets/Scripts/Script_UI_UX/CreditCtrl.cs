@@ -15,9 +15,6 @@ public class CreditCtrl : MonoBehaviour
     {
         endPos = new Vector3(Screen.width / 2, Screen.height * 7,0);
         velocity = Vector3.zero;
-
-        if(backBtn != null)
-            StartCoroutine(BackBtnEnable());
     }
 
     // Update is called once per frame
@@ -33,13 +30,6 @@ public class CreditCtrl : MonoBehaviour
     public void Credit_Open()
     {
         SceneManager.LoadScene("Credit");
-    }
-
-    IEnumerator BackBtnEnable()
-    {
-        backBtn.SetActive(false);
-        yield return new WaitForSeconds(80f);
-        backBtn.SetActive(true);
     }
 
     public void Credit_Close()
