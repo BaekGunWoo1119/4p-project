@@ -286,60 +286,25 @@ public class DemonKingCtrl : BossCtrl
     #region 공격 이펙트 스크립트
     public void SpearSwing()
     {
-        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
-        {
-            SkillEffect = Instantiate(SpearSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(0, 0, 0));
-        }
-        else
-        {
-            SkillEffect = Instantiate(SpearSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(0, -180, 0));
-        }
+        SkillEffect = Instantiate(SpearSwing_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, SkillYRot + 90f, 0));
     }
 
     public void SpearSting()
     {
-        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
-        {
-            SkillEffect = Instantiate(SpearSting_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(0, 0, 0));
-        }
-        else
-        {
-            SkillEffect = Instantiate(SpearSting_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(0, -180, 0));
-        }
+        SkillEffect = Instantiate(SpearSting_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, SkillYRot, 0));
     }
     public void SpearSwing_Strong()
     {
-        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
-        {
-            SkillEffect = Instantiate(SpearSwing_Strong_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y+2, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));
-        }
-        else
-        {
-            SkillEffect = Instantiate(SpearSwing_Strong_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y+2, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));
-        }
+        SkillEffect = Instantiate(SpearSwing_Strong_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, SkillYRot + 90f, 0));
     }
     public void FireShot()
     {
-        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
-        {
-            SkillEffect = Instantiate(FireShot_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(0, 0, 0));
-        }
-        else
-        {
-            SkillEffect = Instantiate(FireShot_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2, EffectGen.transform.position.z), Quaternion.Euler(0, -180, 0));
-        }
+        SkillEffect = Instantiate(FireShot_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 1.5f, EffectGen.transform.position.z), Quaternion.Euler(0, SkillYRot, 0));
     }
 
     public void SpearPortal()
     {
-        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
-        {
-            SkillEffect = Instantiate(SpearPortal_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y+2, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));
-        }
-        else
-        {
-            SkillEffect = Instantiate(SpearPortal_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y+2, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));        
-        }
+        SkillEffect = Instantiate(SpearPortal_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y + 2f, EffectGen.transform.position.z), Quaternion.Euler(0, SkillYRot, 0));        
     }
 
     public void FireThrower()
@@ -348,14 +313,7 @@ public class DemonKingCtrl : BossCtrl
     }
     public void FireWall()
     {
-        if (SkillYRot == 180 || (SkillYRot > 130 && SkillYRot < 230))
-        {
-            SkillEffect = Instantiate(FireWall_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, 90, 0));
-        }
-        else
-        {
-            SkillEffect = Instantiate(FireWall_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, -90, 0));        
-        }
+        SkillEffect = Instantiate(FireWall_Effect, new Vector3(EffectGen.transform.position.x, EffectGen.transform.position.y, EffectGen.transform.position.z), Quaternion.Euler(0, SkillYRot - 90f, 0));
     }
     #endregion
 }
