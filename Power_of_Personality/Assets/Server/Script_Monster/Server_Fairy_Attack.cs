@@ -54,7 +54,7 @@ public class Server_Fairy_Attack : MonoBehaviour
 
     public void Update()
     {
-        transform.localRotation = Quaternion.identity; // 초기 회전으로 설정
+        //transform.localRotation = Quaternion.identity; // 초기 회전으로 설정
     }
     
 }
