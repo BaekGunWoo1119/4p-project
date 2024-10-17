@@ -55,7 +55,7 @@ public class TabBtn : MonoBehaviour
     {
         if (button != null)
         {
-            Debug.Log("???????? ????");
+            //Debug.Log("???????? ????");
             ColorBlock colors = button.colors;
             colors.normalColor = iceColor;
             button.colors = colors;

@@ -33,6 +33,7 @@ public class Stone_Golem : BossCtrl
     #region Awake, Start, Update문
     protected override void Awake()
     {
+        DEF = 200f;
         base.Awake();
     }
 
@@ -40,7 +41,7 @@ public class Stone_Golem : BossCtrl
     {
         base.Start();
         MoveSpeed = 7f;
-
+        SetHP(1000f);
         shopPortal.SetActive(false);
         StartCoroutine(Think());
         SoundsManager.Change_Sounds("Cave_Boss"); //소리 추가(08.31)

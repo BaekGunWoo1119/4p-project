@@ -24,6 +24,7 @@ public class DemonKingCtrl : BossCtrl
     #region Awake, Start, Update문
     protected override void Awake()
     {
+        DEF = 100f;
         base.Awake();
     }
 
@@ -31,7 +32,7 @@ public class DemonKingCtrl : BossCtrl
     {
         base.Start();
         MoveSpeed = 7f;
-
+        SetHP(4000);
         shopPortal.SetActive(false);
         StartCoroutine(Think());
         //SoundsManager.Change_Sounds("Castle_Boss"); //소리 추가(08.31)

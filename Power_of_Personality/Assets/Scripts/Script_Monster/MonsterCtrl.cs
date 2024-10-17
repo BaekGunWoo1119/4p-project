@@ -379,7 +379,7 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "RougeSkillQ_2")
         {
             isHit = true;
-            Damage = Status.TotalAP;
+            Damage = Status.TotalAP*2f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -393,7 +393,7 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "RougeSkillW_2")
         {
             isHit = true;
-            Damage = Status.TotalAP * 1.5f;
+            Damage = Status.TotalAP * 0.3f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -435,7 +435,7 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "RougeSkillE_4")
         {
             isHit = true;
-            Damage = Status.TotalAP * 3f;
+            Damage = Status.TotalAP * 4f;
             if (Status.set6_4_Activated)
             {
                 Damage *= 1.2f;
@@ -513,7 +513,7 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "WizardSkillW")
         {
             isHit = true;
-            Damage = Status.TotalAP * 3f;
+            Damage = Status.TotalAP * 4f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -585,7 +585,7 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "RougeSkillQ_1" && TickCoolTime >= 0.25f)
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.3f;
+            Damage = Status.TotalAP * 0.4f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -601,7 +601,7 @@ public class MonsterCtrl : MonoBehaviour
         if (col.tag == "RougeSkillW_1" && TickCoolTime >= 0.3f)
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.4f;
+            Damage = Status.TotalAP * 0.5f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -662,10 +662,10 @@ public class MonsterCtrl : MonoBehaviour
         }
         #endregion
         #region 마법사
-        if (col.tag == "WizardSkillQ" && TickCoolTime >= 0.25f)
+        if (col.tag == "WizardSkillQ" && TickCoolTime >= 0.3f)
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.5f;
+            Damage = Status.TotalAP * 0.3f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -728,13 +728,13 @@ public class MonsterCtrl : MonoBehaviour
             {
                 Debug.Log("힐 하기 전 HP:" + Status.HP);
 
-                if(Status.HP + (Damage * 0.2f) > Status.MaxHP)
+                if(Status.HP + (Damage * 0.05f) > Status.MaxHP)
                 {
                     Status.HP = Status.MaxHP;
                 }
                 else
                 {
-                    Status.HP += (Damage * 0.2f);
+                    Status.HP += (Damage * 0.05f);
                 }
                 Debug.Log("힐 하고 나서 HP:" + Status.HP);
             }
