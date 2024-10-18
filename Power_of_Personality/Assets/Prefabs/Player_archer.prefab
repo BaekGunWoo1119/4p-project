@@ -89083,6 +89083,8 @@ MonoBehaviour:
   LocalSkillYRot: 0
   EffectGen: {fileID: 0}
   SkillEffect: {fileID: 0}
+  PotionEffect: {fileID: 0}
+  SpellEffect: {fileID: 0}
   DamageText: {fileID: 5357283400005317788, guid: c87b9d34b3435f643a71a71e49449700, type: 3}
   Damage_Effect: {fileID: 2292867600362698915, guid: 356dc8270444ffd4eace122d8aa26061, type: 3}
   HPPotion_Effect: {fileID: 4313010620861098664, guid: cb0e3529083d1a849875beded1854e79, type: 3}
@@ -89137,7 +89139,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: dc201d6d977804c4aadc0aede8d0fb4f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -89226,6 +89228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a3eab9530891aa48be1f8c1eaad5613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invenlist: 
   inventoryObject: {fileID: 0}
   InvenCtrl: {fileID: 0}
   TraitBoxes: []

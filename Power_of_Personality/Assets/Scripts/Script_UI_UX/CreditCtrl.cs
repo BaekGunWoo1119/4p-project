@@ -23,7 +23,7 @@ public class CreditCtrl : MonoBehaviour
         if(credit != null)
             credit.transform.position = Vector3.SmoothDamp(credit.transform.position, endPos, ref velocity, 66.0f);
 
-        if(Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != "1-3 (Setting)")
+        if(Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != "1 (Main)")
             Credit_Close();
     }
 
@@ -34,6 +34,6 @@ public class CreditCtrl : MonoBehaviour
 
     public void Credit_Close()
     {
-        SceneManager.LoadScene("1-3 (Setting)");
+        SceneManager.LoadScene("1 (Main)");
     }
 }

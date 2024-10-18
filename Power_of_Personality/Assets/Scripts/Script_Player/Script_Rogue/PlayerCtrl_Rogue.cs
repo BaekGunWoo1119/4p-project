@@ -209,6 +209,7 @@ public class PlayerCtrl_Rogue : PlayerCtrl
         if (AttackNumber == 3)
         {
             StartCoroutine(Attack_Sound(1, 0.5f)); //소리 추가(08.31)
+            isAttack = false;
         }
 
         if (AttackNumber == 4)

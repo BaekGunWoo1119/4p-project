@@ -378,7 +378,6 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             spellSounds[i].Stop();
         }
-        
     }
     protected virtual void FixedUpdate()
     {
@@ -622,6 +621,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !stateDamage)
             {
                 UseSkill("Q");
+                isSkill = true;
                 TotalQSkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
                 // Debug.Log("TotalQSkillCoolTime :" + TotalQSkillCoolTime);
                 // Debug.Log("Status.FixedCooltime :" + Status.FixedCooltime);
@@ -639,6 +639,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !stateDamage)
             {
                 UseSkill("W");
+                isSkill = true;
                 TotalWSkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
                 // Debug.Log("TotalWSkillCoolTime :" + TotalWSkillCoolTime);
                 // Debug.Log("Status.FixedCooltime :" + Status.FixedCooltime);
@@ -656,6 +657,7 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
             && !stateDamage)
             {
                 UseSkill("E");
+                isSkill = true;
                 TotalESkillCoolTime = ((10f-Status.FixedCooltime)*(100f/Status.PercentCooltime)); //도훈 2024-08-27
                 // Debug.Log("TotalESkillCoolTime :" + TotalESkillCoolTime);
                 // Debug.Log("Status.FixedCooltime :" + Status.FixedCooltime);

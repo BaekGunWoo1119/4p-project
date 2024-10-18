@@ -36,7 +36,7 @@ public class BonusState : MonoBehaviour
     }
     private void UpdateStatText()
     {
-        StatText.text = "???? ????? ???? = " + PlayerPrefs.GetInt("RemainStat", bonusstat);
+        StatText.text = "남은 보너스 스탯 = " + PlayerPrefs.GetInt("RemainStat", bonusstat);
     }
     
 
