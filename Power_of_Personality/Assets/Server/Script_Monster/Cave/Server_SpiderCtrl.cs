@@ -13,9 +13,11 @@ public class Server_SpiderCtrl : Server_MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty ="Fire";
-        ATK = 0;
+        maxHP = 150f;
+        ATK = 8.0f;
+        DEF = 50f;
         MoveSpeed = 2.0f;
-        Damage = 00.0f;
+        Damage = 10.0f;
         TraceRadius = 10.0f;
         attackRadius = 5.0f;
         base.Awake();

@@ -12,7 +12,9 @@ public class Server_SlimeCtrl : Server_MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty ="Ice";
-        ATK = 10.0f;
+        maxHP = 500f;
+        ATK = 15.0f;
+        DEF = 50f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
         TraceRadius = 10.0f;
