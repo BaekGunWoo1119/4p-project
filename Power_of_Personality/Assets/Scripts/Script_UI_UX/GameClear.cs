@@ -120,20 +120,7 @@ public class GameClear : MonoBehaviour
     private void SetBonusStat()
     {   
         Scene scene = SceneManager.GetActiveScene(); //함수 안에 선언하여 사용한다.
-        switch (scene.name){
-            case "Forest_Example":
-                afterBonus = 0;
-                break;
-            case "Cave_Example":
-                afterBonus = 4;
-                break;
-            case "Sewer_Example":
-                afterBonus = 8;
-                break;
-            case "Castle_Example":
-                afterBonus = 12;
-                break;
-        }
+        afterBonus = 16;
         BonusGap = afterBonus - defaultBonus;
         if(BonusGap > 0){
             PlayerPrefs.SetInt("BonusStat", afterBonus);

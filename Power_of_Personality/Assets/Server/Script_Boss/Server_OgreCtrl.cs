@@ -32,6 +32,7 @@ public class Server_OgreCtrl : Server_BossCtrl
     #region Awake, Start, Update문
     protected override void Awake()
     {
+        DEF = 100f;
         base.Awake();
     }
 
@@ -39,7 +40,7 @@ public class Server_OgreCtrl : Server_BossCtrl
     {
         base.Start();
         MoveSpeed = 7f;
-
+        SetHP(2000f);
         //shopPortal.SetActive(false);
         if(photonview.IsMine){
             StartCoroutine(Think());

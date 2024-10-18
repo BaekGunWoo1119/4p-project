@@ -39,6 +39,7 @@ public class Server_DruidCtrl : Server_BossCtrl
     #region Awake, Start, Update문
     protected override void Awake()
     {
+        DEF = 100f;
         base.Awake();
         Scratch_Collider = GameObject.Find("Scratch");
         GroundStrike_Collider_S = GameObject.Find("GroundStrike_S");
@@ -51,6 +52,7 @@ public class Server_DruidCtrl : Server_BossCtrl
     protected override void Start()
     {
         base.Start();
+        SetHP(500);
         MoveSpeed = 7f;
         Scratch_Collider.SetActive(false);
         GroundStrike_Collider_S.SetActive(false);

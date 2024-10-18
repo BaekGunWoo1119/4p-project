@@ -11,8 +11,10 @@ public class Server_MimicCtrl : Server_MonsterCtrl
 {
     public override void Awake()
     {
-        ownWeakProperty ="Ice";
-        ATK = 10.0f;
+        ownWeakProperty = "Ice";
+        maxHP = 200f;
+        ATK = 12.0f;
+        DEF = 100f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
         TraceRadius = 10.0f;

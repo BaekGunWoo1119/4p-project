@@ -34,12 +34,14 @@ public class Server_Stone_Golem : Server_BossCtrl
     #region Awake, Start, Update문
     protected override void Awake()
     {
+        DEF = 200f;
         base.Awake();
     }
 
     protected override void Start()
     {
         base.Start();
+        SetHP(1000f);
         MoveSpeed = 7f;
         if(photonview.IsMine){
             StartCoroutine(Think());

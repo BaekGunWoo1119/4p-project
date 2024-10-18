@@ -12,7 +12,9 @@ public class Server_MushroomCtrl : Server_MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty ="Ice";
-        ATK = 10.0f;
+        maxHP = 200f;
+        ATK = 5.0f;
+        DEF = 100f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
         TraceRadius = 10.0f;
