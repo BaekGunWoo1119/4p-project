@@ -153,7 +153,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
             }
 
             // 웨이브 끝났을 때 상점 나왔는지 체크
-            if (IsWave == false)
+            if (IsWave == false&& wavedelay >10.0f)
             {
                 // 플레이어가 상점에서 나오면 서버로 응답 보냄
                 if (Status.IsShop == false)
@@ -161,7 +161,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                     ExitShop();
                     if (CheckExitShop() == true)
                     {
-                        if (PhotonNetwork.IsMasterClient && wavedelay >10.0f){
+                        if (PhotonNetwork.IsMasterClient){
                             photonview.RPC("StartWave",RpcTarget.All);
                         }
                     }
