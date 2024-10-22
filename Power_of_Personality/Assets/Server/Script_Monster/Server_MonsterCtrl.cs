@@ -84,7 +84,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
             AttackCollider.SetActive(false);    // 몬스터의 공격 콜라이더를 비활성화
         }
         
-        SetHP(100);                         // 몬스터의 기본 HP를 설정
+        SetHP(maxHP);                         // 몬스터의 기본 HP를 설정
         CheckHP();                          // 몬스터 HP바 설정
         anim = GetComponent<Animator>();    // 몬스터 애니메이터를 가져옴
         matObj = targetObj.GetComponent<SkinnedMeshRenderer>();
@@ -411,7 +411,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         if (col.tag == "RougeSkillQ_2")
         {
             isHit = true;
-            Damage = Status.TotalAP;
+            Damage = Status.TotalAP*2f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -425,7 +425,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         if (col.tag == "RougeSkillW_2")
         {
             isHit = true;
-            Damage = Status.TotalAP * 1.5f;
+            Damage = Status.TotalAP * 0.3f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -467,7 +467,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         if (col.tag == "RougeSkillE_4")
         {
             isHit = true;
-            Damage = Status.TotalAP * 3f;
+            Damage = Status.TotalAP * 4f;
             if (Status.set6_4_Activated)
             {
                 Damage *= 1.2f;
@@ -503,7 +503,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         if (col.tag == "ArcherSkillQ")
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.1f;
+            Damage = Status.TotalAP * 0.25f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -545,7 +545,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         if (col.tag == "WizardSkillW")
         {
             isHit = true;
-            Damage = Status.TotalAP * 3f;
+            Damage = Status.TotalAP * 4f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -597,7 +597,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
     public virtual void OnTriggerStay(Collider col)
     {
         #region 전사
-        if (col.tag == "WarriorSkillW" && TickCoolTime >= 0.75f)
+        if (col.tag == "WarriorSkillW" && TickCoolTime >= 0.5f)
         {
             isHit = true;
             Damage = Status.TotalAP * 1.5f;
@@ -617,7 +617,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         if (col.tag == "RougeSkillQ_1" && TickCoolTime >= 0.25f)
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.3f;
+            Damage = Status.TotalAP * 0.4f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -633,7 +633,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         if (col.tag == "RougeSkillW_1" && TickCoolTime >= 0.3f)
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.4f;
+            Damage = Status.TotalAP * 0.5f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -665,7 +665,7 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         if (col.tag == "ArcherSkillW" && TickCoolTime >= 0.25f)
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.75f;
+            Damage = Status.TotalAP * 0.35f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;
@@ -694,10 +694,10 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
         }
         #endregion
         #region 마법사
-        if (col.tag == "WizardSkillQ" && TickCoolTime >= 0.25f)
+        if (col.tag == "WizardSkillQ" && TickCoolTime >= 0.3f)
         {
             isHit = true;
-            Damage = Status.TotalAP * 0.75f;
+            Damage = Status.TotalAP * 0.3f;
             if (Status.set6_3_Activated)
             {
                 Damage *= 1.2f;

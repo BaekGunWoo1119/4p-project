@@ -18,6 +18,7 @@ public class ShopCtrl : MonoBehaviour
     public GameObject[] soldOut;
 
     private GameObject warningWindow;
+    private int reRoll_cout;
 
     public TMP_Text rerollShow;
 
@@ -58,12 +59,13 @@ public class ShopCtrl : MonoBehaviour
         warningWindow.SetActive(false);
 
         PlayerPrefs.SetInt("Shop", PlayerPrefs.GetInt("Shop") + 1);
+        reRoll_cout = PlayerPrefs.GetInt("Shop");
 
         GetRandomItemCode();
 
         //리롤 표시 추가(10.02)
         if(rerollShow != null)
-            rerollShow.text = "남은 새로고침 횟수 : " + PlayerPrefs.GetInt("Shop");
+            rerollShow.text = "남은 새로고침 횟수 : " + reRoll_cout;
 
         buyAudio = this.GetComponent<AudioSource>();
         buyAudio.Stop();
@@ -141,13 +143,12 @@ public class ShopCtrl : MonoBehaviour
         }
         else if(isSave == true)
         {
-            if(PlayerPrefs.GetInt("Shop") >= 1) //코인소모에서 리롤횟수 소모로 바꿈 (09.28 정도훈)
+            if(reRoll_cout >= 1) //코인소모에서 리롤횟수 소모로 바꿈 (09.28 정도훈)
             {
-                int refresh = PlayerPrefs.GetInt("Shop");
-                PlayerPrefs.SetInt("Shop", refresh - 1);
+                reRoll_cout--;
                 //리롤 소모 횟수 표시(10.02)
                 if(rerollShow != null)
-                    rerollShow.text = "남은 새로고침 횟수 : " + PlayerPrefs.GetInt("Shop");
+                    rerollShow.text = "남은 새로고침 횟수 : " + reRoll_cout;
                 
                 GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
 

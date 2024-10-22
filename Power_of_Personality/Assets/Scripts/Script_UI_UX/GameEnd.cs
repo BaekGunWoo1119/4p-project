@@ -13,6 +13,7 @@ public class GameEnd : MonoBehaviour
     //public GameObject gameClearGRP; // 페이드 인/아웃 적용할 UI 요소
     private Graphic[] targetGRP;
     public Button okbutton; 
+    public GameObject creditbutton; 
 
     private bool isFading = false; // 페이드 여부
     private float targetAlpha = 0.0f; //알파 값 (0: 투명, 1: 불투명)
@@ -29,6 +30,7 @@ public class GameEnd : MonoBehaviour
         endText = GameObject.Find("Text-GameOver").GetComponent<TMP_Text>(); 
         okbutton.onClick.AddListener(OK_Pressed);
         // 초기에는 UI 요소를 숨김
+        creditbutton.SetActive(false);
         ApplyFadeChild(gameOverGRP.transform);
         // 변수 초기화
         targetGRP = new Graphic[gameOverGRP.transform.childCount + 1];

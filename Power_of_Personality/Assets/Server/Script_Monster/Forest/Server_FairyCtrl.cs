@@ -13,7 +13,9 @@ public class Server_FairyCtrl : Server_MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty ="Fire";
+        maxHP = 75f;
         ATK = 5;
+        DEF = 50f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
         TraceRadius = 10.0f;

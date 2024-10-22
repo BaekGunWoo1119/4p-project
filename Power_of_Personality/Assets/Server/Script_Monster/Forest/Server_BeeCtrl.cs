@@ -13,8 +13,9 @@ public class Server_BeeCtrl : Server_MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty ="Ice";
+        maxHP = 100f;
         ATK = 10.0f;
-        DEF = 100;
+        DEF = 50f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
         TraceRadius = 10.0f;

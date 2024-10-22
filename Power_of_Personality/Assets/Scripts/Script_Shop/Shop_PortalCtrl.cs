@@ -70,7 +70,7 @@ public class Shop_PortalCtrl : MonoBehaviour
         exitshop.SetActive(false);
         orgWindow.transform.localScale = new Vector3(0, 0, 0);
 
-        GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().RemoveHadItem();
+        GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().SetHadItem();
 
         if(shopctrl != null)
         {

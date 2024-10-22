@@ -66,6 +66,9 @@ public class Inventory : MonoBehaviour
         {
             foreach(int id in invenlist){
                 if(id == itemToBeAdded.itemID){
+                    itemToBeAdded.transform.parent = emptySlots[itemToBeAdded.SlotIndex].transform;
+                    itemToBeAdded.gameObject.SetActive(false);
+                    Status.StatUpdate();
                     isDuplicated = true;
                 }
             }
@@ -88,10 +91,54 @@ public class Inventory : MonoBehaviour
                     Status.PercentFire += itemToBeAdded.PercentFire;
                     Status.FixedIce += itemToBeAdded.FixedIce;
                     Status.PercentIce += itemToBeAdded.PercentIce;
+
+                    if(itemToBeAdded.itemID >= 0 && itemToBeAdded.itemID <= 3)
+                    {
+                        Status.set1Count++;
+                    }
+
+                    if(itemToBeAdded.itemID >= 4 && itemToBeAdded.itemID <= 7)
+                    {
+                        Status.set2Count++;
+                    }
+
+                    if(itemToBeAdded.itemID >= 8 && itemToBeAdded.itemID <= 11)
+                    {
+                        Status.set3Count++;
+                    }
+
+                    if(itemToBeAdded.itemID >= 12 && itemToBeAdded.itemID <= 15)
+                    {
+                        Status.set4Count++;
+                    }
+
+                    if(itemToBeAdded.itemID >= 16 && itemToBeAdded.itemID <= 19)
+                    {
+                        Status.set5Count++;
+                    }
+
+                    if(itemToBeAdded.itemID >= 20 && itemToBeAdded.itemID <= 23)
+                    {
+                        Status.set6Count++;
+                    }
+
+                    if(itemToBeAdded.itemID >= 24 && itemToBeAdded.itemID <= 27)
+                    {
+                        Status.set7Count++;
+                    }
+
+                    if(itemToBeAdded.itemID >= 28 && itemToBeAdded.itemID <= 31)
+                    {
+                        Status.set8Count++;
+                    }
+
                     Status.StatUpdate();
                     invenlist.Add(itemToBeAdded.itemID);
                 }
             Debug.Log(itemToBeAdded.itemID);
+
+            Debug.Log(Status.set1Count);
+
             Status.SetUpdate(itemToBeAdded.itemID);
         }
     }
@@ -103,11 +150,8 @@ public class Inventory : MonoBehaviour
         {
             if(InvenCtrl.collectedItems[i] != null)
             {
-                if(InvenCtrl.collectedItemsID[i] != InvenCtrl.HadItemsID[i])
-                {
-                    Debug.Log(InvenCtrl.collectedItemsID[i]);
-                    Instantiate(InvenCtrl.itemList[InvenCtrl.collectedItemsID[i]], this.transform.position, Quaternion.identity);
-                }
+                Debug.Log(InvenCtrl.collectedItemsID[i]);
+                Instantiate(InvenCtrl.itemList[InvenCtrl.collectedItemsID[i]], this.transform.position, Quaternion.identity);        
             }
         }
     }

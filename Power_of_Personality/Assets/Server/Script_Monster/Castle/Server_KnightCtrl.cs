@@ -16,8 +16,9 @@ public class Server_KnightCtrl : Server_MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty = "Ice";
-        ATK = 10.0f;
-        DEF = 100;
+        maxHP = 1000f;
+        ATK = 15.0f;
+        DEF = 200f;
         MoveSpeed = 2.0f;
         Damage = 10.0f;
         TraceRadius = 10.0f;

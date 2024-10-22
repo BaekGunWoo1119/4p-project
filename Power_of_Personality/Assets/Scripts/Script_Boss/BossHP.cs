@@ -34,6 +34,11 @@ public class BossHP : MonoBehaviour
                 hpBarImg.sprite = bossHpImg[2];
             }   
 
+            if(bossType.name == "DemonKing")
+            {
+                hpBarImg.sprite = bossHpImg[3];
+            }   
+
             if(bossType.name == "Server_Druid(Clone)")
             {
                 hpBarImg.sprite = bossHpImg[0];
@@ -47,7 +52,12 @@ public class BossHP : MonoBehaviour
             if(bossType.name == "Server_Ogre(Clone)")
             {
                 hpBarImg.sprite = bossHpImg[2];
-            }          
+            }
+
+            if(bossType.name == "Server_DemonKing(Clone)")
+            {
+                hpBarImg.sprite = bossHpImg[3];
+            }             
         }
     }
 }
