@@ -33,6 +33,8 @@ public class DruidCtrl : BossCtrl
     private bool canTraceAttack;
     private float TraceTime = 0;
     private bool TraceOn;
+
+    private float baboTime = 0; //보스 멈춰서 바보되는 오류 고치는 시도 중(일단 성공) (10.24 백건우)
     #endregion
 
     #region Awake, Start, Update문
@@ -98,6 +100,21 @@ public class DruidCtrl : BossCtrl
         {
             SoundsManager.Change_Sounds("Forest"); //소리 추가(08.31)
         }
+
+        //보스 멈춰서 바보되는 오류 고치는 시도 중(일단 성공) (10.24 백건우)
+        if(!TraceOn && TraceTime == 0 && anim.GetBool("doMove") == true)
+        {
+            baboTime += Time.deltaTime;
+            Debug.Log("바보타임 시작");
+        }
+
+        if(baboTime >= 1f)
+        {
+            baboTime = 0;
+            TraceOn = true;
+            Debug.Log("바보타임 종료");
+        }
+
     }
     #endregion
 

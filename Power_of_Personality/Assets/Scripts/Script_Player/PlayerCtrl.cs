@@ -378,6 +378,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
         {
             spellSounds[i].Stop();
         }
+
+        //죽지 않았음을 체크(10.24)
+        Status.IsDie = false;
     }
     protected virtual void FixedUpdate()
     {

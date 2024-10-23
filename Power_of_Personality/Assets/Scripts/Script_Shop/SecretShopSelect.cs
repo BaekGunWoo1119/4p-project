@@ -8,6 +8,7 @@ public class SecretShopSelect : MonoBehaviour
 {
     public GameObject eventSystem;
     public static bool hidden_pick;
+    private Button btn;
     // Start is called before the first frame update
 
     void Start()
@@ -15,12 +16,13 @@ public class SecretShopSelect : MonoBehaviour
         hidden_pick = false;
         //eventSystem의 SecretShop 받아옴
         eventSystem = GameObject.Find("EventSystem");
-        Button btn = GameObject.Find("Pick_Hidden").GetComponent<Button>();
+        btn = GameObject.Find("Pick_Hidden").GetComponent<Button>();
         btn.onClick.AddListener(PickatRandom);
     }
 
     public void PickatRandom()
     {
+        btn.onClick.RemoveListener(PickatRandom);
         eventSystem.GetComponent<SecretShop>().StartAtRandom();
         hidden_pick = true;
         StartCoroutine(PickItem());

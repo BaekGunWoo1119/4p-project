@@ -30,7 +30,7 @@ public class Shop_PortalCtrl : MonoBehaviour
         if(col.gameObject.tag == "Player")
         {
             //Debug.Log("S키를 눌러 상점 진입");
-            if(Input.GetKeyDown(KeyCode.S))
+            if(Input.GetKeyDown(KeyCode.S) && !Status.IsDie)
             {
                 Open_Shop(col);
                 GameObject.Find("InventoryCtrl").GetComponent<InventoryCtrl>().PotionCount++;

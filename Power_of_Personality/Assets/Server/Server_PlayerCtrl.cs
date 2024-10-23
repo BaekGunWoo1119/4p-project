@@ -389,6 +389,9 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
         else{
             this.gameObject.tag = "OtherPlayer";
         }
+
+        //죽지 않았음을 체크(10.24 백건우)
+        Status.IsDie = false;
         
     }
     protected virtual void FixedUpdate()

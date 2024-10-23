@@ -87,6 +87,7 @@ public class Status : MonoBehaviour
     public static bool set8_3_Activated = false;
 
     public static bool IsShop = false; //현재 상점인지 확인
+    public static bool IsDie = false; //현재 죽었는지 확인(10.24 백건우)
     public static bool Spell_TimeSlowdown_ON = false; //보조스킬 시간 감속 (09.18 정도훈)
     static int a = 0;
     public static int BonusStat;
@@ -458,6 +459,7 @@ public class Status : MonoBehaviour
 
     public static void isDie()
     {
+        IsDie = true;
         set1_Activate = false;
         set1_3_Activated = false;
         set1_4_Activated = false;

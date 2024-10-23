@@ -21,7 +21,7 @@ public class PortraitCtrl : MonoBehaviour
 
     void Update()
     {
-        // float 값이 0보다 크면 반짝이게 하고, 그렇지 않으면 멈춤
+        //스탯포인트가 0보다 크면 반짝이게 하고, 그렇지 않으면 멈춤
         if (InvenCtrl.StatPoint > 0 && !isFlashing)
         {
             StartCoroutine(FlashImage());
