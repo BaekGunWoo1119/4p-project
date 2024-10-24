@@ -87,7 +87,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         var properties = PhotonNetwork.LocalPlayer.CustomProperties;
         properties["IsExitShop"] = true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
-        string jsondata = Resources.Load<TextAsset>("JSON/WaveData").text;
+        string jsondata = Resources.Load<TextAsset>("JSON/WaveData_test").text;
         // JSON 데이터를 WaveDatas 클래스로 Deserialize
         JSONWaveList = JsonUtility.FromJson<WaveDatas>(jsondata);
         WaveUpdate(); // 초기 웨이브 설정
@@ -220,11 +220,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     // 몬스터 스폰
     void SpawnMonster()
     {
-        // 호스트에서 몹 소환하도록
-        if (PhotonNetwork.IsMasterClient)
-        {
-
-            switch (CurrentWave)
+        switch (CurrentWave)
             {
                 case 1:
                 case 2:
@@ -247,6 +243,9 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                     SpawnPoints = SpawnPoints4;
                     break;
             }
+        // 호스트에서 몹 소환하도록
+        if (PhotonNetwork.IsMasterClient)
+        {
             int spawnIndex = Random.Range(0, SpawnPoints.Length);
             Transform spawnPoint = SpawnPoints[spawnIndex];
             var currentWaveData = JSONWaveList.WaveData[CurrentWave - 1];
