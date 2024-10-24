@@ -75,8 +75,6 @@ public class Shop_PortalCtrl : MonoBehaviour
         if(shopctrl != null)
         {
             shopctrl.Reroll_Item();
-            float currentCoin = PlayerPrefs.GetFloat("Coin");
-            PlayerPrefs.SetFloat("Coin", currentCoin + 3);
         }
     }
 
