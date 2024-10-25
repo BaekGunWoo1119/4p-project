@@ -10,6 +10,7 @@ public class CreditCtrl : MonoBehaviour
     public GameObject backBtn;
     private Vector3 endPos;
     private Vector3 velocity;
+    public float upSpeed = 66.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +22,28 @@ public class CreditCtrl : MonoBehaviour
     void Update()
     {
         if(credit != null)
-            credit.transform.position = Vector3.SmoothDamp(credit.transform.position, endPos, ref velocity, 66.0f);
+        {
+            credit.transform.position = Vector3.SmoothDamp(credit.transform.position, endPos, ref velocity, upSpeed);
+
+            if(credit.transform.position.y > Screen.height * 6.5)
+            {
+                Credit_Close();
+            }
+        }
 
         if(Input.GetKeyDown(KeyCode.Escape) && SceneManager.GetActiveScene().name != "1 (Main)")
             Credit_Close();
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if(upSpeed > 2.0f)
+            {
+                upSpeed -= 2.0f;
+            }
+            else
+            {
+                upSpeed = 1.5f;
+            }
+        }
     }
 
     public void Credit_Open()

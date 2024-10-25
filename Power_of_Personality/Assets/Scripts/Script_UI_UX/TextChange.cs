@@ -77,7 +77,7 @@ public class TextChange : MonoBehaviour
             ChangeText("S", 4);
             ChangeText("기본공격 데미지", 5);
             ChangeText("고정 데미지", 6);
-            ChangeText("공격속도 증가 비율", 7);
+            ChangeText("데미지 증가 비율", 7);
             ChangeText(Status.TotalADC.ToString(), 8);
             ChangeText(Status.FixedADC.ToString(), 9);
             ChangeText(Status.PercentADC.ToString(), 10);

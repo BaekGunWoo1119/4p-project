@@ -149,8 +149,6 @@ public class ShopCtrl : MonoBehaviour
                 //리롤 소모 횟수 표시(10.02)
                 if(rerollShow != null)
                     rerollShow.text = "남은 새로고침 횟수 : " + reRoll_cout;
-                
-                GameObject.Find("CoinText").GetComponent<TMP_Text>().text = PlayerPrefs.GetFloat("Coin").ToString();
 
                 for (int i = 0; i < C_Slots; ++i)
                 {
