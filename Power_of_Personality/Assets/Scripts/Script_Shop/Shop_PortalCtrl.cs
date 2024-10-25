@@ -93,6 +93,12 @@ public class Shop_PortalCtrl : MonoBehaviour
 
     public void Exit_Shop_Multi()
     {
+        GameObject[] player = GameObject.FindGameObjectsWithTag("Player");
+        inventory = new Inventory[player.Length];
+        for (int i = 0; i < player.Length; i++)
+        {
+            inventory[i] = player[i].GetComponent<Inventory>();
+        }
         playerObj.transform.position = GameObject.FindGameObjectWithTag("CurrentSpawnPotint").transform.position;
         //playerObj.transform.position = GameObject.FindGameObjectsWithTag("CurrentSpawnPotint").transform.position;
         Status.IsShop = false;
