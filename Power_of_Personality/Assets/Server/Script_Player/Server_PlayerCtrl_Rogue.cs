@@ -245,7 +245,9 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         //UI 쿨타임 시간 변경(08.29)
         yield return new WaitForSeconds(1.2f);
         ESkillCoolTime = 0;
+        if(photonview.IsMine){
         Ecool.fillAmount = 1;
+        }
     }
     public void comboAttack_1_on()
     {
@@ -551,7 +553,9 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
             StartCoroutine(MoveForwardForSeconds(1.0f));
             StartCoroutine(Immune(2.5f));
             QSkillCoolTime = 0;
+            if(photonview.IsMine){
             Qcool.fillAmount = 1;
+            }
         }
 
         if(skillName == "W")
@@ -597,7 +601,9 @@ public class Server_PlayerCtrl_Rogue : Server_PlayerCtrl
         //WSkill_Last_Collider.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         WSkillCoolTime = 0;
+        if(photonview.IsMine){
         Wcool.fillAmount = 1;
+        }
         //WSkill_Last_Collider.SetActive(false);
     }
     protected override IEnumerator Delay(float seconds)

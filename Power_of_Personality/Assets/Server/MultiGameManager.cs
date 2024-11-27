@@ -87,7 +87,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         var properties = PhotonNetwork.LocalPlayer.CustomProperties;
         properties["IsExitShop"] = true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
-        string jsondata = Resources.Load<TextAsset>("JSON/WaveData_test").text;
+        string jsondata = Resources.Load<TextAsset>("JSON/WaveData").text;
         // JSON 데이터를 WaveDatas 클래스로 Deserialize
         JSONWaveList = JsonUtility.FromJson<WaveDatas>(jsondata);
         WaveUpdate(); // 초기 웨이브 설정

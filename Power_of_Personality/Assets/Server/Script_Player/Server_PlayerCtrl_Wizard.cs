@@ -206,7 +206,10 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         //QSkill_Collider.SetActive(false);
         isSkillQ = false;
         QSkillCoolTime = 0;
+
+        if(photonview.IsMine){
         Qcool.fillAmount = 1;
+        }
         //QSkill_Collider.transform.localScale = new Vector3(1, 5, 1);
     }
     public IEnumerator Skill_W()
@@ -217,7 +220,9 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         yield return new WaitForSeconds(1f);
         //WSkill_Collider.SetActive(false);
         WSkillCoolTime = 0;
+        if(photonview.IsMine){
         Wcool.fillAmount = 1;
+        }
     }
     public IEnumerator Skill_E_Move()
     {
@@ -232,7 +237,9 @@ public class Server_PlayerCtrl_Wizard : Server_PlayerCtrl
         rd.useGravity = true;
         Fall();
         ESkillCoolTime = 0;
+        if(photonview.IsMine){
         Ecool.fillAmount = 1;
+        }
     }
 
     public void comboAttack_1_on()

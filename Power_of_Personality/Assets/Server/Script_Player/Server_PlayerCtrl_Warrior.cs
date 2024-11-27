@@ -298,7 +298,9 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         StartCoroutine(Attack_Sound(3, 0.5f));
         //쿨타임
         QSkillCoolTime = 0;
+        if(photonview.IsMine){
         Qcool.fillAmount = 1;
+        }
     }
 
     IEnumerator SKill_E_Move()
@@ -363,7 +365,9 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
         yield return new WaitForSeconds(1f);
         audioSources[3].Stop();
         ESkillCoolTime = 0;
+        if(photonview.IsMine){
         Ecool.fillAmount = 1;
+        }
     }
 
     #endregion
@@ -528,7 +532,9 @@ public class Server_PlayerCtrl_Warrior : Server_PlayerCtrl
             //WSkill_Collider.SetActive(true);
             PlayAnim("Skill_W");
             WSkillCoolTime = 0;
+            if(photonview.IsMine){
             Wcool.fillAmount = 1;
+            }
             StartCoroutine(Attack_Sound(4, 3.4f));
             StartCoroutine(Immune(2f));
             StartCoroutine(MoveForwardForSeconds(1.35f));
