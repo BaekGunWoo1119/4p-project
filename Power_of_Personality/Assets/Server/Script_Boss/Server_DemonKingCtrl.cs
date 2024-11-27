@@ -36,7 +36,7 @@ public class Server_DemonKingCtrl : Server_BossCtrl
         SetHP(4000);
         //shopPortal.SetActive(false);
         StartCoroutine(Think());
-        //SoundsManager.Change_Sounds("Castle_Boss"); //소리 추가(08.31)
+        SoundsManager.Change_Sounds("Castle"); //소리 추가(08.31)
     }
 
     protected override void Update()
@@ -45,9 +45,9 @@ public class Server_DemonKingCtrl : Server_BossCtrl
         SkillYRot = transform.localEulerAngles.y;
         //캔버스 뒤집어지는 오류 해결(08.29)
         if(GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y > 0 && GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y < 180)
-            MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot + 90f, 0);
+            MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot, 0);
         else
-            MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 90f, 0);
+            MonsterCanvas.transform.localRotation = Quaternion.Euler(0, SkillYRot - 180f, 0);
         if(photonview.IsMine){
             DistanceCheck();
         }
