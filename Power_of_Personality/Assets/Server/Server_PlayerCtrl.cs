@@ -1133,7 +1133,9 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
 
         if(Rcool.fillAmount == 0)
         {
+            if(photonview.IsMine){
             Rcool.fillAmount = 1;
+            }
         }
 
         yield return new WaitForSeconds(0.5f);
@@ -2168,7 +2170,9 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
                         Spell_1_CoolTime = Resurrect_CoolTime;
                         break;
                 }
+                if(photonview.IsMine){
             Dcool.fillAmount = 1;
+                }
             Debug.Log(Spell_1_CoolTime);
             break;
             case 2:
@@ -2198,7 +2202,9 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
                         Spell_2_CoolTime = Resurrect_CoolTime;
                         break;
                 }
+            if(photonview.IsMine){    
             Fcool.fillAmount = 1;
+            }
             Debug.Log(Spell_2_CoolTime);
             break;
         }
@@ -2214,7 +2220,9 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
             if(Dodge_CoolTime > TotalDodge_CoolTime){
                 DodgeAmount += 1;
                 Dodge_CoolTime = 0f;
+                if(photonview.IsMine){
                 Rcool.fillAmount = 1;
+                }
             }
             DodgeValue.text = DodgeAmount.ToString();
         }

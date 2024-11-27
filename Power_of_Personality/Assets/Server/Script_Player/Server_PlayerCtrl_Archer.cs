@@ -185,7 +185,9 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         StartCoroutine(Attack_Sound(3, 2.5f)); //소리 추가(08.31)
         StartCoroutine(Immune(2f));
         QSkillCoolTime = 0;
+        if(photonview.IsMine){
         Qcool.fillAmount = 1;
+        }
     }
     IEnumerator Skill_W()
     {
@@ -200,7 +202,9 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         yield return new WaitForSeconds(1f);
         //WSkill_Collider.SetActive(false);
         WSkillCoolTime = 0;
+        if(photonview.IsMine){
         Wcool.fillAmount = 1;
+        }
     }
     IEnumerator Skill_E()
     {
@@ -215,7 +219,9 @@ public class Server_PlayerCtrl_Archer : Server_PlayerCtrl
         yield return new WaitForSeconds(1.5f);
         //ESkill_Collider.SetActive(false);
         ESkillCoolTime = 0;
+        if(photonview.IsMine){
         Ecool.fillAmount = 1;
+        }
     }
     IEnumerator SKill_Up_Move(float upScale, float waitTime1, float waitTime2, float delayTime)
     {
