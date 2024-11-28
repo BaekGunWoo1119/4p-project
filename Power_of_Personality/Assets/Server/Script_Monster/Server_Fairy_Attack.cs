@@ -11,6 +11,7 @@ public class Server_Fairy_Attack : MonoBehaviour
     void Awake()
 
     {
+        this.tag = "Monster_Ranged";
         curproperty = PlayerPrefs.GetString("property");
         PlayerTr = GameObject.FindWithTag("Player").transform;
         Vector3 targetPosition = PlayerTr.position + Vector3.up;

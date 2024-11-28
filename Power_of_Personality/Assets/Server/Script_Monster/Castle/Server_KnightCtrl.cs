@@ -55,14 +55,15 @@ public class Server_KnightCtrl : Server_MonsterCtrl
                 StartCoroutine(Trace());
             }
             else if (Distance > TraceRadius){ 
-                photonview.RPC("RPCRun", RpcTarget.All, true);
+                photonview.RPC("RPCRun", RpcTarget.All, false);
                 Settarget();
             }
 
             if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && !isHit && !isSpawn)
             {
-                anim.SetBool("isRun", false);
-                photonview.RPC("RPCRun", RpcTarget.All, true);
+                
+                photonview.RPC("RPCRun", RpcTarget.All, false);
+                photonview.RPC("Server_Attack", RpcTarget.All);
                 //StartCoroutine(Attack());
             }
         }

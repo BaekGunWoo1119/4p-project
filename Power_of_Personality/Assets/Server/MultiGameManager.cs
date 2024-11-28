@@ -28,6 +28,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     public TMP_Text timerText;
     public GameObject Player;
     public static bool IsDie; // 죽었는지 판단
+    public bool CheckShop = true;
     private WaveDatas JSONWaveList; // JSON에서 받아온 웨이브 데이터
     public bool IsWave; // 현재 웨이브 진행 중인지
     public Collider PlayerCol; // 플레이어 콜라이더
@@ -156,8 +157,9 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
             if (IsWave == false&& wavedelay >10.0f)
             {
                 // 플레이어가 상점에서 나오면 서버로 응답 보냄
-                if (Status.IsShop == false)
+                if (Status.IsShop == false && CheckShop == false)
                 {   
+                    CheckShop = true;
                     WaitPlayer.SetActive(true);
                     //ExitShop();
                     if (CheckReady() == true)
@@ -196,6 +198,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         PlayerPrefs.SetInt("Shop", 1);
         GameObject.Find("EventSystem").GetComponent<Shop_PortalCtrl>().Open_Shop(PlayerCol);
         Player.transform.position = ShopTr.position;
+        CheckShop = false;
     }
     [PunRPC]
     // 웨이브 종료 후 상점으로 이동
@@ -214,6 +217,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         WaveUpdate(); // 다음 웨이브 설정
         SetSpawnPoint();
         // 상점으로 이동
+
         Invoke("gotoshop", 5.0f);
     }
 
@@ -399,11 +403,12 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         IsDie=false;
     }
     public bool CheckReady(){
-        bool Checked = false;
+        bool Checked = true;
         GameObject[] tartgets =GameObject.FindGameObjectsWithTag("Target");
         foreach (GameObject tart in tartgets){
-            if(tart.transform.parent.GetComponent<Server_PlayerCtrl>().isShop == false){
-                Checked = true;
+            Debug.Log("isshop:"+tart.transform.parent.GetComponent<Server_PlayerCtrl>().isShop);
+            if(tart.transform.parent.GetComponent<Server_PlayerCtrl>().isShop == true){
+                Checked = false;
             }
         }
         return Checked;

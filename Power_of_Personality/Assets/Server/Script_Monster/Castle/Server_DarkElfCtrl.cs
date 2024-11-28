@@ -56,11 +56,10 @@ public class Server_DarkElfCtrl : Server_MonsterCtrl
                 photonview.RPC("RPCRun", RpcTarget.All, true);
                 StartCoroutine(Trace());
             }
-            if(Distance <= attackRadius){
+            else if (Distance > TraceRadius){ 
                 photonview.RPC("RPCRun", RpcTarget.All, false);
                 Settarget();
             }
-
             if (Distance <= attackRadius && AttackCoolTime >= 3.0f*(1f/AnimSpeed) && !isDie && hitCount <= 0 && !isSpawn)
             {
                 photonview.RPC("RPCRun", RpcTarget.All, false);

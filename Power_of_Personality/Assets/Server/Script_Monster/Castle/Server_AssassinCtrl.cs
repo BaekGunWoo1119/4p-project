@@ -16,7 +16,7 @@ public class Server_AssassinCtrl : Server_MonsterCtrl
     public override void Awake()
     {
         ownWeakProperty ="Ice";
-        maxHP = 500;
+        maxHP = 500f;
         ATK = 15.0f;
         DEF = 100f;
         MoveSpeed = 3.5f;
@@ -59,14 +59,14 @@ public class Server_AssassinCtrl : Server_MonsterCtrl
                 StartCoroutine(Trace());
             }
             else if (Distance > TraceRadius){ 
-                photonview.RPC("RPCRun", RpcTarget.All, true);
+                photonview.RPC("RPCRun", RpcTarget.All, false);
                 Settarget();
             }
 
             if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && !isHit && !isSpawn)
             {
-                anim.SetBool("isRun", false);
-                photonview.RPC("RPCRun", RpcTarget.All, true);
+                photonview.RPC("RPCRun", RpcTarget.All, false);
+                photonview.RPC("Server_Attack", RpcTarget.All);
                 //StartCoroutine(Attack());
             }
         }

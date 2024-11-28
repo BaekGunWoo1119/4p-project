@@ -137,11 +137,19 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
             }
             AttackCoolTime += Time.deltaTime;
             hitCount -= Time.deltaTime;
+            if (this.transform.position.x - PlayerTr.transform.position.x < 0)
+            {
+                this.transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
+            else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
+            {
+                this.transform.rotation = Quaternion.Euler(0, -90, 0);
+            }
         }
         else{
             //transform.position = Vector3.Lerp(transform.position, receivePos, 2.0f * Time.deltaTime);
             transform.position = Vector3.MoveTowards(gameObject.transform.position, receivePos, 2.0f);
-            transform.rotation = Quaternion.Lerp(transform.rotation,receiveRot, 2.0f * Time.deltaTime);
+            transform.rotation = receiveRot;
         }
         
         #region 3/4세트 4세트 효과
@@ -157,14 +165,6 @@ public class Server_MonsterCtrl : MonoBehaviourPun, IPunObservable
             //Debug.Log("약점속성이 빙속성이 됨.");
         }
         #endregion
-        if (this.transform.position.x - PlayerTr.transform.position.x < 0)
-            {
-                this.transform.rotation = Quaternion.Euler(0, 90, 0);
-            }
-            else if (this.transform.position.x - PlayerTr.transform.position.x > 0)
-            {
-                this.transform.rotation = Quaternion.Euler(0, -90, 0);
-            }
         //캔버스 뒤집어지는 오류 해결(08.29)
         if(GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y > 0 && GameObject.FindWithTag("MainCamera").transform.parent.transform.eulerAngles.y < 180)
             MonsterCanvas.transform.localRotation = Quaternion.Euler(0, CanvasYRot, 0);
