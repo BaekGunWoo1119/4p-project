@@ -159,7 +159,6 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
                 // 플레이어가 상점에서 나오면 서버로 응답 보냄
                 if (Status.IsShop == false && CheckShop == false)
                 {   
-                    CheckShop = true;
                     WaitPlayer.SetActive(true);
                     //ExitShop();
                     if (CheckReady() == true)
@@ -265,6 +264,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
     void StartWave()
     {
         Debug.Log("Targetspawn: "+ TargetSpawn);
+        CheckShop = true;
         if(IsWave ==false){
             int playerViewID = Player.GetComponent<PhotonView>().ViewID;
             int SpawnPointViewID;
