@@ -48,21 +48,27 @@ public class Server_DarkElfCtrl : Server_MonsterCtrl
 
     public override void DistanceCheck()
     {
-        Distance = Vector3.Distance(transform.position, PlayerTr.position);
+        if(CurTarget != null){
+            Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
-        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn&&!anim.GetBool("isAttack"))
-        {
-            photonview.RPC("RPCRun", RpcTarget.All, true);
-            StartCoroutine(Trace());
-        }
-        if(Distance <= attackRadius){
-            photonview.RPC("RPCRun", RpcTarget.All, false);
-        }
+            if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn&&!anim.GetBool("isAttack"))
+            {
+                photonview.RPC("RPCRun", RpcTarget.All, true);
+                StartCoroutine(Trace());
+            }
+            if(Distance <= attackRadius){
+                photonview.RPC("RPCRun", RpcTarget.All, false);
+                Settarget();
+            }
 
-        if (Distance <= attackRadius && AttackCoolTime >= 3.0f*(1f/AnimSpeed) && !isDie && hitCount <= 0 && !isSpawn)
-        {
-            photonview.RPC("RPCRun", RpcTarget.All, false);
-            photonview.RPC("Server_Attack", RpcTarget.All);
+            if (Distance <= attackRadius && AttackCoolTime >= 3.0f*(1f/AnimSpeed) && !isDie && hitCount <= 0 && !isSpawn)
+            {
+                photonview.RPC("RPCRun", RpcTarget.All, false);
+                photonview.RPC("Server_Attack", RpcTarget.All);
+            }
+        }
+        else {
+            Settarget();
         }
     }
 
@@ -121,5 +127,9 @@ public class Server_DarkElfCtrl : Server_MonsterCtrl
     [PunRPC]
     public  void RPCRun(bool state){
         anim.SetBool("isRun", state);
+    }
+    public override void Settarget()
+    {
+        base.Settarget();
     }
 }

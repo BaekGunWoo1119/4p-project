@@ -46,21 +46,28 @@ public class Server_KnightCtrl : Server_MonsterCtrl
 
     public override void DistanceCheck()
     {
-        Distance = Vector3.Distance(transform.position, PlayerTr.position);
+        if(CurTarget != null){
+            Distance = Vector3.Distance(transform.position, PlayerTr.position);
 
-        if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn&&!anim.GetBool("isAttack"))
-        {
-            anim.SetBool("isRun", true);
-            StartCoroutine(Trace());
-        }
-        if(Distance <= attackRadius){
-            anim.SetBool("isRun", false);
-        }
+            if (Distance <= TraceRadius && Distance > attackRadius && !isDie && !isHit && !isSpawn)
+            {
+                photonview.RPC("RPCRun", RpcTarget.All, true);
+                StartCoroutine(Trace());
+            }
+            else if (Distance > TraceRadius){ 
+                photonview.RPC("RPCRun", RpcTarget.All, true);
+                Settarget();
+            }
 
-        if (Distance <= attackRadius && AttackCoolTime >= 3.0f*(1f/AnimSpeed) && !isDie && hitCount <= 0 && !isSpawn)
-        {
-            anim.SetBool("isRun", false);
-            StartCoroutine(Attack());
+            if (Distance <= attackRadius && AttackCoolTime >= 3.0f && !isDie && !isHit && !isSpawn)
+            {
+                anim.SetBool("isRun", false);
+                photonview.RPC("RPCRun", RpcTarget.All, true);
+                //StartCoroutine(Attack());
+            }
+        }
+        else {
+            Settarget();
         }
     }
 
@@ -157,5 +164,13 @@ public class Server_KnightCtrl : Server_MonsterCtrl
     [PunRPC]
     public override void RPCDamage(float CurDamage){
         base.RPCDamage(CurDamage);
+    }
+    [PunRPC]
+    public  void RPCRun(bool state){
+        anim.SetBool("isRun", state);
+    }
+    public override void Settarget()
+    {
+        base.Settarget();
     }
 }

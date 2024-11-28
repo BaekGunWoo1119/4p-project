@@ -440,6 +440,7 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
     protected virtual void Update()
     {
         if(photonview.IsMine){
+            photonview.RPC("SetisShop",RpcTarget.All,Status.IsShop);
             if(Status.IsShop)
             {   
                 StopAnim("isRun");
@@ -2228,5 +2229,10 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
         }
     }
     #endregion
+
+    [PunRPC]
+    public virtual void SetisShop(bool isshop){
+        isShop = isshop;
+    }
     
 }   
