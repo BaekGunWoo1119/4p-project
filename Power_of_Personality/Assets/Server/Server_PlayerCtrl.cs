@@ -224,7 +224,7 @@ public class Server_PlayerCtrl : MonoBehaviourPun, IPlayerSkill, IPlayerAnim, IP
     //스탯 UI 관련
     protected TMP_Text[] StateText; 
 
-    public static bool isShop = false;
+    public bool isShop = false;
 
     //보스 관련
     public GameObject Druid;

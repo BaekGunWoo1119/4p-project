@@ -87,7 +87,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         var properties = PhotonNetwork.LocalPlayer.CustomProperties;
         properties["IsExitShop"] = true;
         PhotonNetwork.LocalPlayer.SetCustomProperties(properties);
-        string jsondata = Resources.Load<TextAsset>("JSON/WaveData").text;
+        string jsondata = Resources.Load<TextAsset>("JSON/WaveData_test").text;
         // JSON 데이터를 WaveDatas 클래스로 Deserialize
         JSONWaveList = JsonUtility.FromJson<WaveDatas>(jsondata);
         WaveUpdate(); // 초기 웨이브 설정
@@ -157,9 +157,10 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
             {
                 // 플레이어가 상점에서 나오면 서버로 응답 보냄
                 if (Status.IsShop == false)
-                {
-                    ExitShop();
-                    if (CheckExitShop() == true)
+                {   
+                    WaitPlayer.SetActive(true);
+                    //ExitShop();
+                    if (CheckReady() == true)
                     {
                         if (PhotonNetwork.IsMasterClient){
                             photonview.RPC("StartWave",RpcTarget.All);
@@ -214,7 +215,6 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         SetSpawnPoint();
         // 상점으로 이동
         Invoke("gotoshop", 5.0f);
-        
     }
 
     // 몬스터 스폰
@@ -334,7 +334,7 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void ExitShop()
+    public void ExitShop() 
     {
         
             var properties = PhotonNetwork.LocalPlayer.CustomProperties;
@@ -398,4 +398,14 @@ public class MultiGameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("1-2 (Multi Lobby)");
         IsDie=false;
     }
+    public bool CheckReady(){
+        bool Checked = false;
+        GameObject[] tartgets =GameObject.FindGameObjectsWithTag("Target");
+        foreach (GameObject tart in tartgets){
+            if(tart.transform.parent.GetComponent<Server_PlayerCtrl>().isShop == false){
+                Checked = true;
+            }
+        }
+        return Checked;
+    } 
 }
