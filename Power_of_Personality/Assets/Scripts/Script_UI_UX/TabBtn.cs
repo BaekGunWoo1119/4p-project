@@ -26,9 +26,10 @@ public class TabBtn : MonoBehaviour
     {
         PlayerPrefs.SetString("property", "Ice");
         isIce = true;
+        StartCoroutine(Effect("Ice"));
     }
 
-    private void SetFire() 
+    public void SetFire() 
     {
         if (button != null)
         {
@@ -48,10 +49,11 @@ public class TabBtn : MonoBehaviour
             button.onClick.RemoveListener(SetFire);
             PlayerPrefs.SetString("property", "Fire");
             isFire = true;
+            StartCoroutine(Effect("Fire"));
         }
     }
 
-    private void SetIce()
+    public void SetIce()
     {
         if (button != null)
         {
@@ -71,12 +73,14 @@ public class TabBtn : MonoBehaviour
             button.onClick.RemoveListener(SetIce);
             PlayerPrefs.SetString("property", "Ice");
             isIce = true;
+            StartCoroutine(Effect("Ice"));
         }
     }
     void Update()
     {
         ColorBlock colors = button.colors;
         Color normalColor = colors.normalColor;
+        /*
         if (button != null)
         {
             if (normalColor == iceColor)
@@ -109,6 +113,7 @@ public class TabBtn : MonoBehaviour
             isFire = false;
             StartCoroutine(Effect("Fire"));
         }
+        */
     }
 
     IEnumerator Effect(string EffectType)

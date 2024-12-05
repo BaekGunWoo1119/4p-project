@@ -275,6 +275,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
     protected float clockEffectTime = 0;
     Stack prevADC = new Stack();
 
+    //Tab키 코드 여기에 옮김(12.02 백건우)
+    protected TabBtn tabKey;
+
     #endregion
 
     protected virtual void Start()
@@ -381,6 +384,9 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
 
         //죽지 않았음을 체크(10.24)
         Status.IsDie = false;
+        
+        //Tab 코드 찾기
+        tabKey = GameObject.Find("EventSystem").GetComponent<TabBtn>();
     }
     protected virtual void FixedUpdate()
     {
@@ -697,6 +703,25 @@ public class PlayerCtrl : MonoBehaviour, IPlayerSkill, IPlayerAnim, IPlayerAttac
                 UseSpell(Spell_2, 2); 
             }
 
+            //Tab(12.02 백건우)
+            if(tabKey == null)
+            {
+                tabKey = GameObject.Find("EventSystem").GetComponent<TabBtn>();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Tab)
+            && !isSkill
+            && !isAttack)
+            {
+                if(PlayerPrefs.GetString("property") == "Ice")
+                {
+                    tabKey.SetFire();
+                }
+                else if(PlayerPrefs.GetString("property") == "Fire")
+                {
+                    tabKey.SetIce();
+                }
+            }
 
             //Jump
             if (Input.GetKeyDown(KeyCode.Space) && !isSkill && !isAttack && !isJumping
